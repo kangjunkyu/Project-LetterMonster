@@ -3,8 +3,18 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  height: 100vh;
+  // height: 100vh;
   justify-content: center;
   align-items: center;
   font-size: 100px;
+}
+
+img{
+  width: 100px;
+  height: 100px;
+}
+
+.characterDiv{
+  display: flex;
+  flex-wrap: wrap;
 }
