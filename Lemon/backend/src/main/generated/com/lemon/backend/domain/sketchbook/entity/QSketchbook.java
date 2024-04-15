@@ -39,7 +39,7 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public final StringPath name = createString("name");
 
-    public final StringPath ShareLink = createString("ShareLink");
+    public final StringPath shareLink = createString("shareLink");
 
     public final com.lemon.backend.domain.users.entity.QUsers users;
 

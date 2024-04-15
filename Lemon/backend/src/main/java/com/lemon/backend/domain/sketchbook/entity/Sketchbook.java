@@ -25,13 +25,17 @@ public class Sketchbook extends BaseEntity {
     @Column(name = "sketchbook_id")
     private Long id;
 
+    @Setter
     @Column(name = "is_public")
-    @ColumnDefault("false")
-    private Boolean isPublic;
+//    @ColumnDefault("ture")
+    @Builder.Default
+    private Boolean isPublic = true;
 
-    @Column(name = "share_link", length = 1000)
+    @Setter
+    @Column(name = "share_link", length = 1000, nullable = true)
     private String shareLink;
 
+    @Setter
     @Column(name = "name")
     private String name;
 
@@ -45,9 +49,7 @@ public class Sketchbook extends BaseEntity {
     }
 
     @Builder(toBuilder = true)
-    Sketchbook(Users users, Boolean isPublic, String shareLink, String name){
-        this.isPublic = isPublic;
-        this.shareLink = shareLink;
+    Sketchbook(Users users, String name){
         this.name = name;
         addSketchbook(users);
     }
