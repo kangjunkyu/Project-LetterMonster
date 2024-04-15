@@ -30,7 +30,7 @@ public class Sketchbook extends BaseEntity {
     private Boolean isPublic;
 
     @Column(name = "share_link", length = 1000)
-    private String ShareLink;
+    private String shareLink;
 
     @Column(name = "name")
     private String name;
@@ -39,5 +39,16 @@ public class Sketchbook extends BaseEntity {
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
 
+    public void addSketchbook(Users users) {
+        this.users = users;
+        users.getSketchbookList().add(this);
+    }
 
+    @Builder(toBuilder = true)
+    Sketchbook(Users users, Boolean isPublic, String shareLink, String name){
+        this.isPublic = isPublic;
+        this.shareLink = shareLink;
+        this.name = name;
+        addSketchbook(users);
+    }
 }

@@ -1,8 +1,9 @@
-package com.lemon.backend.domain.character.entity;
+package com.lemon.backend.domain.characters.character.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
-import com.lemon.backend.domain.characterMotion.entity.CharacterMotion;
+import com.lemon.backend.domain.characters.characterMotion.entity.CharacterMotion;
 import com.lemon.backend.domain.letter.entity.Letter;
+import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.users.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,9 +39,22 @@ public class Characters extends BaseEntity {
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
 
+    @Builder.Default
     @OneToMany(mappedBy = "characters", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<CharacterMotion> characterMotionList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "characters", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<Letter> letterList = new ArrayList<>();
+
+    public void addCharacter(Users user){
+        this.users = user;
+        user.getCharacterList().add(this);
+    }
+
+    @Builder(toBuilder = true)
+    Characters(String nickname, Boolean mainCharacter, Users user){
+        this.nickname = nickname;
+        this.mainCharacter = mainCharacter;
+        this.users = user;
+        addCharacter(user);
+    }
+
 }

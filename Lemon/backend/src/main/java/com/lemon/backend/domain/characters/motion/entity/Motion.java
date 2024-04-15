@@ -1,7 +1,7 @@
-package com.lemon.backend.domain.motion.entity;
+package com.lemon.backend.domain.characters.motion.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
-import com.lemon.backend.domain.characterMotion.entity.CharacterMotion;
+import com.lemon.backend.domain.characters.characterMotion.entity.CharacterMotion;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -27,6 +27,4 @@ public class Motion extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "motion", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    private List<CharacterMotion> characterMotionList = new ArrayList<>();
 }

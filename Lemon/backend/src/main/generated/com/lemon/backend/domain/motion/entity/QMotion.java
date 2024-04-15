@@ -2,6 +2,8 @@ package com.lemon.backend.domain.motion.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.lemon.backend.domain.characters.characterMotion.entity.CharacterMotion;
+import com.lemon.backend.domain.characters.motion.entity.Motion;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -22,7 +24,7 @@ public class QMotion extends EntityPathBase<Motion> {
 
     public final com.lemon.backend.domain.base.QBaseEntity _super = new com.lemon.backend.domain.base.QBaseEntity(this);
 
-    public final ListPath<com.lemon.backend.domain.characterMotion.entity.CharacterMotion, com.lemon.backend.domain.characterMotion.entity.QCharacterMotion> characterMotionList = this.<com.lemon.backend.domain.characterMotion.entity.CharacterMotion, com.lemon.backend.domain.characterMotion.entity.QCharacterMotion>createList("characterMotionList", com.lemon.backend.domain.characterMotion.entity.CharacterMotion.class, com.lemon.backend.domain.characterMotion.entity.QCharacterMotion.class, PathInits.DIRECT2);
+    public final ListPath<CharacterMotion, com.lemon.backend.domain.characterMotion.entity.QCharacterMotion> characterMotionList = this.<CharacterMotion, com.lemon.backend.domain.characterMotion.entity.QCharacterMotion>createList("characterMotionList", CharacterMotion.class, com.lemon.backend.domain.characterMotion.entity.QCharacterMotion.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;

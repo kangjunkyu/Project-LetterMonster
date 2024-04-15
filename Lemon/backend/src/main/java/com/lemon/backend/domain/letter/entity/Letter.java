@@ -1,16 +1,12 @@
 package com.lemon.backend.domain.letter.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
-import com.lemon.backend.domain.character.entity.Characters;
+import com.lemon.backend.domain.characters.character.entity.Characters;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -42,5 +38,6 @@ public class Letter extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "characters_id", nullable = true)
     private Characters characters;
+
 
 }

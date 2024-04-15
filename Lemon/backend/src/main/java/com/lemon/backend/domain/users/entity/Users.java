@@ -1,7 +1,7 @@
 package com.lemon.backend.domain.users.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
-import com.lemon.backend.domain.character.entity.Characters;
+import com.lemon.backend.domain.characters.character.entity.Characters;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,9 +35,12 @@ public class Users extends BaseEntity {
     @Column(name = "provider")
     private String provider;
 
+    @Builder.Default
     @OneToMany(mappedBy = "users", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Characters> characterList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "users", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Sketchbook> sketchbookList = new ArrayList<>();
+
 }
