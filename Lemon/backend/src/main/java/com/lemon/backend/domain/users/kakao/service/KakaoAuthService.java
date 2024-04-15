@@ -51,4 +51,27 @@ public class KakaoAuthService {
         return kakaoToken;
     }
 
+
+    public KakaoProfile getUserInfo(String accessToken) {
+        String userInfoUri = kakaoProviderProperties.getUserInfoUri();
+        // 요청
+        WebClient webClient = WebClient.create(userInfoUri);
+        String response = webClient.post()
+                .uri(userInfoUri)
+                .header("Authorization", "Bearer " + accessToken)
+                .header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        // 응답 파싱해서 유저 정보 반환
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoProfile kakaoProfile = null;
+        try {
+            kakaoProfile = objectMapper.readValue(response, KakaoProfile.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return kakaoProfile;
+    }
 }
