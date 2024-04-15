@@ -1,0 +1,31 @@
+server:
+  servlet:
+    context-path: /api
+    port: 8080
+
+# DB와 secret key 세팅 값
+spring:
+  profiles:
+    active: prod
+---
+spring:
+  profiles:
+    active: dev
+---
+spring:
+  profiles:
+    active: local
+
+
+  jpa:
+    hibernate:
+      format_sql: true
+      show_sql: false
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+
+
+
