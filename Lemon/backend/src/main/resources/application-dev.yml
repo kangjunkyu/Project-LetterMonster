@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+
+  data:
+    redis:
+      host: 43.203.217.53
+      port: 6379
+      time-to-live: 3600000
+
+
+  email:
+    authCode:
+      duration: 300
+
+cors:
+  allowed:
+    origin: http://localhost:3000
+
+email:
+  authCode:
+    duration: 300

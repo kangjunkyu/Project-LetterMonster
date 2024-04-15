@@ -60,3 +60,13 @@ Qsrc/main/java/com/lemon/backend/domain/letter/service/impl/LetterServiceImpl.ja
 Nsrc/main/java/com/lemon/backend/domain/letter/controller/LetterController.java,b\4\b43b26b1938fc6c65328af4740d53ecb2bd41bcf
 s
 Csrc/main/java/com/lemon/backend/global/exception/character/.gitkeep,5\3\532887ca75f8eef6d9bdcccbf369a49209f616cb
+n
+>src/main/java/com/lemon/backend/domain/users/entity/Users.java,1\a\1a7a690e2a9c698a37bdcfd07aac81d0a852ea5b
+v
+Fsrc/main/java/com/lemon/backend/domain/character/entity/Character.java,0\8\0846abbfe616fcd9e4a883c9cc643c707d5442e6
+‚
+Rsrc/main/java/com/lemon/backend/domain/characterMotion/entity/CharacterMotion.java,3\6\36dc24427a12b4324cfc86d89ed87b49d7a2f9c9
+p
+@src/main/java/com/lemon/backend/domain/motion/entity/Motion.java,8\4\84f0cca919ee1e94b323c5fd7218e65db0b56731
+w
+Gsrc/main/java/com/lemon/backend/domain/character/entity/Characters.java,7\e\7e680c7d113815009620cc5ca34945daf32df589
