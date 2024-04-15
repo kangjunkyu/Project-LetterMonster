@@ -15,8 +15,6 @@ spring:
 spring:
   profiles:
     active: local
-
-
   jpa:
     hibernate:
       format_sql: true
