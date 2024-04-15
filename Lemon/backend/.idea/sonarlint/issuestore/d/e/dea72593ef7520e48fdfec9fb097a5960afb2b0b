@@ -1,40 +1,40 @@
 
-	java:S112F"FDefine and throw a dedicated exception instead of using a generic one.(’ÕÚ¢ùÿÿÿÿ8Ï¶Áçí1J$3f8f90ba-56a4-4c72-8e98-828659ac9ddd
+	java:S112G"FDefine and throw a dedicated exception instead of using a generic one.(’ÕÚ¢ùÿÿÿÿ8Ï¶Áçí1J$9e061d24-10fa-40e0-98fb-b942da67dae9
 n
-java:S1452T"&Remove usage of generic wildcard type.(†ºË©ıÿÿÿÿ8â¶Áçí1J$18d88358-3273-43bd-8b63-9bbdebbb9e9b
+java:S1452U"&Remove usage of generic wildcard type.(†ºË©ıÿÿÿÿ8áñŞùí1J$a0abc094-7164-4470-89c0-4035ef6c88a1
 n
-java:S1452e"&Remove usage of generic wildcard type.(·ÔÉ±üÿÿÿÿ8ã¶Áçí1J$be3621bf-b44f-495c-8cf4-da128f3d100f
+java:S1452f"&Remove usage of generic wildcard type.(·ÔÉ±üÿÿÿÿ8ãñŞùí1J$1a09d6d7-c4db-4c3d-a7df-d68370164e64
 _
-java:S2326s"T is not used in the method.(“ãÊ£8å¶Áçí1J$92016163-6ebf-4248-86c6-0494196166a1
+java:S2326t"T is not used in the method.(“ãÊ£8å¶Áçí1J$a0f89509-6e2b-4069-be67-c3ccec658785
 i
-java:S1452s"&Remove usage of generic wildcard type.(“ãÊ£8å¶Áçí1J$447a1bb5-994c-4e26-9e5b-49118f400a32
+java:S1452t"&Remove usage of generic wildcard type.(“ãÊ£8åñŞùí1J$cb7b080d-d582-4bb3-91fc-11bcb17a99cc
 e
-java:S2326ƒ"T is not used in the method.(”ı†ßüÿÿÿÿ8å¶Áçí1J$cadbecac-2937-4ab0-b833-03fedfee1846
+java:S2326„"T is not used in the method.(”ı†ßüÿÿÿÿ8å¶Áçí1J$e9691b57-8a89-4fd8-a0e1-1ca9ec04a962
 o
-java:S1452ƒ"&Remove usage of generic wildcard type.(”ı†ßüÿÿÿÿ8å¶Áçí1J$97ac8f6c-9fb6-4313-912c-9bda3069c6ba
+java:S1452„"&Remove usage of generic wildcard type.(”ı†ßüÿÿÿÿ8çñŞùí1J$efedfb0b-a2dc-44f9-9460-36e650d3fc60
 j
-java:S1452š"&Remove usage of generic wildcard type.(±¼„8æ¶Áçí1J$28bea7ae-04d1-4cc2-be7a-44262ee40194
+java:S1452›"&Remove usage of generic wildcard type.(±¼„8èñŞùí1J$c104241d-8c0f-4bc9-b7c3-d81399f503ec
 i
-java:S1452°"&Remove usage of generic wildcard type.(ŞÍ´t8ç¶Áçí1J$29113a54-aeb0-4ace-b29b-384e0931ef72
+java:S1452±"&Remove usage of generic wildcard type.(ŞÍ´t8êñŞùí1J$7c4f305e-dff3-42bf-a431-adbc8b51fe39
 e
-java:S2326Â"T is not used in the method.(ŠÏÂ­ûÿÿÿÿ8ç¶Áçí1J$8c294658-6544-4c87-8dd1-bfa3b4827d6f
+java:S2326Ã"T is not used in the method.(ŠÏÂ­ûÿÿÿÿ8ç¶Áçí1J$4c158920-4e9d-449e-8094-cbe89ae0c62a
 o
-java:S1452Â"&Remove usage of generic wildcard type.(ŠÏÂ­ûÿÿÿÿ8ç¶Áçí1J$b519679f-5d05-4bf8-a71c-11a01054dc8d
+java:S1452Ã"&Remove usage of generic wildcard type.(ŠÏÂ­ûÿÿÿÿ8ëñŞùí1J$882f0dae-0aa7-41fe-99be-19c12c03a458
 o
-java:S1452Ô"&Remove usage of generic wildcard type.(¡·ĞŞÿÿÿÿÿ8è¶Áçí1J$beca18dd-3cb7-424c-aace-f811aa5a24c1
+java:S1452Õ"&Remove usage of generic wildcard type.(¡·ĞŞÿÿÿÿÿ8íñŞùí1J$522bb7d4-c6ee-4913-ba10-0e613ba585d5
 j
-java:S1452å"&Remove usage of generic wildcard type.(²Èİ£8è¶Áçí1J$6e390d52-997c-4b06-aa18-9729c05d1078
+java:S1452æ"&Remove usage of generic wildcard type.(²Èİ£8îñŞùí1J$9a2a78d9-03a4-4c81-ab0b-e806297b237d
 –
-java:S6204ç"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8é¶Áçí1J$3a2fb15a-b556-4377-9733-f1a4fbf31d84
+java:S6204è"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8ğñŞùí1J$51250c78-397b-452e-88a3-9f6cedba26e9
 j
-java:S1452ø"&Remove usage of generic wildcard type.(øƒ°Ó8ë¶Áçí1J$4598e999-e627-4eee-821c-28f631cf08c6
+java:S1452ù"&Remove usage of generic wildcard type.(øƒ°Ó8óñŞùí1J$f35b4e28-a330-40bc-99ad-2d1fdc5b0536
 o
-java:S1452‰"&Remove usage of generic wildcard type.(ˆĞïÄøÿÿÿÿ8ë¶Áçí1J$fc417138-d33d-40de-81fe-af8857efe736
+java:S1452Š"&Remove usage of generic wildcard type.(ˆĞïÄøÿÿÿÿ8ôñŞùí1J$2baee70e-e5d9-487c-b99c-c6698038d773
 e
-java:S2326™"T is not used in the method.(Ùº­„ùÿÿÿÿ8ë¶Áçí1J$669e5c6b-7f1f-41b7-83a6-4a651f59b9ee
+java:S2326š"T is not used in the method.(Ùº­„ùÿÿÿÿ8ë¶Áçí1J$a3ad2cd6-d3bc-4ebf-9a83-7957ef214527
 o
-java:S1452™"&Remove usage of generic wildcard type.(Ùº­„ùÿÿÿÿ8ë¶Áçí1J$47c8e2c5-bacf-4af3-905c-39fa9b4086b7
+java:S1452š"&Remove usage of generic wildcard type.(Ùº­„ùÿÿÿÿ8õñŞùí1J$f694afd6-2cb3-4bd6-bab6-569e07d71ec6
 e
-java:S2326¦"T is not used in the method.(åıíúÿÿÿÿ8ë¶Áçí1J$cdcbf5c1-c174-435e-8b28-dbccb9879393
+java:S2326§"T is not used in the method.(åıíúÿÿÿÿ8ë¶Áçí1J$1de47739-ff4f-4b7b-8f9c-e79a8264ef16
 o
-java:S1452¦"&Remove usage of generic wildcard type.(åıíúÿÿÿÿ8ë¶Áçí1J$28a9eaee-7a04-4a30-bfdf-fc3b3c9e6019
+java:S1452§"&Remove usage of generic wildcard type.(åıíúÿÿÿÿ8öñŞùí1J$1e8f357d-d1d1-4ae9-ab97-ac5eaf51d074

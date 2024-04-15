@@ -58,3 +58,5 @@ p
 Qsrc/main/java/com/lemon/backend/domain/letter/service/impl/LetterServiceImpl.java,a\a\aa46e18ed309988040d64b29e33bcb80a393d7c1
 ~
 Nsrc/main/java/com/lemon/backend/domain/letter/controller/LetterController.java,b\4\b43b26b1938fc6c65328af4740d53ecb2bd41bcf
+s
+Csrc/main/java/com/lemon/backend/global/exception/character/.gitkeep,5\3\532887ca75f8eef6d9bdcccbf369a49209f616cb

@@ -1,5 +1,6 @@
 package com.lemon.backend.global.format.code;
 
+import com.lemon.backend.global.format.response.ErrorCode;
 import com.lemon.backend.global.format.response.ResponseCode;
 import lombok.*;
 import org.springframework.data.domain.Pageable;
