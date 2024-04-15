@@ -7,14 +7,17 @@ server:
 spring:
   profiles:
     active: prod
+    include: secret
 ---
 spring:
   profiles:
     active: dev
+    include: secret
 ---
 spring:
   profiles:
     active: local
+    include: secret
 
 
   jpa:
