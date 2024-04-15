@@ -3,3 +3,51 @@
   justify-content: center;
   align-items: center;
 }
+
+@mixin title() {
+  font-size: 24px;
+}
+
+@mixin title_M() {
+  font-size: 20px;
+}
+
+@mixin title2() {
+  font-size: 22px;
+}
+
+@mixin title2_M() {
+  font-size: 18px;
+}
+
+@mixin subtitle() {
+  font-size: 20px;
+}
+
+@mixin subtitle_M() {
+  font-size: 16px;
+}
+
+@mixin body() {
+  font-size: 16px;
+}
+
+@mixin body_M() {
+  font-size: 14px;
+}
+
+@mixin body2() {
+  font-size: 14px;
+}
+
+@mixin body2_M() {
+  font-size: 12px;
+}
+
+@mixin caption() {
+  font-size: 12px;
+}
+
+@mixin caption_M() {
+  font-size: 11px;
+}
