@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.users.entity;
+package com.lemon.backend.domain.users.user.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
 import com.lemon.backend.domain.characters.character.entity.Characters;

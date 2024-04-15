@@ -7,8 +7,8 @@ import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDt
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
-import com.lemon.backend.domain.users.entity.Users;
-import com.lemon.backend.domain.users.repository.UserRepository;
+import com.lemon.backend.domain.users.user.entity.Users;
+import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.sketchbook.SketchbookNotFound;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

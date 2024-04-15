@@ -2,6 +2,7 @@ package com.lemon.backend.domain.users.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.lemon.backend.domain.users.user.entity.Users;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;

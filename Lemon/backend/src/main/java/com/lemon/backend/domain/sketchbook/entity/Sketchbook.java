@@ -1,15 +1,11 @@
 package com.lemon.backend.domain.sketchbook.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
-import com.lemon.backend.domain.users.entity.Users;
+import com.lemon.backend.domain.users.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
