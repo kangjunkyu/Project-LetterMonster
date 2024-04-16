@@ -4,9 +4,6 @@ import "./MainPage.scss";
 
 function MainPage() {
   const navigate = useNavigate();
-  const goToLogin = () => {
-    navigate(Page_Url.Login);
-  };
 
   return (
     <main className="container">
@@ -21,7 +18,7 @@ function MainPage() {
         <img src="/src/assets/characterSample/attamoma.gif" alt="" />
         <img src="/src/assets/characterSample/juhyeon.gif" alt="" />
       </div>
-      <button onClick={() => goToLogin()}>LOGIN</button>
+      <button onClick={() => navigate(Page_Url.Login)}>카카오로그인</button>
     </main>
   );
 }
