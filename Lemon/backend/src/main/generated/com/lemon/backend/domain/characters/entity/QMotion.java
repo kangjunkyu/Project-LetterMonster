@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:Lemon/backend/src/main/generated/com/lemon/backend/domain/characters/entity/QMotion.java
 package com.lemon.backend.domain.characters.entity;
+========
+package com.lemon.backend.domain.characters.motion.entity;
+>>>>>>>> 54d74913a972581e97443a911a4cad0096fe7cbc:Lemon/backend/src/main/generated/com/lemon/backend/domain/characters/motion/entity/QMotion.java
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,7 +19,11 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QMotion extends EntityPathBase<Motion> {
 
+<<<<<<<< HEAD:Lemon/backend/src/main/generated/com/lemon/backend/domain/characters/entity/QMotion.java
     private static final long serialVersionUID = 1133813925L;
+========
+    private static final long serialVersionUID = -2143560923L;
+>>>>>>>> 54d74913a972581e97443a911a4cad0096fe7cbc:Lemon/backend/src/main/generated/com/lemon/backend/domain/characters/motion/entity/QMotion.java
 
     public static final QMotion motion = new QMotion("motion");
 
