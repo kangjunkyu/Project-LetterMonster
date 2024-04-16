@@ -1,0 +1,29 @@
+import { Link } from "react-router-dom";
+import "./GNB.scss";
+import { Page_Url } from "../../../router/Page_Url";
+
+// 아이콘
+import sketchbook from "../../../assets/GNBIcon/sketchbook.svg";
+import draw from "../../../assets/GNBIcon/draw.svg";
+import more from "../../../assets/GNBIcon/more.svg";
+
+function GNB() {
+  return (
+    <header>
+      <Link className="GNBbutton" to={Page_Url.Test}>
+        <img src={draw} alt="그리기" />
+        캐릭터그리기
+      </Link>
+      <Link className="GNBbutton" to={Page_Url.Main}>
+        <img src={sketchbook} alt="스케치북" />
+        스케치북
+      </Link>
+      <Link className="GNBbutton" to={Page_Url.Main}>
+        <img src={more} alt="메인" />
+        더보기
+      </Link>
+    </header>
+  );
+}
+
+export default GNB;

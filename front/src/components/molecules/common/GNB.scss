@@ -1,0 +1,36 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/defalut";
+
+header {
+  display: none;
+  gap: 1em;
+  height: $headerHeight;
+  margin-bottom: 1em;
+
+  border-top: 2px solid black;
+  & a {
+    @include flexCenter();
+    width: 100%;
+  }
+
+  @media screen and (max-width: 1023px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 모바일 */
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3em;
+    padding-top: 1em;
+  }
+}
+.GNBbutton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
