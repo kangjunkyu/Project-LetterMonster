@@ -9,7 +9,8 @@ import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
-import com.lemon.backend.global.exception.sketchbook.SketchbookNotFound;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.format.response.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,12 +28,12 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
-        return sketchbookRepository.getSketchList(userId).orElseThrow(SketchbookNotFound::new);
+        return sketchbookRepository.getSketchList(userId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
 
     @Override
     public SketchbookGetDto getSketchSelect(Long sketchId){
-        return sketchbookRepository.getSketchSelect(sketchId).orElseThrow(SketchbookNotFound::new);
+        return sketchbookRepository.getSketchSelect(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
     @Transactional
     @Override
