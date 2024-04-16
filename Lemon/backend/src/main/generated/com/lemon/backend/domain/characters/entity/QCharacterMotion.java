@@ -1,8 +1,7 @@
-package com.lemon.backend.domain.characterMotion.entity;
+package com.lemon.backend.domain.characters.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.lemon.backend.domain.characters.characterMotion.entity.CharacterMotion;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -17,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QCharacterMotion extends EntityPathBase<CharacterMotion> {
 
-    private static final long serialVersionUID = 1574253963L;
+    private static final long serialVersionUID = 1581604912L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -25,7 +24,7 @@ public class QCharacterMotion extends EntityPathBase<CharacterMotion> {
 
     public final com.lemon.backend.domain.base.QBaseEntity _super = new com.lemon.backend.domain.base.QBaseEntity(this);
 
-    public final com.lemon.backend.domain.character.entity.QCharacters characters;
+    public final QCharacters characters;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -38,7 +37,7 @@ public class QCharacterMotion extends EntityPathBase<CharacterMotion> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final com.lemon.backend.domain.motion.entity.QMotion motion;
+    public final QMotion motion;
 
     public final StringPath url = createString("url");
 
@@ -60,8 +59,8 @@ public class QCharacterMotion extends EntityPathBase<CharacterMotion> {
 
     public QCharacterMotion(Class<? extends CharacterMotion> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.characters = inits.isInitialized("characters") ? new com.lemon.backend.domain.character.entity.QCharacters(forProperty("characters"), inits.get("characters")) : null;
-        this.motion = inits.isInitialized("motion") ? new com.lemon.backend.domain.motion.entity.QMotion(forProperty("motion")) : null;
+        this.characters = inits.isInitialized("characters") ? new QCharacters(forProperty("characters"), inits.get("characters")) : null;
+        this.motion = inits.isInitialized("motion") ? new QMotion(forProperty("motion")) : null;
     }
 
 }

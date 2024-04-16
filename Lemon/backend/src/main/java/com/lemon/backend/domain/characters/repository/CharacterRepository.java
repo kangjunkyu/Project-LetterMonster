@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.characters.character.repository;
+package com.lemon.backend.domain.characters.repository;
 
 import org.springframework.stereotype.Repository;
 

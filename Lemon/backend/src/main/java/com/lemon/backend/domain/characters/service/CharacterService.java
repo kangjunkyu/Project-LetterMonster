@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.characters.character.service;
+package com.lemon.backend.domain.characters.service;
 
 import org.springframework.stereotype.Service;
 

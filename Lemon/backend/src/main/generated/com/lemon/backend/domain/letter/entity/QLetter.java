@@ -24,7 +24,7 @@ public class QLetter extends EntityPathBase<Letter> {
 
     public final com.lemon.backend.domain.base.QBaseEntity _super = new com.lemon.backend.domain.base.QBaseEntity(this);
 
-    public final com.lemon.backend.domain.character.entity.QCharacters characters;
+    public final com.lemon.backend.domain.characters.entity.QCharacters characters;
 
     public final StringPath content = createString("content");
 
@@ -63,7 +63,7 @@ public class QLetter extends EntityPathBase<Letter> {
 
     public QLetter(Class<? extends Letter> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.characters = inits.isInitialized("characters") ? new com.lemon.backend.domain.character.entity.QCharacters(forProperty("characters"), inits.get("characters")) : null;
+        this.characters = inits.isInitialized("characters") ? new com.lemon.backend.domain.characters.entity.QCharacters(forProperty("characters"), inits.get("characters")) : null;
         this.sketchbook = inits.isInitialized("sketchbook") ? new com.lemon.backend.domain.sketchbook.entity.QSketchbook(forProperty("sketchbook"), inits.get("sketchbook")) : null;
     }
 

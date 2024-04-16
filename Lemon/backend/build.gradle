@@ -60,6 +60,9 @@ dependencies {
 
     // 스프링 앱 서버의 상태를 확인
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

@@ -2,7 +2,6 @@ package com.lemon.backend.domain.users.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.lemon.backend.domain.characters.character.entity.Characters;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -23,7 +22,7 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final com.lemon.backend.domain.base.QBaseEntity _super = new com.lemon.backend.domain.base.QBaseEntity(this);
 
-    public final ListPath<Characters, com.lemon.backend.domain.character.entity.QCharacters> characterList = this.<Characters, com.lemon.backend.domain.character.entity.QCharacters>createList("characterList", Characters.class, com.lemon.backend.domain.character.entity.QCharacters.class, PathInits.DIRECT2);
+    public final ListPath<com.lemon.backend.domain.characters.entity.Characters, com.lemon.backend.domain.characters.entity.QCharacters> characterList = this.<com.lemon.backend.domain.characters.entity.Characters, com.lemon.backend.domain.characters.entity.QCharacters>createList("characterList", com.lemon.backend.domain.characters.entity.Characters.class, com.lemon.backend.domain.characters.entity.QCharacters.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;

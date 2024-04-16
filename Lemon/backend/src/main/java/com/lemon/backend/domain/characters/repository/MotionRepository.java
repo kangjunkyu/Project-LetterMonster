@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.characters.motion.repository;
+package com.lemon.backend.domain.characters.repository;
 
 import org.springframework.stereotype.Repository;
 
