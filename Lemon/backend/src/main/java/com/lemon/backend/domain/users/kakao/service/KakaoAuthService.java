@@ -12,6 +12,8 @@ import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import com.lemon.backend.global.jwt.TokenAndLanguageResponse;
+import com.lemon.backend.global.redis.RefreshToken;
+import com.lemon.backend.global.redis.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -27,6 +29,7 @@ public class KakaoAuthService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     // 카카오로부터 accessToken 받는 함수
     public KakaoToken getAccessToken(String code) {
@@ -92,7 +95,12 @@ public class KakaoAuthService {
         TokenAndLanguageResponse tokenResponse = jwtTokenProvider.createToken(user.getId());
         tokenResponse.setIsLanguageSet(user.getIsLanguage());
 
+        //Redis에 저장
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setId(user.getId());
+        refreshToken.setToken(tokenResponse.getRefreshToken());
+        refreshTokenRepository.save(refreshToken);
+
         return tokenResponse;
     }
-
 }
