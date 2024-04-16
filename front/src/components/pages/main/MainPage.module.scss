@@ -2,21 +2,22 @@
 
 .container {
   @include flexCenter();
-  width: 100%;
   flex-direction: column;
   gap: 1em;
-  // height: 100vh;
-  justify-content: center;
-  align-items: center;
   font-size: 100px;
+
+  & section {
+    @include body2();
+    padding: 10px;
+  }
 }
 
-img{
+.character {
   width: 100px;
   height: 100px;
 }
 
-.characterDiv{
+.characterDiv {
   display: flex;
   flex-wrap: wrap;
 }
