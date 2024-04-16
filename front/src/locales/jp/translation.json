@@ -1,14 +1,13 @@
 {
   "header": {
-    "mypage": "마이페이지",
-    "logout": "로그아웃",
-    "login": "로그인",
-    "register": "회원가입",
-    "language": "언어설정",
-    "help": "고객센터"
+    "language": "言語設定",
+    "help": "ヘルプ"
   },
   "nav": {
-    "dashboard": "대시보드",
-    "shopping-mall": "쇼핑몰 관리"
+    "sketchbook": "スケッチブック",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "register": "ユーザー登録",
+    "letter": "電子メール"
   }
 }
