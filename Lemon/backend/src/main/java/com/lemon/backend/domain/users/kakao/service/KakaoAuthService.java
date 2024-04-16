@@ -88,18 +88,11 @@ public class KakaoAuthService {
         String accessToken = getAccessToken(code).getAccessToken();
         KakaoProfile profile = getUserInfo(accessToken);
 
-        Users user = userRepository.findByKakaoId(profile.getId()).orElseGet(() -> kakaoSignUp(profile));
+        Users user = userRepository.findByKakaoId(profile.getId()).orElseGet(() -> userService.createKakaoUser(profile, Social.KAKAO));
         TokenAndLanguageResponse tokenResponse = jwtTokenProvider.createToken(user.getId());
         tokenResponse.setIsLanguageSet(user.getIsLanguage());
 
         return tokenResponse;
     }
 
-
-    private Users kakaoSignUp(KakaoProfile profile) {
-        Users user = Users.builder().nickname(userService.makeNickname())
-                .provider(Social.KAKAO)
-                .kakaoId(profile.getId()).build();
-        return userRepository.save(user);
-    }
 }
