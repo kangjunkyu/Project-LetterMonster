@@ -1,6 +1,19 @@
 @import "./fonts";
 
+html {
+  /* 데스크탑 */
+
+  @media screen and (max-width: 1023px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 모바일 */
+  }
+}
+
 body {
+  background-color: #f5f5f5;
   & * {
     box-sizing: border-box;
   }
@@ -15,6 +28,11 @@ button,
 table {
   font-family: "KyoboHand";
   line-height: 1.1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* 여백 초기화 */
