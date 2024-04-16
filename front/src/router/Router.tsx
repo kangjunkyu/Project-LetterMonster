@@ -6,12 +6,14 @@ import { Page_Url } from "./Page_Url";
 import MainPage from "../components/pages/main/MainPage";
 import LoginPage from "../components/pages/login/LoginPage";
 import KakaoCallback from "../components/pages/login/KakaoCallback";
+import SketchPage from "../components/pages/sketch/SketchPage";
 
 function Router() {
   return (
     <Routes>
       <Route path={Page_Url.Main} element={<MainPage />}></Route>
       <Route path={Page_Url.Login} element={<LoginPage />}></Route>
+      <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
 
       <Route path={Page_Url.KakaoCallback} element={<KakaoCallback />}></Route>
     </Routes>
