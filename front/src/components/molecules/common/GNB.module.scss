@@ -6,15 +6,10 @@ header {
   gap: 1em;
   height: $headerHeight;
   margin-bottom: 1em;
-
   border-top: 2px solid black;
   & a {
     @include flexCenter();
     width: 100%;
-  }
-
-  @media screen and (max-width: 1023px) {
-    /* 타블렛 */
   }
 
   @media screen and (max-width: 767px) {

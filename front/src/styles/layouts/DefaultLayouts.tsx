@@ -1,4 +1,4 @@
-import "./DefaultLayouts.scss";
+import styles from "./DefaultLayouts.module.scss";
 import GNB from "../../components/molecules/common/GNB";
 import SNB from "../../components/molecules/common/SNB";
 import { Outlet } from "react-router";
@@ -8,7 +8,7 @@ function DefaultLayouts() {
     <main>
       <GNB />
       <SNB />
-      <section>
+      <section className={styles.layoutSection}>
         <Outlet />
       </section>
     </main>
