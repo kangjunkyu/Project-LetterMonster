@@ -5,15 +5,15 @@ import styles from "./SNB.module.scss";
 function SNB() {
   return (
     <nav>
-      <Link className={styles.SNBButton} to={Page_Url.Test}>
+      <Link className={styles.SNBButton} to={Page_Url.Main}>
         <img src="/red.png" alt="그리기" />
         그리기
       </Link>
-      <Link className={styles.SNBButton} to={Page_Url.Test}>
+      <Link className={styles.SNBButton} to={Page_Url.Main}>
         <img src="/yellow.png" alt="스케치북" />
         스케치북
       </Link>
-      <Link className={styles.SNBButton} to={Page_Url.Test}>
+      <Link className={styles.SNBButton} to={Page_Url.Main}>
         <img src="/green.png" alt="더보기" />
         더보기
       </Link>

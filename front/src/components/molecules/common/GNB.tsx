@@ -10,7 +10,7 @@ import more from "../../../assets/GNBIcon/more.svg";
 function GNB() {
   return (
     <header>
-      <Link className={styles.GNBbutton} to={Page_Url.Test}>
+      <Link className={styles.GNBbutton} to={Page_Url.Main}>
         <img src={draw} alt="그리기" />
         캐릭터그리기
       </Link>
