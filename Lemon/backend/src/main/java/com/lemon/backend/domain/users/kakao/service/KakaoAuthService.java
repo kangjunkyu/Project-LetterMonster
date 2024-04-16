@@ -6,8 +6,12 @@ import com.lemon.backend.domain.users.kakao.dto.KakaoProfile;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProperties;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProviderProperties;
 import com.lemon.backend.domain.users.kakao.dto.KakaoToken;
+import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.domain.users.user.service.UserService;
+import com.lemon.backend.global.jwt.JwtTokenProvider;
+import com.lemon.backend.global.jwt.TokenAndLanguageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,6 +25,8 @@ public class KakaoAuthService {
     private final KakaoProperties kakaoProperties;
     private final KakaoProviderProperties kakaoProviderProperties;
     private final UserRepository userRepository;
+    private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     // 카카오로부터 accessToken 받는 함수
     public KakaoToken getAccessToken(String code) {
@@ -78,15 +84,22 @@ public class KakaoAuthService {
         return kakaoProfile;
     }
 
-    public KakaoProfile login(String code) {
+    public TokenAndLanguageResponse login(String code) {
         String accessToken = getAccessToken(code).getAccessToken();
         KakaoProfile profile = getUserInfo(accessToken);
-        return profile;
 
-//        Users user = userRepository.findByKakaoId(profile.getId()).orElseGet(() -> kakaoSignUp(profile));
+        Users user = userRepository.findByKakaoId(profile.getId()).orElseGet(() -> kakaoSignUp(profile));
+        TokenAndLanguageResponse tokenResponse = jwtTokenProvider.createToken(user.getId());
+        tokenResponse.setIsLanguageSet(user.getIsLanguage());
+
+        return tokenResponse;
     }
 
-//    private Users kakaoSignUp(KakaoProfile profile) {
-//        userService
-//    }
+
+    private Users kakaoSignUp(KakaoProfile profile) {
+        Users user = Users.builder().nickname(userService.makeNickname())
+                .provider(Social.KAKAO)
+                .kakaoId(profile.getId()).build();
+        return userRepository.save(user);
+    }
 }

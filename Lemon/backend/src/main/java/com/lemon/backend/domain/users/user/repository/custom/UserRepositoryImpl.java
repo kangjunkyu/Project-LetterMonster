@@ -15,7 +15,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     @Override
     public Optional<Users> findByKakaoId(String kakaoId) {
         Users user = query.selectFrom(users)
-                .where(users.kakaoId.eq(Integer.valueOf(kakaoId)))
+                .where(users.kakaoId.eq(kakaoId))
                 .fetchOne();
         return Optional.ofNullable(user);
     }
