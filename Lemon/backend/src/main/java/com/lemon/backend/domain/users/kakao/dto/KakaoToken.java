@@ -1,9 +1,11 @@
 package com.lemon.backend.domain.users.kakao.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoToken {
     @JsonProperty("token_type")
     private String tokenType;

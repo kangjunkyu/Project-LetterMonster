@@ -33,7 +33,10 @@ public class Users extends BaseEntity {
     private String nicknameTag;
 
     @Column(name = "provider")
-    private String provider;
+    private Social provider;
+
+    @Column(name = "kakao_id")
+    private Integer kakaoId;
 
     @Builder.Default
     @OneToMany(mappedBy = "users", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
