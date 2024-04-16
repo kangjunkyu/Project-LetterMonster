@@ -19,7 +19,7 @@ import static com.lemon.backend.global.response.CommonResponseEntity.getResponse
 @Tag(name = "Sketchbook 컨트롤러", description = "Sketchbook Controller API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sketchbooks")
+@RequestMapping("/api/sketchbooks")
 public class SketchbookController {
 
     private final SketchbookService sketchbookService;
