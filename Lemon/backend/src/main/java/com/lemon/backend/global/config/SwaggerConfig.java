@@ -23,36 +23,36 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi characterGroup() {
         return GroupedOpenApi.builder()
-                .group("캐릭터").pathsToMatch("/api/v1/characters/**").build();
+                .group("캐릭터").pathsToMatch("/api/characters/**").build();
     }
 
     @Bean
     public GroupedOpenApi characterMotionGroup() {
         return GroupedOpenApi.builder()
-                .group("캐릭터모션").pathsToMatch("/api/v1/charactermotions/**").build();
+                .group("캐릭터모션").pathsToMatch("/api/charactermotions/**").build();
     }
 
     @Bean
     public GroupedOpenApi letterGroup() {
         return GroupedOpenApi.builder()
-                .group("편지").pathsToMatch("/api/v1/letters/**").build();
+                .group("편지").pathsToMatch("/api/letters/**").build();
     }
 
     @Bean
     public GroupedOpenApi motionGroup() {
         return GroupedOpenApi.builder()
-                .group("모션").pathsToMatch("/api/v1/motions/**").build();
+                .group("모션").pathsToMatch("/api/motions/**").build();
     }
     @Bean
     public GroupedOpenApi sketchbookGroup() {
         return GroupedOpenApi.builder()
-                .group("스케치북").pathsToMatch("/api/v1/sketchbooks/**").build();
+                .group("스케치북").pathsToMatch("/api/sketchbooks/**").build();
     }
 
     @Bean
     public GroupedOpenApi usersGroup() {
         return GroupedOpenApi.builder()
-                .group("유저").pathsToMatch("/api/v1/users/**").build();
+                .group("유저").pathsToMatch("/api/users/**").build();
     }
 
 }
