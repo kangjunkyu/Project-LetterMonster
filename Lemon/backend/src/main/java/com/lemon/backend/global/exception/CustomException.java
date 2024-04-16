@@ -1,6 +1,5 @@
 package com.lemon.backend.global.exception;
 
-import com.lemon.backend.global.format.response.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

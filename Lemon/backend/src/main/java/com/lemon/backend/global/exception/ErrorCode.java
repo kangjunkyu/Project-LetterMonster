@@ -1,4 +1,4 @@
-package com.lemon.backend.global.format.response;
+package com.lemon.backend.global.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

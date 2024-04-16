@@ -1,6 +1,5 @@
 package com.lemon.backend.global.exception;
 
-import com.lemon.backend.global.format.response.ErrorCode;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;

@@ -10,7 +10,7 @@ import com.lemon.backend.domain.sketchbook.service.SketchbookService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.CustomException;
-import com.lemon.backend.global.format.response.ErrorCode;
+import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
