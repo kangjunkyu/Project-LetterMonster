@@ -50,9 +50,9 @@ public class JwtTokenProvider {
                 .grantType(BEARER_TYPE).build();
     }
 
-    public String getSubject(String accessToken) {
+    public Integer getSubject(String accessToken) {
         Claims claims = parseClaims(accessToken);
-        return claims.getSubject();
+        return Integer.parseInt(claims.getSubject());
     }
 
     //토큰 검증
