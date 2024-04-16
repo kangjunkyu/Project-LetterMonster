@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.users.entity;
+package com.lemon.backend.domain.users.user.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QUsers extends EntityPathBase<Users> {
 
-    private static final long serialVersionUID = -1641376469L;
+    private static final long serialVersionUID = -1606036206L;
 
     public static final QUsers users = new QUsers("users");
 
@@ -32,6 +32,8 @@ public class QUsers extends EntityPathBase<Users> {
     //inherited
     public final BooleanPath isDeleted = _super.isDeleted;
 
+    public final NumberPath<Integer> kakaoId = createNumber("kakaoId", Integer.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
@@ -39,7 +41,7 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final StringPath nicknameTag = createString("nicknameTag");
 
-    public final StringPath provider = createString("provider");
+    public final EnumPath<Social> provider = createEnum("provider", Social.class);
 
     public final ListPath<com.lemon.backend.domain.sketchbook.entity.Sketchbook, com.lemon.backend.domain.sketchbook.entity.QSketchbook> sketchbookList = this.<com.lemon.backend.domain.sketchbook.entity.Sketchbook, com.lemon.backend.domain.sketchbook.entity.QSketchbook>createList("sketchbookList", com.lemon.backend.domain.sketchbook.entity.Sketchbook.class, com.lemon.backend.domain.sketchbook.entity.QSketchbook.class, PathInits.DIRECT2);
 
