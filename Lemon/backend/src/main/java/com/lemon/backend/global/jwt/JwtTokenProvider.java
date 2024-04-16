@@ -24,7 +24,7 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenResponse createToken(Long userId) {
+    public TokenAndLanguageResponse createToken(Integer userId) {
         long now = (new Date()).getTime();
         Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
@@ -44,7 +44,10 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        return TokenResponse.of(accessToken, refreshToken, BEARER_TYPE);
+        return TokenAndLanguageResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .grantType(BEARER_TYPE).build();
     }
 
     public String getSubject(String accessToken) {

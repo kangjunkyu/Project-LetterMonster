@@ -32,11 +32,16 @@ public class Users extends BaseEntity {
     @Column(name = "nickname_tag")
     private String nicknameTag;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "provider")
     private Social provider;
 
     @Column(name = "kakao_id")
-    private Integer kakaoId;
+    private String kakaoId;
+
+    @Column(name = "is_language")
+    @Builder.Default
+    private Boolean isLanguage = false;
 
     @Builder.Default
     @OneToMany(mappedBy = "users", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
