@@ -23,6 +23,4 @@ public class KakaoController {
     public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code){
         return getResponseEntity(SuccessCode.OK, kakaoAuthService.login(code));
     }
-
-
 }

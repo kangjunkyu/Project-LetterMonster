@@ -6,12 +6,13 @@ import com.lemon.backend.domain.users.kakao.dto.KakaoProfile;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProperties;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProviderProperties;
 import com.lemon.backend.domain.users.kakao.dto.KakaoToken;
+import com.lemon.backend.domain.users.user.dto.LoginResponse;
 import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
-import com.lemon.backend.global.jwt.TokenAndLanguageResponse;
+import com.lemon.backend.global.jwt.TokenResponse;
 import com.lemon.backend.global.redis.RefreshToken;
 import com.lemon.backend.global.redis.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -87,13 +88,12 @@ public class KakaoAuthService {
         return kakaoProfile;
     }
 
-    public TokenAndLanguageResponse login(String code) {
+    public LoginResponse login(String code) {
         String accessToken = getAccessToken(code).getAccessToken();
         KakaoProfile profile = getUserInfo(accessToken);
 
         Users user = userRepository.findByKakaoId(profile.getId()).orElseGet(() -> userService.createKakaoUser(profile, Social.KAKAO));
-        TokenAndLanguageResponse tokenResponse = jwtTokenProvider.createToken(user.getId());
-        tokenResponse.setIsLanguageSet(user.getIsLanguage());
+        TokenResponse tokenResponse = jwtTokenProvider.createToken(user.getId());
 
         //Redis에 저장
         RefreshToken refreshToken = new RefreshToken();
@@ -101,6 +101,9 @@ public class KakaoAuthService {
         refreshToken.setToken(tokenResponse.getRefreshToken());
         refreshTokenRepository.save(refreshToken);
 
-        return tokenResponse;
+        return LoginResponse.builder().token(tokenResponse)
+                .isLanguageSet(user.getIsLanguage())
+                .nickname(user.getNickname())
+                .nicknameTag(user.getNicknameTag()).build();
     }
 }
