@@ -10,4 +10,5 @@ public interface UserService {
     public Users createKakaoUser(KakaoProfile profile, Social social);
     public TokenResponse recreateToken(String bearerToken);
     public void saveRefreshTokenIntoRedis(Integer userId, String token);
+    void logout(Integer userId);
 }

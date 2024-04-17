@@ -1,4 +1,4 @@
-package com.lemon.backend.global.redis;
+package com.lemon.backend.global.redis.entity;
 
 import jakarta.persistence.Id;
 import lombok.Getter;

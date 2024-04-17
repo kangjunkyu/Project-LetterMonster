@@ -11,12 +11,12 @@ import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import com.lemon.backend.global.jwt.TokenResponse;
-import com.lemon.backend.global.redis.RefreshToken;
-import com.lemon.backend.global.redis.RefreshTokenRepository;
+import com.lemon.backend.global.redis.entity.RefreshToken;
+import com.lemon.backend.global.redis.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final RedisTemplate<String, String> redisTemplate;
 
     @Override
     public String makeNickname() {
@@ -81,5 +80,15 @@ public class UserServiceImpl implements UserService {
         refreshToken.setId(userId);
         refreshToken.setToken(token);
         refreshTokenRepository.save(refreshToken);
+    }
+
+    @Override
+    public void logout(Integer userId) {
+        Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findById(userId);
+
+        refreshTokenOptional.ifPresent(refreshToken -> {
+            refreshTokenRepository.delete(refreshToken);
+        });
+
     }
 }

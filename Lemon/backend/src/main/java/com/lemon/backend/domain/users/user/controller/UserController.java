@@ -24,4 +24,13 @@ public class UserController {
     public ResponseEntity<?> recreateToken(@RequestHeader(value = "Authorization", required = false) String bearerToken){
         return getResponseEntity(SuccessCode.OK, userService.recreateToken(bearerToken));
     }
+
+    @Operation(summary = "로그아웃", description = "Header의 액세스 토큰을 이용하여 로그아웃을 합니다.")
+    @PostMapping("/logout")
+    public ResponseEntity<?> recreateToken(HttpServletRequest request){
+        Integer userId = (Integer) request.getAttribute("userId");
+        userService.logout(userId);
+        return getResponseEntity(SuccessCode.OK);
+    }
+
 }
