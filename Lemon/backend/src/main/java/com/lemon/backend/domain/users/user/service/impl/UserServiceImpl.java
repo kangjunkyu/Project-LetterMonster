@@ -7,11 +7,14 @@ import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import com.lemon.backend.global.jwt.TokenResponse;
 import com.lemon.backend.global.redis.RefreshToken;
 import com.lemon.backend.global.redis.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -23,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Override
     public String makeNickname() {
@@ -53,8 +57,18 @@ public class UserServiceImpl implements UserService {
         String refreshToken = jwtTokenProvider.resolveToken(bearerToken);
         jwtTokenProvider.validateToken(refreshToken);
 
-        //토큰 재발급
         Integer userId = jwtTokenProvider.getSubject(refreshToken);
+
+        //레디스에서 리프레시토큰 가져오기
+        RefreshToken redisRefreshToken = refreshTokenRepository.findById(userId).orElseThrow(() ->
+                new CustomException(ErrorCode.INVALID_AUTH_CODE)
+        );
+
+        //레디스에서 가져온 리프레시 토큰과 비교
+        if (redisRefreshToken == null || !redisRefreshToken.getToken().equals(refreshToken)) {
+            throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
+        }
+
         TokenResponse tokenResponse = jwtTokenProvider.createToken(userId);
         saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
 

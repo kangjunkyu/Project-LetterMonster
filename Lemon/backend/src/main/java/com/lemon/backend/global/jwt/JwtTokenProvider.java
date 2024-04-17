@@ -74,7 +74,7 @@ public class JwtTokenProvider {
     }
 
     // AccessToken 파싱하여 JWT Claims 추출
-    private Claims parseClaims(String accessToken) {
+    public Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
