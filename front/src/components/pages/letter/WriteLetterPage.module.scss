@@ -21,8 +21,6 @@ $maxWidthValue: 1024px;
   @include box();
   width: $widthValue;
   max-width: $maxWidthValue;
-  height: 1024px;
-  max-height: 80vh;
   display: flex;
   margin: 0 auto;
   gap: 1em;
