@@ -27,6 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     static {
         //jwt 토큰이 필요 없는 곳은 uri 추가
         whiteList.add("/api/kakao");
+        whiteList.add("/api/user/token");
         whiteList.add("/api/swagger-ui");
         whiteList.add("/api/v3/api-docs");
     }
@@ -42,7 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         try{
-            String accessToken = resolveToken(request);
+            String bearerToken = request.getHeader("Authorization");
+            String accessToken = jwtTokenProvider.resolveToken(bearerToken);
+
             //회원인 경우
             if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
                 // 토큰이 유효할 경우
@@ -69,15 +72,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // 헤더에서 토큰 추출
-    private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 
     private boolean checkWhiteList(String requestURI) {
