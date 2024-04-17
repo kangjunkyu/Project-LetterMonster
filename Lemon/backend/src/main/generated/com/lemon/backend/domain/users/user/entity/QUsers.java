@@ -32,7 +32,9 @@ public class QUsers extends EntityPathBase<Users> {
     //inherited
     public final BooleanPath isDeleted = _super.isDeleted;
 
-    public final NumberPath<Integer> kakaoId = createNumber("kakaoId", Integer.class);
+    public final BooleanPath isLanguage = createBoolean("isLanguage");
+
+    public final StringPath kakaoId = createString("kakaoId");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;

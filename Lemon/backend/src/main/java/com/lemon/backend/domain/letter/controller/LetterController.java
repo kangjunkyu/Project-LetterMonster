@@ -17,7 +17,7 @@ import static com.lemon.backend.global.response.CommonResponseEntity.getResponse
 @Tag(name = "Letter 컨트롤러", description = "Letter Controller API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/letter")
+@RequestMapping("/letter")
 public class LetterController {
 
     private final LetterService letterService;
