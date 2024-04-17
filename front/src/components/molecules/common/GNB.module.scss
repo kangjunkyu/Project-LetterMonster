@@ -4,8 +4,6 @@
 .header {
   display: none;
   gap: 1em;
-  height: $headerHeight;
-  margin-bottom: 1em;
   border-top: 1px solid black;
   & a {
     @include flexCenter();
@@ -20,7 +18,8 @@
     left: 0;
     right: 0;
     height: 3em;
-    padding-top: 1em;
+    padding: 1em 0;
+    background-color: $gc900;
   }
 }
 .GNBbutton {
