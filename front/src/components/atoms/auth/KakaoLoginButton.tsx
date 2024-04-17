@@ -1,5 +1,5 @@
 import Kakao from "../../../assets/login/kakaoLogin.png";
-import "./AuthButton.scss";
+import styles from "./AuthButton.module.scss";
 
 function KakaoLogin() {
   const KAKAO_REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
@@ -12,7 +12,7 @@ function KakaoLogin() {
 
   return (
     <button type="button" onClick={Login}>
-      <img className="kakaoLoginImg" src={Kakao} alt="Kakao Login" />
+      <img className={styles.loginImg} src={Kakao} alt="Kakao Login" />
     </button>
   );
 }
