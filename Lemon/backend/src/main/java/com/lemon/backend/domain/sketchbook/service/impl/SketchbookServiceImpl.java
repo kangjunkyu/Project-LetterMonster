@@ -2,6 +2,7 @@ package com.lemon.backend.domain.sketchbook.service.impl;
 
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
@@ -34,6 +35,10 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public SketchbookGetDto getSketchSelect(Long sketchId){
         return sketchbookRepository.getSketchSelect(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+    }
+    @Override
+    public SketchbookGetDetailDto getSketchSelect2(Long sketchId){
+        return sketchbookRepository.getSketchSelect2(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
     @Transactional
     @Override

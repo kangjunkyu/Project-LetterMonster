@@ -2,6 +2,7 @@ package com.lemon.backend.domain.sketchbook.service;
 
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,8 @@ public interface SketchbookService {
     List<SketchbookGetSimpleDto> getSketchList(Integer userId);
 
     SketchbookGetDto getSketchSelect(Long sketchId);
+
+    SketchbookGetDetailDto getSketchSelect2(Long sketchId);
 
     @Transactional
     Long createSketchbook(SketchbookCreateDto sketchDto);

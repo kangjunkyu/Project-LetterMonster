@@ -98,3 +98,15 @@ z
 Jsrc/main/java/com/lemon/backend/domain/users/user/service/UserService.java,4\8\487cae80adb8b64d0714d309656b77ae195e6cfa
 Ç
 Rsrc/main/java/com/lemon/backend/domain/users/kakao/controller/KakaoController.java,0\6\06ce0c8d9394a5480d2b19756ed01ed13e9854d6
+â
+Ysrc/main/java/com/lemon/backend/domain/characters/dto/CharacterMotionToSketchbookDto.java,6\f\6ff39e4f85c7a97fbd843d4fc40ddadeb11190ed
+É
+Ssrc/main/java/com/lemon/backend/domain/characters/dto/CharacterToSketchbookDto.java,2\0\2008224d16cf01243f77fdd0b6ebbcb6b963136a
+á
+Wsrc/main/java/com/lemon/backend/domain/letter/dto/requestDto/LetterToSketchbookDto.java,8\a\8acdffa47af33f37e4b1b6cb2a542612eb6e1c5a
+x
+Hsrc/main/java/com/lemon/backend/domain/characters/entity/Characters.java,4\f\4f7662f95725e32b325ee5c570347fdd54634bd8
+}
+Msrc/main/java/com/lemon/backend/domain/characters/entity/CharacterMotion.java,6\3\63ae62e86ad0985a024a2f278f05e71b3efa44ee
+ç
+]src/main/java/com/lemon/backend/domain/sketchbook/dto/responseDto/SketchbookGetDetailDto.java,5\a\5add340da88a0eb7efeffb84f553cdbe20e26ba7

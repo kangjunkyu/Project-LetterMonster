@@ -2,6 +2,7 @@ package com.lemon.backend.domain.sketchbook.controller;
 
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
@@ -32,9 +33,16 @@ public class SketchbookController {
     }
 
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
-    @GetMapping("/{sketchbookId}")
+    @GetMapping("/simple/{sketchbookId}")
     public ResponseEntity<?> getSketchSelect(@PathVariable(value = "sketchbookId") Long sketchId){
         SketchbookGetDto sketchSelect = sketchbookService.getSketchSelect(sketchId);
+        return getResponseEntity(SuccessCode.OK, sketchSelect);
+    }
+
+    @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
+    @GetMapping("/detail/{sketchbookId}")
+    public ResponseEntity<?> getSketchSelect2(@PathVariable(value = "sketchbookId") Long sketchId){
+        SketchbookGetDetailDto sketchSelect = sketchbookService.getSketchSelect2(sketchId);
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }
 

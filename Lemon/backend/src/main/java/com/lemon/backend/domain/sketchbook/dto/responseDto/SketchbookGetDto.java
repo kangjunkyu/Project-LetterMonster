@@ -1,6 +1,10 @@
 package com.lemon.backend.domain.sketchbook.dto.responseDto;
 
+import com.lemon.backend.domain.letter.dto.requestDto.LetterGetDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterToSketchbookDto;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Builder
@@ -12,6 +16,5 @@ public class SketchbookGetDto {
     private Boolean isPublic;
     private String shareLink;
     private String name;
-//    private Integer userId;
-
+//    private List<LetterToSketchbookDto> letters;
 }

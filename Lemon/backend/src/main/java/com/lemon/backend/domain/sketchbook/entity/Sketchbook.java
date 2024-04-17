@@ -1,11 +1,15 @@
 package com.lemon.backend.domain.sketchbook.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
+import com.lemon.backend.domain.letter.entity.Letter;
 import com.lemon.backend.domain.users.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -38,6 +42,9 @@ public class Sketchbook extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
+
+    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Letter> letters = new ArrayList<>();
 
     public void addSketchbook(Users users) {
         this.users = users;

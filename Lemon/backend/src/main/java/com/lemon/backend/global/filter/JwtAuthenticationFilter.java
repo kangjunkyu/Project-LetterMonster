@@ -43,7 +43,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try{
             String accessToken = resolveToken(request);
-
             //회원인 경우
             if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
                 // 토큰이 유효할 경우

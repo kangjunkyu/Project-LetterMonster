@@ -1,6 +1,7 @@
 package com.lemon.backend.domain.letter.dto.requestDto;
 
 
+import com.lemon.backend.domain.characters.dto.CharacterToSketchbookDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -18,4 +19,5 @@ public class LetterGetDto {
     private Long charactersId;
     private Long sketchbookId;
     private LocalDate write_time;
+//    private CharacterToSketchbookDto character;
 }

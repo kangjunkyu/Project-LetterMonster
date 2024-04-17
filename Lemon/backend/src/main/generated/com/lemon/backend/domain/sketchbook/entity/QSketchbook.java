@@ -34,6 +34,8 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public final BooleanPath isPublic = createBoolean("isPublic");
 
+    public final ListPath<com.lemon.backend.domain.letter.entity.Letter, com.lemon.backend.domain.letter.entity.QLetter> letters = this.<com.lemon.backend.domain.letter.entity.Letter, com.lemon.backend.domain.letter.entity.QLetter>createList("letters", com.lemon.backend.domain.letter.entity.Letter.class, com.lemon.backend.domain.letter.entity.QLetter.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 

@@ -8,6 +8,9 @@ import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -39,5 +42,7 @@ public class Letter extends BaseEntity {
     @JoinColumn(name = "characters_id", nullable = true)
     private Characters characters;
 
+    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Letter> letters = new ArrayList<>();
 
 }
