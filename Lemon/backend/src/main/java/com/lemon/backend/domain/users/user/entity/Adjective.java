@@ -1,8 +1,8 @@
 package com.lemon.backend.domain.users.user.entity;
 
 public enum Adjective {
-    happy, wise, shy, kind,
-    missing, hungry, full, smiling,
-    bubbly, dreamy, cheerful, impressive,
-    brilliant
+    Happy, Wise, Shy, Kind,
+    Missing, Hungry, Full, Smiling,
+    Bubbly, Dreamy, Cheerful, Impressive,
+    Brilliant
 }
