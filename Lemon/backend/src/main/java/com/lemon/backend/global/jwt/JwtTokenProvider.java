@@ -5,8 +5,10 @@ import com.lemon.backend.global.exception.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
@@ -50,8 +52,8 @@ public class JwtTokenProvider {
                 .grantType(BEARER_TYPE).build();
     }
 
-    public Integer getSubject(String accessToken) {
-        Claims claims = parseClaims(accessToken);
+    public Integer getSubject(String token) {
+        Claims claims = parseClaims(token);
         return Integer.parseInt(claims.getSubject());
     }
 
@@ -82,5 +84,11 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+    public String resolveToken(String bearerToken) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 }
