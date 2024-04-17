@@ -1,0 +1,26 @@
+.paintUpper {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.paintTool {
+  display: flex;
+  gap: 10px;
+}
+
+.paintImportExport {
+  display: flex;
+  gap: 10px;
+}
+
+.popoverContent {
+  position: absolute;
+  z-index: 3;
+}
+
+.paintCanvas {
+  position: relative;
+}
