@@ -51,6 +51,7 @@ function MainPage() {
         />
       </div>
       <button onClick={() => navigate(Page_Url.Login)}>카카오로그인</button>
+      <button onClick={() => navigate(Page_Url.Sketch)}>캐릭터그리기</button>
     </div>
   );
 }

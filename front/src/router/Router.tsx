@@ -8,12 +8,17 @@ import MainPage from "../components/pages/main/MainPage";
 import ErrorPage from "../components/pages/error/ErrorPage";
 import LoginPage from "../components/pages/login/LoginPage";
 import KakaoCallback from "../components/pages/login/KakaoCallback";
+import SketchPage from "../components/pages/sketch/SketchPage";
+import MotionPage from "../components/pages/motion/MotionPage";
 
 function Router() {
   return (
     <Routes>
       <Route element={<DefaultLayouts />} errorElement={<ErrorPage />}>
-        <Route path={Page_Url.Main} element={<MainPage />}></Route>
+      <Route path={Page_Url.Main} element={<MainPage />}></Route>
+      <Route path={Page_Url.Login} element={<LoginPage />}></Route>
+      <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
+      <Route path={Page_Url.Motion} element={<MotionPage />}></Route>
 
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route
