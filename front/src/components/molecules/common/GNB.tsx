@@ -9,7 +9,7 @@ import more from "../../../assets/GNBIcon/more.svg";
 
 function GNB() {
   return (
-    <header>
+    <header className={styles.header}>
       <Link className={styles.GNBbutton} to={Page_Url.Main}>
         <img src={draw} alt="그리기" />
         캐릭터그리기
@@ -17,6 +17,10 @@ function GNB() {
       <Link className={styles.GNBbutton} to={Page_Url.Main}>
         <img src={sketchbook} alt="스케치북" />
         스케치북
+      </Link>
+      <Link className={styles.GNBbutton} to={Page_Url.Main}>
+        <img src={sketchbook} alt="편지 쓰기" />
+        편지쓰기
       </Link>
       <Link className={styles.GNBbutton} to={Page_Url.Main}>
         <img src={more} alt="메인" />
