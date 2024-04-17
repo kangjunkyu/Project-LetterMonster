@@ -7,6 +7,11 @@ export const getKakaoLogin = (code: string | null) => {
   return API.get(`/kakao`, { params: { code: code } });
 };
 
+// 라인 소셜 로그인
+export const postLineLogin = (code: string) => {
+  return API.post(`/line`, { params: { code: code } });
+};
+
 // 캐릭터 그림 전송(생성)
 export const postCharacter = async (nickname: string, file: File) => {
   const formData = new FormData();
@@ -45,4 +50,3 @@ export const getCharacterMotionSelect = () =>
 // 캐릭터 삭제
 export const deleteCharacter = (characterId: number) =>
   API.delete(`/characters/delete/${characterId}`);
-
