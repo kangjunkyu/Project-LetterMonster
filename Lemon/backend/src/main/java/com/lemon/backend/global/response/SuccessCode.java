@@ -10,6 +10,8 @@ public enum SuccessCode {
 
     OK(HttpStatus.OK, "OK"),
 
+    ACCEPTED(HttpStatus.ACCEPTED, "ACCEPTED"),
+
     //생성 완료
     CREATED(HttpStatus.CREATED, "CREATED");
 
