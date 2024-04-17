@@ -27,7 +27,6 @@ spring:
       max-file-size: 20MB
       max-request-size: 25MB
 
-
 cloud:
   aws:
     s3:
@@ -37,3 +36,4 @@ cloud:
     credentials:
       accessKey: ${ACCESS_KEY}
       secretKey: ${SECRET_KEY}
+

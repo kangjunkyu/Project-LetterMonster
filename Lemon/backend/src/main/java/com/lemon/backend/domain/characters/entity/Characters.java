@@ -35,7 +35,6 @@ public class Characters extends BaseEntity {
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
 
-
     @OneToMany(mappedBy = "characters", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     @Builder.Default
     private List<CharacterMotion> characterMotionList = new ArrayList<>();
@@ -47,15 +46,14 @@ public class Characters extends BaseEntity {
     }
 
     @Builder(toBuilder = true)
-    Characters(String nickname, Boolean mainCharacter, Users user){
+    Characters(String nickname, Users user){
         this.nickname = nickname;
-        this.mainCharacter = mainCharacter;
         this.users = user;
         addCharacter(user);
     }
 
     public void changeMainCharacter() {
-        this.mainCharacter = !this.getMainCharacter();
+        this.mainCharacter = !this.mainCharacter;
     }
 
 }
