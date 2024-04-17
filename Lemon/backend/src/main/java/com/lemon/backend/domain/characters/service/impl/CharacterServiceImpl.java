@@ -1,12 +1,23 @@
 package com.lemon.backend.domain.characters.service.impl;
 
+import com.lemon.backend.domain.characters.entity.Characters;
+import com.lemon.backend.domain.characters.repository.CharacterMotionRepository;
+import com.lemon.backend.domain.characters.repository.CharacterRepository;
+import com.lemon.backend.domain.characters.repository.MotionRepository;
 import com.lemon.backend.domain.characters.service.CharacterService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
-public class CharacterServiceImpl implements CharacterService {
+import java.util.List;
 
+@Service
+@RequiredArgsConstructor
+public class CharacterServiceImpl implements CharacterService {
+    
+    private final CharacterRepository characterRepository;
+    private final CharacterMotionRepository characterMotionRepository;
+    private final MotionRepository motionRepository;
 
     /*
     1. react에서 파일 업로드 or 사용자 그리기를 통해 생성된 그림 파일을 spring boot로 전송한다.
@@ -50,6 +61,7 @@ public class CharacterServiceImpl implements CharacterService {
      */
     @Override
     public Object showCharacters(int userId) {
+
         return null;
     }
 
@@ -65,7 +77,7 @@ public class CharacterServiceImpl implements CharacterService {
     사용자가 가진 캐릭터중 대표캐릭터로 선정된 캐릭의 대표 여부를 false로, 선택한 캐릭터의 대표 여부를 true로 변경한다.
      */
     @Override
-    public Object changeMainCharacter(Long characterId) {
+    public Object changeMainCharacter(Long characterId, int userId) {
         return null;
     }
 }

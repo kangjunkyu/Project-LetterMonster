@@ -35,7 +35,8 @@ public class CharacterController {
 
     @PatchMapping("/my/maincharacter/{characterId}")
     public ResponseEntity<Object> changeMainCharacter(@PathVariable(name="characterId") Long characterId) {
-        return ResponseEntity.ok().body(characterService.changeMainCharacter(characterId));
+        int userId = 0;
+        return ResponseEntity.ok().body(characterService.changeMainCharacter(characterId, userId));
     }
     @GetMapping("/list/motion")
     public ResponseEntity<Object> showMotions() {

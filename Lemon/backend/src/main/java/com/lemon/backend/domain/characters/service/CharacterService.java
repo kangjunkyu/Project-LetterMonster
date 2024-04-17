@@ -17,5 +17,5 @@ public interface CharacterService {
 
     Object showMotions();
 
-    Object changeMainCharacter(Long characterId);
+    Object changeMainCharacter(Long characterId, int userId);
 }
