@@ -1,0 +1,9 @@
+controller:
+  MODE: video_render
+  OUTPUT_VIDEO_PATH: "C:\\Users\\SSAFY\\Desktop\\ai-server\\gif_temp\\298dbd3e-b0e2-4abc-aa6c-0d66cb03a656\\\
+    gif\uD30C\uC77C\uBA85.gif"
+scene:
+  ANIMATED_CHARACTERS:
+  - character_cfg: C:\Users\SSAFY\Desktop\ai-server\gif_temp\298dbd3e-b0e2-4abc-aa6c-0d66cb03a656\char_cfg.yaml
+    motion_cfg: C:\Users\SSAFY\Desktop\ai-server\AnimatedDrawings\examples\config\motion\jesse_dance.yaml
+    retarget_cfg: C:\Users\SSAFY\Desktop\ai-server\AnimatedDrawings\examples\config\retarget\mixamo_fff.yaml
