@@ -6,7 +6,7 @@ import com.lemon.backend.domain.users.kakao.dto.KakaoProfile;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProperties;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProviderProperties;
 import com.lemon.backend.domain.users.kakao.dto.KakaoToken;
-import com.lemon.backend.domain.users.user.dto.LoginResponse;
+import com.lemon.backend.domain.users.user.dto.response.LoginResponse;
 import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
