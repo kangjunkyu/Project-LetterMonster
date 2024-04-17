@@ -1,5 +1,5 @@
 import { KonvaEventObject } from "konva/lib/Node";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Rect,
   Stage,
@@ -12,6 +12,10 @@ import { v4 as uuidv4 } from "uuid";
 import { Scribble } from "./PaintTypes";
 import { DrawAction, PAINT_OPTIONS } from "./PaintConstants";
 import { SketchPicker } from "react-color";
+import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
+import styles from "./Paint.module.scss";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 interface PaintProps {}
 
@@ -24,27 +28,36 @@ const downloadURI = (uri: string | undefined, name: string) => {
   document.body.removeChild(link);
 };
 
-const SIZE = 500;
+export const SIZE = 500;
 
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
+  const navigate = useNavigate();
+  const {
+    mutate: uploadImage,
+    isSuccess,
+    data: imageId,
+  } = useMutation(uploadImageData);
+
   const [color, setColor] = useState("#000");
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Select);
   const [scribbles, setScribbles] = useState<Scribble[]>([]);
-  const [image, setImage] = useState<HTMLImageElement>();
+  // const [image, setImage] = useState<HTMLImageElement>();
   const [showPopover, setShowPopover] = useState(false);
 
-  const onImportImageSelect = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files?.[0]) {
-        const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-        const image = new Image(SIZE / 2, SIZE / 2);
-        image.src = imageUrl;
-        setImage(image);
-      }
-      e.target.files = null;
-    },
-    []
-  );
+  const { image, setImage, onImportImageSelect } = useImportImageSelect();
+
+  // const onImportImageSelect = useCallback(
+  //   (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     if (e.target.files?.[0]) {
+  //       const imageUrl = URL.createObjectURL(e.target.files?.[0]);
+  //       const image = new Image(SIZE / 2, SIZE / 2);
+  //       image.src = imageUrl;
+  //       setImage(image);
+  //     }
+  //     e.target.files = null;
+  //   },
+  //   []
+  // );
 
   const fileRef = useRef<HTMLInputElement>(null);
   const onImportImageClick = useCallback(() => {
@@ -53,15 +66,28 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
   const stageRef = useRef<any>(null);
 
+  // 그림 추출
   const onExportClick = useCallback(() => {
-    const dataUri = stageRef?.current?.toDataURL({
+    const dataUri = stageRef.current.toDataURL({
       pixelRatio: 3,
       mimeType: "image/png", //PNG 확장자라고 명시
       quality: 1, // 그림 최대 품질
     });
-    downloadURI(dataUri, "image.png");
-  }, []);
+    // downloadURI(dataUri, "image.png");
+    uploadImage({ image: dataUri });
+  }, [uploadImage]);
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`/motion`,{
+        state:{
+          image: dataUri
+        }
+      });
+    }
+  }, [isSuccess, imageId, navigate]);
+
+  // 그림판 초기화
   const onClear = useCallback(() => {
     setScribbles([]);
     setImage(undefined);
@@ -147,8 +173,8 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
   return (
     <div>
-      <div>
-        <div>
+      <div className={`${styles.paintUpper}`}>
+        <div className={styles.paintTool}>
           {PAINT_OPTIONS.map(({ id, label, icon }) => (
             <div
               key={id}
@@ -165,7 +191,6 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
           <div>
             <div
-              className="color-box"
               onClick={() => setShowPopover(true)}
               style={{
                 backgroundColor: color,
@@ -176,11 +201,8 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
               }}
             ></div>
             {showPopover && (
-              <div style={{ width: "300px" }}>
-                <button
-                  className="popover-close"
-                  onClick={() => setShowPopover(false)}
-                >
+              <div className={styles.popoverContent} style={{ width: "300px" }}>
+                <button onClick={() => setShowPopover(false)}>
                   <span className="material-icons">clear</span>
                 </button>
                 <SketchPicker
@@ -197,11 +219,13 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             초기화
           </button>
         </div>
-        <div>
+        <div className={styles.paintImportExport}>
           <input
             type="file"
             ref={fileRef}
-            onChange={onImportImageSelect}
+            onChange={
+              onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
+            }
             style={{ display: "none" }}
             accept="image/*"
           />
@@ -210,7 +234,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         </div>
       </div>
 
-      <div>
+      <div className={styles.paintCanvas}>
         <Stage
           height={SIZE}
           width={SIZE}
@@ -218,12 +242,13 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           onMouseUp={onStageMouseUp}
           onMouseDown={onStageMouseDown}
           onMouseMove={onStageMouseMove}
+          style={{ border: "3px solid black" }}
         >
           <Layer>
             <Rect
               width={SIZE}
               height={SIZE}
-              fill="yellow" // 배경색을 빨간색으로 설정
+              fill="white" // 배경색을 빨간색으로 설정
             />
             {image && (
               <KonvaImage

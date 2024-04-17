@@ -6,12 +6,12 @@ export enum DrawAction {
 export const PAINT_OPTIONS = [
   {
     id: DrawAction.Select,
-    label: "Select Shapes",
+    label: "손",
     icon: <span className="material-icons">arrow_circle_left</span>,
   },
   {
     id: DrawAction.Scribble,
-    label: "Scribble",
+    label: "펜",
     icon: <span className="material-icons">edit</span>,
   },
 ];
