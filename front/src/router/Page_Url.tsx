@@ -5,4 +5,6 @@ export const Page_Url = {
   Login: "/login",
   // 카카오 콜백 페이지
   KakaoCallback: "/kakao/callback",
+  // 편지쓰기 페이지
+  WriteLetter: "/letter/write",
 };

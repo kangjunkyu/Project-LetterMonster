@@ -8,6 +8,7 @@ import MainPage from "../components/pages/main/MainPage";
 import ErrorPage from "../components/pages/error/ErrorPage";
 import LoginPage from "../components/pages/login/LoginPage";
 import KakaoCallback from "../components/pages/login/KakaoCallback";
+import LetterWritePage from "../components/pages/letter/WriteLetterPage";
 
 function Router() {
   return (
@@ -16,6 +17,10 @@ function Router() {
         <Route path={Page_Url.Main} element={<MainPage />}></Route>
 
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
+        <Route
+          path={Page_Url.WriteLetter}
+          element={<LetterWritePage />}
+        ></Route>
         <Route
           path={Page_Url.KakaoCallback}
           element={<KakaoCallback />}
