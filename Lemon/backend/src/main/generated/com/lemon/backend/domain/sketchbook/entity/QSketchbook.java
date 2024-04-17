@@ -41,7 +41,7 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public final StringPath shareLink = createString("shareLink");
 
-    public final com.lemon.backend.domain.users.entity.QUsers users;
+    public final com.lemon.backend.domain.users.user.entity.QUsers users;
 
     public QSketchbook(String variable) {
         this(Sketchbook.class, forVariable(variable), INITS);
@@ -61,7 +61,7 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public QSketchbook(Class<? extends Sketchbook> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.users = inits.isInitialized("users") ? new com.lemon.backend.domain.users.entity.QUsers(forProperty("users")) : null;
+        this.users = inits.isInitialized("users") ? new com.lemon.backend.domain.users.user.entity.QUsers(forProperty("users")) : null;
     }
 
 }

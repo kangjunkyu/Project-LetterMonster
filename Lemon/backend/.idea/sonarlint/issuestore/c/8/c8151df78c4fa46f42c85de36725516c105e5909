@@ -1,8 +1,9 @@
 
-›	java:S116!"TRename this field "ShareLink" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÎŠÖçûÿÿÿÿ8›ÁÂúí1J$69d6a228-957f-40bd-8189-5bb3e5452460
 p
-java:S1874"-Remove this use of "Where"; it is deprecated.(óÚ‘°8ÁÂúí1J$41102505-6895-4d58-830a-b8e24e19f85b
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8†¾¿ûí1
-M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8‡¾¿ûí1
+java:S1874"-Remove this use of "Where"; it is deprecated.(óÚ‘°8ÁÂúí1J$36797e11-c150-4561-9aca-c376f9bf7d40
+‡
+java:S1128"DRemove this unused import 'org.hibernate.annotations.ColumnDefault'.(”šÆû8á…„î1J$e71a1874-50a3-4e1b-b60d-523e253fbda5
+s
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Ûù„„î1J$30599c5c-77a5-4bd1-b3f3-a16b0a3a996a
+s
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8Ûù„„î1J$79b0ea75-790a-42af-aad7-d9402544563b

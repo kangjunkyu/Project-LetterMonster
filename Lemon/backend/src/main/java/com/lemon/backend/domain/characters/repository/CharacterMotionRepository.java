@@ -1,6 +1,7 @@
 package com.lemon.backend.domain.characters.repository;
 
 import com.lemon.backend.domain.characters.entity.CharacterMotion;
+import com.lemon.backend.domain.characters.entity.Characters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

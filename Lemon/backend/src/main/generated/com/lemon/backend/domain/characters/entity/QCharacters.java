@@ -41,7 +41,7 @@ public class QCharacters extends EntityPathBase<Characters> {
 
     public final StringPath nickname = createString("nickname");
 
-    public final com.lemon.backend.domain.users.entity.QUsers users;
+    public final com.lemon.backend.domain.users.user.entity.QUsers users;
 
     public QCharacters(String variable) {
         this(Characters.class, forVariable(variable), INITS);
@@ -61,7 +61,7 @@ public class QCharacters extends EntityPathBase<Characters> {
 
     public QCharacters(Class<? extends Characters> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.users = inits.isInitialized("users") ? new com.lemon.backend.domain.users.entity.QUsers(forProperty("users")) : null;
+        this.users = inits.isInitialized("users") ? new com.lemon.backend.domain.users.user.entity.QUsers(forProperty("users")) : null;
     }
 
 }
