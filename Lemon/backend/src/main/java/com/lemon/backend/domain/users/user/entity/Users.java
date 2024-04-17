@@ -16,10 +16,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "users", indexes = {
+        @Index(name = "idx_nickname_nicknameTag", columnList = "nickname, nicknameTag")
+})
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE users SET is_deleted = TRUE WHERE users_id = ?")
 public class Users extends BaseEntity {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

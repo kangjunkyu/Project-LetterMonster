@@ -1,5 +1,6 @@
 package com.lemon.backend.domain.users.user.controller;
 
+import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,5 +24,20 @@ public class UserController {
     @PostMapping("/token")
     public ResponseEntity<?> recreateToken(@RequestHeader(value = "Authorization", required = false) String bearerToken){
         return getResponseEntity(SuccessCode.OK, userService.recreateToken(bearerToken));
+    }
+
+    @Operation(summary = "로그아웃", description = "Header의 액세스 토큰을 이용하여 로그아웃을 합니다.")
+    @PostMapping("/logout")
+    public ResponseEntity<?> recreateToken(HttpServletRequest request){
+        Integer userId = (Integer) request.getAttribute("userId");
+        userService.logout(userId);
+        return getResponseEntity(SuccessCode.OK);
+    }
+
+    @Operation(summary = "닉네임 변경", description = "Header의 액세스 토큰을 이용하여 닉네임 변경을 합니다.")
+    @PostMapping("/nickname")
+    public ResponseEntity<?> changeNickname(HttpServletRequest httpServletRequest, @RequestBody ChangeNicknameRequest request){
+        Integer userId = (Integer) httpServletRequest.getAttribute("userId");
+        return getResponseEntity(SuccessCode.OK, userService.changeNickname(userId, request));
     }
 }

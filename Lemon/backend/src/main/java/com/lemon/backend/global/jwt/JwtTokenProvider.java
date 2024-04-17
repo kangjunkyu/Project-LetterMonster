@@ -2,10 +2,12 @@ package com.lemon.backend.global.jwt;
 
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
+import com.lemon.backend.global.redis.service.TokenBlacklistService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -14,14 +16,19 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
 
     private static final String BEARER_TYPE = "Bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
-    private final Key key;
+    private final TokenBlacklistService tokenBlacklistService;
+    @Value("${jwt.secret-key}")
+    private String secretKey;
+    private Key key;
 
-    public JwtTokenProvider(@Value("${jwt.secret-key}") String secretKey) {
+    @PostConstruct
+    public void init() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -61,6 +68,8 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            if(tokenBlacklistService.isTokenBlacklisted(token))
+                throw new CustomException(ErrorCode.BLACK_AUTH_TOKEN);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
@@ -73,13 +82,12 @@ public class JwtTokenProvider {
         }
     }
 
-    // AccessToken 파싱하여 JWT Claims 추출
-    public Claims parseClaims(String accessToken) {
+    public Claims parseClaims(String token) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
-                    .parseClaimsJws(accessToken)
+                    .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
@@ -90,5 +98,13 @@ public class JwtTokenProvider {
             return bearerToken.substring(7);
         }
         return null;
+    }
+
+    public void addTokenIntoBlackList(String refreshToken) {
+        long expirationTime  = parseClaims(refreshToken).getExpiration().getTime();
+        long currentTime = System.currentTimeMillis();
+        long timeLeft = expirationTime - currentTime;
+
+        tokenBlacklistService.blacklistToken(refreshToken, timeLeft);
     }
 }

@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.users.user.dto;
+package com.lemon.backend.domain.users.user.dto.response;
 
 import com.lemon.backend.global.jwt.TokenResponse;
 import lombok.AllArgsConstructor;

@@ -19,4 +19,23 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .fetchOne();
         return Optional.ofNullable(user);
     }
+
+    @Override
+    public Optional<String> findHighestNicknameTagByNickname(String nickname) {
+        String highestTag = query.select(users.nicknameTag)
+                .from(users)
+                .where(users.nickname.eq(nickname))
+                .orderBy(users.nicknameTag.desc())
+                .fetchFirst();
+        return Optional.ofNullable(highestTag);
+    }
+
+    @Override
+    public void changeNickname(Users user, String newNickname, String newNicknameTag) {
+        query.update(users)
+                .set(users.nickname, newNickname)
+                .set(users.nicknameTag, newNicknameTag)
+                .where(users.eq(user))
+                .execute();
+    }
 }
