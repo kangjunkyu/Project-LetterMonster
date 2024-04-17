@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class CharacterServiceImpl implements CharacterService {
      */
     @Override
     public Object updateCharacterNickname(Long characterId) {
+        Optional<Characters> characters = characterRepository.findById(characterId);
         return null;
     }
 
@@ -52,7 +54,7 @@ public class CharacterServiceImpl implements CharacterService {
     없다면 fastapi로 모션 이름과 캐릭터 원본 url을 전송하여 gif를 반환받는다.
      */
     @Override
-    public Object selectCharacterMotion(Long characterId) {
+    public Object selectCharacterMotion(Long characterId, Long motionId) {
         return null;
     }
 

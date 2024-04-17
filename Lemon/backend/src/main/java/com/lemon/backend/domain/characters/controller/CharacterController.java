@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CharacterController {
     private final CharacterService characterService;
     @PostMapping("/create")
-    public ResponseEntity<Object> makeCharacter(MultipartFile file, String nickname) {
+    public ResponseEntity<Object> makeCharacter(@RequestParam("file")MultipartFile file, @RequestParam("nickname")String nickname) {
         return ResponseEntity.ok()
                 .body(characterService.createCharacter(file, nickname));
     }
@@ -44,9 +44,9 @@ public class CharacterController {
     }
 
     // 선택한 캐릭터 모션에 따른 gif 주소를 반환한다.
-    @GetMapping("/select/motion/{characterId}")
-    public ResponseEntity<Object> selectCharacterMotion(@PathVariable(name="characterId") Long characterId) {
-        return ResponseEntity.ok().body(characterService.selectCharacterMotion(characterId));
+    @GetMapping("/select/motion")
+    public ResponseEntity<Object> selectCharacterMotion(@RequestParam(name="characterId") Long characterId, @RequestParam(name="motionId") Long motionId) {
+        return ResponseEntity.ok().body(characterService.selectCharacterMotion(characterId, motionId));
     }
 
     // 캐릭터와 관련 캐릭터모션을 전부 삭제한다.

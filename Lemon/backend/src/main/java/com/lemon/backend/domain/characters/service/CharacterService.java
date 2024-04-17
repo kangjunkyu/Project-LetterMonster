@@ -11,7 +11,7 @@ public interface CharacterService {
 
     Object updateCharacterNickname(Long characterId);
 
-    Object selectCharacterMotion(Long characterId);
+    Object selectCharacterMotion(Long characterId, Long motionId);
 
     Object showCharacters(int userId);
 
