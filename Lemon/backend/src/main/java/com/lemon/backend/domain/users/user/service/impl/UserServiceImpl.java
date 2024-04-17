@@ -13,6 +13,9 @@ import com.lemon.backend.global.jwt.JwtTokenProvider;
 import com.lemon.backend.global.jwt.TokenResponse;
 import com.lemon.backend.global.redis.entity.RefreshToken;
 import com.lemon.backend.global.redis.repository.RefreshTokenRepository;
+import com.lemon.backend.global.redis.repository.TokenBlacklistRepository;
+import com.lemon.backend.global.redis.service.TokenBlacklistService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     public String makeNickname() {
@@ -68,6 +72,9 @@ public class UserServiceImpl implements UserService {
             throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
         }
 
+        //헤더에 들어온 리프레시 토큰을 블랙리스트에 추가
+        jwtTokenProvider.addTokenIntoBlackList(refreshToken);
+
         TokenResponse tokenResponse = jwtTokenProvider.createToken(userId);
         saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
 
@@ -87,8 +94,11 @@ public class UserServiceImpl implements UserService {
         Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findById(userId);
 
         refreshTokenOptional.ifPresent(refreshToken -> {
+            //리프레시 토큰 삭제
             refreshTokenRepository.delete(refreshToken);
-        });
 
+            //리프레시 토큰을 블랙리스트에 추가
+            jwtTokenProvider.addTokenIntoBlackList(refreshToken.getToken());
+        });
     }
 }
