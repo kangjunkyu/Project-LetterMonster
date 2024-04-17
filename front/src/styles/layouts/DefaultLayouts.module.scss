@@ -9,10 +9,13 @@ main {
     height: 100%;
     min-height: 100vh;
     /* 데스크탑 */
+    & > * {
+      min-height: 100vh;
+    }
 
     @media screen and (max-width: 767px) {
       /* 모바일 */
-      min-height: calc(100vh - $headerHeight);
+      margin-bottom: 4em;
     }
   }
 }

@@ -9,4 +9,6 @@ export const Page_Url = {
   Sketch: "/sketch",
   // 캐릭터 모션 선택 페이지
   Motion: "/motion",
+  // 편지쓰기 페이지
+  WriteLetter: "/letter/write",
 };
