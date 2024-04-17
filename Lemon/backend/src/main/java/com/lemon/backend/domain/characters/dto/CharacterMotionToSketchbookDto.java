@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CharacterMotionToSketchbookDto {
     private Long id;
-//    private Long motionId;
+    private Long motionId;
     private String imageUrl;
+    private String nickname;
 }

@@ -110,3 +110,17 @@ Hsrc/main/java/com/lemon/backend/domain/characters/entity/Characters.java,4\f\4
 Msrc/main/java/com/lemon/backend/domain/characters/entity/CharacterMotion.java,6\3\63ae62e86ad0985a024a2f278f05e71b3efa44ee
 ç
 ]src/main/java/com/lemon/backend/domain/sketchbook/dto/responseDto/SketchbookGetDetailDto.java,5\a\5add340da88a0eb7efeffb84f553cdbe20e26ba7
+á
+Wsrc/main/java/com/lemon/backend/domain/sketchbook/entity/SketchbookCharacterMotion.java,2\6\26222ffc4cd479757e1a5536e12d5d8398104162
+Ö
+Usrc/main/java/com/lemon/backend/domain/characters/repository/CharacterRepository.java,b\9\b927cb3ac08f684064c0c38dcbcfa4f04bd31473
+Ç
+Rsrc/main/java/com/lemon/backend/domain/characters/repository/MotionRepository.java,5\f\5f995b448812aa979409f96554b0b0e80b732c71
+ã
+[src/main/java/com/lemon/backend/domain/characters/repository/CharacterMotionRepository.java,9\8\9893ae91a569fe00bfd097d97ceb4d11c45ea91d
+ë
+asrc/main/java/com/lemon/backend/domain/sketchbook/repository/SketchCharacterMotionRepository.java,0\d\0dc609428bdee9d79b25dc6430c1546e32880b59
+ö
+jsrc/main/java/com/lemon/backend/domain/sketchbook/dto/responseDto/SketchbookCharacterMotionGetListDto.java,b\a\bad2d80d4f4581a165d518b5f1fb4033760c9e99
+ò
+hsrc/main/java/com/lemon/backend/domain/sketchbook/dto/requestDto/SketchbookCharacterMotionUpdateDto.java,0\e\0ed11bebe0b12ef84b16a89fe3916fc451b5de19

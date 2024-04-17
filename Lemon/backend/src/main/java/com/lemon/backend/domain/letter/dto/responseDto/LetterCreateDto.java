@@ -14,7 +14,7 @@ public class LetterCreateDto {
     private Integer sender;
     private Integer receiver;
     private String content;
-    private Long charactersId;
+    private Long characterMotionId;
     private Long sketchbookId;
-
+//    private Long sketchbookcharactermotionId;
 }

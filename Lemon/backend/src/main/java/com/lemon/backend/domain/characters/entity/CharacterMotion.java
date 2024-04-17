@@ -1,10 +1,14 @@
 package com.lemon.backend.domain.characters.entity;
 
 import com.lemon.backend.domain.base.BaseEntity;
+import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,6 +34,9 @@ public class CharacterMotion extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "motion_id", nullable = true)
     private Motion motion;
+
+    @OneToMany(mappedBy = "characterMotion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
 
     // 양방향 연관관계 편의 메서드
     // 이거는 일대다로 양방향을 맺어 놓은 상태일 때, N의 엔티티를 생성할 때 리스트로 관리하는 1쪽에 객체를 추가하는 편의 메서드임.

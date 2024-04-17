@@ -18,7 +18,7 @@ public class SketchbookGetDetailDto {
     private String shareLink;
     private String name;
 //    private List<LetterToSketchbookDto> letterList;
-    private List<CharacterToSketchbookDto> characterList;
+    private List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionList;
     public SketchbookGetDetailDto(Long id, Boolean isPublic, String shareLink, String name) {
         this.id = id;
         this.isPublic = isPublic;

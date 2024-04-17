@@ -39,6 +39,8 @@ public class QCharacterMotion extends EntityPathBase<CharacterMotion> {
 
     public final QMotion motion;
 
+    public final ListPath<com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion, com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion> sketchbookCharacterMotionList = this.<com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion, com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion>createList("sketchbookCharacterMotionList", com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion.class, com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion.class, PathInits.DIRECT2);
+
     public final StringPath url = createString("url");
 
     public QCharacterMotion(String variable) {

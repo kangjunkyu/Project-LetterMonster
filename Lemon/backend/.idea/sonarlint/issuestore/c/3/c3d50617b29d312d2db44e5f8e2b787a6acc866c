@@ -1,3 +1,13 @@
 
 p
-java:S1874"-Remove this use of "Where"; it is deprecated.(óÚ‘°8¾œØî1J$fe9d2fd1-cd75-48e2-ba38-aa882ccf4d21
+java:S1874"-Remove this use of "Where"; it is deprecated.(óÚ‘°8äí‰Şî1J$1568d5c8-d4a3-4d8b-89d9-3e6130e0a01e
+ƒ	java:S125("<This block of commented-out lines of code should be removed.( Ìô‰øÿÿÿÿ8çí‰Şî1J$b138dbc7-0d56-459c-be2a-7b2414ff06e5
+~	java:S1253"<This block of commented-out lines of code should be removed.(ÿÇ†8èí‰Şî1J$430f4a88-30e6-4835-94bf-c23ecf34e6f7
+•
+java:S1128"RRemove this unused import 'com.lemon.backend.domain.characters.entity.Characters'.(î¼ ×8éí‰Şî1J$16535893-de46-413f-bb91-fe570093b845
+•
+java:S1128"RRemove this unused import 'com.lemon.backend.domain.sketchbook.entity.Sketchbook'.(ÎÃŠù8éí‰Şî1J$270f6fcd-e677-45c9-93c7-9bb9218949f7
+s
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8éí‰Şî1J$5ddfb77e-b652-495a-a875-67fe3182939d
+s
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8éí‰Şî1J$5eb94af0-cb39-4e13-82eb-6cc7215bacfb

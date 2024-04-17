@@ -31,7 +31,7 @@ public class LetterRepositoryImpl implements LetterRepositoryCustom{
                         letter.receiver,
                         letter.content,
                         letter.createdAt)).from(letter)
-                .where(letter.sketchbook.id.eq(sketchbookId)).fetch();
+                .where(letter.sketchbookCharacterMotion.sketchbook.id.eq(sketchbookId)).fetch();
         return Optional.ofNullable(letterDtos.isEmpty() ? null : letterDtos);
     }
 

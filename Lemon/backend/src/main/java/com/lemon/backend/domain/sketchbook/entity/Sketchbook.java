@@ -43,8 +43,11 @@ public class Sketchbook extends BaseEntity {
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
 
+//    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Letter> letters = new ArrayList<>();
+
     @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Letter> letters = new ArrayList<>();
+    private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
 
     public void addSketchbook(Users users) {
         this.users = users;

@@ -34,14 +34,14 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public final BooleanPath isPublic = createBoolean("isPublic");
 
-    public final ListPath<com.lemon.backend.domain.letter.entity.Letter, com.lemon.backend.domain.letter.entity.QLetter> letters = this.<com.lemon.backend.domain.letter.entity.Letter, com.lemon.backend.domain.letter.entity.QLetter>createList("letters", com.lemon.backend.domain.letter.entity.Letter.class, com.lemon.backend.domain.letter.entity.QLetter.class, PathInits.DIRECT2);
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final StringPath name = createString("name");
 
     public final StringPath shareLink = createString("shareLink");
+
+    public final ListPath<SketchbookCharacterMotion, QSketchbookCharacterMotion> sketchbookCharacterMotionList = this.<SketchbookCharacterMotion, QSketchbookCharacterMotion>createList("sketchbookCharacterMotionList", SketchbookCharacterMotion.class, QSketchbookCharacterMotion.class, PathInits.DIRECT2);
 
     public final com.lemon.backend.domain.users.user.entity.QUsers users;
 

@@ -6,6 +6,8 @@ import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDt
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
+import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
+import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
 import com.lemon.backend.domain.users.user.entity.Users;
@@ -26,6 +28,7 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     private final UserRepository userRepository;
     private final SketchbookRepository sketchbookRepository;
+    private final SketchCharacterMotionRepository sketchbookCharacterMotionRepository;
 
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
@@ -49,6 +52,10 @@ public class SketchbookServiceImpl implements SketchbookService {
                 .users(user)
                 .build();
 
+        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
+                .sketchbook(sketch)
+                .build();
+        sketchbookCharacterMotionRepository.save(sketchbookCharacterMotion);
 
         return sketchbookRepository.save(sketch).getId();
     }
