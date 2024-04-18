@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LetterCreateDto {
 
-    private Integer sender;
-    private Integer receiver;
+//    private Integer sender;
+//    private Integer receiver;
     private String content;
     private Long characterMotionId;
     private Long sketchbookId;

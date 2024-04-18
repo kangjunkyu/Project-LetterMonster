@@ -37,4 +37,10 @@ public class SketchbookCharacterMotion extends BaseEntity {
     @OneToMany(mappedBy = "sketchbookCharacterMotion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Letter> letters;
 
+    public SketchbookCharacterMotion(Long id, Sketchbook sketchbook, CharacterMotion characterMotion) {
+        this.id = id;
+        this.sketchbook = sketchbook;
+        this.characterMotion = characterMotion;
+    }
+
 }

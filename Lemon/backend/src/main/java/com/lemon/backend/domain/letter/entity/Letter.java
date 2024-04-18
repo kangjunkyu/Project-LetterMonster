@@ -4,6 +4,7 @@ import com.lemon.backend.domain.base.BaseEntity;
 import com.lemon.backend.domain.characters.entity.Characters;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
+import com.lemon.backend.domain.users.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -26,11 +27,13 @@ public class Letter extends BaseEntity {
     @Column(name = "letter_id")
     private Long id;
 
-    @Column(name = "sender")
-    private Integer sender;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
+    private Users sender;
 
-    @Column(name = "receiver")
-    private Integer receiver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
+    private Users receiver;
 
     @Column(name= "content", length = 1000)
     private String content;

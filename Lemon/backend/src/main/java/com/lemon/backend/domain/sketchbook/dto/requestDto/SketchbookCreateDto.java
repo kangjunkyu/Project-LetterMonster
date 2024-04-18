@@ -13,6 +13,6 @@ public class SketchbookCreateDto {
 //    private Boolean isPublic;
 //    private String shareLink;
     private String name;
-    private Integer userId;
+//    private Integer userId;
 
 }

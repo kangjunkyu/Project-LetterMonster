@@ -37,9 +37,9 @@ public class QLetter extends EntityPathBase<Letter> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final NumberPath<Integer> receiver = createNumber("receiver", Integer.class);
+    public final com.lemon.backend.domain.users.user.entity.QUsers receiver;
 
-    public final NumberPath<Integer> sender = createNumber("sender", Integer.class);
+    public final com.lemon.backend.domain.users.user.entity.QUsers sender;
 
     public final com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion sketchbookCharacterMotion;
 
@@ -61,6 +61,8 @@ public class QLetter extends EntityPathBase<Letter> {
 
     public QLetter(Class<? extends Letter> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.receiver = inits.isInitialized("receiver") ? new com.lemon.backend.domain.users.user.entity.QUsers(forProperty("receiver")) : null;
+        this.sender = inits.isInitialized("sender") ? new com.lemon.backend.domain.users.user.entity.QUsers(forProperty("sender")) : null;
         this.sketchbookCharacterMotion = inits.isInitialized("sketchbookCharacterMotion") ? new com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion(forProperty("sketchbookCharacterMotion"), inits.get("sketchbookCharacterMotion")) : null;
     }
 

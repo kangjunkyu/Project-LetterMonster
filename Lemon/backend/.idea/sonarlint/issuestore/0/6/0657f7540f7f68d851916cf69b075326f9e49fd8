@@ -1,3 +1,6 @@
 
-ƒ	java:S1258"<This block of commented-out lines of code should be removed.(îáûıÿÿÿÿ8ÙÕ¸åî1J$643a9ef6-1623-4c34-87b7-c3ec260585f7
-ƒ	java:S125p"<This block of commented-out lines of code should be removed.(îáûıÿÿÿÿ8ÚÕ¸åî1J$472afff9-5587-41fa-b2d6-bc252a6a414f
+“	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óìé¶8Òµˆ€ï1J$eafa426f-0769-4ae9-b928-08cc4f750146
+ƒ	java:S125D"<This block of commented-out lines of code should be removed.(îáûıÿÿÿÿ8óµˆ€ï1J$b77358c3-1a0e-4024-b10e-ddc2ba30ef13
+ƒ	java:S125|"<This block of commented-out lines of code should be removed.(îáûıÿÿÿÿ8ôµˆ€ï1J$1aa9dfa1-372f-42a8-b1dc-1c155d56d059
+v
+java:S1128"TRemove this unused import 'com.lemon.backend.domain.users.user.entity.QUsers.users'.(–ßãéùÿÿÿÿ8ÀÍÃ€ï1
