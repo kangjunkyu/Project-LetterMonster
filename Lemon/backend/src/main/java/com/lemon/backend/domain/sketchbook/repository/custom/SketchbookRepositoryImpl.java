@@ -29,6 +29,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
     public Optional<List<SketchbookGetSimpleDto>> getSketchList(Integer userId){
         List<SketchbookGetSimpleDto> sketchDtos = query
                 .select(constructor(SketchbookGetSimpleDto.class,
+                        sketchbook.id,
+                        sketchbook.isPublic,
                         sketchbook.shareLink,
                         sketchbook.name
                 )).from(sketchbook)

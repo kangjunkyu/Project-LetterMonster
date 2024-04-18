@@ -29,7 +29,8 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 목록 조회", description = "스케치북 목록 조회 / userId 필요")
     @GetMapping("/list")
-    public ResponseEntity<?> getSketchList(@RequestParam(value = "userId") Integer userId){
+    public ResponseEntity<?> getSketchList(HttpServletRequest request){
+        Integer userId = (Integer) request.getAttribute("userId");
         List<SketchbookGetSimpleDto> sketchList = sketchbookService.getSketchList(userId);
         return getResponseEntity(SuccessCode.OK, sketchList);
     }
