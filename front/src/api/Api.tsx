@@ -4,12 +4,12 @@ export const baseAPI = () => API.get("/");
 
 // 카카오 소셜 로그인
 export const getKakaoLogin = (code: string | null) => {
-  return API.get(`/kakao`, { params: { code: code } });
+  return API.post(`/kakao`, {}, { params: { code: code } });
 };
 
 // 라인 소셜 로그인
 export const postLineLogin = (code: string) => {
-  return API.post(`/line`, { params: { code: code } });
+  return API.post(`/line`, {}, { params: { code: code } });
 };
 
 // 캐릭터 그림 전송(생성)
