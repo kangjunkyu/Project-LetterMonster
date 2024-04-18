@@ -3,7 +3,7 @@
 
 .button_default {
   @include box();
-  background-color: inherit;
+  background-color: $gc900;
   height: 100%;
   transition: 0.2s all;
 
