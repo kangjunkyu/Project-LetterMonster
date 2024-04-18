@@ -63,7 +63,13 @@ export const postSketchbook = (name: string) =>
 export const getSketchbookList = () =>
   API.get(`/sketchbooks/list`).then((res) => res.data);
 
-/** 스케치북 선택 조회
+/** 스케치북 선택 간단 조회
+ * @param sketchbookId 스케치북 아이디
+ */
+export const getSketchbookSelectedsimple = (sketchbookId: number) =>
+  API.get(`/sketchbooks/simple/${sketchbookId}`).then((res) => res.data);
+
+/** 스케치북 선택 상세 조회
  * @param sketchbookId 스케치북 아이디
  */
 export const getSketchbookSelected = (sketchbookId: number) =>
