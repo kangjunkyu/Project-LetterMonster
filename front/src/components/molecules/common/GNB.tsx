@@ -17,7 +17,7 @@ function GNB() {
         <img src={draw} alt="그리기" />
         {t("nav.drawing")}
       </Link>
-      <Link className={styles.GNBbutton} to={Page_Url.Main}>
+      <Link className={styles.GNBbutton} to={Page_Url.SketchbookList}>
         <img src={sketchbook} alt="스케치북" />
         {t("nav.sketchbook")}
       </Link>

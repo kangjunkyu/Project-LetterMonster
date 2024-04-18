@@ -19,7 +19,7 @@ function SNB() {
         <img src={red} alt="빨강 크레파스" />
         {t("nav.drawing")}
       </Link>
-      <Link className={styles.SNBButton} to={Page_Url.Main}>
+      <Link className={styles.SNBButton} to={Page_Url.SketchbookList}>
         <img src={yellow} alt="노랑 크레파스" />
         {t("nav.sketchbook")}
       </Link>
