@@ -50,3 +50,36 @@ export const getCharacterMotionSelect = () =>
 // 캐릭터 삭제
 export const deleteCharacter = (characterId: number) =>
   API.delete(`/characters/delete/${characterId}`);
+
+// 스케치북
+
+/** 스케치북 생성
+ * @requires name  스케치북이름
+ */
+export const postSketchbook = (name: string) =>
+  API.post(`/sketchbooks`, { name: name }).then((res) => res.data);
+
+/** 스케치북 목록 조회 */
+export const getSketchbookList = () =>
+  API.get(`/sketchbooks/list`).then((res) => res.data);
+
+/** 스케치북 선택 조회
+ * @param sketchbookId 스케치북 아이디
+ */
+export const getSketchbookSelected = (sketchbookId: number) =>
+  API.get(`/sketchbooks/detail/${sketchbookId}`).then((res) => res.data);
+
+/** 스케치북 수정
+ * @requires sketchbookId 스케치북 아이디
+ * @requires name 스케치북 이름
+ */
+export const putSketchbookName = (sketchbookId: number, name: string) =>
+  API.put(`/sketchbooks/${sketchbookId}`, { name: name }).then(
+    (res) => res.data
+  );
+
+/** 스케치북 삭제
+ * @requires sketchbookId 스케치북 아이디
+ */
+export const deleteSketchbook = (sketchbookId: number) =>
+  API.delete(`/sketchbooks/${sketchbookId}`).then((res) => res.data);
