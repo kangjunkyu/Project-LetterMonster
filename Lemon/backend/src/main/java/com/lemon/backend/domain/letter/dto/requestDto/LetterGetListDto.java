@@ -1,5 +1,7 @@
 package com.lemon.backend.domain.letter.dto.requestDto;
 
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.domain.users.user.entity.Users;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LetterGetListDto {
     private Long id;
-    private Integer sender;
-    private Integer receiver;
+    private UserGetDto sender;
+    private UserGetDto receiver;
     private String content;
     private LocalDateTime write_time;
 }

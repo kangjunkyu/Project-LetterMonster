@@ -1,6 +1,8 @@
 package com.lemon.backend.domain.letter.repository.custom;
 
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -27,10 +29,16 @@ public class LetterRepositoryImpl implements LetterRepositoryCustom{
         List<LetterGetListDto> letterDtos = query
                 .select(constructor(LetterGetListDto.class,
                         letter.id,
-                        letter.sender,
-                        letter.receiver,
+                        Projections.fields(UserGetDto.class,
+                                letter.sender.nickname,
+                                letter.sender.nicknameTag),
+                        Projections.fields(UserGetDto.class,
+                                letter.receiver.nickname,
+                                letter.receiver.nicknameTag),
                         letter.content,
                         letter.createdAt)).from(letter)
+                .leftJoin(letter.sender)
+                .leftJoin(letter.receiver)
                 .where(letter.sketchbookCharacterMotion.sketchbook.id.eq(sketchbookId)).fetch();
         return Optional.ofNullable(letterDtos.isEmpty() ? null : letterDtos);
     }
