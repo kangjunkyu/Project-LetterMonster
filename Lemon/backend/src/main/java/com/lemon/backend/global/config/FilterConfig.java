@@ -1,9 +1,9 @@
 package com.lemon.backend.global.config;
 
+import com.lemon.backend.global.filter.CorsFilter;
 import com.lemon.backend.global.filter.JwtAuthenticationFilter;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import jakarta.servlet.Filter;
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
