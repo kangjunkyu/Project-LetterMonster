@@ -9,7 +9,9 @@ import com.lemon.backend.domain.sketchbook.service.SketchbookService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,10 +48,12 @@ public class SketchbookController {
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }
 
+
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
     @PostMapping("/")
-    public ResponseEntity<?> createSketch(@RequestBody SketchbookCreateDto sketchDto){
-        Long createSketchId = sketchbookService.createSketchbook(sketchDto);
+    public ResponseEntity<?> createSketch(HttpServletRequest request, @RequestBody SketchbookCreateDto sketchDto){
+        Integer userId = (Integer) request.getAttribute("userId");
+        Long createSketchId = sketchbookService.createSketchbook(userId,sketchDto);
         return getResponseEntity(SuccessCode.CREATED, createSketchId);
     }
 

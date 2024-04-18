@@ -13,6 +13,8 @@ import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
+import com.lemon.backend.domain.users.user.entity.Users;
+import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,37 +34,44 @@ public class LetterServiceImpl implements LetterService {
     private final CharacterMotionRepository characterMotionRepository;
     private final SketchCharacterMotionRepository sketchCharacterMotionRepository;
     private final LetterRepository letterRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public List<LetterGetListDto> getLetterList(Long sketchbookId){
+    public List<LetterGetListDto> getLetterList(Long sketchbookId) {
         return letterRepository.getLetterList(sketchbookId).orElseThrow();
     }
 
     @Transactional
     @Override
-    public Long createLetter(LetterCreateDto letterDto){
-        Sketchbook sketchbook = sketchbookRepository.findById(letterDto.getSketchbookId()).orElseThrow();
-        CharacterMotion characterMotion = characterMotionRepository.findById(letterDto.getCharacterMotionId()).orElseThrow();
+    public Long createLetter(Integer senderId, LetterCreateDto letterDto) {
+        SketchbookCharacterMotion sketchbookCharacterMotion = sketchbookRepository.findByCharacterMotionAndSketchbook(letterDto.getSketchbookId(), letterDto.getCharacterMotionId())
+                .orElseGet(() -> {
+                    Sketchbook sketchbook = sketchbookRepository.findById(letterDto.getSketchbookId()).orElseThrow();
+                    CharacterMotion characterMotion = characterMotionRepository.findById(letterDto.getCharacterMotionId()).orElseThrow();
+                    SketchbookCharacterMotion newSketchbookCharacterMotion = SketchbookCharacterMotion.builder()
+                            .sketchbook(sketchbook)
+                            .characterMotion(characterMotion)
+                            .build();
+                    return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
+                });
 
-        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
-                .sketchbook(sketchbook)
-                .characterMotion(characterMotion)
-                .build();
-        sketchbookCharacterMotion = sketchCharacterMotionRepository.save(sketchbookCharacterMotion);
+        Users sender = userRepository.findById(senderId).orElseThrow();
+        Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow();
+
         Letter letter = Letter.builder()
-                .sender(letterDto.getSender())
-                .receiver(letterDto.getReceiver())
+                .sender(sender)
+                .receiver(receiver)
                 .content(letterDto.getContent())
-//                .characters(character)
-//                .sketchbook(sketchbook)
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
+
         return letterRepository.save(letter).getId();
     }
 
+
     @Transactional
     @Override
-    public void deleteLetter(Long letterId){
+    public void deleteLetter(Long letterId) {
         letterRepository.deleteById(letterId);
     }
 }

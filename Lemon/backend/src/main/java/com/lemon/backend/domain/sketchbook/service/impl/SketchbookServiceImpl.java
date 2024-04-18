@@ -45,8 +45,8 @@ public class SketchbookServiceImpl implements SketchbookService {
     }
     @Transactional
     @Override
-    public Long createSketchbook(SketchbookCreateDto sketchDto){
-        Users user = userRepository.findById(sketchDto.getUserId()).orElseThrow();
+    public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto){
+        Users user = userRepository.findById(userId).orElseThrow();
         Sketchbook sketch = Sketchbook.builder()
                 .name(sketchDto.getName())
                 .users(user)

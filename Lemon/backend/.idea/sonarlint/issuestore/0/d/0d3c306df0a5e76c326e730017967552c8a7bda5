@@ -1,13 +1,15 @@
 
 n
-java:S1452"&Remove usage of generic wildcard type.(ã¿Ï­ûÿÿÿÿ8õîÖ¬î1J$189b0754-3a02-4e55-a906-dcd5d0abcfc1
+java:S1452 "&Remove usage of generic wildcard type.(ã¿Ï­ûÿÿÿÿ8Ç”›ıî1J$57516e79-da77-4eb3-a2d0-be3bc1a9afec
 h
-java:S1452%"&Remove usage of generic wildcard type.(ÒğÊC8÷îÖ¬î1J$47946fb3-5f68-4f96-91fa-7ef8833a191e
+java:S1452'"&Remove usage of generic wildcard type.(ÒğÊC8È”›ıî1J$d3816920-2f34-4193-9e65-c083d4d115e6
 i
-java:S1452,"&Remove usage of generic wildcard type.(áÛÉà8÷îÖ¬î1J$0ed54db5-06c7-46b6-b47b-9f081dc112e0
+java:S1452."&Remove usage of generic wildcard type.(áÛÉà8É”›ıî1J$d3d61634-7f78-4eec-bc0f-9edb69d9afd7
 n
-java:S14523"&Remove usage of generic wildcard type.(°õÿ¼ûÿÿÿÿ8øîÖ¬î1J$efcf22d3-a8fd-4246-b16f-18b85144f90e
+java:S14526"&Remove usage of generic wildcard type.(ŞŸîüÿÿÿÿ8Ê”›ıî1J$5fe974c7-09a8-44bb-85eb-5a1d530fec56
 i
-java:S1452:"&Remove usage of generic wildcard type.(“ì²8ùîÖ¬î1J$da8570f8-fc5f-4a37-999a-516dcca2fa7a
+java:S1452>"&Remove usage of generic wildcard type.(“ì²8Ì”›ıî1J$dab5f16f-a6d0-464f-8c37-258f5777abfb
 n
-java:S1452A"&Remove usage of generic wildcard type.(ØñöÌûÿÿÿÿ8øÕ±Ôî1J$75e93574-d183-4069-a7dc-010a75d33efa
+java:S1452E"&Remove usage of generic wildcard type.(ØñöÌûÿÿÿÿ8Ì”›ıî1J$12100892-e1b9-4b10-bc86-26a5b5d2d7f4
+^
+java:S1128"ARemove this unused import 'org.springframework.http.HttpRequest'.(ÌÖÁÛ8ß« ıî1

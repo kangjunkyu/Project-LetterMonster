@@ -10,7 +10,7 @@ public interface LetterService {
     List<LetterGetListDto> getLetterList(Long sketchbookId);
 
     @Transactional
-    Long createLetter(LetterCreateDto letterDto);
+    Long createLetter(Integer senderId, LetterCreateDto letterDto);
 
     @Transactional
     void deleteLetter(Long letterId);

@@ -1,12 +1,10 @@
 package com.lemon.backend.domain.sketchbook.repository.custom;
 
 import com.lemon.backend.domain.characters.dto.CharacterMotionToSketchbookDto;
-import com.lemon.backend.domain.characters.dto.CharacterToSketchbookDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterToSketchbookDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookCharacterMotionGetListDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
+import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +17,7 @@ import static com.lemon.backend.domain.characters.entity.QCharacters.characters;
 import static com.lemon.backend.domain.letter.entity.QLetter.letter;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbook.sketchbook;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion.sketchbookCharacterMotion;
+import static com.lemon.backend.domain.users.user.entity.QUsers.users;
 import static com.querydsl.core.types.Projections.constructor;
 
 @RequiredArgsConstructor
@@ -50,6 +49,19 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                 .where(sketchbook.id.eq(sketchId))
                 .fetchOne();
         return Optional.ofNullable(sketchDto);
+    }
+
+    @Override
+    public Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId){
+        SketchbookCharacterMotion SketchbookCharacterMotion = query
+                .select(constructor(SketchbookCharacterMotion.class,
+                        sketchbookCharacterMotion.id,
+                        sketchbookCharacterMotion.sketchbook,
+                        sketchbookCharacterMotion.characterMotion))
+                .from(sketchbookCharacterMotion)
+                .where(sketchbookCharacterMotion.sketchbook.id.eq(sketchbookId).and(sketchbookCharacterMotion.characterMotion.id.eq(characterMotionId)))
+                .fetchOne();
+        return Optional.ofNullable(SketchbookCharacterMotion);
     }
 
 //    @Override
@@ -198,13 +210,21 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
 
             for (SketchbookCharacterMotionGetListDto motionDto : sketchbookCharacterMotions) {
                 List<LetterToSketchbookDto> letters = query
-                        .select(Projections.constructor(LetterToSketchbookDto.class,
+                        .select(constructor(LetterToSketchbookDto.class,
                                 letter.id,
-                                letter.sender,
-                                letter.receiver,
+//                                letter.sender,
+//                                letter.receiver,
+                                Projections.fields(UserGetDto.class,
+                                        letter.sender.nickname,
+                                        letter.sender.nicknameTag),
+                                Projections.fields(UserGetDto.class,
+                                        letter.receiver.nickname,
+                                        letter.receiver.nicknameTag),
                                 letter.content,
                                 letter.createdAt))
                         .from(letter)
+                        .leftJoin(letter.sender)
+                        .leftJoin(letter.receiver)
                         .where(letter.sketchbookCharacterMotion.id.eq(motionDto.getId()))
                         .fetch();
                 motionDto.setLetterList(letters);

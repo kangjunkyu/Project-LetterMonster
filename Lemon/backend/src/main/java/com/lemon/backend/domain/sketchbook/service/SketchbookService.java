@@ -17,7 +17,7 @@ public interface SketchbookService {
     SketchbookGetDetailDto getSketchSelect2(Long sketchId);
 
     @Transactional
-    Long createSketchbook(SketchbookCreateDto sketchDto);
+    Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto);
 
     @Transactional
     boolean changePublic(Long sketchbookId);
