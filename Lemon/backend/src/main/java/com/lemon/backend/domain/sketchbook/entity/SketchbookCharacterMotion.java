@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
-@SQLDelete(sql = "UPDATE sketchbookcharactermotion SET is_deleted = TRUE WHERE sketchbookcharactermotion_id = ?")
+@SQLDelete(sql = "UPDATE sketchbook_character_motion SET is_deleted = TRUE WHERE sketchbookcharactermotion_id = ?")
 public class SketchbookCharacterMotion extends BaseEntity {
 
     @Id

@@ -144,3 +144,5 @@ X
 (src/main/resources/application-local.yml,4\c\4c414bd4c38ddfeaa331e21cb760a0c94656ce82
 V
 &src/main/resources/application-dev.yml,9\5\95f6363b92881afcf55ed87e1b26a2bdb2374dc6
+t
+Dsrc/main/java/com/lemon/backend/domain/characters/entity/Motion.java,a\1\a1b61c3b3d6134e55c5a0240febc617f603eb4cc

@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Log4j2
@@ -32,7 +33,7 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
-        return sketchbookRepository.getSketchList(userId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+        return sketchbookRepository.getSketchList(userId).orElse(Collections.emptyList());
     }
 
     @Override
