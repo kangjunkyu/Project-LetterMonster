@@ -11,6 +11,8 @@ import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import com.lemon.backend.global.jwt.TokenResponse;
 import lombok.RequiredArgsConstructor;
@@ -91,6 +93,7 @@ public class KakaoAuthService {
         KakaoProfile profile = getUserInfo(accessToken);
 
         Users user = userRepository.findByKakaoId(profile.getId()).orElseGet(() -> userService.createKakaoUser(profile, Social.KAKAO));
+        if(user.getIsDeleted()) throw new CustomException(ErrorCode.IS_WITHDRAW_USER);
         TokenResponse tokenResponse = jwtTokenProvider.createToken(user.getId());
 
         userService.saveRefreshTokenIntoRedis(user.getId(), tokenResponse.getRefreshToken());

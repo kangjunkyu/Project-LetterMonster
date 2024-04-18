@@ -13,6 +13,6 @@ public interface UserService {
     TokenResponse recreateToken(String bearerToken);
     void saveRefreshTokenIntoRedis(Integer userId, String token);
     void logout(Integer userId);
-
     ChangeNicknameResponse changeNickname(Integer userId, ChangeNicknameRequest request);
+    void withdrawUser(Integer userId);
 }

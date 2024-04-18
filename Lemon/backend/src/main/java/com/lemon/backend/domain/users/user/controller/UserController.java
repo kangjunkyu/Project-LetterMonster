@@ -40,4 +40,12 @@ public class UserController {
         Integer userId = (Integer) httpServletRequest.getAttribute("userId");
         return getResponseEntity(SuccessCode.OK, userService.changeNickname(userId, request));
     }
+
+    @Operation(summary = "회원탈퇴", description = "회원 탈퇴를 진행합니다.")
+    @DeleteMapping()
+    public ResponseEntity<?> withdrawUser(HttpServletRequest httpServletRequest){
+        Integer userId = (Integer) httpServletRequest.getAttribute("userId");
+        userService.withdrawUser(userId);
+        return getResponseEntity(SuccessCode.ACCEPTED);
+    }
 }

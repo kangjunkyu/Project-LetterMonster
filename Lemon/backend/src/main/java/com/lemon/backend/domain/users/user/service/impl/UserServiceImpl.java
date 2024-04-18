@@ -97,15 +97,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(Integer userId) {
-        Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findById(userId);
-
-        refreshTokenOptional.ifPresent(refreshToken -> {
-            //리프레시 토큰 삭제
-            refreshTokenRepository.delete(refreshToken);
-
-            //리프레시 토큰을 블랙리스트에 추가
-            jwtTokenProvider.addTokenIntoBlackList(refreshToken.getToken());
-        });
+        deleteRefreshToken(userId);
     }
 
     @Override
@@ -117,5 +109,24 @@ public class UserServiceImpl implements UserService {
         return ChangeNicknameResponse.builder()
                 .nickname(request.getNickname())
                 .nicknameTag(sameNicknameLastNumber).build();
+    }
+
+    @Override
+    @Transactional
+    public void withdrawUser(Integer userId) {
+        userRepository.deleteById(userId);
+        deleteRefreshToken(userId);
+    }
+
+    private void deleteRefreshToken(Integer userId) {
+        Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findById(userId);
+
+        refreshTokenOptional.ifPresent(refreshToken -> {
+            //리프레시 토큰 삭제
+            refreshTokenRepository.delete(refreshToken);
+
+            //리프레시 토큰을 블랙리스트에 추가
+            jwtTokenProvider.addTokenIntoBlackList(refreshToken.getToken());
+        });
     }
 }
