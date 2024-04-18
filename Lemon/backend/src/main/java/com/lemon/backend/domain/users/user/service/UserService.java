@@ -15,4 +15,6 @@ public interface UserService {
     void logout(Integer userId);
     ChangeNicknameResponse changeNickname(Integer userId, ChangeNicknameRequest request);
     void withdrawUser(Integer userId);
+
+    String getSocialLoginUrl(String provider);
 }
