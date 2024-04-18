@@ -8,6 +8,8 @@
     "logout": "Sign Out",
     "login": "Sign In",
     "register": "Sign Up",
-    "letter": "Letter"
+    "drawing": "drawing",
+    "letter": "Letter",
+    "more": "More"
   }
 }

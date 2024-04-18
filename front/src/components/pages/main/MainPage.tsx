@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Page_Url } from "../../../router/Page_Url";
 import styles from "./MainPage.module.scss";
-
+import LanguageSwitcher from "../../molecules/language/LanguageSwitcher";
 function MainPage() {
   const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
+      <LanguageSwitcher />
       <div>Letter Monster / 레터몬스터</div>
       <div className={styles.characterDiv}>
         <img

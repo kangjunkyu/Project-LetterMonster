@@ -8,6 +8,8 @@
     "logout": "ログアウト",
     "login": "ログイン",
     "register": "ユーザー登録",
-    "letter": "電子メール"
+    "drawing": "描く",
+    "letter": "手紙",
+    "more": "以外"
   }
 }
