@@ -20,6 +20,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(summary = "소셜 로그인 url 재공", description = "인가코드를 얻어오는 url을 리턴합니다.")
+    @GetMapping("/login/{provider}")
+    public ResponseEntity<?> getSocialLoginUrl(@PathVariable String provider){
+        return getResponseEntity(SuccessCode.OK, userService.getSocialLoginUrl(provider));
+    }
+
     @Operation(summary = "액세스 토큰 재발급", description = "Header에 리프레시토큰 필요")
     @PostMapping("/token")
     public ResponseEntity<?> recreateToken(@RequestHeader(value = "Authorization", required = false) String bearerToken){

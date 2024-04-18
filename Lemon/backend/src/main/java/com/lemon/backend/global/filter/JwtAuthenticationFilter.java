@@ -28,6 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //jwt 토큰이 필요 없는 곳은 uri 추가
         whiteList.add("/api/kakao");
         whiteList.add("/api/user/token");
+        whiteList.add("/api/user/login");
         whiteList.add("/api/swagger-ui");
         whiteList.add("/api/v3/api-docs");
     }
