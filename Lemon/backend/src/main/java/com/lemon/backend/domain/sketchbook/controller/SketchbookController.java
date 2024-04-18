@@ -51,7 +51,7 @@ public class SketchbookController {
 
 
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<?> createSketch(HttpServletRequest request, @RequestBody SketchbookCreateDto sketchDto){
         Integer userId = (Integer) request.getAttribute("userId");
         Long createSketchId = sketchbookService.createSketchbook(userId,sketchDto);
