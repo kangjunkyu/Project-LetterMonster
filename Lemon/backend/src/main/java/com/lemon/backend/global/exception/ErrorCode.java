@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
+    //기타
+    INVALID_ACCESS(HttpStatus.BAD_REQUEST, "잘못된 접근입니다."),
+
     //스케치북
     SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "스케치북 정보를 찾을 수 없습니다."),
 
