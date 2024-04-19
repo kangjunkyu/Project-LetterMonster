@@ -20,9 +20,9 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider, UserRepository userRepository) {
+    public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         FilterRegistrationBean<JwtAuthenticationFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new JwtAuthenticationFilter(jwtTokenProvider, userRepository));
+        registrationBean.setFilter(new JwtAuthenticationFilter(jwtTokenProvider));
         registrationBean.setOrder(2);
         registrationBean.addUrlPatterns("/*");
         return registrationBean;

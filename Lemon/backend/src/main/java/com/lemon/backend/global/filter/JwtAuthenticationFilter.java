@@ -1,7 +1,6 @@
 package com.lemon.backend.global.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.exception.ErrorResponseEntity;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -23,7 +21,6 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
     private final static String main = "/";
     private final static List<String> whiteList = new ArrayList<>();
     static {
@@ -55,9 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
                 // 토큰이 유효할 경우
                 Integer userId = jwtTokenProvider.getSubject(accessToken);
-                userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
-
-                request.setAttribute("userId", jwtTokenProvider.getSubject(accessToken));
+                request.setAttribute("userId", userId);
                 chain.doFilter(request, response);
             }
         }catch (StringIndexOutOfBoundsException e) {
