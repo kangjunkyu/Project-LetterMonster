@@ -7,11 +7,6 @@ import "./locales/i18n"; // 다국어 지원
 
 const queryClient = new QueryClient();
 
-import { worker } from "./mocks/worker";
-
-if (process.env.NODE_ENV === "development") {
-  worker.start();
-}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
