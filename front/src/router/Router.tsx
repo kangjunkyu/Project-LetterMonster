@@ -12,6 +12,8 @@ import LineCallback from "../components/pages/login/LineCallback";
 import SketchPage from "../components/pages/sketch/SketchPage";
 import MotionPage from "../components/pages/motion/MotionPage";
 import LetterWritePage from "../components/pages/letter/WriteLetterPage";
+import SketchbookListPage from "../components/pages/sketchbook/SketchbookListPage";
+import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
 
 function Router() {
   return (
@@ -21,6 +23,14 @@ function Router() {
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
         <Route path={Page_Url.Motion} element={<MotionPage />}></Route>
+        <Route
+          path={Page_Url.SketchbookList}
+          element={<SketchbookListPage />}
+        ></Route>
+        <Route
+          path={Page_Url.Sketchbook + ":sketchbookId"}
+          element={<SketchbookPage />}
+        ></Route>
 
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route

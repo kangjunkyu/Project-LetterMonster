@@ -14,4 +14,8 @@ export const Page_Url = {
   Motion: "/motion",
   // 편지쓰기 페이지
   WriteLetter: "/letter/write",
+  // 스케치북 리스트 페이지
+  SketchbookList: "/sketchbook/list",
+  // 스케치북 페이지
+  Sketchbook: "/sketchbook/",
 };
