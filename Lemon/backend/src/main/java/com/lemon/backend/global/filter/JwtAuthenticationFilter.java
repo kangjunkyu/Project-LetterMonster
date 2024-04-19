@@ -46,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String bearerToken = request.getHeader("Authorization");
             String accessToken = jwtTokenProvider.resolveToken(bearerToken);
 
-            if(accessToken == null) throw new CustomException(ErrorCode.INVALID_ACCESS);
+//            if(accessToken == null) throw new CustomException(ErrorCode.INVALID_ACCESS);
 
             //회원인 경우
             if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
