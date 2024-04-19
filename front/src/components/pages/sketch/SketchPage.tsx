@@ -4,7 +4,7 @@ import styles from "./SketchPage.module.scss";
 function SketchPage() {
   return (
     <>
-      <div className={styles.sketch_container}>
+      <div className={styles.sketchContainer}>
         <Paint />
       </div>
     </>
