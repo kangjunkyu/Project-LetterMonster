@@ -3,8 +3,8 @@ import API, { ImgAPI } from "./Config";
 export const baseAPI = () => API.get("/");
 
 // 카카오 소셜 로그인
-export const getKakaoLogin = (code: string | null) => {
-  return API.get(`/kakao`, { params: { code: code } });
+export const postKakaoLogin = (code: string | null) => {
+  return API.post(`/kakao`, {}, { params: { code: code } });
 };
 
 // 라인 소셜 로그인
