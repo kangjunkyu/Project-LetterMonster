@@ -74,6 +74,10 @@ dependencies {
     //Configuring the Annotation Processor
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+
 
 
     // S3
