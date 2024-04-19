@@ -1,5 +1,6 @@
 package com.lemon.backend.domain.sketchbook.dto.responseDto;
 
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import lombok.*;
 
 @Getter
@@ -12,5 +13,6 @@ public class SketchbookGetSimpleDto {
     private Boolean isPublic;
     private String shareLink;
     private String name;
+    private UserGetDto holder;
 
 }
