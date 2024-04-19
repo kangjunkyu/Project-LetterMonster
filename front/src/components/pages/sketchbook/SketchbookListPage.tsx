@@ -48,7 +48,7 @@ function SketchbookListPage() {
       />
       <button onClick={() => createHandler(data2)}>생성</button>
       <SketchbookList>
-        {!isLoading && data.data && data.data.length > 0 ? (
+        {!isLoading && data?.data && data?.data?.length > 0 ? (
           renderListItems(data.data)
         ) : (
           <div>비었어요.</div>
