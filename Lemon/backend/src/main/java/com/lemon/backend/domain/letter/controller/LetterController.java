@@ -7,6 +7,7 @@ import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class LetterController {
     }
     @Operation(summary = "편지 생성", description = "편지 생성, sketchbookId, characterId 필요")
     @PostMapping
-    public ResponseEntity<?> createLetter(HttpServletRequest request, @RequestBody LetterCreateDto letterDto){
+    public ResponseEntity<?> createLetter(HttpServletRequest request, @Valid @RequestBody LetterCreateDto letterDto){
         Integer senederId = (Integer) request.getAttribute("userId");
         Long createLetterId = letterService.createLetter(senederId, letterDto);
         return getResponseEntity(SuccessCode.CREATED, createLetterId);

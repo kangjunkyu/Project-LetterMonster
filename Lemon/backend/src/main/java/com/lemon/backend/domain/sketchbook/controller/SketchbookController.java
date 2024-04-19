@@ -10,6 +10,7 @@ import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
     @PostMapping
-    public ResponseEntity<?> createSketch(HttpServletRequest request, @RequestBody SketchbookCreateDto sketchDto){
+    public ResponseEntity<?> createSketch(HttpServletRequest request, @Valid @RequestBody SketchbookCreateDto sketchDto){
         Integer userId = (Integer) request.getAttribute("userId");
         Long createSketchId = sketchbookService.createSketchbook(userId,sketchDto);
         return getResponseEntity(SuccessCode.CREATED, createSketchId);
@@ -60,7 +61,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 수정", description = "스케치북 수정 / sketchbookId 필요")
     @PutMapping("/{sketchbookId}")
-    public ResponseEntity<?> updateSketch(@PathVariable(value = "sketchbookId")Long sketchbookId, @RequestBody SketchbookUpdateDto sketchDto){
+    public ResponseEntity<?> updateSketch(@PathVariable(value = "sketchbookId")Long sketchbookId, @Valid @RequestBody SketchbookUpdateDto sketchDto){
         Long updateSketchId = sketchbookService.updateSketchbook(sketchbookId, sketchDto);
         return getResponseEntity(SuccessCode.OK, updateSketchId);
     }
