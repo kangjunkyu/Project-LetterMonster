@@ -15,6 +15,7 @@ import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepos
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class LetterServiceImpl implements LetterService {
 
     @Override
     public List<LetterGetListDto> getLetterList(Long sketchbookId) {
-        return letterRepository.getLetterList(sketchbookId).orElseThrow();
+        return letterRepository.getLetterList(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
 
     @Transactional
@@ -46,8 +47,8 @@ public class LetterServiceImpl implements LetterService {
     public Long createLetter(Integer senderId, LetterCreateDto letterDto) {
         SketchbookCharacterMotion sketchbookCharacterMotion = sketchbookRepository.findByCharacterMotionAndSketchbook(letterDto.getSketchbookId(), letterDto.getCharacterMotionId())
                 .orElseGet(() -> {
-                    Sketchbook sketchbook = sketchbookRepository.findById(letterDto.getSketchbookId()).orElseThrow();
-                    CharacterMotion characterMotion = characterMotionRepository.findById(letterDto.getCharacterMotionId()).orElseThrow();
+                    Sketchbook sketchbook = sketchbookRepository.findById(letterDto.getSketchbookId()).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+                    CharacterMotion characterMotion = characterMotionRepository.findById(letterDto.getCharacterMotionId()).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
                     SketchbookCharacterMotion newSketchbookCharacterMotion = SketchbookCharacterMotion.builder()
                             .sketchbook(sketchbook)
                             .characterMotion(characterMotion)
@@ -55,8 +56,8 @@ public class LetterServiceImpl implements LetterService {
                     return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
                 });
 
-        Users sender = userRepository.findById(senderId).orElseThrow();
-        Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow();
+        Users sender = userRepository.findById(senderId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+        Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
 
         Letter letter = Letter.builder()
                 .sender(sender)

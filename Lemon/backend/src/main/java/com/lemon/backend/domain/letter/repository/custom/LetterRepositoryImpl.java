@@ -2,6 +2,8 @@ package com.lemon.backend.domain.letter.repository.custom;
 
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +18,12 @@ import static com.querydsl.core.types.Projections.constructor;
 public class LetterRepositoryImpl implements LetterRepositoryCustom{
 
     private final JPAQueryFactory query;
-
-//    private Long id;
-//    private Integer sender;
-//    private Integer receiver;
-//    private String content;
-//    private Long charactersId;
-//    private Long sketchbookId;
-//    private LocalDate write_time;
+    
     @Override
     public Optional<List<LetterGetListDto>> getLetterList(Long sketchbookId){
+        if(sketchbookId == null){
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
         List<LetterGetListDto> letterDtos = query
                 .select(constructor(LetterGetListDto.class,
                         letter.id,

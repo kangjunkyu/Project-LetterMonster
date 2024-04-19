@@ -5,6 +5,8 @@ import com.lemon.backend.domain.letter.dto.requestDto.LetterToSketchbookDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,9 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
 
     @Override
     public Optional<List<SketchbookGetSimpleDto>> getSketchList(Integer userId){
+        if (userId == null) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
         List<SketchbookGetSimpleDto> sketchDtos = query
                 .select(constructor(SketchbookGetSimpleDto.class,
                         sketchbook.id,
@@ -44,6 +49,9 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
 
     @Override
     public Optional<SketchbookGetDto> getSketchSelect(Long sketchId){
+        if (sketchId == null) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
         SketchbookGetDto sketchDto = query
                 .select(constructor(SketchbookGetDto.class,
                         sketchbook.id,
@@ -61,6 +69,9 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
 
     @Override
     public Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId){
+        if (sketchbookId == null || characterMotionId == null) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
         SketchbookCharacterMotion SketchbookCharacterMotion = query
                 .select(constructor(SketchbookCharacterMotion.class,
                         sketchbookCharacterMotion.id,
@@ -187,7 +198,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
     @Override
     public Optional<SketchbookGetDetailDto> getSketchSelect2(Long sketchId) {
         if (sketchId == null) {
-            throw new IllegalArgumentException("Sketchbook ID가 없어요");
+            throw new CustomException(ErrorCode.BAD_REQUEST);
         }
 
         SketchbookGetDetailDto sketchDto = query

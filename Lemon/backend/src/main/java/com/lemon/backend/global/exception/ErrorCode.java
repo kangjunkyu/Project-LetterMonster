@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ErrorCode {
 
+    //Bad Request
+    BAD_REQUEST(HttpStatus.BAD_REQUEST, "필수값을 입력해주세요"),
+
     //스케치북
     SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "스케치북 정보를 찾을 수 없습니다."),
 

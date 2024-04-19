@@ -1,6 +1,4 @@
 
-ì	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÏÈ∂8ﬂ”≥†Ô1J$f9fdf073-86a8-49fd-bd1a-fd0025e35f0b
-É	java:S125L"<This block of commented-out lines of code should be removed.(ÓÅ·˚˝ˇˇˇˇ8◊‘≥†Ô1J$80ed7571-015b-440d-90a9-97d0f0bb175b
-Ñ	java:S125Ñ"<This block of commented-out lines of code should be removed.(ÓÅ·˚˝ˇˇˇˇ8◊‘≥†Ô1J$3db2421a-a5a0-49a6-b502-dfd04bfdfddc
-v
-java:S1128"TRemove this unused import 'com.lemon.backend.domain.users.user.entity.QUsers.users'.(ñﬂ„È˘ˇˇˇˇ8ÊÂ≥†Ô1
+ì	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ÏÈ∂8ÀçÈ†Ô1J$c9bbe53d-45f0-402e-9e58-fba07639724a
+É	java:S125W"<This block of commented-out lines of code should be removed.(ÓÅ·˚˝ˇˇˇˇ8˜çÈ†Ô1J$bf3dde88-5525-43d1-9eb5-c12e95c238fd
+Ñ	java:S125è"<This block of commented-out lines of code should be removed.(ÓÅ·˚˝ˇˇˇˇ8˜çÈ†Ô1J$6693387a-5d96-4c86-b71f-15282a791248

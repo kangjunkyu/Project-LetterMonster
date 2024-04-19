@@ -47,7 +47,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Transactional
     @Override
     public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto){
-        Users user = userRepository.findById(userId).orElseThrow();
+        Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
         Sketchbook sketch = Sketchbook.builder()
                 .name(sketchDto.getName())
                 .users(user)
@@ -64,7 +64,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Transactional
     @Override
     public boolean changePublic(Long sketchbookId){
-        Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow();
+        Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
         boolean changePublicStatus = !sketch.getIsPublic();
         sketch.setIsPublic(changePublicStatus);
 
@@ -74,7 +74,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Transactional
     @Override
     public Long updateSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto){
-        Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow();
+        Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
 
         sketch.setName(sketchDto.getName());
 
@@ -84,7 +84,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Transactional
     @Override
     public Long ShareSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto){
-        Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow();
+        Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
 
         sketch.setShareLink(sketchDto.getShareLink());
 
