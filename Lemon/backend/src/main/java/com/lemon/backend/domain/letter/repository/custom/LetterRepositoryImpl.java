@@ -22,7 +22,7 @@ public class LetterRepositoryImpl implements LetterRepositoryCustom{
     @Override
     public Optional<List<LetterGetListDto>> getLetterList(Long sketchbookId){
         if(sketchbookId == null){
-            throw new CustomException(ErrorCode.BAD_REQUEST);
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
         List<LetterGetListDto> letterDtos = query
                 .select(constructor(LetterGetListDto.class,

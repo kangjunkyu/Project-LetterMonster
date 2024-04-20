@@ -34,6 +34,8 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public final BooleanPath isPublic = createBoolean("isPublic");
 
+    public final BooleanPath isWritePossible = createBoolean("isWritePossible");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
@@ -42,6 +44,10 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
     public final StringPath shareLink = createString("shareLink");
 
     public final ListPath<SketchbookCharacterMotion, QSketchbookCharacterMotion> sketchbookCharacterMotionList = this.<SketchbookCharacterMotion, QSketchbookCharacterMotion>createList("sketchbookCharacterMotionList", SketchbookCharacterMotion.class, QSketchbookCharacterMotion.class, PathInits.DIRECT2);
+
+    public final StringPath sketchbookUuid = createString("sketchbookUuid");
+
+    public final StringPath tag = createString("tag");
 
     public final com.lemon.backend.domain.users.user.entity.QUsers users;
 

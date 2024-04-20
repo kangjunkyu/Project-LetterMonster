@@ -19,18 +19,17 @@ import static com.lemon.backend.domain.characters.entity.QCharacters.characters;
 import static com.lemon.backend.domain.letter.entity.QLetter.letter;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbook.sketchbook;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion.sketchbookCharacterMotion;
-import static com.lemon.backend.domain.users.user.entity.QUsers.users;
 import static com.querydsl.core.types.Projections.constructor;
 
 @RequiredArgsConstructor
-public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
+public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
 
     private final JPAQueryFactory query;
 
     @Override
-    public Optional<List<SketchbookGetSimpleDto>> getSketchList(Integer userId){
+    public Optional<List<SketchbookGetSimpleDto>> getSketchList(Integer userId) {
         if (userId == null) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
         List<SketchbookGetSimpleDto> sketchDtos = query
                 .select(constructor(SketchbookGetSimpleDto.class,
@@ -40,7 +39,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                         sketchbook.name,
                         Projections.fields(UserGetDto.class,
                                 sketchbook.users.nickname,
-                                sketchbook.users.nicknameTag)
+                                sketchbook.users.nicknameTag),
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag,
+                        sketchbook.isWritePossible
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId))
                 .fetch();
@@ -48,9 +50,9 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
     }
 
     @Override
-    public Optional<SketchbookGetDto> getSketchSelect(Long sketchId){
+    public Optional<SketchbookGetDto> getSketchSelect(String sketchId) {
         if (sketchId == null) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
         SketchbookGetDto sketchDto = query
                 .select(constructor(SketchbookGetDto.class,
@@ -58,19 +60,22 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                         sketchbook.isPublic,
                         sketchbook.shareLink,
                         sketchbook.name,
+                        sketchbook.isWritePossible,
                         Projections.fields(UserGetDto.class,
                                 sketchbook.users.nickname,
-                                sketchbook.users.nicknameTag)
+                                sketchbook.users.nicknameTag),
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag
                 )).from(sketchbook)
-                .where(sketchbook.id.eq(sketchId))
+                .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
         return Optional.ofNullable(sketchDto);
     }
 
     @Override
-    public Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId){
+    public Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId) {
         if (sketchbookId == null || characterMotionId == null) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
         SketchbookCharacterMotion SketchbookCharacterMotion = query
                 .select(constructor(SketchbookCharacterMotion.class,
@@ -196,9 +201,9 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
 //    }
 
     @Override
-    public Optional<SketchbookGetDetailDto> getSketchSelect2(Long sketchId) {
+    public Optional<SketchbookGetDetailDto> getSketchSelect2(String sketchId) {
         if (sketchId == null) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
 
         SketchbookGetDetailDto sketchDto = query
@@ -209,9 +214,13 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                         sketchbook.name,
                         Projections.fields(UserGetDto.class,
                                 sketchbook.users.nickname,
-                                sketchbook.users.nicknameTag)))
+                                sketchbook.users.nicknameTag),
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag,
+                        sketchbook.isWritePossible)
+                )
                 .from(sketchbook)
-                .where(sketchbook.id.eq(sketchId))
+                .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
 
         if (sketchDto != null) {
@@ -227,7 +236,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                     .from(sketchbookCharacterMotion)
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
-                    .where(sketchbookCharacterMotion.sketchbook.id.eq(sketchId))
+                    .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
 
             for (SketchbookCharacterMotionGetListDto motionDto : sketchbookCharacterMotions) {
@@ -272,7 +281,15 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
         return Optional.ofNullable(sketchDto);
     }
 
-
+    @Override
+    public Optional<String> findHighestSketchbookTagByName(String name) {
+        String highestSketchbookTag = query.select(sketchbook.tag)
+                .from(sketchbook)
+                .where(sketchbook.name.eq(name))
+                .orderBy(sketchbook.tag.desc())
+                .fetchFirst();
+        return Optional.ofNullable(highestSketchbookTag);
+    }
 
 
 }

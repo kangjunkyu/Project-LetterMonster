@@ -37,15 +37,15 @@ public class SketchbookController {
     }
 
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
-    @GetMapping("/simple/{sketchbookId}")
-    public ResponseEntity<?> getSketchSelect(@PathVariable(value = "sketchbookId") Long sketchId){
+    @GetMapping("/simple/{sketchbookUuid}")
+    public ResponseEntity<?> getSketchSelect(@PathVariable(value = "sketchbookUuid") String sketchId){
         SketchbookGetDto sketchSelect = sketchbookService.getSketchSelect(sketchId);
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }
 
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
-    @GetMapping("/detail/{sketchbookId}")
-    public ResponseEntity<?> getSketchSelect2(@PathVariable(value = "sketchbookId") Long sketchId){
+    @GetMapping("/detail/{sketchbookUuid}")
+    public ResponseEntity<?> getSketchSelect2(@PathVariable(value = "sketchbookUuid") String sketchId){
         SketchbookGetDetailDto sketchSelect = sketchbookService.getSketchSelect2(sketchId);
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }

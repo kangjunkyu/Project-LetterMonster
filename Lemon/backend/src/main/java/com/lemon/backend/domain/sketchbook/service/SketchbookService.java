@@ -12,9 +12,9 @@ import java.util.List;
 public interface SketchbookService {
     List<SketchbookGetSimpleDto> getSketchList(Integer userId);
 
-    SketchbookGetDto getSketchSelect(Long sketchId);
+    SketchbookGetDto getSketchSelect(String sketchId);
 
-    SketchbookGetDetailDto getSketchSelect2(Long sketchId);
+    SketchbookGetDetailDto getSketchSelect2(String sketchId);
 
     @Transactional
     Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto);
