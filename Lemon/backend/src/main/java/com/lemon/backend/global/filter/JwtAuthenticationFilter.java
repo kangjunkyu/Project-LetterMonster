@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -47,10 +46,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String bearerToken = request.getHeader("Authorization");
             String accessToken = jwtTokenProvider.resolveToken(bearerToken);
 
+//            if(accessToken == null) throw new CustomException(ErrorCode.INVALID_ACCESS);
+
             //회원인 경우
             if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
                 // 토큰이 유효할 경우
-                request.setAttribute("userId", jwtTokenProvider.getSubject(accessToken));
+                Integer userId = jwtTokenProvider.getSubject(accessToken);
+                request.setAttribute("userId", userId);
                 chain.doFilter(request, response);
             }
         }catch (StringIndexOutOfBoundsException e) {

@@ -1,5 +1,6 @@
 package com.lemon.backend.global.config;
 
+import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.filter.CorsFilter;
 import com.lemon.backend.global.filter.JwtAuthenticationFilter;
 import com.lemon.backend.global.jwt.JwtTokenProvider;

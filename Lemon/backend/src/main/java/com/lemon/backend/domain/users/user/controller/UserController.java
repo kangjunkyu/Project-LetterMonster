@@ -54,4 +54,11 @@ public class UserController {
         userService.withdrawUser(userId);
         return getResponseEntity(SuccessCode.ACCEPTED);
     }
+
+    @Operation(summary = "유저 정보 조회", description = "유저 정보를 조회합니다.")
+    @GetMapping
+    public ResponseEntity<?> getUserInfo(HttpServletRequest httpServletRequest){
+        Integer userId = (Integer) httpServletRequest.getAttribute("userId");
+        return getResponseEntity(SuccessCode.OK, userService.getUserInfo(userId));
+    }
 }

@@ -32,7 +32,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                         sketchbook.id,
                         sketchbook.isPublic,
                         sketchbook.shareLink,
-                        sketchbook.name
+                        sketchbook.name,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag)
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId))
                 .fetch();
@@ -46,7 +49,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                         sketchbook.id,
                         sketchbook.isPublic,
                         sketchbook.shareLink,
-                        sketchbook.name
+                        sketchbook.name,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag)
                 )).from(sketchbook)
                 .where(sketchbook.id.eq(sketchId))
                 .fetchOne();
@@ -181,7 +187,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
     @Override
     public Optional<SketchbookGetDetailDto> getSketchSelect2(Long sketchId) {
         if (sketchId == null) {
-            throw new IllegalArgumentException("Sketchbook ID must not be null");
+            throw new IllegalArgumentException("Sketchbook ID가 없어요");
         }
 
         SketchbookGetDetailDto sketchDto = query
@@ -189,7 +195,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom{
                         sketchbook.id,
                         sketchbook.isPublic,
                         sketchbook.shareLink,
-                        sketchbook.name))
+                        sketchbook.name,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag)))
                 .from(sketchbook)
                 .where(sketchbook.id.eq(sketchId))
                 .fetchOne();
