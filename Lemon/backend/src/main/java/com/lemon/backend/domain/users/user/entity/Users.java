@@ -38,6 +38,10 @@ public class Users extends BaseEntity {
     @Column(name = "provider")
     private Social provider;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
     @Column(name = "kakao_id")
     private String kakaoId;
 
