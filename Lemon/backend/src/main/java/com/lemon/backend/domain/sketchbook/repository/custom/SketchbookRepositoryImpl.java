@@ -7,9 +7,13 @@ import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -280,6 +284,74 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
 
         return Optional.ofNullable(sketchDto);
     }
+
+    @Override
+    public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable) {
+        if (sketchId == null) {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+
+        SketchbookGetDetailDto sketchDto = query
+                .select(Projections.constructor(SketchbookGetDetailDto.class,
+                        sketchbook.id,
+                        sketchbook.isPublic,
+                        sketchbook.shareLink,
+                        sketchbook.name,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag),
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag,
+                        sketchbook.isWritePossible))
+                .from(sketchbook)
+                .where(sketchbook.sketchbookUuid.eq(sketchId))
+                .fetchOne();
+
+        QueryResults<SketchbookCharacterMotionGetListDto> results = query
+                .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
+                        sketchbookCharacterMotion.id,
+                        Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                characterMotion.id,
+                                characterMotion.motion.id,
+                                characterMotion.url,
+                                characters.nickname)))
+                .from(sketchbookCharacterMotion)
+                .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
+                .leftJoin(characterMotion.characters, characters)
+                .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        List<SketchbookCharacterMotionGetListDto> motions = results.getResults();
+        long total = results.getTotal();
+
+        // 추가 정보 로딩 (예: 편지)
+        motions.forEach(motion -> {
+            List<LetterToSketchbookDto> letters = query
+                    .select(Projections.constructor(LetterToSketchbookDto.class,
+                            letter.id,
+                            Projections.fields(UserGetDto.class,
+                                    letter.sender.nickname,
+                                    letter.sender.nicknameTag),
+                            Projections.fields(UserGetDto.class,
+                                    letter.receiver.nickname,
+                                    letter.receiver.nicknameTag),
+                            letter.content,
+                            letter.createdAt))
+                    .from(letter)
+                    .leftJoin(letter.sender)
+                    .leftJoin(letter.receiver)
+                    .where(letter.sketchbookCharacterMotion.id.eq(motion.getId()))
+                    .fetch();
+
+            motion.setLetterList(letters);  // Assuming a setter method is available to set letters
+        });
+
+        Page<SketchbookCharacterMotionGetListDto> page = new PageImpl<>(motions, pageable, total);
+        return new SketchbookDetailPageDto(sketchDto, page);
+    }
+
 
     @Override
     public Optional<String> findHighestSketchbookTagByName(String name) {

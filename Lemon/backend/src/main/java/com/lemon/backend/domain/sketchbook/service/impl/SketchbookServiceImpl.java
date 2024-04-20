@@ -2,9 +2,7 @@ package com.lemon.backend.domain.sketchbook.service.impl;
 
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
@@ -17,6 +15,8 @@ import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -45,6 +45,11 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public SketchbookGetDetailDto getSketchSelect2(String sketchId){
         return sketchbookRepository.getSketchSelect2(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+    }
+
+    @Override
+    public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable){
+        return sketchbookRepository.getSketchSelect3(sketchId, pageable);
     }
 
     private long getSameSketchbookLastNumber(String name){

@@ -74,8 +74,6 @@ dependencies {
     //Configuring the Annotation Processor
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-
-
     // S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }

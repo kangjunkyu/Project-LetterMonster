@@ -1,10 +1,9 @@
 package com.lemon.backend.domain.sketchbook.repository.custom;
 
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookCharacterMotionGetDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDetailDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetDto;
-import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetSimpleDto;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +16,8 @@ public interface SketchbookRepositoryCustom {
     Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId);
 
     Optional<SketchbookGetDetailDto> getSketchSelect2(String sketchId);
+
+    SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
 
     Optional<String> findHighestSketchbookTagByName(String name);
 }
