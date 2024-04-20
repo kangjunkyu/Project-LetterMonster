@@ -5,6 +5,7 @@ import com.lemon.backend.domain.users.kakao.dto.KakaoProviderProperties;
 import com.lemon.backend.domain.users.kakao.service.KakaoAuthService;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.ChangeNicknameResponse;
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.domain.users.user.entity.Adjective;
 import com.lemon.backend.domain.users.user.entity.Noun;
 import com.lemon.backend.domain.users.user.entity.Social;
@@ -126,6 +127,12 @@ public class UserServiceImpl implements UserService {
         if(Social.KAKAO.name().equals(provider))
             return kakaoProviderProperties.getAuthorizationUri();
         return null;
+    }
+
+    @Override
+    public UserGetDto getUserInfo(Integer userId) {
+        Users user = userRepository.findById(userId).get();
+        return UserGetDto.builder().nickname(user.getNickname()).nicknameTag(user.getNicknameTag()).build();
     }
 
     private void deleteRefreshToken(Integer userId) {
