@@ -23,7 +23,7 @@ public class JwtTokenProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
     private final TokenBlacklistService tokenBlacklistService;
-    @Value("${jwt.secret-key}")
+    @Value("${spring.security.jwt.secret-key}")
     private String secretKey;
     private Key key;
 

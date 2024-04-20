@@ -1,21 +1,17 @@
 package com.lemon.backend.domain.users.user.service.impl;
 
-import com.lemon.backend.domain.users.kakao.dto.KakaoProfile;
 import com.lemon.backend.domain.users.kakao.dto.KakaoProviderProperties;
-import com.lemon.backend.domain.users.kakao.service.KakaoAuthService;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.ChangeNicknameResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
-import com.lemon.backend.domain.users.user.entity.Adjective;
-import com.lemon.backend.domain.users.user.entity.Noun;
-import com.lemon.backend.domain.users.user.entity.Social;
-import com.lemon.backend.domain.users.user.entity.Users;
+import com.lemon.backend.domain.users.user.entity.*;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import com.lemon.backend.global.jwt.TokenResponse;
+import com.lemon.backend.global.auth.userinfo.OAuth2UserInfo;
 import com.lemon.backend.global.redis.entity.RefreshToken;
 import com.lemon.backend.global.redis.repository.RefreshTokenRepository;
 import jakarta.transaction.Transactional;
@@ -42,15 +38,17 @@ public class UserServiceImpl implements UserService {
         return randomAdjective.toString() + " " + randomNoun.toString();
     }
 
-    public Users createKakaoUser(KakaoProfile profile, Social social) {
+
+    public Users createKakaoUser(OAuth2UserInfo userInfo, Social social) {
         String nickname = makeNickname();
         long sameNicknameLastNumber = getSameNicknameLastNumber(nickname);
 
         Users newUser = Users.builder()
                 .nickname(nickname)
                 .nicknameTag(String.valueOf(sameNicknameLastNumber))
-                .kakaoId(profile.getId())
-                .provider(Social.KAKAO)
+                .kakaoId(userInfo.getId())
+                .provider(social)
+                .role(Role.USER)
                 .build();
 
         userRepository.save(newUser);

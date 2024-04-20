@@ -53,8 +53,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // 토큰이 유효할 경우
                 Integer userId = jwtTokenProvider.getSubject(accessToken);
                 request.setAttribute("userId", userId);
-                chain.doFilter(request, response);
             }
+
+            chain.doFilter(request, response);
         }catch (StringIndexOutOfBoundsException e) {
             throw new CustomException(ErrorCode.NOT_FOUND_AUTH_TOKEN);
         } catch (CustomException e) {
