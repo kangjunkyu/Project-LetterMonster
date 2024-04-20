@@ -45,6 +45,8 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final EnumPath<Social> provider = createEnum("provider", Social.class);
 
+    public final EnumPath<Role> role = createEnum("role", Role.class);
+
     public final ListPath<com.lemon.backend.domain.sketchbook.entity.Sketchbook, com.lemon.backend.domain.sketchbook.entity.QSketchbook> sketchbookList = this.<com.lemon.backend.domain.sketchbook.entity.Sketchbook, com.lemon.backend.domain.sketchbook.entity.QSketchbook>createList("sketchbookList", com.lemon.backend.domain.sketchbook.entity.Sketchbook.class, com.lemon.backend.domain.sketchbook.entity.QSketchbook.class, PathInits.DIRECT2);
 
     public QUsers(String variable) {

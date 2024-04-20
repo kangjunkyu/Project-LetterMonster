@@ -1,6 +1,5 @@
 package com.lemon.backend.domain.users.user.service.impl;
 
-import com.lemon.backend.domain.users.kakao.dto.KakaoProviderProperties;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.ChangeNicknameResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
@@ -28,7 +27,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final KakaoProviderProperties kakaoProviderProperties;
 
     @Override
     public String makeNickname() {
@@ -118,13 +116,6 @@ public class UserServiceImpl implements UserService {
     public void withdrawUser(Integer userId) {
         userRepository.deleteById(userId);
         deleteRefreshToken(userId);
-    }
-
-    @Override
-    public String getSocialLoginUrl(String provider) {
-        if(Social.KAKAO.name().equals(provider))
-            return kakaoProviderProperties.getAuthorizationUri();
-        return null;
     }
 
     @Override
