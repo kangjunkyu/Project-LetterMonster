@@ -25,7 +25,7 @@ function GNB() {
         <img src={sketchbook} alt="편지 쓰기" />
         {t("nav.letter")}
       </Link>
-      <Link className={styles.GNBbutton} to={Page_Url.Main}>
+      <Link className={styles.GNBbutton} to={Page_Url.MyPage}>
         <img src={more} alt="메인" />
         {t("nav.more")}
       </Link>
