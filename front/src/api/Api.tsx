@@ -2,18 +2,29 @@ import API, { ImgAPI } from "./Config";
 
 export const baseAPI = () => API.get("/");
 
-// 카카오 소셜 로그인
-export const postKakaoLogin = (code: string | null) => {
-  return API.post(`/kakao`, {}, { params: { code: code } });
-};
+/** 카카오 소셜 로그인 */
+export const postKakaoLogin = (code: string | null) =>
+  API.post(`/kakao`, {}, { params: { code: code } });
 
-// 라인 소셜 로그인
-export const postLineLogin = (code: string) => {
-  return API.post(`/line`, {}, { params: { code: code } });
-};
+/** 라인 소셜 로그인 */
+export const postLineLogin = (code: string) =>
+  API.post(`/line`, {}, { params: { code: code } });
 
-// 캐릭터 그림 전송(생성)
-export const postCharacter = async (nickname: string, file: File) => {
+/** 로그아웃 */
+export const postLogout = () => API.post(`/user/logout`);
+
+/** 회원 탈퇴 */
+export const deleteUser = () => API.delete(`/user`);
+
+/** 유저 닉네임 조회 */
+export const getUserNickname = () => API.get(`/user`).then((res) => res.data.data);
+
+/** 유저 닉네임 변경 */
+export const postNickname = (nickname: string) =>
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
+
+/** 캐릭터 그림 전송(생성) */
+export const postSketchCharacter = async (nickname: string, file: File) => {
   const formData = new FormData();
 
   const data = { nickname: nickname };
@@ -31,23 +42,23 @@ export const postCharacter = async (nickname: string, file: File) => {
   }
 };
 
-// 캐릭터 생성 취소
+/** 캐릭터 생성 취소 */
 export const cancelCharacter = (characterId: number) =>
   API.delete(`/characters/cancel/${characterId}`);
 
-// 캐릭터 리스트 조회
+/** 캐릭터 리스트 조회 */
 export const getCharacterList = (userId: number) =>
   API.get(`/characters/list/${userId}`).then((res) => res.data);
 
-// 캐릭터 모션 리스트 조회
+/** 캐릭터 모션 리스트 조회 */
 export const getCharacterMotionList = () =>
   API.get(`/characters/list/motion`).then((res) => res.data);
 
-// 캐릭터 모션 리스트 조회
+/** 캐릭터 모션 리스트 조회 */
 export const getCharacterMotionSelect = () =>
   API.get(`/characters/select/motion`).then((res) => res.data);
 
-// 캐릭터 삭제
+/** 캐릭터 삭제 */
 export const deleteCharacter = (characterId: number) =>
   API.delete(`/characters/delete/${characterId}`);
 
