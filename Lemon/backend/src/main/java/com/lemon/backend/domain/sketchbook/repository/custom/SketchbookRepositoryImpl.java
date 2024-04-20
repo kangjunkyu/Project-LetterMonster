@@ -290,7 +290,6 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
-
         SketchbookGetDetailDto sketchDto = query
                 .select(Projections.constructor(SketchbookGetDetailDto.class,
                         sketchbook.id,
@@ -306,7 +305,6 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
-
         QueryResults<SketchbookCharacterMotionGetListDto> results = query
                 .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
                         sketchbookCharacterMotion.id,
@@ -325,8 +323,6 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
 
         List<SketchbookCharacterMotionGetListDto> motions = results.getResults();
         long total = results.getTotal();
-
-        // 추가 정보 로딩 (예: 편지)
         motions.forEach(motion -> {
             List<LetterToSketchbookDto> letters = query
                     .select(Projections.constructor(LetterToSketchbookDto.class,

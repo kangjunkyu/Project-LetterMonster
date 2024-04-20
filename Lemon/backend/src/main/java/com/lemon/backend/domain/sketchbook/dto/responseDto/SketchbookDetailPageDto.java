@@ -16,5 +16,4 @@ public class SketchbookDetailPageDto {
         this.characterMotions = characterMotions;
     }
 
-    // Getters and Setters
 }

@@ -20,10 +20,10 @@ public class SketchbookGetDetailDto {
     private String shareLink;
     private String name;
     private UserGetDto holder;
-    private List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionList;
     private String uuid;
     private String tag;
     private Boolean isWritePossible;
+    private List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionList;
 
     public SketchbookGetDetailDto(Long id, Boolean isPublic, String shareLink, String name, UserGetDto holder, String uuid, String tag, Boolean isWritePossible) {
         this.id = id;
@@ -52,4 +52,17 @@ public class SketchbookGetDetailDto {
         this.holder = holder;
     }
 
+    @Override
+    public String toString() {
+        return "SketchbookGetDetailDto{" +
+                "id=" + id +
+                ", isPublic=" + isPublic +
+                ", shareLink='" + shareLink + '\'' +
+                ", name='" + name + '\'' +
+                ", holder=" + holder +
+                ", uuid='" + uuid + '\'' +
+                ", tag='" + tag + '\'' +
+                ", isWritePossible=" + isWritePossible +
+                '}';
+    }
 }

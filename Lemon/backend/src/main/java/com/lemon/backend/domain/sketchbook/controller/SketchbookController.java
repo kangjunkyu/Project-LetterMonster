@@ -51,13 +51,13 @@ public class SketchbookController {
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }
 
-    @Operation(summary = "스케치북 캐릭터 모션 조회", description = "스케치북 ID에 따른 캐릭터 모션의 페이지네이션된 리스트를 조회합니다.")
-    @GetMapping("/sketchbooks/{sketchId}/character-motions")
-    public ResponseEntity<Page<SketchbookCharacterMotionGetListDto>> getSketchSelect2(
-            @Parameter(description = "스케치북 ID", required = true) @PathVariable String sketchId,
+    @Operation(summary = "스케치북 캐릭터 모션 페이지네이션", description = "스케치북 ID에 따른 캐릭터 모션의 페이지네이션된 리스트를 조회")
+    @GetMapping("/sketchbooks/{sketchbookUuid}/pagination")
+    public ResponseEntity<SketchbookDetailPageDto> getSketchSelect3(
+            @Parameter(description = "스케치북 ID", required = true) @PathVariable(value = "sketchbookUuid") String sketchId,
             @Parameter(description = "페이지 정보", required = true) Pageable pageable) {
         SketchbookDetailPageDto detailPageDto = sketchbookService.getSketchSelect3(sketchId, pageable);
-        return ResponseEntity.ok(detailPageDto.getCharacterMotions());
+        return ResponseEntity.ok(detailPageDto);
     }
 
 
