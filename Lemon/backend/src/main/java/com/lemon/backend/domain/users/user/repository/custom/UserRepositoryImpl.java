@@ -12,13 +12,6 @@ import static com.lemon.backend.domain.users.user.entity.QUsers.users;
 public class UserRepositoryImpl implements UserRepositoryCustom{
 
     private final JPAQueryFactory query;
-    @Override
-    public Optional<Users> findByKakaoId(String kakaoId) {
-        Users user = query.selectFrom(users)
-                .where(users.kakaoId.eq(kakaoId))
-                .fetchOne();
-        return Optional.ofNullable(user);
-    }
 
     @Override
     public Optional<String> findHighestNicknameTagByNickname(String nickname) {

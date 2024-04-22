@@ -10,7 +10,7 @@ import com.lemon.backend.global.auth.userinfo.OAuth2UserInfo;
 
 public interface UserService {
     String makeNickname();
-    Users createKakaoUser(OAuth2UserInfo userInfo, Social social);
+    Users createUser(OAuth2UserInfo userInfo, Social social);
     TokenResponse recreateToken(String bearerToken);
     void saveRefreshTokenIntoRedis(Integer userId, String token);
     void logout(Integer userId);

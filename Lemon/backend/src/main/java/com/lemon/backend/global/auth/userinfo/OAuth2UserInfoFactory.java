@@ -8,11 +8,12 @@ import java.util.Map;
 
 public class OAuth2UserInfoFactory{
     public static OAuth2UserInfo getOAuth2UserInfo(Social social, Map<String, Object> attributes) {
+
         switch (social) {
             case KAKAO:
                 return new KakaoOAuth2UserInfo(attributes);
             case LINE:
-//                return new FacebookOAuth2UserInfo(attributes);
+                return new LineOAuth2UserInfo(attributes);
             default:
                 throw new IllegalArgumentException("Unsupported Social " + social);
         }

@@ -10,5 +10,5 @@ public abstract class OAuth2UserInfo {
         this.attributes = attributes;
     }
 
-    public abstract String getId(); //카카오 - "id"
+    public abstract String getId(); //카카오 - "id" 라인 - "sub"
 }

@@ -42,8 +42,8 @@ public class Users extends BaseEntity {
     @Column(name = "role")
     private Role role;
 
-    @Column(name = "kakao_id")
-    private String kakaoId;
+    @Column(name = "provider_id")
+    private String providerId;
 
     @Column(name = "is_language")
     @Builder.Default

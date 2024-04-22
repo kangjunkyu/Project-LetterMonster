@@ -34,8 +34,6 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final BooleanPath isLanguage = createBoolean("isLanguage");
 
-    public final StringPath kakaoId = createString("kakaoId");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
@@ -44,6 +42,8 @@ public class QUsers extends EntityPathBase<Users> {
     public final StringPath nicknameTag = createString("nicknameTag");
 
     public final EnumPath<Social> provider = createEnum("provider", Social.class);
+
+    public final StringPath providerId = createString("providerId");
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
 

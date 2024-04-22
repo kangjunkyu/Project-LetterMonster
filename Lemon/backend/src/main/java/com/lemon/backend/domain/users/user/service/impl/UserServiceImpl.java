@@ -37,14 +37,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public Users createKakaoUser(OAuth2UserInfo userInfo, Social social) {
+    public Users createUser(OAuth2UserInfo userInfo, Social social) {
         String nickname = makeNickname();
         long sameNicknameLastNumber = getSameNicknameLastNumber(nickname);
 
         Users newUser = Users.builder()
                 .nickname(nickname)
                 .nicknameTag(String.valueOf(sameNicknameLastNumber))
-                .kakaoId(userInfo.getId())
+                .providerId(userInfo.getId())
                 .provider(social)
                 .role(Role.USER)
                 .build();
