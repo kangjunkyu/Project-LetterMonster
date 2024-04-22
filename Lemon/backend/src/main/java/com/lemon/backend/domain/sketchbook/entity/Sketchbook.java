@@ -40,14 +40,24 @@ public class Sketchbook extends BaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id", nullable = true)
+    @JoinColumn(name = "users_id")
     private Users users;
-
-//    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Letter> letters = new ArrayList<>();
 
     @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
+
+    @Setter
+    @Column(name = "sketchbook_uuid")
+    private String sketchbookUuid;
+
+    @Setter
+    @Column(name="sketchbook_tag")
+    private String tag;
+
+    @Setter
+    @Column(name="write_possible")
+    private Boolean isWritePossible = false;
+
 
     public void addSketchbook(Users users) {
         this.users = users;

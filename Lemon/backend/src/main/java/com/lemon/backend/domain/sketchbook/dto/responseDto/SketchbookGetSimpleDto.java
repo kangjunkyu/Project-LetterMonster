@@ -14,5 +14,7 @@ public class SketchbookGetSimpleDto {
     private String shareLink;
     private String name;
     private UserGetDto holder;
-
+    private String uuid;
+    private String tag;
+    private Boolean isWritePossible;
 }

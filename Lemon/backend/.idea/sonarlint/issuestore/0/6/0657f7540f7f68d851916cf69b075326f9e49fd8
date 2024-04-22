@@ -1,6 +1,0 @@
-
-m	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óìé¶8÷ Øï1
-]	java:S125L"<This block of commented-out lines of code should be removed.(îáûıÿÿÿÿ8Å÷ Øï1
-^	java:S125„"<This block of commented-out lines of code should be removed.(îáûıÿÿÿÿ8Æ÷ Øï1
-v
-java:S1128"TRemove this unused import 'com.lemon.backend.domain.users.user.entity.QUsers.users'.(–ßãéùÿÿÿÿ8Ë÷ Øï1
