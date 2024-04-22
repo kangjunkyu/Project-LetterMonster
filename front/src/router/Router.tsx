@@ -4,6 +4,7 @@ import { Page_Url } from "./Page_Url";
 import DefaultLayouts from "../styles/layouts/DefaultLayouts";
 
 // 페이지
+import WelcomePage from "../components/pages/welcome/WelcomePage";
 import MainPage from "../components/pages/main/MainPage";
 import ErrorPage from "../components/pages/error/ErrorPage";
 import LoginPage from "../components/pages/login/LoginPage";
@@ -18,6 +19,7 @@ import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
 function Router() {
   return (
     <Routes>
+      <Route path={Page_Url.Welcome} element={<WelcomePage />}></Route>
       <Route element={<DefaultLayouts />} errorElement={<ErrorPage />}>
         <Route path={Page_Url.Main} element={<MainPage />}></Route>
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>

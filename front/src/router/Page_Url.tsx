@@ -1,6 +1,7 @@
 export const Page_Url = {
+  Welcome: "/",
   // 메인 페이지
-  Main: "/",
+  Main: "/main",
   // 로그인 페이지
   Login: "/login",
   // 카카오 콜백 페이지
@@ -14,6 +15,8 @@ export const Page_Url = {
   Motion: "/motion",
   // 편지쓰기 페이지
   WriteLetter: "/letter/write",
+  // 특정 스케치북에 편지쓰기 페이지
+  WriteLetterToSketchbook: "/letter/write/",
   // 스케치북 리스트 페이지
   SketchbookList: "/sketchbook/list",
   // 스케치북 페이지
