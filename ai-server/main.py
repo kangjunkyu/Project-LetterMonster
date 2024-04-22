@@ -1,25 +1,26 @@
 import os
 import uuid
 
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile, Form, APIRouter
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 import boto3
+from dotenv import load_dotenv
 from botocore.exceptions import ClientError
 import logging
 
 from pkg_resources import resource_filename
 from pydantic import BaseModel, Field
 
-from animated_drawings import render
 from AnimatedDrawings.examples.image_to_animation import image_to_animation
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+router = APIRouter()
 
 origins = [
     "*"
@@ -34,11 +35,13 @@ app.add_middleware(
 )
 
 # S3 설정
-# client_s3 = boto3.client(
-#     's3',
-#     aws_access_key_id=os.getenv("CREDENTIALS_ACCESS_KEY"),
-#     aws_secret_access_key=os.getenv("CREDENTIALS_SECRET_KEY")
-# )
+load_dotenv()
+
+client_s3 = boto3.client(
+    s3_bucket_name=os.getenv("BUCKET_NAME"),
+    aws_access_key_id=os.getenv("CREDENTIALS_ACCESS_KEY"),
+    aws_secret_access_key=os.getenv("CREDENTIALS_SECRET_KEY")
+)
 
 @app.get("/")
 async def home():
