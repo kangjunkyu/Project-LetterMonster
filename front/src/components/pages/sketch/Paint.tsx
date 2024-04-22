@@ -1,5 +1,5 @@
 import { KonvaEventObject } from "konva/lib/Node";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Rect,
   Stage,
@@ -14,50 +14,33 @@ import { DrawAction, PAINT_OPTIONS } from "./PaintConstants";
 import { SketchPicker } from "react-color";
 import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 import styles from "./Paint.module.scss";
-import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchCharacter";
 
 interface PaintProps {}
-
-const downloadURI = (uri: string | undefined, name: string) => {
-  const link = document.createElement("a");
-  link.download = name;
-  link.href = uri || "";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
 
 export const SIZE = 500;
 
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
+  // 캐릭터 생성 뮤테이션
+  const postSketchCharacterMutation = usePostSketchCharacter();
+
   const navigate = useNavigate();
-  const {
-    mutate: uploadImage,
-    isSuccess,
-    data: imageId,
-  } = useMutation(uploadImageData);
 
   const [color, setColor] = useState("#000");
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Select);
   const [scribbles, setScribbles] = useState<Scribble[]>([]);
-  // const [image, setImage] = useState<HTMLImageElement>();
   const [showPopover, setShowPopover] = useState(false);
+  const [characterNickname, setCharacterNickname] = useState("");
 
   const { image, setImage, onImportImageSelect } = useImportImageSelect();
 
-  // const onImportImageSelect = useCallback(
-  //   (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     if (e.target.files?.[0]) {
-  //       const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-  //       const image = new Image(SIZE / 2, SIZE / 2);
-  //       image.src = imageUrl;
-  //       setImage(image);
-  //     }
-  //     e.target.files = null;
-  //   },
-  //   []
-  // );
+  const handleCharacterNicknameChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCharacterNickname(event.target.value);
+    },
+    []
+  );
 
   const fileRef = useRef<HTMLInputElement>(null);
   const onImportImageClick = useCallback(() => {
@@ -67,25 +50,41 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const stageRef = useRef<any>(null);
 
   // 그림 추출
-  const onExportClick = useCallback(() => {
-    const dataUri = stageRef.current.toDataURL({
-      pixelRatio: 3,
-      mimeType: "image/png", //PNG 확장자라고 명시
-      quality: 1, // 그림 최대 품질
-    });
-    // downloadURI(dataUri, "image.png");
-    uploadImage({ image: dataUri });
-  }, [uploadImage]);
+  // const onExportClick = useCallback(() => {
+  //   const uri = stageRef.current.toDataURL({
+  //     pixelRatio: 3,
+  //     mimeType: "image/png",
+  //     quality: 1,
+  //   });
+  //   postSketchCharacterMutation.mutate({
+  //     file: uri,
+  //     nickname: characterNickname,
+  //   });
+  //   console.log("사진 들어감api로");
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(`/motion`,{
-        state:{
-          image: dataUri
-        }
+  //   navigate("/motion", { state: { image: uri } });
+  // }, [navigate]);
+  const onExportClick = useCallback(() => {
+    const uri = stageRef.current.toDataURL({
+      pixelRatio: 3,
+      mimeType: "image/png",
+      quality: 1,
+    });
+  
+    // Data URI를 Blob으로 변환
+    fetch(uri)
+      .then(res => res.blob())
+      .then(blob => {
+        const file = new File([blob], 'character.png', { type: 'image/png' });
+        const nickname = characterNickname;
+  
+        // usePostSketchCharacter 훅을 통해 데이터 전송
+        postSketchCharacterMutation.mutate({ nickname, file });
       });
-    }
-  }, [isSuccess, imageId, navigate]);
+  
+    console.log("이미지와 별명이 API로 전송됨");
+    navigate("/motion", { state: { image: uri, nickname: characterNickname } });
+  }, [navigate, characterNickname, postSketchCharacterMutation]);
 
   // 그림판 초기화
   const onClear = useCallback(() => {
@@ -245,11 +244,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           style={{ border: "3px solid black" }}
         >
           <Layer>
-            <Rect
-              width={SIZE}
-              height={SIZE}
-              fill="white" // 배경색을 빨간색으로 설정
-            />
+            <Rect width={SIZE} height={SIZE} fill="white" />
             {image && (
               <KonvaImage
                 image={image}
@@ -276,6 +271,15 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             <Transformer ref={transformerRef} />
           </Layer>
         </Stage>
+        <div>
+          <input
+            type="text"
+            value={characterNickname}
+            onChange={handleCharacterNicknameChange}
+            placeholder="캐릭터 별명을 입력해주세요"
+          />
+          <div>별명: {characterNickname}</div>
+        </div>
       </div>
     </div>
   );
