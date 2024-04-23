@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "local": "env-cmd -f .env.local vite",
-    "dev": "env-cmd -f .env.development vite",
-    "prod": "env-cmd -f .env.production vite",
+    "dev": "env-cmd -f .env.development vite --mode dev",
+    "prod": "env-cmd -f .env.production vite --mode prod",
     "build": "env-cmd -f .env.local tsc && vite build",
     "build:dev": "env-cmd -f .env.development tsc && vite build",
     "build:prod": "env-cmd -f .env.production tsc && vite build",
