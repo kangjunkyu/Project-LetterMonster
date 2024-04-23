@@ -10,7 +10,7 @@ RUN CI=false npm run build
 FROM nginx
 
 # host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
-COPY --from=builder build /usr/share/nginx/html
+COPY --from=builder dist /usr/share/nginx/html
 
 # nginx 의 default.conf 를 삭제
 RUN rm /etc/nginx/conf.d/default.conf
