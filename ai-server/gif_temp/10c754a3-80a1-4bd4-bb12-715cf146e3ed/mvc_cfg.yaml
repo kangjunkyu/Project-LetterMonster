@@ -1,9 +1,0 @@
-controller:
-  MODE: video_render
-  OUTPUT_VIDEO_PATH: "C:\\Users\\SSAFY\\Desktop\\FINAL_PJT\\ai-server\\gif_temp\\\
-    10c754a3-80a1-4bd4-bb12-715cf146e3ed\\gif\uD30C\uC77C\uBA85.gif"
-scene:
-  ANIMATED_CHARACTERS:
-  - character_cfg: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\gif_temp\10c754a3-80a1-4bd4-bb12-715cf146e3ed\char_cfg.yaml
-    motion_cfg: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\AnimatedDrawings\examples\config\motion\hello.yaml
-    retarget_cfg: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\AnimatedDrawings\examples\config\retarget\mixamo_fff.yaml

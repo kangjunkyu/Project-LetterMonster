@@ -1,8 +1,0 @@
-controller:
-  MODE: video_render
-  OUTPUT_VIDEO_PATH: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\gif_temp\33b8859b-da3e-433e-b3a4-1878feaaba76\test_wow.gif
-scene:
-  ANIMATED_CHARACTERS:
-  - character_cfg: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\gif_temp\33b8859b-da3e-433e-b3a4-1878feaaba76\char_cfg.yaml
-    motion_cfg: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\AnimatedDrawings\examples\config\motion\wow.yaml
-    retarget_cfg: C:\Users\SSAFY\Desktop\FINAL_PJT\ai-server\AnimatedDrawings\examples\config\retarget\mixamo_fff.yaml
