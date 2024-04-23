@@ -36,15 +36,18 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
         log.info("쿠키 저장해");
         //쿠키가 있는 상태이면 삭제함.
         if (authorizationRequest == null) {
+            log.info("쿠키 삭제");
             CookieUtil.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
             CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
             return;
         }
 
+        log.info("쿠키 첨부");
         // 쿠키에 REDIRECT URL 첨부
         CookieUtil.addCookie(response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME, CookieUtil.serialize(authorizationRequest), cookieExpireSeconds);
         String redirectUriAfterLogin = request.getParameter(REDIRECT_URI_PARAM_COOKIE_NAME);
         if (StringUtils.isNotBlank(redirectUriAfterLogin)) {
+            log.info("쿠키 진짜 넣음");
             CookieUtil.addCookie(response, REDIRECT_URI_PARAM_COOKIE_NAME, redirectUriAfterLogin, cookieExpireSeconds);
         }
     }
