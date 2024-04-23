@@ -12,6 +12,8 @@ import java.util.List;
 public interface SketchbookService {
     List<SketchbookGetSimpleDto> getSketchList(Integer userId);
 
+    List<SketchbookGetAllDto> getSketchAll();
+
     SketchbookGetDto getSketchSelect(String sketchId);
 
     SketchbookGetDetailDto getSketchSelect2(String sketchId);
