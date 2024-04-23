@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 * */
 
 @Slf4j
+@Component
 public class OAuth2AuthorizationRequestBasedOnCookieRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
