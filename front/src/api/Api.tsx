@@ -20,7 +20,7 @@ export const deleteUser = () => API.delete(`/user`);
 
 /** 유저 닉네임 조회 */
 export const getUserNickname = () =>
-  API.get(`/user`).then((res) => res.data.data);
+  API.get(`/user`).then((res) => res.data);
 
 /** 유저 닉네임 변경
  * @param nickname 유저 닉네임
