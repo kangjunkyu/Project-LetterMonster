@@ -31,13 +31,25 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Select);
   const [scribbles, setScribbles] = useState<Scribble[]>([]);
   const [showPopover, setShowPopover] = useState(false);
-  const [characterNickname, setCharacterNickname] = useState("");
 
   const { image, setImage, onImportImageSelect } = useImportImageSelect();
 
+  // 닉네임 validation hook
+  const [characterNickname, setCharacterNickname] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
   const handleCharacterNicknameChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setCharacterNickname(event.target.value);
+      const newNickname = event.target.value;
+      if(newNickname.startsWith(" ") ){
+        setNicknameError("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+      }else if (/[^a-zA-Z0-9ㄱ-힣\s]/.test(newNickname) || newNickname.includes('　')) {
+        setNicknameError("닉네임은 영문, 숫자, 한글만 가능합니다.");
+      } else if (newNickname.length > 20) {
+        setNicknameError("닉네임은 20글자 이하만 가능합니다.");
+      } else {
+        setCharacterNickname(newNickname);
+        setNicknameError("");
+      }
     },
     []
   );
@@ -70,18 +82,18 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
       mimeType: "image/png",
       quality: 1,
     });
-  
+
     // Data URI를 Blob으로 변환
     fetch(uri)
-      .then(res => res.blob())
-      .then(blob => {
-        const file = new File([blob], 'character.png', { type: 'image/png' });
+      .then((res) => res.blob())
+      .then((blob) => {
+        const file = new File([blob], "character.png", { type: "image/png" });
         const nickname = characterNickname;
-  
+
         // usePostSketchCharacter 훅을 통해 데이터 전송
         postSketchCharacterMutation.mutate({ nickname, file });
       });
-  
+
     console.log("이미지와 별명이 API로 전송됨");
     navigate("/motion", { state: { image: uri, nickname: characterNickname } });
   }, [navigate, characterNickname, postSketchCharacterMutation]);
@@ -179,16 +191,19 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
               key={id}
               aria-label={label}
               onClick={() => setDrawAction(id)}
-              style={{
-                colorScheme: id === drawAction ? "whatsapp" : undefined,
-              }}
+              // style={{
+              //   colorScheme: id === drawAction ? "whatsapp" : undefined,
+              // }}
+              className={`${styles.paintEachTool} ${
+                id === drawAction ? styles.toolSelected : ""
+              }`}
             >
               {icon}
-              {label}
+              {/* {label} */}
             </div>
           ))}
 
-          <div>
+          <div className={styles.colorButton}>
             <div
               onClick={() => setShowPopover(true)}
               style={{
@@ -214,7 +229,11 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             )}
           </div>
 
-          <button aria-label={"Clear"} onClick={onClear}>
+          <button
+            className={styles.etcButton}
+            aria-label={"Clear"}
+            onClick={onClear}
+          >
             초기화
           </button>
         </div>
@@ -228,8 +247,12 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             style={{ display: "none" }}
             accept="image/*"
           />
-          <button onClick={onImportImageClick}>그림 올리기</button>
-          <button onClick={onExportClick}>만나러 가기</button>
+          <button className={styles.etcButton} onClick={onImportImageClick}>
+            그림 올리기
+          </button>
+          <button className={styles.etcButton} onClick={onExportClick}>
+            만나러 가기
+          </button>
         </div>
       </div>
 
@@ -271,14 +294,22 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             <Transformer ref={transformerRef} />
           </Layer>
         </Stage>
-        <div>
-          <input
-            type="text"
-            value={characterNickname}
-            onChange={handleCharacterNicknameChange}
-            placeholder="캐릭터 별명을 입력해주세요"
-          />
-          <div>별명: {characterNickname}</div>
+      </div>
+      <div className={styles.characterNicknameContainer}>
+        <input
+          type="text"
+          value={characterNickname}
+          onChange={handleCharacterNicknameChange}
+          placeholder="캐릭터 별명을 입력해주세요"
+          className={styles.inputCharacterNickname}
+        />
+        <div className={styles.outputCharacterNickname}>
+          {/* <div>닉네임</div> */}
+          {nicknameError && (
+            <div className={styles.nicknameError} style={{ color: "red" }}>
+              {nicknameError}
+            </div>
+          )}
         </div>
       </div>
     </div>
