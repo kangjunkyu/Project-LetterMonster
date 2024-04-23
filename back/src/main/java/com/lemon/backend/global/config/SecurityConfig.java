@@ -2,7 +2,6 @@ package com.lemon.backend.global.config;
 
 import com.lemon.backend.global.auth.*;
 import com.lemon.backend.global.filter.JwtAuthenticationFilter;
-import com.lemon.backend.global.handler.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Slf4j
 @Configuration
@@ -31,7 +29,6 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOidcUserService customOidcUserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,7 +44,7 @@ public class SecurityConfig {
                         // 인증되지 않은 사용자도 접근 가능
                         .requestMatchers("**", "/error").permitAll()
                         // 로그인 한 사용자
-                        .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
+                        .requestMatchers("/user/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
 
 //                        // 인증된 사용자만 접근 가능
 //                        .requestMatchers("/user/**", "/sketchbooks/**", "/letters/*",
@@ -56,8 +53,7 @@ public class SecurityConfig {
 //                        // ADMIN 권한을 가진 인증된 사용자만 접근 가능
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
                 )
-                .exceptionHandling(authenticationManager -> authenticationManager
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint(handlerExceptionResolver)))
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .oauth2Login(oauth2 -> oauth2
