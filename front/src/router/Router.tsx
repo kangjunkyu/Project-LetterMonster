@@ -14,6 +14,7 @@ import MotionPage from "../components/pages/motion/MotionPage";
 import LetterWritePage from "../components/pages/letter/WriteLetterPage";
 import SketchbookListPage from "../components/pages/sketchbook/SketchbookListPage";
 import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
+import MyPage from "../components/pages/mypage/mypage";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
         <Route path={Page_Url.Motion} element={<MotionPage />}></Route>
+        <Route path={Page_Url.MyPage} element={<MyPage />}></Route>
         <Route
           path={Page_Url.SketchbookList}
           element={<SketchbookListPage />}

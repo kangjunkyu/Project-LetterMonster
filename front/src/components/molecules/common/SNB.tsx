@@ -27,7 +27,7 @@ function SNB() {
         <img src={green} alt="초록 크레파스" />
         {t("nav.letter")}
       </Link>
-      <Link className={styles.SNBButton} to={Page_Url.Main}>
+      <Link className={styles.SNBButton} to={Page_Url.MyPage}>
         <img src={blue} alt="파랑 크레파스" />
         {t("nav.more")}
       </Link>

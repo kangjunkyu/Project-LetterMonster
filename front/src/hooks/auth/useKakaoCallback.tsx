@@ -1,30 +1,26 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Page_Url } from "../../router/Page_Url";
-import { postKakaoLogin } from "../../api/Api";
 
 function useKakaoCallback() {
   const navigate = useNavigate();
-  useEffect(() => {
-    const code = new URL(window.location.href).searchParams.get("code");
-    postKakaoLogin(code)
-      .then((res) => {
-        //springboot에서 발급된 jwt 반환 localstorage에 저장
-        localStorage.setItem("accessToken", res.data.data.token["accessToken"]);
-        localStorage.setItem(
-          "refreshToken",
-          res.data.data.token["refreshToken"]
-        );
+  const location = useLocation(); // 현재 위치 정보를 가져옴
 
-        //메인 페이지로 이동
-        navigate(Page_Url.Main);
-      })
-      .catch((error: any) => {
-        //에러 발생 시 로그인 페이지로 이동
-        navigate(Page_Url.Login);
-        console.log(error);
-      });
-  });
+  useEffect(() => {
+    // URLSearchParams를 사용하여 쿼리 파라미터 접근
+    const queryParams = new URLSearchParams(location.search);
+    const accessToken = queryParams.get("accessToken");
+    const refreshToken = queryParams.get("refreshToken");
+
+    // localStorage에 토큰 저장
+    if (accessToken && refreshToken) {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      navigate(Page_Url.Main);
+    }
+  }, [location]);
+
+  return <div>로그인 처리 중입니다...</div>;
 }
 
 export default useKakaoCallback;

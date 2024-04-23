@@ -7,6 +7,8 @@ export const Page_Url = {
   KakaoCallback: "/kakao/callback",
   // 라인 콜백 페이지
   LineCallback: "/line/callback",
+  // 마이페이지
+  MyPage: "/mypage",
 
   // 캐릭터 그림 그리기 페이지
   Sketch: "/sketch",
