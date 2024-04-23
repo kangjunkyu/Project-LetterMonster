@@ -12,7 +12,10 @@ function SketchbookPage() {
   const { data } = useSketchbook(Number(sketchbookId.sketchbookId));
   const putSketchbook = usePutSketchbook();
   const deleteSketchbook = useDeleteSketchbook();
-  const [name, setName] = useState("임시수정");
+  const [
+    name,
+    // setName
+  ] = useState("임시수정");
   return (
     <article className={styles.SketchbookContainer}>
       <DefalutButton
