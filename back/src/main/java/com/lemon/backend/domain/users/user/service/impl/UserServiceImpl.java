@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
                 .nicknameTag(String.valueOf(sameNicknameLastNumber))
                 .providerId(userInfo.getId())
                 .provider(social)
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
 
         userRepository.save(newUser);
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         //헤더에 들어온 리프레시 토큰을 블랙리스트에 추가
         jwtTokenProvider.addTokenIntoBlackList(refreshToken);
 
-        TokenResponse tokenResponse = jwtTokenProvider.createToken(userId);
+        TokenResponse tokenResponse = jwtTokenProvider.createToken(userId, Role.ROLE_USER.name());
         saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
 
         return tokenResponse;

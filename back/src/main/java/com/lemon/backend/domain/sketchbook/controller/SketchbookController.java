@@ -8,13 +8,11 @@ import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +29,8 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 목록 조회", description = "스케치북 목록 조회 / userId 필요")
     @GetMapping("/list")
-    public ResponseEntity<?> getSketchList(HttpServletRequest request){
-        Integer userId = (Integer) request.getAttribute("userId");
+    public ResponseEntity<?> getSketchList(Authentication authentication){
+        Integer userId = (Integer) authentication.getPrincipal();
         List<SketchbookGetSimpleDto> sketchList = sketchbookService.getSketchList(userId);
         return getResponseEntity(SuccessCode.OK, sketchList);
     }
@@ -70,8 +68,8 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
     @PostMapping
-    public ResponseEntity<?> createSketch(HttpServletRequest request, @Valid @RequestBody SketchbookCreateDto sketchDto){
-        Integer userId = (Integer) request.getAttribute("userId");
+    public ResponseEntity<?> createSketch(Authentication authentication, @Valid @RequestBody SketchbookCreateDto sketchDto){
+        Integer userId = (Integer) authentication.getPrincipal();
         Long createSketchId = sketchbookService.createSketchbook(userId,sketchDto);
         return getResponseEntity(SuccessCode.CREATED, createSketchId);
     }

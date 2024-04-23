@@ -1,6 +1,8 @@
 package com.lemon.backend.global.config;
 
 import com.lemon.backend.global.auth.*;
+import com.lemon.backend.global.filter.JwtAuthenticationFilter;
+import com.lemon.backend.global.handler.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +15,11 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoderFactory;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Slf4j
 @Configuration
@@ -26,21 +30,35 @@ public class SecurityConfig {
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOidcUserService customOidcUserService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .formLogin(form -> form.disable())
+
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .headers(headers -> headers.frameOptions().disable())
-
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/login/oauth2/code/*")
-                        .permitAll()
-                        .anyRequest().permitAll())
+                        // 인증되지 않은 사용자도 접근 가능
+                        .requestMatchers("**", "/error").permitAll()
+                        // 로그인 한 사용자
+                        .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
+
+//                        // 인증된 사용자만 접근 가능
+//                        .requestMatchers("/user/**", "/sketchbooks/**", "/letters/*",
+//                                "/characters/**", "/ai/**").hasRole("USER")
+//
+//                        // ADMIN 권한을 가진 인증된 사용자만 접근 가능
+//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                )
+                .exceptionHandling(authenticationManager -> authenticationManager
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint(handlerExceptionResolver)))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(auth -> auth
