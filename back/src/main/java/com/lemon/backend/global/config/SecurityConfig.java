@@ -1,10 +1,6 @@
 package com.lemon.backend.global.config;
 
-import com.lemon.backend.global.auth.CustomOAuth2UserService;
-import com.lemon.backend.global.auth.OAuth2AuthorizationRequestBasedOnCookieRepository;
-import com.lemon.backend.global.auth.OAuth2LoginFailureHandler;
-import com.lemon.backend.global.auth.OAuth2LoginSuccessHandler;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.lemon.backend.global.auth.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -15,9 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.oidc.authentication.OidcIdTokenDecoderFactory;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoderFactory;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -31,6 +25,7 @@ public class SecurityConfig {
 
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOidcUserService customOidcUserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,15 +36,20 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .headers(headers -> headers.frameOptions().disable())
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/login/oauth2/code/*")
                         .permitAll()
                         .anyRequest().permitAll())
+
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(auth -> auth
                                 .baseUri("/oauth2/authorization")
                                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
-                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .userInfoEndpoint(userInfo -> {
+                            userInfo.userService(customOAuth2UserService);
+                            userInfo.oidcUserService(customOidcUserService);
+                        })
                         .successHandler(oAuth2LoginSuccessHandler)
                         .failureHandler(oAuth2LoginFailureHandler(oAuth2AuthorizationRequestBasedOnCookieRepository())));
 
@@ -83,7 +83,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtDecoderFactory<ClientRegistration> idTokenecoderFactory() {
+    public JwtDecoderFactory<ClientRegistration> idTokenEncoderFactory() {
         OidcIdTokenDecoderFactory idTokenDecoderFactory = new OidcIdTokenDecoderFactory();
         idTokenDecoderFactory.setJwsAlgorithmResolver(clientRegistration -> MacAlgorithm.HS256);
         return idTokenDecoderFactory;
