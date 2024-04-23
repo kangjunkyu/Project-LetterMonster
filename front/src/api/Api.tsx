@@ -1,16 +1,6 @@
 import API, { ImgAPI } from "./Config";
 
-export const baseAPI = () => API.get("/");
-
 //Authorization & User 관련 API
-
-/** 카카오 소셜 로그인 */
-export const postKakaoLogin = (code: string | null) =>
-  API.post(`/kakao`, {}, { params: { code: code } });
-
-/** 라인 소셜 로그인 */
-export const postLineLogin = (code: string) =>
-  API.post(`/line`, {}, { params: { code: code } });
 
 /** 로그아웃 */
 export const postLogout = () => API.post(`/user/logout`);
@@ -95,10 +85,7 @@ export const getMotionList = () => API.get(`/characters/list/motion`);
  * @param characterId 캐릭터 아이디
  * @param motionId 모션 아이디
  */
-export const getMotionSelect = (
-  characterId: number,
-  motionId: number
-) =>
+export const getMotionSelect = (characterId: number, motionId: number) =>
   API.get(`/characters/select/motion`, {
     params: { charcterId: characterId, motionId: motionId },
   });
