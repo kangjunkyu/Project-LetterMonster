@@ -32,12 +32,10 @@ function SketchbookListPage() {
   };
 
   const renderListItems = (items: [IItem]) => {
-    return items.map((item: IItem) => (
-      <>
-        <Link to={`${Page_Url.Sketchbook}${item.id}`}>
-          <SketchbookListItem key={item.id} item={item} />
-        </Link>
-      </>
+    return items.map((item: IItem, i) => (
+      <Link key={i} to={`${Page_Url.Sketchbook}${item.id}`}>
+        <SketchbookListItem item={item} />
+      </Link>
     ));
   };
 
