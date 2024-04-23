@@ -5,10 +5,11 @@ import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
 
 import static com.lemon.backend.global.response.CommonResponseEntity.getResponseEntity;
 
@@ -28,31 +29,31 @@ public class UserController {
 
     @Operation(summary = "로그아웃", description = "Header의 액세스 토큰을 이용하여 로그아웃을 합니다.")
     @PostMapping("/logout")
-    public ResponseEntity<?> recreateToken(HttpServletRequest request){
-        Integer userId = (Integer) request.getAttribute("userId");
+    public ResponseEntity<?> recreateToken(Authentication authentication){
+        Integer userId = (Integer) authentication.getPrincipal();
         userService.logout(userId);
         return getResponseEntity(SuccessCode.OK);
     }
 
     @Operation(summary = "닉네임 변경", description = "Header의 액세스 토큰을 이용하여 닉네임 변경을 합니다.")
     @PostMapping("/nickname")
-    public ResponseEntity<?> changeNickname(HttpServletRequest httpServletRequest, @RequestBody ChangeNicknameRequest request){
-        Integer userId = (Integer) httpServletRequest.getAttribute("userId");
+    public ResponseEntity<?> changeNickname(Authentication authentication, @RequestBody ChangeNicknameRequest request){
+        Integer userId = (Integer) authentication.getPrincipal();
         return getResponseEntity(SuccessCode.OK, userService.changeNickname(userId, request));
     }
 
     @Operation(summary = "회원탈퇴", description = "회원 탈퇴를 진행합니다.")
     @DeleteMapping()
-    public ResponseEntity<?> withdrawUser(HttpServletRequest httpServletRequest){
-        Integer userId = (Integer) httpServletRequest.getAttribute("userId");
+    public ResponseEntity<?> withdrawUser(Authentication authentication){
+        Integer userId = (Integer) authentication.getPrincipal();
         userService.withdrawUser(userId);
         return getResponseEntity(SuccessCode.ACCEPTED);
     }
 
-    @Operation(summary = "유저 정보 조회", description = "유저 정보를 조회합니다.")
+    @Operation(summary = "유저 정보 조회", description = "로그인된 유저 정보를 조회합니다.")
     @GetMapping
-    public ResponseEntity<?> getUserInfo(HttpServletRequest httpServletRequest){
-        Integer userId = (Integer) httpServletRequest.getAttribute("userId");
-        return getResponseEntity(SuccessCode.OK, userService.getUserInfo(userId));
+    public ResponseEntity<?> getUserInfo(Authentication authentication) {
+        Integer userId = (Integer) authentication.getPrincipal();
+        return ResponseEntity.ok(userService.getUserInfo(userId));
     }
 }

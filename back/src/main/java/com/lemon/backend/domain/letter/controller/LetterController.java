@@ -6,10 +6,10 @@ import com.lemon.backend.domain.letter.service.LetterService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +23,6 @@ import static com.lemon.backend.global.response.CommonResponseEntity.getResponse
 public class LetterController {
 
     private final LetterService letterService;
-//    private final SuccessCode successCode;
 
     @Operation(summary = "편지 목록 조회", description = "편지 목록 조회, sketchbookId 필요")
     @GetMapping("/list")
@@ -34,9 +33,9 @@ public class LetterController {
     }
     @Operation(summary = "편지 생성", description = "편지 생성, sketchbookId, characterId 필요")
     @PostMapping
-    public ResponseEntity<?> createLetter(HttpServletRequest request, @Valid @RequestBody LetterCreateDto letterDto){
-        Integer senederId = (Integer) request.getAttribute("userId");
-        Long createLetterId = letterService.createLetter(senederId, letterDto);
+    public ResponseEntity<?> createLetter(Authentication authentication, @Valid @RequestBody LetterCreateDto letterDto){
+        Integer senderId = (Integer) authentication.getPrincipal();
+        Long createLetterId = letterService.createLetter(senderId, letterDto);
         return getResponseEntity(SuccessCode.CREATED, createLetterId);
     }
 

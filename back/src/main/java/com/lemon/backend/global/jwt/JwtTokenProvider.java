@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -33,22 +35,26 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenResponse createToken(Integer userId) {
+    public TokenResponse createToken(Integer userId, String role) {
         long now = (new Date()).getTime();
         Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
         String id = userId.toString();
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", id);
+        claims.put("role", role);
+
         // Access Token 생성
         String accessToken = Jwts.builder()
-                .setSubject(id)
+                .setClaims(claims)
                 .setExpiration(accessTokenExpiredAt)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setSubject(id)
+                .setClaims(claims)
                 .setExpiration(refreshTokenExpiredAt)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
@@ -62,6 +68,11 @@ public class JwtTokenProvider {
     public Integer getSubject(String token) {
         Claims claims = parseClaims(token);
         return Integer.parseInt(claims.getSubject());
+    }
+
+    public String getRoleFromToken(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("role", String.class);
     }
 
     //토큰 검증
