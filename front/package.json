@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "local": "env-cmd -f .env.local vite",
-    "dev": "env-cmd -f .env.development vite",
-    "prod": "env-cmd -f .env.production vite",
-    "build": "env-cmd -f .env.local tsc && vite build",
-    "build:dev": "env-cmd -f .env.development tsc && vite build",
-    "build:prod": "env-cmd -f .env.production tsc && vite build",
+    "local": "env-cmd -f .env.local vite --mode local",
+    "dev": "env-cmd -f .env.development vite --mode development",
+    "prod": "env-cmd -f .env.production vite --mode production",
+    "build": "env-cmd -f .env.local tsc && vite build --mode local",
+    "build:dev": "env-cmd -f .env.development tsc && vite build --mode development",
+    "build:prod": "env-cmd -f .env.production tsc && vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
