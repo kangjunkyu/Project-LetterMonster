@@ -15,6 +15,7 @@ import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +36,6 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
         return sketchbookRepository.getSketchList(userId).orElse(Collections.emptyList());
-    }
-
-    @Override
-    public List<SketchbookGetAllDto> getSketchAll(){
-        return sketchbookRepository.getSketchAll().orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
 
     @Override
