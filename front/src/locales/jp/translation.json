@@ -1,0 +1,15 @@
+{
+  "header": {
+    "language": "言語設定",
+    "help": "ヘルプ"
+  },
+  "nav": {
+    "sketchbook": "スケッチブック",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "register": "ユーザー登録",
+    "drawing": "描く",
+    "letter": "手紙",
+    "more": "以外"
+  }
+}
