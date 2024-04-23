@@ -9,10 +9,10 @@ import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래�
 
 const queryClient = new QueryClient();
 
-const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID;
-ReactGA.initialize(gaTrackingId, { debug: true }); // react-ga 초기화 및 debug 사용
+// const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID;
+// ReactGA.initialize(gaTrackingId, { debug: true }); // react-ga 초기화 및 debug 사용
 
-RouterChangeTracker();
+// RouterChangeTracker();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
