@@ -3,6 +3,10 @@
     "language": "Languages",
     "help": "Help"
   },
+  "button": {
+    "back": "Go Back",
+    "goToMain": "Go To Main"
+  },
   "nav": {
     "sketchbook": "Sketchbook",
     "logout": "Sign Out",
@@ -11,5 +15,6 @@
     "drawing": "drawing",
     "letter": "Letter",
     "more": "More"
-  }
+  },
+  "error": "Unfortunately, there's no page like that"
 }

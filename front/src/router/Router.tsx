@@ -20,7 +20,7 @@ function Router() {
   return (
     <Routes>
       <Route path={Page_Url.Welcome} element={<WelcomePage />}></Route>
-      <Route element={<DefaultLayouts />} errorElement={<ErrorPage />}>
+      <Route element={<DefaultLayouts />}>
         <Route path={Page_Url.Main} element={<MainPage />}></Route>
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
@@ -45,6 +45,7 @@ function Router() {
         ></Route>
         <Route path={Page_Url.LineCallback} element={<LineCallback />}></Route>
       </Route>
+      <Route path={Page_Url.Error404} element={<ErrorPage />}></Route>
     </Routes>
   );
 }
