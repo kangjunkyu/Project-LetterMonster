@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 .vite
 .env
-.env.local
 .env.development
+.env.local
+.env.production

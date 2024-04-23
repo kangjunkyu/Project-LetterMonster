@@ -7,25 +7,36 @@ import com.lemon.backend.global.exception.ErrorResponseEntity;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+@Slf4j
+@Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final static String main = "/";
     private final static List<String> whiteList = new ArrayList<>();
     static {
         //jwt 토큰이 필요 없는 곳은 uri 추가
-        whiteList.add("/api/kakao");
+        whiteList.add("/api/login/oauth2/code");
         whiteList.add("/api/user/token");
         whiteList.add("/api/user/login");
         whiteList.add("/api/swagger-ui");
@@ -33,33 +44,41 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String requestURI = request.getRequestURI();
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        String requestURI = httpRequest.getRequestURI();
 
-        //main url 이거나 whiteList url이면 다음 필터로
-        if (requestURI.equals(main) || checkWhiteList(requestURI)) {
+        if (requestURI.equals("/") || checkWhiteList(requestURI)) {
             chain.doFilter(request, response);
             return;
         }
 
-        try{
-            String bearerToken = request.getHeader("Authorization");
-            String accessToken = jwtTokenProvider.resolveToken(bearerToken);
+        try {
+            String bearerToken = httpRequest.getHeader("Authorization");
+            if (bearerToken != null && !bearerToken.isEmpty()) {
+                String accessToken = jwtTokenProvider.resolveToken(bearerToken);
+                if (jwtTokenProvider.validateToken(accessToken)) {
+                    Integer userId = jwtTokenProvider.getSubject(accessToken);
+                    String role = jwtTokenProvider.getRoleFromToken(accessToken);
 
-//            if(accessToken == null) throw new CustomException(ErrorCode.INVALID_ACCESS);
+                    List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            //회원인 경우
-            if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
-                // 토큰이 유효할 경우
-                Integer userId = jwtTokenProvider.getSubject(accessToken);
-                request.setAttribute("userId", userId);
+                } else {
+                    log.info("Token validation failed");
+                }
+            } else {
+                log.info("No Authorization token provided");
             }
-
             chain.doFilter(request, response);
-        }catch (StringIndexOutOfBoundsException e) {
-            throw new CustomException(ErrorCode.NOT_FOUND_AUTH_TOKEN);
         } catch (CustomException e) {
-            setErrorResponse(response, e.getErrorCode());
+            setErrorResponse((HttpServletResponse) response, e.getErrorCode());
+        }
+        catch (Exception e) {
+            log.error("Error processing authentication", e);
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Error");
         }
     }
 
@@ -86,5 +105,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return false;
     }
-
 }
