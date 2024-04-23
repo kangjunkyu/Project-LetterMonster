@@ -54,6 +54,17 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
     @Override
+    public Optional<List<SketchbookGetAllDto>> getSketchAll(){
+        List<SketchbookGetAllDto> sketchAll = query
+                .select(constructor(SketchbookGetAllDto.class,
+                        sketchbook.id,
+                        sketchbook.name,
+                        sketchbook.tag)).from(sketchbook)
+                .fetch();
+        return Optional.ofNullable(sketchAll.isEmpty() ? null : sketchAll);
+    }
+
+    @Override
     public Optional<SketchbookGetDto> getSketchSelect(String sketchId) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
