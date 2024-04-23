@@ -1,5 +1,6 @@
 package com.lemon.backend.global.auth;
 
+import com.lemon.backend.domain.users.user.entity.Role;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.cookie.CookieUtil;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
@@ -40,7 +41,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         if (cookieRedirectUrl.isPresent()) {
             Integer userId = Integer.valueOf(userPrincipal.getName());
-            TokenResponse tokenResponse = jwtTokenProvider.createToken(userId);
+            TokenResponse tokenResponse = jwtTokenProvider.createToken(userId, Role.ROLE_USER.name());
             userService.saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
 
             String redirectUrl = UriComponentsBuilder.fromUriString(cookieRedirectUrl.get())
