@@ -1,9 +1,9 @@
 import os
+import shutil
 import uuid
 import logging
 
 from fastapi import FastAPI, APIRouter
-from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from starlette.responses import JSONResponse
@@ -13,9 +13,10 @@ import boto3
 from dotenv import load_dotenv
 from botocore.exceptions import ClientError
 
+from PIL import Image, ImageSequence
+
 from pkg_resources import resource_filename
 from AnimatedDrawings.examples.image_to_animation import image_to_animation
-
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -42,6 +43,8 @@ s3 = boto3.client(
     aws_access_key_id=os.getenv("CREDENTIALS_ACCESS_KEY"),
     aws_secret_access_key=os.getenv("CREDENTIALS_SECRET_KEY")
 )
+
+
 # s3.Bucket(os.getenv("S3_BUCKET"))
 
 
@@ -95,11 +98,24 @@ async def create_joint_gif(request: CharacterCreateRequest):
         # retarget config 절대경로 불러오기
         if motion == "dab" or motion == "jumping" or motion == "wave_hello" or motion == "zombie":
             retarget_cfg_fn = resource_filename(__name__, f'AnimatedDrawings/examples/config/retarget/fair1_ppf.yaml')
+        elif motion == "jumping_jacks":
+            retarget_cfg_fn = resource_filename(__name__, f'AnimatedDrawings/examples/config/retarget/cmu1_pfp.yaml')
+
         else:
             retarget_cfg_fn = resource_filename(__name__, f'AnimatedDrawings/examples/config/retarget/mixamo_fff.yaml')
 
         # joint, gif 생성 함수 호출
         image_to_animation(image_path, gif_path, motion_cfg_fn, retarget_cfg_fn, character_id, motion)
+
+        # gif 압축
+        # is_compressed = await gif_compress(
+        #     original_path=gif_path + f"/{character_id}_{motion}.gif",
+        #     compressed_path=gif_path + f"/{character_id}_{motion}_compressed.gif"
+        # )
+        #
+        # if not is_compressed:
+        #     print("압축 실패")
+        #     return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
 
         # S3에 gif 업로드
         is_saved = await save_gif_s3(gif_path, character_id, motion)
@@ -109,13 +125,12 @@ async def create_joint_gif(request: CharacterCreateRequest):
 
         # 로컬에 저장된 img, gif 삭제
         os.remove(image_path)
-        os.remove(gif_path + f"/{character_id}_{motion}.gif")
+        shutil.rmtree(gif_path)
 
         return JSONResponse(content={"gif_path": f"{character_id}_{motion}.gif"}, status_code=200)
-        # return FileResponse(path=gif_path + f"/{character_id}_{motion}.gif", media_type="image/gif")
 
     except Exception as e:
-        logger.error("create_joint_gif => 에러", e)
+        logger.error(f"create_joint_gif => 에러: {e}", e)
         return JSONResponse(content={"error": f"Fast API ERROR : create_joint_gif => {e}"}, status_code=500)
 
 
@@ -130,7 +145,7 @@ async def get_img_s3(s3_img_url):
         return True
 
     except Exception as e:
-        logger.error(f"get_img_s3 => 에러", e)
+        logger.error(f"get_img_s3 => 에러: {e}", e)
         return False
 
 
@@ -147,5 +162,36 @@ async def save_gif_s3(gif_path, character_id, motion):
         return True
 
     except Exception as e:
-        logger.error(f"save_gif_s3 => 에러", e)
+        logger.error(f"save_gif_s3 => 에러 : {e}", e)
+        return False
+
+
+# gif 압축
+async def gif_compress(original_path, compressed_path):
+    try:
+        with Image.open(original_path) as origin:
+            # 프레임 목록 추출
+            frames = [frame.copy() for frame in ImageSequence.Iterator(origin)]
+
+            # 각 프레임을 조정하여 크기를 줄임
+            compressed_frames = [
+                frame.resize((int(frame.width * 0.7), int(frame.height * 0.7)), Image.Resampling.LANCZOS)
+                for frame in frames
+            ]
+
+            # 새 프레임을 gif로 저장
+            compressed_frames[0].save(
+                compressed_path,
+                save_all=True,
+                append_images=compressed_frames[1:],
+                optimize=False,
+                duration=origin.info['duration'],
+                loop=origin.info['loop'],
+                disposal=2
+            )
+            print("압축 성공")
+            return True
+
+    except Exception as e:
+        logger.error(f"gif_compress => 에러 : {e}")
         return False
