@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/letter_monster
+    username: ${H2_USER}
+    password: ${H2_PASSWORD}
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+  h2:
+    console:
+      path: /h2console
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  data:
+    redis:
+      lettuce:
+        cluster:
+          refresh:
+            adaptive: true
+      host: ${REDIS_HOST}
+      port: ${REDIS_LOCAL_PORT}
+  springdoc:
+    api-docs:
+      path: /v3/api-docs
+      enabled: true
+    swagger-ui:
+      path: /swagger-ui.html
+      enabled: true
+
+FAST_API:
+  URL: ${AI_LOCAL_URL}
