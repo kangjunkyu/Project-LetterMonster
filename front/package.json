@@ -4,8 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "local": "env-cmd -f .env.local vite",
+    "dev": "env-cmd -f .env.development vite",
+    "prod": "env-cmd -f .env.production vite",
+    "build": "env-cmd -f .env.local tsc && vite build",
+    "build:dev": "env-cmd -f .env.development tsc && vite build",
+    "build:prod": "env-cmd -f .env.production tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
