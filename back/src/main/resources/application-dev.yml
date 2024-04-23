@@ -4,8 +4,6 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_DEV_PORT}/lemon?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
-
-
   jpa:
     hibernate:
       ddl-auto: update
