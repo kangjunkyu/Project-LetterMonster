@@ -7,7 +7,7 @@ export const PAINT_OPTIONS = [
   {
     id: DrawAction.Select,
     label: "손",
-    icon: <span className="material-icons">arrow_circle_left</span>,
+    icon: <span className="material-icons">back_hand</span>,
   },
   {
     id: DrawAction.Scribble,
