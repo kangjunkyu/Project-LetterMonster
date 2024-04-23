@@ -5,11 +5,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface CharacterService {
-    Object createCharacter(MultipartFile file, String nickname);
+    Object createCharacter(MultipartFile file, int userId, String nickname);
 
     Object deleteCharacter(Long characterId);
 
-    Object updateCharacterNickname(Long characterId);
+    Object updateCharacterNickname(Long characterId, String nickname);
 
     Object selectCharacterMotion(Long characterId, Long motionId);
 
@@ -18,4 +18,6 @@ public interface CharacterService {
     Object showMotions();
 
     Object changeMainCharacter(Long characterId, int userId);
+
+    Object cancelMakeCharacter(Long characterId);
 }

@@ -33,9 +33,11 @@
 //            metadata.setContentType(file.getContentType());
 //            metadata.setContentLength(file.getSize());
 //            amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
+//            System.out.println("성공");
 //            return ResponseEntity.ok(fileUrl);
 //        } catch (IOException e) {
 //            e.printStackTrace();
+//            System.out.println("실패");
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 //        }
 //    }

@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d192343a-bbb2-42c9-bb22-48d0420c8173" name="변경" comment="" />
+    <list default="true" id="d192343a-bbb2-42c9-bb22-48d0420c8173" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/dto/response/CharactersGetDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/generated/com/lemon/backend/domain/characters/entity/QCharacters.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/generated/com/lemon/backend/domain/characters/entity/QCharacters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/controller/CharacterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/controller/CharacterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/controller/FileUploadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/controller/FileUploadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/entity/CharacterMotion.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/entity/CharacterMotion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/entity/Characters.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/entity/Characters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/service/CharacterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/service/CharacterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/service/impl/CharacterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/characters/service/impl/CharacterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/users/user/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/domain/users/user/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/global/config/S3Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/lemon/backend/global/config/S3Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application-local.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application-local.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,9 +40,13 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "checkBackend",
+    "git-widget-placeholder": "be/character",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SSAFY/Desktop/DBS/S10P31B103/Lemon/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "모듈",
     "project.structure.proportion": "0.0",
@@ -48,6 +70,7 @@
       <option name="presentableId" value="Default" />
       <updated>1713101492405</updated>
       <workItem from="1713156393871" duration="27000" />
+      <workItem from="1713744359890" duration="1895000" />
     </task>
     <servers />
   </component>

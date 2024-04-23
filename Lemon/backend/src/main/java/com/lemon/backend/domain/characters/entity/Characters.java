@@ -31,6 +31,9 @@ public class Characters extends BaseEntity {
     @Builder.Default
     private Boolean mainCharacter = false;
 
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String url;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
@@ -54,6 +57,9 @@ public class Characters extends BaseEntity {
 
     public void changeMainCharacter() {
         this.mainCharacter = !this.mainCharacter;
+    }
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 }

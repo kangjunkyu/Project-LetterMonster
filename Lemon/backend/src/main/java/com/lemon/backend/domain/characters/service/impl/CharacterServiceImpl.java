@@ -5,6 +5,11 @@ import com.lemon.backend.domain.characters.repository.CharacterMotionRepository;
 import com.lemon.backend.domain.characters.repository.CharacterRepository;
 import com.lemon.backend.domain.characters.repository.MotionRepository;
 import com.lemon.backend.domain.characters.service.CharacterService;
+import com.lemon.backend.domain.users.user.entity.Users;
+import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +24,7 @@ public class CharacterServiceImpl implements CharacterService {
     private final CharacterRepository characterRepository;
     private final CharacterMotionRepository characterMotionRepository;
     private final MotionRepository motionRepository;
+    private final UserRepository userRepository;
 
     /*
     1. react에서 파일 업로드 or 사용자 그리기를 통해 생성된 그림 파일을 spring boot로 전송한다.
@@ -26,16 +32,8 @@ public class CharacterServiceImpl implements CharacterService {
     3. url과 캐릭터 이름을 db에 저장한다
      */
     @Override
-    public Object createCharacter(MultipartFile file, String nickname) {
+    public Object createCharacter(MultipartFile file, int userId, String nickname) {
 
-        return null;
-    }
-
-    /*
-    캐릭터 생성을 취소하고, 사용자 그림파일을 s3에서 삭제한다. 또한 db에서 캐릭터를 삭제한다
-     */
-    @Override
-    public Object deleteCharacter(Long characterId) {
         return null;
     }
 
@@ -43,9 +41,18 @@ public class CharacterServiceImpl implements CharacterService {
     캐릭터의 닉네임을 사용자의 입력에 따라 변경한다.
      */
     @Override
-    public Object updateCharacterNickname(Long characterId) {
-        Optional<Characters> characters = characterRepository.findById(characterId);
-        return null;
+    @Transactional
+    public Object updateCharacterNickname(Long characterId, String nickname) {
+        Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
+        if(optionalCharacters.isPresent()) {
+            Characters characters = optionalCharacters.get();
+            characters.changeNickname(nickname);
+            return null;
+        } else {
+            return null;
+        }
+
+
     }
 
     /*
@@ -63,8 +70,14 @@ public class CharacterServiceImpl implements CharacterService {
      */
     @Override
     public Object showCharacters(int userId) {
+        Optional<Users> optionalUser = userRepository.findByIdFetch(userId);
+        if(optionalUser.isPresent()) {
+            Users user = optionalUser.get();
+            return user.getCharacterList();
+        } else {
+            throw new CustomException(ErrorCode.USERS_NOT_FOUND);
+        }
 
-        return null;
     }
 
     /*
@@ -80,6 +93,22 @@ public class CharacterServiceImpl implements CharacterService {
      */
     @Override
     public Object changeMainCharacter(Long characterId, int userId) {
+        return null;
+    }
+
+    /*
+    캐릭터 생성을 취소하고, 사용자 그림파일을 s3에서 삭제한다. 또한 db에서 캐릭터를 삭제한다.
+     */
+    @Override
+    public Object cancelMakeCharacter(Long characterId) {
+        return null;
+    }
+
+    /*
+    사용자 그림파일을 s3에서 삭제한다. 또한 db에서 캐릭터의 url을 비우고 유저id를 0으로 만든다.
+     */
+    @Override
+    public Object deleteCharacter(Long characterId) {
         return null;
     }
 }
