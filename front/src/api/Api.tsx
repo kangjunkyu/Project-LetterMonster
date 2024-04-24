@@ -19,14 +19,16 @@ export const postLogout = () => API.post(`/user/logout`);
 export const deleteUser = () => API.delete(`/user`);
 
 /** 유저 닉네임 조회 */
-export const getUserNickname = () =>
-  API.get(`/user`).then((res) => res.data);
+export const getUserNickname = () => API.get(`/user`).then((res) => res.data);
 
 /** 유저 닉네임 변경
  * @param nickname 유저 닉네임
  */
 export const postNickname = (nickname: string) =>
-  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
+    res.data;
+    console.log(res.data);
+  });
 
 // 캐릭터 관련 API
 
@@ -95,10 +97,7 @@ export const getMotionList = () => API.get(`/characters/list/motion`);
  * @param characterId 캐릭터 아이디
  * @param motionId 모션 아이디
  */
-export const getMotionSelect = (
-  characterId: number,
-  motionId: number
-) =>
+export const getMotionSelect = (characterId: number, motionId: number) =>
   API.get(`/characters/select/motion`, {
     params: { charcterId: characterId, motionId: motionId },
   });

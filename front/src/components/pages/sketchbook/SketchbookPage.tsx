@@ -4,7 +4,7 @@ import useSketchbook, {
   useDeleteSketchbook,
   usePutSketchbook,
 } from "../../../hooks/sketchbook/useSketchbook";
-import DefalutButton from "../../atoms/button/DefalutButton";
+import DefaultButton from "../../atoms/button/DefaultButton";
 import { useState } from "react";
 
 function SketchbookPage() {
@@ -18,7 +18,7 @@ function SketchbookPage() {
   ] = useState("임시수정");
   return (
     <article className={styles.SketchbookContainer}>
-      <DefalutButton
+      <DefaultButton
         onClick={() =>
           putSketchbook.mutate({
             sketchbookId: Number(sketchbookId.sketchbookId),
@@ -27,14 +27,14 @@ function SketchbookPage() {
         }
       >
         수정
-      </DefalutButton>
-      <DefalutButton
+      </DefaultButton>
+      <DefaultButton
         onClick={() =>
           deleteSketchbook.mutate(Number(sketchbookId.sketchbookId))
         }
       >
         삭제
-      </DefalutButton>
+      </DefaultButton>
       {data && (
         <>
           <div>{data.data.name} 스케치북</div>
