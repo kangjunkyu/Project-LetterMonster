@@ -105,14 +105,14 @@ export const getSketchbookList = () =>
 /** 스케치북 선택 간단 조회
  * @param sketchbookId 스케치북 아이디
  */
-export const getSketchbookSelectedsimple = (sketchbookId: number) =>
-  API.get(`/sketchbooks/simple/${sketchbookId}`).then((res) => res.data);
+export const getSketchbookSelectedsimple = (uuid: string) =>
+  API.get(`/sketchbooks/simple/${uuid}`).then((res) => res.data);
 
 /** 스케치북 선택 상세 조회
  * @param sketchbookId 스케치북 아이디
  */
-export const getSketchbookSelected = (sketchbookId: number) =>
-  API.get(`/sketchbooks/detail/${sketchbookId}`).then((res) => res.data);
+export const getSketchbookSelected = (uuid: string) =>
+  API.get(`/sketchbooks/detail/${uuid}`).then((res) => res.data);
 
 /** 스케치북 수정
  * @requires sketchbookId 스케치북 아이디
