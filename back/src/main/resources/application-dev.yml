@@ -17,4 +17,4 @@ spring:
       host: ${REDIS_HOST}
       port: ${REDIS_DEV_PORT}
 FAST_API:
-  URL: ${AI_DEV_URL}
+  URL: ${AI_URL}

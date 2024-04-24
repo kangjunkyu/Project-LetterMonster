@@ -33,4 +33,4 @@ spring:
       enabled: true
 
 FAST_API:
-  URL: ${AI_LOCAL_URL}
+  URL: ${AI_URL}

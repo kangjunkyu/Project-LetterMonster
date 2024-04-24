@@ -121,7 +121,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserGetDto getUserInfo(Integer userId) {
         Users user = userRepository.findById(userId).get();
-        return UserGetDto.builder().nickname(user.getNickname()).nicknameTag(user.getNicknameTag()).build();
+        return UserGetDto.builder().nickname(user.getNickname()).nicknameTag(user.getNicknameTag())
+                .isLanguageSet(user.getIsLanguage()).build();
     }
 
     private void deleteRefreshToken(Integer userId) {
