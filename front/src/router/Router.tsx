@@ -32,11 +32,19 @@ function Router() {
           element={<SketchbookListPage />}
         ></Route>
         <Route
-          path={Page_Url.Sketchbook + ":sketchbookId"}
+          path={`${Page_Url.Sketchbook}:uuid`}
           element={<SketchbookPage />}
         ></Route>
 
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
+        <Route
+          path={Page_Url.WriteLetter}
+          element={<LetterWritePage />}
+        ></Route>
+        <Route
+          path={`${Page_Url.WriteLetterToSketchbook}:sketchbookId`}
+          element={<LetterWritePage />}
+        ></Route>
         <Route
           path={Page_Url.WriteLetter}
           element={<LetterWritePage />}
