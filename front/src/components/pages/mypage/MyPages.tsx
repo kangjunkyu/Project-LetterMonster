@@ -1,44 +1,36 @@
-import { useState } from "react";
-import { useLogout } from "../../../hooks/auth/useLogout";
-import { usePostNickname } from "../../../hooks/user/usePostNickname";
 import styles from "./MyPage.module.scss";
-import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
-import { useDeleteUser } from "../../../hooks/user/useDeleteUser";
+import { useLogout } from "../../../hooks/auth/useLogout";
 import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
+import MyPageLangSelect from "../../molecules/mypage/MyPageLangSelect";
+import Modal from "../../atoms/modal/Modal";
+import { useState } from "react";
+
 
 function MyPages() {
+  const [isModalOpen, setModalOpen] = useState(false);
+  const handleToggleModal = () => setModalOpen(!isModalOpen);
   const logout = useLogout();
-  const deleteUser = useDeleteUser();
-  const changeNickname = usePostNickname();
-  const [nickname, setNickname] = useState("");
-  const { data: userInfo } = useGetUserNickname();
-
-  const postNicknameMutation = () => changeNickname.mutate(nickname);
 
   return (
     <>
       <div className={styles.myPageContainer}>
-        <MyPageUserInfo/>
+        {/* <MyPageUserInfo />
+        <MyPageLangSelect />  */}
         <div>
           <button onClick={() => logout()}>로그아웃</button>
         </div>
 
-
-
-        
-        <div>
-          <button onClick={() => deleteUser()}>회원탈퇴</button>
-        </div>
-        <div>
-          {userInfo && <div>현재 닉네임 : {userInfo.nickname}</div>}
-          {userInfo && <div>현재 닉네임태그 : {userInfo.nicknameTag}</div>}
-          <input
-            type="text"
-            onChange={(e) => {
-              setNickname(e.target.value);
-            }}
-          />
-          <button onClick={() => postNicknameMutation()}>닉네임변경</button>
+        {/* 아래부터 erase */}
+        <button onClick={handleToggleModal}>개인 정보 & 언어 설정</button>
+        {isModalOpen && (
+          <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+            <MyPageUserInfo />
+            <MyPageLangSelect />
+          </Modal>
+        )}
+        <div className={styles.content}>
+          <MyPageUserInfo />
+          <MyPageLangSelect />
         </div>
       </div>
     </>
