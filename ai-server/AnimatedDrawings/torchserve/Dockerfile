@@ -1,7 +1,6 @@
 # syntax = docker/dockerfile:1.2
 
 FROM continuumio/miniconda3
-# FROM python:3.8-slim
 
 # install os dependencies
 RUN mkdir -p /usr/share/man/man1

@@ -131,7 +131,7 @@ async def create_joint_gif(request: CharacterCreateRequest):
         return JSONResponse(content={"gif_path": f"{character_id}_{motion}.gif"}, status_code=200)
 
     except Exception as e:
-        logger.error(f"create_joint_gif => 에러: {e}", e)
+        logger.error("create_joint_gif => 에러 발생", exc_info=True)
         return JSONResponse(content={"error": f"Fast API ERROR : create_joint_gif => {e}"}, status_code=500)
 
 
@@ -146,7 +146,7 @@ async def get_img_s3(s3_img_url):
         return True
 
     except Exception as e:
-        logger.error(f"get_img_s3 => 에러: {e}", e)
+        logger.error("get_img_s3 => 에러 발생", exc_info=True)
         return False
 
 
@@ -163,7 +163,7 @@ async def save_gif_s3(gif_path, character_id, motion):
         return True
 
     except Exception as e:
-        logger.error(f"save_gif_s3 => 에러 : {e}", e)
+        logger.error("save_gif_s3 => 에러 발생", exc_info=True)
         return False
 
 
@@ -194,7 +194,7 @@ async def gif_compress(original_path, compressed_path):
             return True
 
     except Exception as e:
-        logger.error(f"gif_compress => 에러 : {e}")
+        logger.error("gif_compress => 에러 발생", exc_info=True)
         return False
 
 
