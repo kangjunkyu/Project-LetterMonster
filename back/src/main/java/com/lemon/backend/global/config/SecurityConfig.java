@@ -44,7 +44,7 @@ public class SecurityConfig {
                         // 인증되지 않은 사용자도 접근 가능
                         .requestMatchers("**", "/error").permitAll()
                         // 로그인 한 사용자
-                        .requestMatchers("/user/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
+                        .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
 
 //                        // 인증된 사용자만 접근 가능
 //                        .requestMatchers("/user/**", "/sketchbooks/**", "/letters/*",
