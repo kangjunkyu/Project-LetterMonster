@@ -24,7 +24,7 @@ public class CharacterMotion extends BaseEntity {
     @Column(name = "character_motion_id")
     private Long id;
 
-    @Column(name = "image_url", length = 1000)
+    @Column(name = "image_url", columnDefinition = "TEXT")
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)

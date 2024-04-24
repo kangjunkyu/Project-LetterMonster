@@ -20,4 +20,4 @@ spring:
       port: ${REDIS_PROD_PORT}
 
 FAST_API:
-  URL: ${AI_PROD_URL}
+  URL: ${AI_URL}
