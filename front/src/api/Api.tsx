@@ -95,10 +95,7 @@ export const getMotionList = () => API.get(`/characters/list/motion`);
  * @param characterId 캐릭터 아이디
  * @param motionId 모션 아이디
  */
-export const getMotionSelect = (
-  characterId: number,
-  motionId: number
-) =>
+export const getMotionSelect = (characterId: number, motionId: number) =>
   API.get(`/characters/select/motion`, {
     params: { charcterId: characterId, motionId: motionId },
   });
