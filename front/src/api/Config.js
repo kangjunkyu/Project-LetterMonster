@@ -45,7 +45,7 @@ API.interceptors.response.use(
                 Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
               },
             })
-            .post("/user/token");
+            .post(import.meta.env.VITE_REFRESH_TOKEN);
           // 리프레시 토큰 요청이 성공할 때
           if (response.status === 200) {
             const newAccessToken = response.data.data["accessToken"];
