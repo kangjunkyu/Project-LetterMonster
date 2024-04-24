@@ -41,6 +41,8 @@ public class QCharacters extends EntityPathBase<Characters> {
 
     public final StringPath nickname = createString("nickname");
 
+    public final StringPath url = createString("url");
+
     public final com.lemon.backend.domain.users.user.entity.QUsers users;
 
     public QCharacters(String variable) {
