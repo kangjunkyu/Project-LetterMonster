@@ -18,7 +18,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # install python dependencies
-RUN pip install python=3.8.13
+RUN conda install python=3.8.13
 RUN pip install openmim
 RUN pip install torch==2.0.0
 RUN mim install mmcv-full==1.7.0
