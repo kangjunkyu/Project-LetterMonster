@@ -26,7 +26,10 @@ export const getUserNickname = () =>
  * @param nickname 유저 닉네임
  */
 export const postNickname = (nickname: string) =>
-  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
+    res.data;
+    console.log(res.data);
+  });
 
 // 캐릭터 관련 API
 

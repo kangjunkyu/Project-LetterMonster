@@ -8,7 +8,6 @@
 .paintTool {
   display: flex;
   gap: 10px;
-  padding: 10px;
   align-items: center;
 }
 
@@ -31,7 +30,6 @@
   background-color: green;
   color: white;
   border-radius: 10px;
-  padding: 10px;
 }
 
 .colorButton {
@@ -48,13 +46,16 @@
 
 .paintEachTool {
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 
 .characterNicknameContainer{
   display: flex;
   flex-direction: column;
-  // align-items: center;
   justify-content: center;
   padding: 10px;
   width: 200px;
@@ -66,6 +67,5 @@
 
 .outputCharacterNickname{
   display: flex;
-  // flex-direction: column;
   justify-content: space-between;
 }
