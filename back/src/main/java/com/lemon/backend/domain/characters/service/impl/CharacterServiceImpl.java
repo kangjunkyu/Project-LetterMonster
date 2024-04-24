@@ -41,7 +41,7 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class CharacterServiceImpl implements CharacterService {
-    
+
     private final CharacterRepository characterRepository;
     private final CharacterMotionRepository characterMotionRepository;
     private final MotionRepository motionRepository;
@@ -51,7 +51,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Value("${FAST_API.AI_URL}")
+    @Value("${FAST_API.URL}")
     private String fastApiUrl;
     /*
     1. react에서 파일 업로드 or 사용자 그리기를 통해 생성된 그림 파일을 spring boot로 전송한다.
