@@ -15,7 +15,7 @@ import MotionPage from "../components/pages/motion/MotionPage";
 import LetterWritePage from "../components/pages/letter/WriteLetterPage";
 import SketchbookListPage from "../components/pages/sketchbook/SketchbookListPage";
 import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
-import MyPage from "../components/pages/mypage/mypage";
+import MyPage from "../components/pages/mypage/MyPages";
 
 function Router() {
   return (

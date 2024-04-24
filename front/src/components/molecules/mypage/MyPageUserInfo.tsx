@@ -1,25 +1,19 @@
 import { useState } from "react";
-import { useLogout } from "../../../hooks/auth/useLogout";
 import { usePostNickname } from "../../../hooks/user/usePostNickname";
-import styles from "./mypage.module.scss";
+import styles from "./MyPageMolecules.module.scss";
 import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
 import { useDeleteUser } from "../../../hooks/user/useDeleteUser";
 
-function MyPage() {
-  const logout = useLogout();
+function MyPageUserInfo() {
   const deleteUser = useDeleteUser();
   const changeNickname = usePostNickname();
   const [nickname, setNickname] = useState("");
   const { data: userInfo } = useGetUserNickname();
 
   const postNicknameMutation = () => changeNickname.mutate(nickname);
-
   return (
     <>
-      <div className={styles.myPageContainer}>
-        <div>
-          <button onClick={() => logout()}>로그아웃</button>
-        </div>
+      <div className={styles.userInfoContainer}>
         <div>
           <button onClick={() => deleteUser()}>회원탈퇴</button>
         </div>
@@ -39,4 +33,4 @@ function MyPage() {
   );
 }
 
-export default MyPage;
+export default MyPageUserInfo;
