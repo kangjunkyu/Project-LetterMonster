@@ -1,11 +1,12 @@
 package com.lemon.backend.domain.friend.repository.custom;
 
-import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import static com.querydsl.core.types.Projections.constructor;
+
 @RequiredArgsConstructor
-public class FriendsRepositoryImpl implements FriendsRepositoryCustom {
+public class GroupsRepositoryImpl implements GroupsRepositoryCustom {
 
     private final JPAQueryFactory query;
 
