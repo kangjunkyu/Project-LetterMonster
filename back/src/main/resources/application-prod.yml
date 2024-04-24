@@ -1,0 +1,23 @@
+# DB 설정
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PROD_PORT}/lemon?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  data:
+    redis:
+      lettuce:
+        cluster:
+          refresh:
+            adaptive: true
+      host: ${REDIS_HOST}
+      port: ${REDIS_PROD_PORT}
+
+FAST_API:
+  URL: ${AI_URL}
