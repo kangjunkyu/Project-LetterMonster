@@ -26,7 +26,10 @@ export const getUserNickname = () =>
  * @param nickname 유저 닉네임
  */
 export const postNickname = (nickname: string) =>
-  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
+    res.data;
+    console.log(res.data);
+  });
 
 // 캐릭터 관련 API
 
@@ -95,10 +98,7 @@ export const getMotionList = () => API.get(`/characters/list/motion`);
  * @param characterId 캐릭터 아이디
  * @param motionId 모션 아이디
  */
-export const getMotionSelect = (
-  characterId: number,
-  motionId: number
-) =>
+export const getMotionSelect = (characterId: number, motionId: number) =>
   API.get(`/characters/select/motion`, {
     params: { charcterId: characterId, motionId: motionId },
   });
