@@ -3,6 +3,7 @@ import shutil
 import uuid
 import logging
 
+import uvicorn
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
@@ -195,3 +196,7 @@ async def gif_compress(original_path, compressed_path):
     except Exception as e:
         logger.error(f"gif_compress => 에러 : {e}")
         return False
+
+
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", host="0.0.0.0", port=7777, reload=True, log_level="debug")
