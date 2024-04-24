@@ -1,4 +1,3 @@
-import styles from "./MyPage.module.scss";
 import { useLogout } from "../../../hooks/auth/useLogout";
 import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import MyPageLangSelect from "../../molecules/mypage/MyPageLangSelect";
@@ -12,7 +11,7 @@ function MyPages() {
 
   return (
     <>
-      <div className={styles.myPageContainer}>
+      <div>
         <div>
           <button onClick={() => logout()}>로그아웃</button>
         </div>
