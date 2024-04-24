@@ -4,8 +4,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액�
 import { BrowserRouter } from "react-router-dom"; // 라우터
 import Router from "./router/Router"; // 라우터
 import "./locales/i18n"; // 다국어 지원
-import ReactGA from "react-ga"; // 구글 애널리틱스
-import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
+// import ReactGA from "react-ga"; // 구글 애널리틱스
+// import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
 
 const queryClient = new QueryClient();
 
