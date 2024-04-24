@@ -8,7 +8,7 @@ interface Props {
   custom?: boolean;
 }
 
-function DefalutButton({ onClick, children, custom = false }: Props) {
+function DefaultButton({ onClick, children, custom = false }: Props) {
   return (
     <button className={custom ? "" : styles.button_default} onClick={onClick}>
       {children}
@@ -16,4 +16,4 @@ function DefalutButton({ onClick, children, custom = false }: Props) {
   );
 }
 
-export default DefalutButton;
+export default DefaultButton;
