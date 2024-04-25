@@ -23,9 +23,12 @@ spring:
 
 
   jpa:
-    hibernate:
-      format_sql: true
-      show_sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+
+
 
   servlet:
     multipart:
