@@ -14,8 +14,13 @@ main {
     }
 
     @media screen and (max-width: 767px) {
+      /* 타블렛 */
+      margin-bottom: 5em;
+    }
+
+    @media screen and (max-width: 479px) {
       /* 모바일 */
-      margin-bottom: 4em;
+      margin-top: 44px;
     }
   }
 }

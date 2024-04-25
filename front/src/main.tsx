@@ -4,21 +4,43 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액�
 import { BrowserRouter } from "react-router-dom"; // 라우터
 import Router from "./router/Router"; // 라우터
 import "./locales/i18n"; // 다국어 지원
+import { useScript } from "./hooks/share/useShareToKakao";
+import { useEffect } from "react";
+import { AlertProvider } from "./hooks/notice/useAlert";
 // import ReactGA from "react-ga"; // 구글 애널리틱스
 // import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
-
-const queryClient = new QueryClient();
 
 // const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID;
 // ReactGA.initialize(gaTrackingId, { debug: true }); // react-ga 초기화 및 debug 사용
 
-// RouterChangeTracker();
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
-    </BrowserRouter>
-  </QueryClientProvider>
+const queryClient = new QueryClient();
+
+const App = () => {
+  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
+  useEffect(() => {
+    if (status === "ready" && window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, [status]);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AlertProvider>
+          <Router />
+        </AlertProvider>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
 );
+root.render(<App />);
