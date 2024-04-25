@@ -1,0 +1,20 @@
+{
+  "header": {
+    "language": "言語設定",
+    "help": "ヘルプ"
+  },
+  "button": {
+    "back": "戻る",
+    "goToMain": "最初に戻る"
+  },
+  "nav": {
+    "sketchbook": "スケッチブック",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "register": "ユーザー登録",
+    "drawing": "描く",
+    "letter": "手紙",
+    "more": "以外"
+  },
+  "error": "あいにくそんなページはありません。(`°̥̥̥̥̥̥̥̥ω°̥̥̥̥̥̥̥̥｀)"
+}

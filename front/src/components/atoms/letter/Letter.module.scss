@@ -1,0 +1,17 @@
+@import "../../../styles/mixins/_defalut.scss";
+
+.letter_container {
+  @include flexCenterColumn();
+  @include full();
+  background-color: blue;
+}
+
+.name_box {
+  padding: 1em;
+  width: 100%;
+}
+
+.content_box {
+  padding: 1em;
+  @include full();
+}

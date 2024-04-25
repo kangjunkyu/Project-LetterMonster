@@ -1,0 +1,30 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/defalut";
+
+.header {
+  display: none;
+  gap: 1em;
+  border-top: 1px solid $gc500;
+  & a {
+    @include flexCenter();
+    width: 100%;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 모바일 */
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3em;
+    padding: 1em 0;
+    background-color: $gc900;
+  }
+}
+.GNBbutton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

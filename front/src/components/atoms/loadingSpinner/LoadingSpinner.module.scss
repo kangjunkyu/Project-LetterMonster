@@ -1,0 +1,66 @@
+.loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%; /* 이미지가 원형으로 잘리도록 유지 */
+  width: 4em;
+  height: 4em;
+  //   background-image: url("/public/gom.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1s infinite ease-in-out;
+  animation: load7 1s infinite ease-in-out;
+}
+
+.loader {
+  font-size: 10px;
+  margin: 80px auto;
+  position: relative;
+  background-image: url("../../../assets/loadingspinner/gom.png");
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  animation-delay: 0s; /* 메인 요소는 지연 없이 시작 */
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+.loader:before {
+  left: -4em;
+  background-image: url("../../../assets/loadingspinner/gom2.png");
+  -webkit-animation-delay: -0.3s; /* 전체 지속시간의 1/3만큼 앞당겨 실행 */
+  animation-delay: -0.3s;
+}
+
+.loader:after {
+  left: 4em;
+  background-image: url("../../../assets/loadingspinner/gom3.png");
+  -webkit-animation-delay: -0.7s; /* 전체 지속시간의 2/3만큼 앞당겨 실행 */
+  animation-delay: -0.7s;
+}
+
+@-webkit-keyframes load7 {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes load7 {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
