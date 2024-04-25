@@ -9,6 +9,7 @@ import DefaultButton from "../../atoms/button/DefaultButton";
 import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
 import LNBButton from "../../atoms/button/LNBButton";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface IItem {
   id: string;
@@ -28,10 +29,19 @@ function SketchbookListPage() {
   const { data, isLoading } = useSketchbookList();
   const [data2, setData2] = useState("");
   const createSketchbook = useCreateSketchbook();
+  const { showAlert } = useAlert();
 
   const createHandler = (name: string) => {
     {
-      name && createSketchbook.mutate(name);
+      if (name) {
+        createSketchbook.mutate(name);
+        showAlert(`${name} 스케치북이 생겼어요`);
+      } else {
+        showAlert(`스케치북 이름을 정해주세요`);
+      }
+    }
+  };
+
   const inputEnter = (e: React.KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === "Enter") {
       createHandler(data2);
