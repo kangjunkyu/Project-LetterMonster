@@ -28,7 +28,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const navigate = useNavigate();
 
   const [color, setColor] = useState("#000");
-  const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Select);
+  const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
   const [scribbles, setScribbles] = useState<Scribble[]>([]);
   const [showPopover, setShowPopover] = useState(false);
 
@@ -40,9 +40,12 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const handleCharacterNicknameChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newNickname = event.target.value;
-      if(newNickname.startsWith(" ") ){
+      if (newNickname.startsWith(" ")) {
         setNicknameError("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
-      }else if (/[^a-zA-Z0-9ㄱ-힣\s]/.test(newNickname) || newNickname.includes('　')) {
+      } else if (
+        /[^a-zA-Z0-9ㄱ-힣\s]/.test(newNickname) ||
+        newNickname.includes("　")
+      ) {
         setNicknameError("닉네임은 영문, 숫자, 한글만 가능합니다.");
       } else if (newNickname.length > 20) {
         setNicknameError("닉네임은 20글자 이하만 가능합니다.");
@@ -59,9 +62,8 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     fileRef?.current && fileRef?.current?.click();
   }, []);
 
-  const stageRef = useRef<any>(null);
-
   // 그림 추출
+  const stageRef = useRef<any>(null);
   // const onExportClick = useCallback(() => {
   //   const uri = stageRef.current.toDataURL({
   //     pixelRatio: 3,
@@ -104,23 +106,44 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     setImage(undefined);
   }, []);
 
-  const isPaintRef = useRef(false);
-
+  // 마우스 움직임 파트
+  const isDrawing = useRef(false);
   const onStageMouseUp = useCallback(() => {
-    isPaintRef.current = false;
+    isDrawing.current = false;
   }, []);
 
   const currentShapeRef = useRef<string>();
 
+  const getPointerPosition = (
+    event: KonvaEventObject<MouseEvent | TouchEvent>
+  ) => {
+    const stage = stageRef.current;
+    // TouchEvent인 경우
+    if (event.evt instanceof TouchEvent && event.evt.touches.length > 0) {
+      // 첫 번째 터치 포인트를 사용합니다.
+      const touch = event.evt.touches[0];
+      return { x: touch.clientX, y: touch.clientY };
+    } else {
+      // MouseEvent를 처리합니다.
+      return stage.getPointerPosition();
+    }
+    // TouchEvent와 MouseEvent를 모두 처리
+    // if (event.evt.touches && event.evt.touches.length > 0) {
+    //   return stage.getPointerPosition(); // 터치 위치 얻기
+    // } else {
+    //   return stage.getPointerPosition(); // 마우스 위치 얻기
+    // }
+  };
+
   const onStageMouseDown = useCallback(
-    (e: KonvaEventObject<MouseEvent>) => {
+    (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
       if (drawAction === DrawAction.Select) {
-        e.cancelBubble = true;
+        event.cancelBubble = true;
         return;
       }
-      isPaintRef.current = true;
-      const stage = stageRef?.current;
-      const pos = stage?.getPointerPosition();
+      isDrawing.current = true;
+      // const stage = stageRef?.current;
+      const pos = getPointerPosition(event);
       const x = pos?.x || 0;
       const y = pos?.y || 0;
       const id = uuidv4();
@@ -138,24 +161,38 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           ]);
           break;
         }
+        case DrawAction.Erase: {
+          setScribbles((prevScribbles) => [
+            ...prevScribbles,
+            {
+              id,
+              points: [x, y],
+              color: "white",
+            },
+          ]);
+          break;
+        }
       }
     },
     [drawAction, color]
   );
 
-  const onStageMouseMove = useCallback(() => {
-    if (drawAction === DrawAction.Select || !isPaintRef.current) return;
+  const onStageMouseMove = useCallback(
+    (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
+      if (drawAction === DrawAction.Select || !isDrawing.current) return;
 
-    const stage = stageRef?.current;
-    const id = currentShapeRef.current;
-    const pos = stage?.getPointerPosition();
-    const x = pos?.x || 0;
-    const y = pos?.y || 0;
+      // const stage = stageRef?.current;
+      const id = currentShapeRef.current;
+      const pos = getPointerPosition(event);
+      const x = pos?.x || 0;
+      const y = pos?.y || 0;
 
-    switch (drawAction) {
-      case DrawAction.Scribble: {
+      if (
+        drawAction === DrawAction.Scribble ||
+        drawAction === DrawAction.Erase
+      ) {
         setScribbles((prevScribbles) =>
-          prevScribbles?.map((prevScribble) =>
+          prevScribbles.map((prevScribble) =>
             prevScribble.id === id
               ? {
                   ...prevScribble,
@@ -164,10 +201,38 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
               : prevScribble
           )
         );
-        break;
       }
-    }
-  }, [drawAction]);
+      // switch (drawAction) {
+      //   case DrawAction.Scribble: {
+      //     setScribbles((prevScribbles) =>
+      //       prevScribbles?.map((prevScribble) =>
+      //         prevScribble.id === id
+      //           ? {
+      //               ...prevScribble,
+      //               points: [...prevScribble.points, x, y],
+      //             }
+      //           : prevScribble
+      //       )
+      //     );
+      //     break;
+      //   }
+      //   case DrawAction.Erase: {
+      //     setScribbles((prevScribbles) =>
+      //       prevScribbles?.map((prevScribble) =>
+      //         prevScribble.id === id
+      //           ? {
+      //               ...prevScribble,
+      //               points: [...prevScribble.points, x, y],
+      //             }
+      //           : prevScribble
+      //       )
+      //     );
+      //     break;
+      //   }
+      // }
+    },
+    [drawAction]
+  );
 
   const transformerRef = useRef<any>(null);
 
@@ -191,15 +256,11 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
               key={id}
               aria-label={label}
               onClick={() => setDrawAction(id)}
-              // style={{
-              //   colorScheme: id === drawAction ? "whatsapp" : undefined,
-              // }}
               className={`${styles.paintEachTool} ${
                 id === drawAction ? styles.toolSelected : ""
               }`}
             >
               {icon}
-              {/* {label} */}
             </div>
           ))}
 
@@ -234,7 +295,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             aria-label={"Clear"}
             onClick={onClear}
           >
-            초기화
+            <span className="material-icons">delete_forever</span>
           </button>
         </div>
         <div className={styles.paintImportExport}>
@@ -285,7 +346,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
                 lineCap="round"
                 lineJoin="round"
                 stroke={scribble?.color}
-                strokeWidth={4}
+                strokeWidth={14}
                 points={scribble.points}
                 onClick={onShapeClick}
                 draggable={isDraggable}

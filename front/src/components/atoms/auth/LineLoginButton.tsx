@@ -1,5 +1,5 @@
 import Line from "../../../assets/login/lineLogin.png";
-import DefalutButton from "../button/DefalutButton";
+import DefaultButton from "../button/DefaultButton";
 import styles from "./AuthButton.module.scss";
 
 function LineLogin() {
@@ -12,9 +12,9 @@ function LineLogin() {
   };
 
   return (
-    <DefalutButton onClick={Login} custom={true}>
+    <DefaultButton onClick={Login} custom={true}>
       <img className={styles.loginImg} src={Line} alt="라인 로그인" />
-    </DefalutButton>
+    </DefaultButton>
   );
 }
 

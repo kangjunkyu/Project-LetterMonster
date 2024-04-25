@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import DefalutButton from "../../atoms/button/DefalutButton";
+import DefaultButton from "../../atoms/button/DefaultButton";
 import styles from "./LanguageSwitcher.module.scss";
 
 function LanguageSwitcher() {
@@ -12,11 +12,11 @@ function LanguageSwitcher() {
 
   return (
     <div className={styles.languageContainer}>
-      <DefalutButton onClick={() => changeLanguage("ko")}>한국어</DefalutButton>
-      <DefalutButton onClick={() => changeLanguage("jp")}>日本語</DefalutButton>
-      <DefalutButton onClick={() => changeLanguage("en")}>
+      <DefaultButton onClick={() => changeLanguage("ko")}>한국어</DefaultButton>
+      <DefaultButton onClick={() => changeLanguage("jp")}>日本語</DefaultButton>
+      <DefaultButton onClick={() => changeLanguage("en")}>
         English
-      </DefalutButton>
+      </DefaultButton>
     </div>
   );
 }

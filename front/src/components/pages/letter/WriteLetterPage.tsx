@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./WriteLetterPage.module.scss";
-import DefalutButton from "../../atoms/button/DefalutButton";
+import DefaultButton from "../../atoms/button/DefaultButton";
 import CrayonBox20 from "../../atoms/crayonBox/CrayonBox20";
 import Letter from "../../atoms/letter/Letter";
 
@@ -11,10 +11,10 @@ function LetterWritePage() {
   return (
     <div className={styles.container}>
       <nav className={styles.localMenu}>
-        <DefalutButton onClick={() => onClickHandler()}>임시저장</DefalutButton>
-        <DefalutButton onClick={() => onClickHandler()} custom={true}>
+        <DefaultButton onClick={() => onClickHandler()}>임시저장</DefaultButton>
+        <DefaultButton onClick={() => onClickHandler()} custom={true}>
           <CrayonBox20>편지 쓰기</CrayonBox20>
-        </DefalutButton>
+        </DefaultButton>
       </nav>
       <section className={styles.letterBox}>
         <article>

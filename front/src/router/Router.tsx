@@ -15,7 +15,7 @@ import MotionPage from "../components/pages/motion/MotionPage";
 import LetterWritePage from "../components/pages/letter/WriteLetterPage";
 import SketchbookListPage from "../components/pages/sketchbook/SketchbookListPage";
 import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
-import MyPage from "../components/pages/mypage/mypage";
+import MyPage from "../components/pages/mypage/MyPages";
 
 function Router() {
   return (
@@ -32,11 +32,19 @@ function Router() {
           element={<SketchbookListPage />}
         ></Route>
         <Route
-          path={Page_Url.Sketchbook + ":sketchbookId"}
+          path={`${Page_Url.Sketchbook}:uuid`}
           element={<SketchbookPage />}
         ></Route>
 
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
+        <Route
+          path={Page_Url.WriteLetter}
+          element={<LetterWritePage />}
+        ></Route>
+        <Route
+          path={`${Page_Url.WriteLetterToSketchbook}:sketchbookId`}
+          element={<LetterWritePage />}
+        ></Route>
         <Route
           path={Page_Url.WriteLetter}
           element={<LetterWritePage />}
