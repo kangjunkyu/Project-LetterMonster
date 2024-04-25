@@ -5,23 +5,27 @@ import useSketchbookList, {
   useCreateSketchbook,
 } from "../../../hooks/sketchbook/useSketchbookList";
 import { useState } from "react";
-// import DefalutButton from "../../atoms/button/DefalutButton";
-import { Link } from "react-router-dom";
+import DefaultButton from "../../atoms/button/DefaultButton";
 import { Page_Url } from "../../../router/Page_Url";
+import LNB from "../../molecules/common/LNB";
+import LNBButton from "../../atoms/button/LNBButton";
 
 interface IItem {
   id: string;
   isPublic: boolean;
   shareLink: string;
   name: string;
+  holder: {
+    nickname: string;
+    nicknameTag: number;
+  };
+  uuid: string;
+  tag: number;
+  isWritePossible: boolean;
 }
 
 function SketchbookListPage() {
-  const {
-    data,
-    isLoading,
-    // isError
-  } = useSketchbookList();
+  const { data, isLoading } = useSketchbookList();
   const [data2, setData2] = useState("");
   const createSketchbook = useCreateSketchbook();
 
@@ -32,31 +36,47 @@ function SketchbookListPage() {
   };
 
   const renderListItems = (items: [IItem]) => {
-    return items.map((item: IItem, i) => (
-      <Link key={i} to={`${Page_Url.Sketchbook}${item.id}`}>
-        <SketchbookListItem item={item} />
-      </Link>
+    return items.map((item: IItem) => (
+      <SketchbookListItem
+        key={item.id}
+        item={item}
+        url={`${Page_Url.Sketchbook}${item.uuid}`}
+      />
     ));
   };
 
   return (
-    <article className={styles.sketchbookListContainer}>
-      <h1>스케치북 리스트</h1>
-      <input
-        type="text"
-        onChange={(e) => {
-          setData2(e.target.value);
-        }}
-      />
-      <button onClick={() => createHandler(data2)}>생성</button>
-      <SketchbookList>
-        {!isLoading && data?.data && data?.data?.length > 0 ? (
-          renderListItems(data.data)
-        ) : (
-          <div>비었어요.</div>
-        )}
-      </SketchbookList>
-    </article>
+    <>
+      <article className={styles.sketchbookListContainer}>
+        <LNB>
+          <h1>스케치북 리스트</h1>
+          <LNBButton
+            onClick={() => createHandler(data2)}
+            onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) =>
+              inputEnter(e)
+            }
+          >
+            만들기
+          </LNBButton>
+        </LNB>
+        <input
+          type="text"
+          onChange={(e) => {
+            setData2(e.target.value);
+          }}
+        />
+        <DefaultButton onClick={() => createHandler(data2)}>
+          만들기
+        </DefaultButton>
+        <SketchbookList>
+          {!isLoading && data?.data && data?.data?.length > 0 ? (
+            renderListItems(data.data)
+          ) : (
+            <div>비었어요.</div>
+          )}
+        </SketchbookList>
+      </article>
+    </>
   );
 }
 
