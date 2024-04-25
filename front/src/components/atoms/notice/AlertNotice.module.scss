@@ -1,0 +1,40 @@
+@import "../../../styles/colors";
+
+.noticeTransition {
+  transition: 0.2s all;
+  z-index: 9999;
+  position: fixed;
+  bottom: 5em;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1em;
+  min-width: 200px;
+  text-align: center;
+  color: $gc900;
+}
+
+.alertContainer {
+  border-radius: 100px;
+  background-color: $gc100Title;
+  &::after {
+    content: "";
+    border: 1.5px solid $gc900;
+    position: absolute;
+    inset: 3px;
+    border-radius: 100px;
+  }
+
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.disappear {
+  opacity: 0;
+}
