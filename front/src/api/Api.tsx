@@ -133,3 +133,29 @@ export const putSketchbookName = (sketchbookId: number, name: string) =>
  */
 export const deleteSketchbook = (sketchbookId: number) =>
   API.delete(`/sketchbooks/${sketchbookId}`).then((res) => res.data);
+
+// 편지 관련 API
+
+/** 편지 작성
+ * @requires content 편지 내용
+ * @requires sketchbookId 스케치북 아이디
+ * @requires characterMotionId 캐릭터 모션 ID
+ */
+export const postLetter = (
+  content: string,
+  sketchbookId: number,
+  characterMotionId: number
+) =>
+  API.post(`/letter`, {
+    content: content,
+    sketchbookId: sketchbookId,
+    characterMotionId: characterMotionId,
+  }).then((res) => res.data);
+
+/** 편지 목록 조회
+ * @requires sketchbookId - 스케치북 ID
+ */
+export const getLetterList = (sketchbookId: number) =>
+  API.get(`letter/list`, { params: { sketchbookId: sketchbookId } }).then(
+    (res) => res.data
+  );
