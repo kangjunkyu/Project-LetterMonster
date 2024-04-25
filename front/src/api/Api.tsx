@@ -9,14 +9,16 @@ export const postLogout = () => API.post(`/user/logout`);
 export const deleteUser = () => API.delete(`/user`);
 
 /** 유저 닉네임 조회 */
-export const getUserNickname = () =>
-  API.get(`/user`).then((res) => res.data.data);
+export const getUserNickname = () => API.get(`/user`).then((res) => res.data);
 
 /** 유저 닉네임 변경
  * @param nickname 유저 닉네임
  */
 export const postNickname = (nickname: string) =>
-  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
+    res.data;
+    console.log(res.data);
+  });
 
 // 캐릭터 관련 API
 

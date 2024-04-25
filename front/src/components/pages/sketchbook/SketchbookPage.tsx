@@ -4,7 +4,7 @@ import useSketchbook, {
   useDeleteSketchbook,
   usePutSketchbook,
 } from "../../../hooks/sketchbook/useSketchbook";
-import DefalutButton from "../../atoms/button/DefalutButton";
+import DefaultButton from "../../atoms/button/DefaultButton";
 import { useState } from "react";
 import { Page_Url } from "../../../router/Page_Url";
 
@@ -21,7 +21,7 @@ function SketchbookPage() {
 
   return (
     <article className={styles.SketchbookContainer}>
-      <DefalutButton
+      <DefaultButton
         onClick={() =>
           putSketchbook.mutate({
             sketchbookId: Number(data.data.id),
