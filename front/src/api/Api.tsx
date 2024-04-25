@@ -91,7 +91,7 @@ export const getMotionSelect = (characterId: number, motionId: number) => {
   });
 };
 
-// 스케치북
+// 스케치북 관련 API
 
 /** 스케치북 생성
  * @requires name  스케치북이름
@@ -102,6 +102,10 @@ export const postSketchbook = (name: string) =>
 /** 스케치북 목록 조회 */
 export const getSketchbookList = () =>
   API.get(`/sketchbooks/list`).then((res) => res.data);
+
+/** 스케치북 목록 전체 조회 (임시)*/
+export const getSketchbookListAll = () =>
+  API.get(`/sketchbooks/all`).then((res) => res.data);
 
 /** 스케치북 선택 간단 조회
  * @param sketchbookId 스케치북 아이디
