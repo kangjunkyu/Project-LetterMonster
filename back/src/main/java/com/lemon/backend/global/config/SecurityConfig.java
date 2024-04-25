@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions().disable())
                 .authorizeHttpRequests(auth -> auth
                         // 인증되지 않은 사용자도 접근 가능
-                        .requestMatchers("**", "/error").permitAll()
+                        .requestMatchers("**","/error").permitAll()
                         // 로그인 한 사용자
                         .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
 
