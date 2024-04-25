@@ -30,19 +30,19 @@ function SketchbookPage() {
         }
       >
         수정
-      </DefalutButton>
-      <DefalutButton
+      </DefaultButton>
+      <DefaultButton
         onClick={() => deleteSketchbook.mutate(Number(data.data.id))}
       >
         삭제
-      </DefalutButton>
-      <DefalutButton
+      </DefaultButton>
+      <DefaultButton
         onClick={() => {
           navigate(`${Page_Url.WriteLetterToSketchbook}${data.data.id}`);
         }}
       >
         편지쓰기
-      </DefalutButton>
+      </DefaultButton>
       {data && (
         <>
           <div>{data.data.name} 스케치북</div>
