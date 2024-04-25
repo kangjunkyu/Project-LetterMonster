@@ -61,12 +61,12 @@ API.interceptors.response.use(
             // 리프레시 토큰 요청이 실패할때(리프레시 토큰도 만료되었을때 = 재로그인 안내)
           }
           if (response.data.status === 401 || response.data.status === 404) {
-            window.location.href = "/login";
+            // window.location.href = "/login";
           }
         } catch (error) {
-          window.location.href = "/login";
+          // window.location.href = "/login";
         }
-        window.location.href = "/login";
+        // window.location.href = "/login";
       }
     }
     return Promise.reject(error);

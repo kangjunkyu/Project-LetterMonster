@@ -7,6 +7,7 @@ import { Page_Url } from "../../../router/Page_Url";
 // 아이콘
 import sketchbook from "../../../assets/GNBIcon/sketchbook.svg";
 import draw from "../../../assets/GNBIcon/draw.svg";
+import letter from "../../../assets/GNBIcon/letter.svg";
 import more from "../../../assets/GNBIcon/more.svg";
 
 function GNB() {
@@ -22,7 +23,7 @@ function GNB() {
         {t("nav.sketchbook")}
       </Link>
       <Link className={styles.GNBbutton} to={Page_Url.WriteLetter}>
-        <img src={sketchbook} alt="편지 쓰기" />
+        <img src={letter} alt="편지 쓰기" />
         {t("nav.letter")}
       </Link>
       <Link className={styles.GNBbutton} to={Page_Url.MyPage}>

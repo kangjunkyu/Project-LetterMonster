@@ -1,16 +1,6 @@
 import API, { ImgAPI } from "./Config";
 
-export const baseAPI = () => API.get("/");
-
 //Authorization & User 관련 API
-
-/** 카카오 소셜 로그인 */
-export const postKakaoLogin = (code: string | null) =>
-  API.post(`/kakao`, {}, { params: { code: code } });
-
-/** 라인 소셜 로그인 */
-export const postLineLogin = (code: string) =>
-  API.post(`/line`, {}, { params: { code: code } });
 
 /** 로그아웃 */
 export const postLogout = () => API.post(`/user/logout`);
@@ -39,17 +29,13 @@ export const postNickname = (nickname: string) =>
 export const postSketchCharacter = async (nickname: string, file: File) => {
   const formData = new FormData();
 
-  // const data = { nickname: nickname };
-  // const uploadData = JSON.stringify(data);
-  // const nickname = new Blob([uploadData], { type: "application/json" });
-
   formData.append("nickname", nickname);
   formData.append("file", file);
 
   // ImgAPI를 사용하여 요청 보내기
   try {
     const response = await ImgAPI.post(`/characters/create`, formData);
-    return response;
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -97,10 +83,13 @@ export const getMotionList = () => API.get(`/characters/list/motion`);
  * @param characterId 캐릭터 아이디
  * @param motionId 모션 아이디
  */
-export const getMotionSelect = (characterId: number, motionId: number) =>
-  API.get(`/characters/select/motion`, {
-    params: { charcterId: characterId, motionId: motionId },
+export const getMotionSelect = (characterId: number, motionId: number) => {
+  return API.get(`/characters/select/motion`, {
+    params: { characterId: characterId, motionId: motionId },
+  }).then((res) => {
+    return res.data.data;
   });
+};
 
 // 스케치북
 
@@ -117,14 +106,14 @@ export const getSketchbookList = () =>
 /** 스케치북 선택 간단 조회
  * @param sketchbookId 스케치북 아이디
  */
-export const getSketchbookSelectedsimple = (sketchbookId: number) =>
-  API.get(`/sketchbooks/simple/${sketchbookId}`).then((res) => res.data);
+export const getSketchbookSelectedsimple = (uuid: string) =>
+  API.get(`/sketchbooks/simple/${uuid}`).then((res) => res.data);
 
 /** 스케치북 선택 상세 조회
  * @param sketchbookId 스케치북 아이디
  */
-export const getSketchbookSelected = (sketchbookId: number) =>
-  API.get(`/sketchbooks/detail/${sketchbookId}`).then((res) => res.data);
+export const getSketchbookSelected = (uuid: string) =>
+  API.get(`/sketchbooks/detail/${uuid}`).then((res) => res.data);
 
 /** 스케치북 수정
  * @requires sketchbookId 스케치북 아이디

@@ -14,20 +14,26 @@ function MyPageUserInfo() {
   return (
     <>
       <div className={styles.userInfoContainer}>
-        <div>
-          <button onClick={() => deleteUser()}>회원탈퇴</button>
+        <div className={styles.userInfoDetail}>
+          <div>
+            <div>닉네임</div>
+            <div>닉네임 태그</div>
+          </div>
+          <div>
+            {userInfo && <div>{userInfo.nickname}</div>}
+            {userInfo && <div>{userInfo.nicknameTag}</div>}
+          </div>
         </div>
-        <div>
-          {userInfo && <div>현재 닉네임 : {userInfo.nickname}</div>}
-          {userInfo && <div>현재 닉네임태그 : {userInfo.nicknameTag}</div>}
-          <input
-            type="text"
-            onChange={(e) => {
-              setNickname(e.target.value);
-            }}
-          />
-          <button onClick={() => postNicknameMutation()}>닉네임변경</button>
-        </div>
+        <input
+          className={styles.userNicknameInput}
+          type="text"
+          onChange={(e) => {
+            setNickname(e.target.value);
+          }}
+          placeholder="새로운 닉네임을 입력하세요"
+        />
+        <button onClick={() => postNicknameMutation()}>닉네임변경</button>
+        <button onClick={() => deleteUser()}>회원탈퇴</button>
       </div>
     </>
   );

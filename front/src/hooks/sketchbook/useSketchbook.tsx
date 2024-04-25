@@ -13,10 +13,10 @@ import { Page_Url } from "../../router/Page_Url";
 // }
 
 /** 스케치북 불러오기 */
-export default function useSketchbook(sketchbookId: number) {
+export default function useSketchbook(uuid: string) {
   return useQuery({
     queryKey: ["sketchbook"],
-    queryFn: () => getSketchbookSelected(sketchbookId),
+    queryFn: () => getSketchbookSelected(uuid),
   });
 }
 
@@ -40,11 +40,9 @@ export function usePutSketchbook() {
 /** 스케치북 삭제  */
 export function useDeleteSketchbook() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (sketchbookId: number) => deleteSketchbook(sketchbookId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["sketchbook"] });
       navigate(Page_Url.SketchbookList);
     },
   });

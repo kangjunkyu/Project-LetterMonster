@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./SketchbookPage.module.scss";
 import useSketchbook, {
   useDeleteSketchbook,
@@ -6,35 +6,43 @@ import useSketchbook, {
 } from "../../../hooks/sketchbook/useSketchbook";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useState } from "react";
+import { Page_Url } from "../../../router/Page_Url";
 
 function SketchbookPage() {
-  const sketchbookId = useParams() as { sketchbookId: string };
-  const { data } = useSketchbook(Number(sketchbookId.sketchbookId));
+  const params = useParams() as { uuid: string };
+  const { data } = useSketchbook(params.uuid);
   const putSketchbook = usePutSketchbook();
   const deleteSketchbook = useDeleteSketchbook();
   const [
     name,
     // setName
   ] = useState("임시수정");
+  const navigate = useNavigate();
+
   return (
     <article className={styles.SketchbookContainer}>
       <DefaultButton
         onClick={() =>
           putSketchbook.mutate({
-            sketchbookId: Number(sketchbookId.sketchbookId),
+            sketchbookId: Number(data.data.id),
             name: name,
           })
         }
       >
         수정
-      </DefaultButton>
-      <DefaultButton
-        onClick={() =>
-          deleteSketchbook.mutate(Number(sketchbookId.sketchbookId))
-        }
+      </DefalutButton>
+      <DefalutButton
+        onClick={() => deleteSketchbook.mutate(Number(data.data.id))}
       >
         삭제
-      </DefaultButton>
+      </DefalutButton>
+      <DefalutButton
+        onClick={() => {
+          navigate(`${Page_Url.WriteLetterToSketchbook}${data.data.id}`);
+        }}
+      >
+        편지쓰기
+      </DefalutButton>
       {data && (
         <>
           <div>{data.data.name} 스케치북</div>

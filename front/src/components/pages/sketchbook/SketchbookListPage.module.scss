@@ -6,6 +6,6 @@
   gap: 1em;
 
   & h1 {
-    @include title();
+    @include subtitle();
   }
 }

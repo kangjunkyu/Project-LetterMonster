@@ -5,8 +5,6 @@ import {
   patchCharacterNickname,
   patchMainCharacter,
 } from "../../api/Api";
-import { useNavigate } from "react-router";
-import { Page_Url } from "../../router/Page_Url";
 
 /** 캐릭터 닉네임 설정 */
 export function usePatchCharacterNickname() {
@@ -37,16 +35,10 @@ export function useSelectMainCharacter() {
 }
 
 /** 캐릭터 생성 취소 */
-export function useCancelCharacter() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (characterId: number) => cancelCharacter(characterId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["Character"] });
-      navigate(Page_Url.Sketchbook);
-    },
-  });
+export function useCancelCharacter(characterId: number) {
+  return () => {
+    cancelCharacter(characterId);
+  };
 }
 
 /** 캐릭터 삭제 */

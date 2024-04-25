@@ -6,7 +6,7 @@ export function usePostNickname() {
   return useMutation({
     mutationFn: (nickname: string) => postNickname(nickname),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["Nickname"] });
+      queryClient.invalidateQueries({ queryKey: ["usernickname"] });
     },
   });
 }
