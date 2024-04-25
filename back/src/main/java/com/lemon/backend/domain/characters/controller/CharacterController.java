@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.protocol.HTTP;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,14 +26,14 @@ public class CharacterController {
     private final CharacterService characterService;
     private final AmazonS3Client amazonS3Client;
     @PostMapping("/create")
-    public ResponseEntity<?> makeCharacter(HttpServletRequest request, @RequestParam("file")MultipartFile file, @RequestParam("nickname")String nickname) {
-        int userId = (int) request.getAttribute("userId");
+    public ResponseEntity<?> makeCharacter(Authentication authentication, @RequestParam("file")MultipartFile file, @RequestParam("nickname")String nickname) {
+        Integer userId = (Integer) authentication.getPrincipal();
         Long characterId = characterService.createCharacter(file, userId, nickname);
         return getResponseEntity(SuccessCode.CREATED, characterId);
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity<?> cancelMakeCharacter(HttpServletRequest request, @RequestParam(name="characterId") Long characterId) {
+    public ResponseEntity<?> cancelMakeCharacter(@RequestParam(name="characterId") Long characterId) {
         characterService.cancelMakeCharacter(characterId);
         return getResponseEntity(SuccessCode.OK, null);
     }
@@ -44,15 +45,15 @@ public class CharacterController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> showCharacters(HttpServletRequest request) {
-        int userId = (int) request.getAttribute("userId");
+    public ResponseEntity<?> showCharacters(Authentication authentication) {
+        Integer userId = (Integer) authentication.getPrincipal();
         List<CharactersGetDto> charactersGetDtoList = characterService.showCharacters(userId);
         return getResponseEntity(SuccessCode.OK, charactersGetDtoList);
     }
 
     @PatchMapping("/my/maincharacter")
-    public ResponseEntity<?> changeMainCharacter(HttpServletRequest request, @RequestParam(name="characterId") Long characterId) {
-        int userId = (int) request.getAttribute("userId");
+    public ResponseEntity<?> changeMainCharacter(Authentication authentication, @RequestParam(name="characterId") Long characterId) {
+        Integer userId = (Integer) authentication.getPrincipal();
         characterService.changeMainCharacter(characterId, userId);
         return getResponseEntity(SuccessCode.OK, null);
     }
