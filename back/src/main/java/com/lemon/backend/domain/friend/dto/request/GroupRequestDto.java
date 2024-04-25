@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GroupRequestDto {
-    private String name;
 
+    private String name;
     private Users user;
     private Users friend;
 }

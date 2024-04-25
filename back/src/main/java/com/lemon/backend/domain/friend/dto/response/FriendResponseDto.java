@@ -12,4 +12,9 @@ public class FriendResponseDto {
     private Long id;
     private Users user;
     private Users friend;
+
+    public FriendResponseDto(Users user, Users friend) {
+        this.user = user;
+        this.friend = friend;
+    }
 }

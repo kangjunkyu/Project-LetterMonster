@@ -24,16 +24,25 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public Integer addFriend(Integer userId, Integer friendId) {
-        Users user = userRepository.findById(userId).orElse(null);
-        Users friends = userRepository.findById(friendId).orElse(null);
+        Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
+        Users friendUser = userRepository.findById(friendId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
+
+        Groups defaultGroup = groupsRepository.findFirstByUsersId(userId).orElseGet(() -> {
+            Groups newGroup = Groups.builder()
+                    .groupName("기본")
+                    .owner(user)
+                    .build();
+            return groupsRepository.save(newGroup);
+        });
 
         Friends friend = Friends.builder()
                 .users(user)
-                .friend(friends)
+                .friend(friendUser)
+                .groups(defaultGroup)
                 .build();
 
         user.getFriendList().add(friend);
-        friends.getFriendList().add(friend);
+        friendUser.getFriendList().add(friend);
 
         return friendsRepository.save(friend).getId();
     }

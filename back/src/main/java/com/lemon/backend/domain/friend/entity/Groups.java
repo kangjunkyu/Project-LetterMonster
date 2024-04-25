@@ -16,6 +16,7 @@ import java.util.List;
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE groups SET is_deleted = TRUE WHERE groups_id = ?")
 public class Groups {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "groups_id")
@@ -25,6 +26,7 @@ public class Groups {
     @Column(name = "group_name")
     private String groupName;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private Users owner;  // 그룹의 소유자
