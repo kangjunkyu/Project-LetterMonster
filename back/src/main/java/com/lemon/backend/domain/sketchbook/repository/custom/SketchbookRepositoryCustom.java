@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface SketchbookRepositoryCustom {
     Optional<List<SketchbookGetSimpleDto>> getSketchList(Integer userId);
 
-    Optional<List<SketchbookGetAllDto>> getSketchAll();
-
     Optional<SketchbookGetDto> getSketchSelect(String sketchId);
 
     Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId);

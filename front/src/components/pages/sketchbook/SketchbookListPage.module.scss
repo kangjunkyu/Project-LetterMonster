@@ -1,0 +1,11 @@
+@import "../../../styles/mixins/defalut";
+
+.sketchbookListContainer {
+  @include flexCenterColumn();
+  padding: 1em;
+  gap: 1em;
+
+  & h1 {
+    @include title();
+  }
+}

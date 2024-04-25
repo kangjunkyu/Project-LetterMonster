@@ -35,13 +35,6 @@ public class SketchbookController {
         return getResponseEntity(SuccessCode.OK, sketchList);
     }
 
-    @Operation(summary = "스케치북 전체 조회", description = "스케치북 전체 목록 조회")
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllSketchList(){
-        List<SketchbookGetAllDto> sketchAll = sketchbookService.getSketchAll();
-        return getResponseEntity(SuccessCode.OK, sketchAll);
-    }
-
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
     @GetMapping("/simple/{sketchbookUuid}")
     public ResponseEntity<?> getSketchSelect(@PathVariable(value = "sketchbookUuid") String sketchId){

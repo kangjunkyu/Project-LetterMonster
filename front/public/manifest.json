@@ -1,0 +1,21 @@
+{
+  "short_name": "Letter Monster",
+  "name": "Letter Monster",
+  "icons": [
+    {
+      "src": "",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#191919",
+  "background_color": "#191919"
+}
