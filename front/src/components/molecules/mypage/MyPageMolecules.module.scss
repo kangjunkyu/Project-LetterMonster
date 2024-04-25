@@ -2,6 +2,17 @@
 @import "../../../styles/mixins/defalut";
 
 // MyPageUserInfo
-.userInfoContainer{
-    background-color: $warningColor;
+.userInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.userInfoDetail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userNicknameInput {
+  padding: 0.5em;
 }
