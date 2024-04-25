@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libosmesa6 \
     libosmesa6-dev \
-    mesa-utils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
