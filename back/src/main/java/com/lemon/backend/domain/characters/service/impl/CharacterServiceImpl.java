@@ -59,6 +59,7 @@ public class CharacterServiceImpl implements CharacterService {
     3. url과 캐릭터 이름을 db에 저장한다
      */
     @Override
+    @Transactional
     public Long createCharacter(MultipartFile file, int userId, String nickname) {
         try {
             Optional<Users> optionalUsers = userRepository.findById(userId);
@@ -131,7 +132,7 @@ public class CharacterServiceImpl implements CharacterService {
             requestBody.put("character_id", characterId.toString());
 
             requestBody.put("motion_name", motion.getName());
-            requestBody.put("img_url", characters.getUrl());
+            requestBody.put("img_url", characters.getId()+".png");
 
             // HttpEntity에 헤더와 요청 데이터 적용
             HttpHeaders headers = new HttpHeaders();
@@ -139,7 +140,7 @@ public class CharacterServiceImpl implements CharacterService {
             HttpEntity<Map<String, String>> entity = new HttpEntity<>(requestBody, headers);
 
             // POST 요청 보내기
-            ResponseEntity<Map> response = restTemplate.exchange(fastApiUrl+"/ai/characters/create", HttpMethod.POST, entity, Map.class);
+            ResponseEntity<Map> response = restTemplate.exchange(fastApiUrl+"/ai/character/create", HttpMethod.POST, entity, Map.class);
 
             // 응답으로 받은 데이터 처리
             if (response.getStatusCode().is2xxSuccessful()) {
