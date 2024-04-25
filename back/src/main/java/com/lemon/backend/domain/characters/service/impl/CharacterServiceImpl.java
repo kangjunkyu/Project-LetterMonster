@@ -145,10 +145,14 @@ public class CharacterServiceImpl implements CharacterService {
             // 응답으로 받은 데이터 처리
             if (response.getStatusCode().is2xxSuccessful()) {
                 Map<String, String> responseBody = response.getBody();
-                return responseBody.getOrDefault("gif_path", "No GIF path returned");
+                String gifUrl = "https://letter-monster.s3.ap-northeast-2.amazonaws.com/"+responseBody.get("gif_path");
+                CharacterMotion newMotion = CharacterMotion.builder().characters(characters).motion(motion).url(gifUrl).build();
+                characterMotionRepository.save(newMotion);
+                return gifUrl;
             } else {
                 return "Failed to create GIF";
             }
+
 
         }
     }
