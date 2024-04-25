@@ -3,9 +3,18 @@ import styles from "./WriteLetterPage.module.scss";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import CrayonBox20 from "../../atoms/crayonBox/CrayonBox20";
 import Letter from "../../atoms/letter/Letter";
+import { useLocation } from "react-router";
 
 function LetterWritePage() {
   const [content, setContent] = useState("");
+  const location = useLocation();
+  const { characterId, gif, characterNickname, motionId } =
+    location.state || {};
+
+  console.log(gif);
+  console.log(characterId);
+  console.log(characterNickname);
+  console.log(motionId);
 
   const onClickHandler = () => {};
   return (
@@ -25,11 +34,11 @@ function LetterWritePage() {
                 className={`${styles.characterListItem} ${styles.boxComponent}`}
               >
                 <img
-                  src="/image.png"
+                  src={gif}
                   className={`${styles.characterImg}`}
                   alt="캐릭터 사진"
                 ></img>
-                <div>캐릭터이름</div>
+                <div>{characterNickname}</div>
               </li>
             </ul>
           </figure>

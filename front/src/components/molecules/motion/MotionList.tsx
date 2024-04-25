@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import styles from "./MotionList.module.scss";
-// import { useGetMotionSelect } from "../../../hooks/motion/useGetMotionSelect";
+import formatMotionName from "../../../hooks/motion/useFormatMotionName";
+import { useGetMotionSelect } from "../../../hooks/motion/useGetMotionSelect";
 
 interface Motion {
   name: string;
   path: string;
+}
+
+interface Prop {
   characterId: number;
-  motionId: number;
+  setGif: (gif: string) => void;
+  setMotionId: (motinoId: number) => void;
 }
 
 async function loadMotions(): Promise<Motion[]> {
@@ -17,35 +22,35 @@ async function loadMotions(): Promise<Motion[]> {
     Object.entries(motionModules).map(async ([path, resolver]) => {
       const name = path.split("/").pop()?.replace(".gif", "") ?? "Unknown";
       const module = resolver as { default: string };
-      return { name, path: module.default, characterId: 0, motionId: 1 };
+      return { name, path: module.default };
     })
   );
   return motions;
 }
 
-function MotionList() {
+function MotionList({ characterId, setGif, setMotionId }: Prop) {
+  const [motions, setMotions] = useState<Motion[]>([]);
   const [clickedMotionIndex, setClickedMotionIndex] = useState<number | null>(
     null
   );
-  const handleMotionClick = (index: number) => {
+  const getMotionSelect = useGetMotionSelect();
+
+  const handleMotionClick = async (index: number) => {
+    const motionId = index + 1;
     setClickedMotionIndex(index);
+    setGif("");
+    const data = await getMotionSelect(characterId, motionId);
+    if (data) {
+      setMotionId(motionId);
+      setGif(data);
+    } else {
+      console.log("No motion data available");
+    }
   };
 
-  // const [selectedMotion, setSelectedMotion] = useState<Motion | null>(null);
-  // const { data: motionData, refetch } = useGetMotionSelect(
-  //   selectedMotion?.characterId ?? 0,
-  //   selectedMotion?.motionId ?? 0
-  // );
-  // const handleSelectMotion = (motion: Motion) => {
-  //   setSelectedMotion(motion); // 선택된 모션을 상태로 설정합니다.
-  //   refetch(); // 쿼리를 수동으로 다시 실행합니다.
-  // };
-
   // 모션 샘플 관련
-  const [motions, setMotions] = useState<Motion[]>([]);
-
   useEffect(() => {
-    loadMotions().then((motions) => setMotions(motions));
+    loadMotions().then(setMotions);
   }, []);
 
   return (
@@ -60,7 +65,6 @@ function MotionList() {
               }`}
               key={index}
               onClick={() => {
-                // handleSelectMotion(motion);
                 handleMotionClick(index);
               }}
             >
@@ -69,10 +73,7 @@ function MotionList() {
                 src={motion.path}
                 alt={`${motion.name} animation`}
               />
-              <div>
-                {/* {index + 1}번 :  */}
-                {motion.name}
-              </div>
+              <div>{formatMotionName(motion.name)}</div>
             </div>
           ))}
         </div>

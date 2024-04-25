@@ -1,9 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { getMotionSelect } from "../../api/Api";
 
-export function useGetMotionSelect(characterId: number, motionId: number) {
-  return useQuery({
-    queryKey: ["motionSelect"],
-    queryFn: () => getMotionSelect(characterId, motionId),
-  });
+export function useGetMotionSelect() {
+  const callGetMotionSelect = useCallback(
+    (characterId: number, motionId: number): any => {
+      return getMotionSelect(characterId, motionId);
+    },
+    []
+  );
+
+  return callGetMotionSelect;
 }

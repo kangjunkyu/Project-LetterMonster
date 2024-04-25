@@ -23,7 +23,15 @@ export const SIZE = 500;
 
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   // 캐릭터 생성 뮤테이션
-  const postSketchCharacterMutation = usePostSketchCharacter();
+  const postSketchCharacterMutation = usePostSketchCharacter(
+    (response, uri, nickname) => {
+      if (response) {
+        navigate("/motion", {
+          state: { characterId: response.data, image: uri, nickname },
+        });
+      }
+    }
+  );
 
   const navigate = useNavigate();
 
@@ -64,20 +72,6 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
   // 그림 추출
   const stageRef = useRef<any>(null);
-  // const onExportClick = useCallback(() => {
-  //   const uri = stageRef.current.toDataURL({
-  //     pixelRatio: 3,
-  //     mimeType: "image/png",
-  //     quality: 1,
-  //   });
-  //   postSketchCharacterMutation.mutate({
-  //     file: uri,
-  //     nickname: characterNickname,
-  //   });
-  //   console.log("사진 들어감api로");
-
-  //   navigate("/motion", { state: { image: uri } });
-  // }, [navigate]);
   const onExportClick = useCallback(() => {
     const uri = stageRef.current.toDataURL({
       pixelRatio: 3,
@@ -93,10 +87,9 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         const nickname = characterNickname;
 
         // usePostSketchCharacter 훅을 통해 데이터 전송
-        postSketchCharacterMutation.mutate({ nickname, file });
+        postSketchCharacterMutation.mutate({ nickname, file, uri });
       });
 
-    console.log("이미지와 별명이 API로 전송됨");
     navigate("/motion", { state: { image: uri, nickname: characterNickname } });
   }, [navigate, characterNickname, postSketchCharacterMutation]);
 
@@ -202,34 +195,6 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           )
         );
       }
-      // switch (drawAction) {
-      //   case DrawAction.Scribble: {
-      //     setScribbles((prevScribbles) =>
-      //       prevScribbles?.map((prevScribble) =>
-      //         prevScribble.id === id
-      //           ? {
-      //               ...prevScribble,
-      //               points: [...prevScribble.points, x, y],
-      //             }
-      //           : prevScribble
-      //       )
-      //     );
-      //     break;
-      //   }
-      //   case DrawAction.Erase: {
-      //     setScribbles((prevScribbles) =>
-      //       prevScribbles?.map((prevScribble) =>
-      //         prevScribble.id === id
-      //           ? {
-      //               ...prevScribble,
-      //               points: [...prevScribble.points, x, y],
-      //             }
-      //           : prevScribble
-      //       )
-      //     );
-      //     break;
-      //   }
-      // }
     },
     [drawAction]
   );
@@ -365,7 +330,6 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           className={styles.inputCharacterNickname}
         />
         <div className={styles.outputCharacterNickname}>
-          {/* <div>닉네임</div> */}
           {nicknameError && (
             <div className={styles.nicknameError} style={{ color: "red" }}>
               {nicknameError}

@@ -29,17 +29,13 @@ export const postNickname = (nickname: string) =>
 export const postSketchCharacter = async (nickname: string, file: File) => {
   const formData = new FormData();
 
-  // const data = { nickname: nickname };
-  // const uploadData = JSON.stringify(data);
-  // const nickname = new Blob([uploadData], { type: "application/json" });
-
   formData.append("nickname", nickname);
   formData.append("file", file);
 
   // ImgAPI를 사용하여 요청 보내기
   try {
     const response = await ImgAPI.post(`/characters/create`, formData);
-    return response;
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -87,10 +83,13 @@ export const getMotionList = () => API.get(`/characters/list/motion`);
  * @param characterId 캐릭터 아이디
  * @param motionId 모션 아이디
  */
-export const getMotionSelect = (characterId: number, motionId: number) =>
-  API.get(`/characters/select/motion`, {
-    params: { charcterId: characterId, motionId: motionId },
+export const getMotionSelect = (characterId: number, motionId: number) => {
+  return API.get(`/characters/select/motion`, {
+    params: { characterId: characterId, motionId: motionId },
+  }).then((res) => {
+    return res.data.data;
   });
+};
 
 // 스케치북
 
