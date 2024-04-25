@@ -65,7 +65,7 @@ public class CharacterServiceImpl implements CharacterService {
 
             if(optionalUsers.isPresent()) {
                 Users users = optionalUsers.get();
-                Characters characters = Characters.builder().nickname(users.getNickname()).users(users).build();
+                Characters characters = Characters.builder().nickname(nickname).users(users).build();
                 characterRepository.save(characters);
                 String fileName = characters.getId().toString() + ".png";
                 ObjectMetadata metadata= new ObjectMetadata();
