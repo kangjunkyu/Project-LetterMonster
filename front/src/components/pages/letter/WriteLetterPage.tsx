@@ -4,19 +4,31 @@ import DefaultButton from "../../atoms/button/DefaultButton";
 import CrayonBox20 from "../../atoms/crayonBox/CrayonBox20";
 import Letter from "../../atoms/letter/Letter";
 import { useLocation } from "react-router";
+import { useParams } from "react-router-dom";
+import useSketchbookList from "../../../hooks/sketchbook/useSketchbookList";
+// import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
+import { postLetter } from "../../../api/Api";
 
 function LetterWritePage() {
-  const [content, setContent] = useState("");
+  const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
+  const [content, setContent] = useState(""); // 편지내용
+  const [target, setTarget] = useState(0); // 편지보낼스케치북
   const location = useLocation();
   const { characterId, gif, characterNickname, motionId } =
     location.state || {};
+  const { data: sketchbookList } = useSketchbookList();
 
-  console.log(gif);
-  console.log(characterId);
-  console.log(characterNickname);
-  console.log(motionId);
-
-  const onClickHandler = () => {};
+  const onClickHandler = () => {
+    if (content && (target || sketchbookId)) {
+      // 값 유무 확인
+      postLetter(content, Number(target), 1).then((res) => {
+        if (res.statusCode === 201) {
+          setContent("");
+        }
+      });
+    } else {
+    }
+  };
   return (
     <div className={styles.container}>
       <nav className={styles.localMenu}>
@@ -48,12 +60,21 @@ function LetterWritePage() {
               name="sendTo"
               id="sendTo"
               className={`${styles.sendList} ${styles.boxComponent}`}
+              onChange={(e) => {
+                setTarget(Number(e.target.value));
+              }}
             >
-              <option value="dd">본민</option>
-              <option value="dd">주현</option>
-              <option value="dd">준규</option>
-              <option value="dd">담현</option>
-              <option value="dd">연주</option>
+              {sketchbookList &&
+                sketchbookList.data?.map(
+                  (
+                    item: { id: number; name: string; tag: number },
+                    i: number
+                  ) => (
+                    <option value={item.id} key={i}>
+                      {item.name} - {item.tag}
+                    </option>
+                  )
+                )}
             </select>
           </figure>
           <figure>
