@@ -23,9 +23,12 @@ spring:
 
 
   jpa:
-    hibernate:
-      format_sql: true
-      show_sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+
+
 
   servlet:
     multipart:
@@ -42,4 +45,5 @@ cloud:
       accessKey: ${S3_ACCESS_KEY}
       secretKey: ${S3_SECRET_KEY}
 
-
+FAST_API:
+  URL: ${AI_URL}
