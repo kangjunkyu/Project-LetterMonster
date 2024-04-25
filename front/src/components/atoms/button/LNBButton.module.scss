@@ -1,0 +1,10 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
+
+.LNBButtonContainer {
+  @include subtitle();
+  transition: 0.2s all;
+  &:hover {
+    color: $actionColor;
+  }
+}
