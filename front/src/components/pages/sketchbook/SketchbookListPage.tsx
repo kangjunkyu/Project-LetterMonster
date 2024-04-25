@@ -32,6 +32,9 @@ function SketchbookListPage() {
   const createHandler = (name: string) => {
     {
       name && createSketchbook.mutate(name);
+  const inputEnter = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "Enter") {
+      createHandler(data2);
     }
   };
 
