@@ -1,14 +1,19 @@
 package com.lemon.backend.domain.friend.service.impl;
 
+import com.lemon.backend.domain.friend.dto.response.GroupResponseDto;
 import com.lemon.backend.domain.friend.entity.Groups;
 import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.lemon.backend.domain.friend.repository.GroupsRepository;
 import com.lemon.backend.domain.friend.service.GroupsService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,6 +26,11 @@ public class GroupsServiceImpl implements GroupsService {
     private final GroupsRepository groupRepository;
     private final UserRepository userRepository;
 
+
+    @Override
+    public List<GroupResponseDto> getGroupForUser(Integer userId){
+        return groupRepository.findAllByUsersId(userId);
+    }
 
     @Override
     public Long createGroup(Integer userId, String groupName){
@@ -40,11 +50,11 @@ public class GroupsServiceImpl implements GroupsService {
     }
 
     @Override
-    public void changeGroupName(Long groupId, String newName){
+    public Long changeGroupName(Long groupId, String newName){
         Groups group = groupRepository.findById(groupId).get();
 
         group.setGroupName(newName);
 
-        groupRepository.save(group);
+        return groupRepository.save(group).getId();
     }
 }

@@ -2,6 +2,7 @@ package com.lemon.backend.domain.friend.dto.response;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -11,14 +12,13 @@ import java.util.List;
 public class GroupResponseDto {
 
     private Long id;
+    private String name;
+    private List<FriendResponseDto> friendList = new ArrayList<>();
 
     public GroupResponseDto(Long id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    private String name;
-    private List<FriendResponseDto> friendList;
 
     public GroupResponseDto(String name) {
         this.name = name;

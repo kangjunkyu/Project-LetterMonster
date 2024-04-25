@@ -1,10 +1,16 @@
 package com.lemon.backend.domain.friend.service;
 
+import com.lemon.backend.domain.friend.dto.response.GroupResponseDto;
+
+import java.util.List;
+
 public interface GroupsService {
+
+    List<GroupResponseDto> getGroupForUser(Integer userId);
 
     Long createGroup(Integer userId, String groupName);
 
     void deleteGroup(Long groupId);
 
-    void changeGroupName(Long groupId, String newName);
+    Long changeGroupName(Long groupId, String newName);
 }

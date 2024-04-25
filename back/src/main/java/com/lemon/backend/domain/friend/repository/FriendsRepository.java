@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface FriendsRepository extends JpaRepository<Friends, Long>, FriendsRepositoryCustom {
-    Optional<Friends> findByUser_IdAndFriend_Id(Integer userId, Integer friendId);
+    Optional<Friends> findByUsers_IdAndFriend_Id(Integer userId, Integer friendId);
 }

@@ -23,7 +23,7 @@ public class FriendsServiceImpl implements FriendsService {
     private final GroupsRepository groupsRepository;
 
     @Override
-    public Integer addFriend(Integer userId, Integer friendId) {
+    public Long addFriend(Integer userId, Integer friendId) {
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         Users friendUser = userRepository.findById(friendId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 
@@ -49,7 +49,7 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public void deleteFriend(Integer userId, Integer friendId) {
-        Friends friend = friendsRepository.findByUser_IdAndFriend_Id(userId, friendId).orElseThrow(() -> new CustomException(ErrorCode.INVALID_AUTH_CODE));
+        Friends friend = friendsRepository.findByUsers_IdAndFriend_Id(userId, friendId).orElseThrow(() -> new CustomException(ErrorCode.INVALID_AUTH_CODE));
 
         friendsRepository.delete(friend);
     }

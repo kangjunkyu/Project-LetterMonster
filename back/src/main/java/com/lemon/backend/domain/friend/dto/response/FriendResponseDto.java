@@ -10,11 +10,11 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FriendResponseDto {
     private Long id;
-    private Users user;
-    private Users friend;
+    private String nickname;
+    private String nicknameTag;
 
-    public FriendResponseDto(Users user, Users friend) {
-        this.user = user;
-        this.friend = friend;
+    public FriendResponseDto(String nickname, String nicknameTag) {
+        this.nickname = nickname;
+        this.nicknameTag = nicknameTag;
     }
 }
