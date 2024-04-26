@@ -13,7 +13,7 @@ export default function useSketchbookList() {
   });
 }
 
-/** 스케치북 리스트전체 불러오기 */
+/** 스케치북 리스트 전체 불러오기 */
 export function useSketchbookListAll() {
   return useQuery({
     queryKey: ["sketchbooklistall"],
@@ -27,7 +27,7 @@ export function useCreateSketchbook() {
   return useMutation({
     mutationFn: (name: string) => postSketchbook(name),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["sketchbookList"] });
+      queryClient.invalidateQueries({ queryKey: ["sketchbooklist"] });
     },
     mutationKey: ["createSketchbook"],
   });
