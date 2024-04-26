@@ -18,6 +18,7 @@ const RouterChangeTracker = () => {
       ReactGA.pageview(location.pathname + location.search);
     }
   }, [initialized, location]);
+  return null;
 };
 
 export default RouterChangeTracker;
