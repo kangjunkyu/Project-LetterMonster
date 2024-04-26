@@ -2,10 +2,7 @@ package com.lemon.backend.domain.characters.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.lemon.backend.domain.characters.dto.response.CharactersGetDto;
-import com.lemon.backend.domain.characters.dto.response.CharactersIdDto;
-import com.lemon.backend.domain.characters.dto.response.ImageUrlDto;
-import com.lemon.backend.domain.characters.dto.response.RepresentMotionDto;
+import com.lemon.backend.domain.characters.dto.response.*;
 import com.lemon.backend.domain.characters.entity.CharacterMotion;
 import com.lemon.backend.domain.characters.entity.Characters;
 import com.lemon.backend.domain.characters.entity.Motion;
@@ -112,7 +109,7 @@ public class CharacterServiceImpl implements CharacterService {
     이후 캐릭터 모션을 DB에 저장한다.
      */
     @Override
-    public String selectCharacterMotion(Long characterId, Long motionId) {
+    public SelectCharacterMotionDto selectCharacterMotion(Long characterId, Long motionId) {
         Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
         Optional<Motion> optionalMotion = motionRepository.findById(motionId);
 
@@ -124,7 +121,8 @@ public class CharacterServiceImpl implements CharacterService {
         Optional<CharacterMotion> optionalCharacterMotion = characterMotionRepository.findByCharactersAndMotion(characters, motion);
         if(optionalCharacterMotion.isPresent()) {
             CharacterMotion characterMotion = optionalCharacterMotion.get();
-            return characterMotion.getUrl();
+            SelectCharacterMotionDto selectCharacterMotionDto = SelectCharacterMotionDto.builder().CharacterMotionId(characterMotion.getId()).imageUrl(characterMotion.getUrl()).build();
+            return selectCharacterMotionDto;
         } else {
             // Rest template
             RestTemplate restTemplate = new RestTemplate();
@@ -148,9 +146,10 @@ public class CharacterServiceImpl implements CharacterService {
                 String gifUrl = "https://letter-monster.s3.ap-northeast-2.amazonaws.com/"+responseBody.get("gif_path");
                 CharacterMotion newMotion = CharacterMotion.builder().characters(characters).motion(motion).url(gifUrl).build();
                 characterMotionRepository.save(newMotion);
-                return gifUrl;
+                SelectCharacterMotionDto selectCharacterMotionDto = SelectCharacterMotionDto.builder().CharacterMotionId(newMotion.getId()).imageUrl(gifUrl).build();
+                return selectCharacterMotionDto;
             } else {
-                return "Failed to create GIF";
+                throw new CustomException(ErrorCode.CHARACTERMOTION_SAVE_FAILED);
             }
 
 
