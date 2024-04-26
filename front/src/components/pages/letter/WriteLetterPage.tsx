@@ -14,8 +14,7 @@ function LetterWritePage() {
   const [content, setContent] = useState(""); // 편지내용
   const [target, setTarget] = useState(0); // 편지보낼스케치북
   const location = useLocation();
-  const { characterId, gif, characterNickname, motionId } =
-    location.state || {};
+  const { gif, characterNickname } = location.state || {};
   const { data: sketchbookList } = useSketchbookList();
 
   const onClickHandler = () => {
