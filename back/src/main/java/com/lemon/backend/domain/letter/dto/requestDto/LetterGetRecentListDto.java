@@ -12,14 +12,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LetterGetListDto {
-    private Long id;
-    private UserGetDto sender;
-    private UserGetDto receiver;
-    private String content;
-    private LocalDateTime write_time;
-
-    public LetterGetListDto(UserGetDto receiver) {
-        this.receiver = receiver;
-    }
+public class LetterGetRecentListDto {
+    private Integer id;
+    private String nickname;
+    private String tag;
 }

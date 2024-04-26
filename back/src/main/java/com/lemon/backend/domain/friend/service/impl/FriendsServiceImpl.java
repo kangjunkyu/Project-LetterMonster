@@ -1,7 +1,7 @@
 package com.lemon.backend.domain.friend.service.impl;
 
 import com.lemon.backend.domain.friend.entity.Friends;
-import com.lemon.backend.domain.friend.entity.Groups;
+import com.lemon.backend.domain.friend.entity.GroupsInfo;
 import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.lemon.backend.domain.friend.repository.GroupsRepository;
 import com.lemon.backend.domain.friend.service.FriendsService;
@@ -27,8 +27,8 @@ public class FriendsServiceImpl implements FriendsService {
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         Users friendUser = userRepository.findById(friendId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 
-        Groups defaultGroup = groupsRepository.findFirstByUsersId(userId).orElseGet(() -> {
-            Groups newGroup = Groups.builder()
+        GroupsInfo defaultGroup = groupsRepository.findFirstByUsersId(userId).orElseGet(() -> {
+            GroupsInfo newGroup = GroupsInfo.builder()
                     .groupName("기본")
                     .owner(user)
                     .build();
@@ -38,7 +38,7 @@ public class FriendsServiceImpl implements FriendsService {
         Friends friend = Friends.builder()
                 .users(user)
                 .friend(friendUser)
-                .groups(defaultGroup)
+                .groupsInfo(defaultGroup)
                 .build();
 
         user.getFriendList().add(friend);
@@ -59,10 +59,10 @@ public class FriendsServiceImpl implements FriendsService {
         Friends friend = friendsRepository.findById(friendId)
                 .orElseThrow(() -> new RuntimeException("Friend relationship not found"));
 
-        Groups newGroup = groupsRepository.findById(newGroupId)
+        GroupsInfo newGroup = groupsRepository.findById(newGroupId)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
-        friend.setGroups(newGroup);
+        friend.setGroupsInfo(newGroup);
         friendsRepository.save(friend);
     }
 

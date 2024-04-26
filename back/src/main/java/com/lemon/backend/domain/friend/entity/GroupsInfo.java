@@ -15,15 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
-@SQLDelete(sql = "UPDATE groups SET is_deleted = TRUE WHERE groups_id = ?")
-public class Groups extends BaseEntity {
+@SQLDelete(sql = "UPDATE groups_info SET is_deleted = TRUE WHERE groups_id = ?")
+public class GroupsInfo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "groups_id")
     private Long id;
 
-    public Groups(Long id, String groupName) {
+    public GroupsInfo(Long id, String groupName) {
         this.id = id;
         this.groupName = groupName;
     }
@@ -37,7 +37,7 @@ public class Groups extends BaseEntity {
     @JoinColumn(name = "owner_id")
     private Users owner;  // 그룹의 소유자
 
-    @OneToMany(mappedBy = "groups", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "groupsInfo", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Friends> friendList;
 
 }

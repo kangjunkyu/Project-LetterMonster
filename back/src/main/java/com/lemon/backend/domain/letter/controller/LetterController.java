@@ -1,6 +1,7 @@
 package com.lemon.backend.domain.letter.controller;
 
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateDto;
 import com.lemon.backend.domain.letter.service.LetterService;
 import com.lemon.backend.global.response.SuccessCode;
@@ -31,6 +32,16 @@ public class LetterController {
 
         return getResponseEntity(SuccessCode.OK, letterList);
     }
+
+    @Operation
+    @GetMapping("/recent")
+    public ResponseEntity<?> getRecentLetter(Authentication authentication){
+        Integer senderId = (Integer) authentication.getPrincipal();
+        List<LetterGetRecentListDto> letterList = letterService.getLetterThree(senderId);
+        return getResponseEntity(SuccessCode.OK, letterList);
+    }
+
+
     @Operation(summary = "편지 생성", description = "편지 생성, sketchbookId, characterId 필요")
     @PostMapping
     public ResponseEntity<?> createLetter(Authentication authentication, @Valid @RequestBody LetterCreateDto letterDto){

@@ -2,7 +2,7 @@ package com.lemon.backend.domain.friend.service.impl;
 
 import com.lemon.backend.domain.friend.dto.response.GroupResponseDto;
 import com.lemon.backend.domain.friend.entity.Friends;
-import com.lemon.backend.domain.friend.entity.Groups;
+import com.lemon.backend.domain.friend.entity.GroupsInfo;
 import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.lemon.backend.domain.friend.repository.GroupsRepository;
 import com.lemon.backend.domain.friend.service.GroupsService;
@@ -38,7 +38,7 @@ public class GroupsServiceImpl implements GroupsService {
     public Long createGroup(Integer userId, String groupName){
         Users user = userRepository.findById(userId).get();
 
-        Groups newGroup = Groups.builder()
+        GroupsInfo newGroup = GroupsInfo.builder()
                 .groupName(groupName)
                 .owner(user)
                 .build();
@@ -47,23 +47,21 @@ public class GroupsServiceImpl implements GroupsService {
     }
 
     @Override
-    public void deleteGroup(Long groupId) {
-        Optional<Groups> groupOptional = groupRepository.findById(groupId);
+    public void deleteGroup(Integer userId, Long groupId) {
+        Optional<GroupsInfo> groupOptional = groupRepository.findById(groupId);
         if (groupOptional.isPresent()) {
-            Groups group = groupOptional.get();
-            List<Friends> friends = group.getFriendList(); // 혹시라도 속성 이름이 다르다면 적절히 변경해주세요.
-            // 기본 그룹 ID를 설정해주세요.
-            Long defaultGroupId = 1L;
+            GroupsInfo group = groupOptional.get();
+            List<Friends> friends = group.getFriendList();
 
-            Groups defaultGroup = groupRepository.findById(defaultGroupId).get();
+            GroupsInfo defaultGroup = groupRepository.findFirstByUsersId(userId).get();
+
             for (Friends friend : friends) {
                 System.out.println(friend);
-                friend.setGroups(defaultGroup); // 속한 그룹을 기본 그룹으로 설정
+                friend.setGroupsInfo(defaultGroup);
                 friendsRepository.save(friend);
             }
             groupRepository.deleteById(groupId);
         } else {
-            // 그룹이 존재하지 않는 경우 예외 처리
             throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
         }
     }
@@ -71,7 +69,7 @@ public class GroupsServiceImpl implements GroupsService {
 
     @Override
     public Long changeGroupName(Long groupId, String newName){
-        Groups group = groupRepository.findById(groupId).get();
+        GroupsInfo group = groupRepository.findById(groupId).get();
 
         group.setGroupName(newName);
 
