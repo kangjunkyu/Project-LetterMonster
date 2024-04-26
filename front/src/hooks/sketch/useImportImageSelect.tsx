@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import { SIZE } from "../../components/pages/sketch/Paint";
+// import { SIZE } from "../../components/pages/sketch/Paint";
 
-function useImportImageSelect() {
+function useImportImageSelect(SIZE:number) {
   const [image, setImage] = useState<HTMLImageElement | undefined>();
 
   const onImportImageSelect: React.ChangeEventHandler<HTMLInputElement> =

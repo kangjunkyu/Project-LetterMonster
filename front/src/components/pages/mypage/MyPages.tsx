@@ -4,13 +4,17 @@ import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import MyPageLangSelect from "../../molecules/mypage/MyPageLangSelect";
 import Modal from "../../atoms/modal/Modal";
 import { useState } from "react";
+import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
+// import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 
-type ModalName = 'userInfo' | 'langSelect';
+type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList";
 
 function MyPages() {
   const [isModalOpen, setModalOpen] = useState({
     userInfo: false,
     langSelect: false,
+    findFriend: false,
+    characterList: false,
   });
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
@@ -43,6 +47,28 @@ function MyPages() {
             <MyPageLangSelect />
           </Modal>
         )}
+        <button onClick={() => handleToggleModal("characterList")}>
+          캐릭터 목록
+        </button>
+        {isModalOpen.characterList && (
+          <Modal
+            isOpen={isModalOpen.characterList}
+            onClose={() => handleToggleModal("characterList")}
+          >
+            <MyPageCharacter />
+          </Modal>
+        )}
+        {/* <button onClick={() => handleToggleModal("findFriend")}>
+          친구 찾기
+        </button>
+        {isModalOpen.findFriend && (
+          <Modal
+            isOpen={isModalOpen.findFriend}
+            onClose={() => handleToggleModal("findFriend")}
+          >
+            <MyPageFindFriend />
+          </Modal>
+        )} */}
       </div>
     </>
   );
