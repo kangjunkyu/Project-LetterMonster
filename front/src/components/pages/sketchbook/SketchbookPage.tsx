@@ -25,7 +25,7 @@ function SketchbookPage() {
         <DefaultButton
           onClick={() =>
             putSketchbook.mutate({
-              sketchbookId: Number(data.data.id),
+              sketchbookId: Number(data?.data?.id),
               name: name,
             })
           }
@@ -33,13 +33,13 @@ function SketchbookPage() {
           수정
         </DefaultButton>
         <DefaultButton
-          onClick={() => deleteSketchbook.mutate(Number(data.data.id))}
+          onClick={() => deleteSketchbook.mutate(Number(data?.data?.id))}
         >
           삭제
         </DefaultButton>
         <DefaultButton
           onClick={() => {
-            navigate(`${Page_Url.WriteLetterToSketchbook}${data.data.id}`);
+            navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`);
           }}
         >
           편지쓰기
@@ -47,35 +47,38 @@ function SketchbookPage() {
       </div>
       {data && (
         <figure className={styles.sketchbook}>
-          <div>{data.data.name} 스케치북</div>
-          <div>{data.data.sketchbookCharacterMotionList[1].id} 스케치북</div>
+          <div>{data?.data?.name} 스케치북</div>
+          <div>{data?.data?.sketchbookCharacterMotionList[1]?.id} 스케치북</div>
           <div>
             {
-              data.data.sketchbookCharacterMotionList[1].letterList[0].sender
-                .nickname
+              data?.data?.sketchbookCharacterMotionList[1]?.letterList[0]
+                ?.sender.nickname
             }
             님의 편지
           </div>
           <div>
-            {data.data.sketchbookCharacterMotionList[1].letterList[0].content}
+            {
+              data?.data?.sketchbookCharacterMotionList[1]?.letterList[0]
+                ?.content
+            }
           </div>
           <div>
             {
-              data.data.sketchbookCharacterMotionList[1].letterList[0]
-                .write_time
+              data?.data?.sketchbookCharacterMotionList[1]?.letterList[0]
+                ?.write_time
             }
           </div>
           <img
             src={
-              data.data.sketchbookCharacterMotionList[1].characterMotion
-                .imageUrl
+              data?.data?.sketchbookCharacterMotionList[1]?.characterMotion
+                ?.imageUrl
             }
             alt=""
           />
           <div>
             {
-              data.data.sketchbookCharacterMotionList[1].characterMotion
-                .nickname
+              data?.data?.sketchbookCharacterMotionList[1]?.characterMotion
+                ?.nickname
             }
           </div>
         </figure>
