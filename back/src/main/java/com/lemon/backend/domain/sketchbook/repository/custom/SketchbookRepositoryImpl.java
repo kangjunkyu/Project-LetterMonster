@@ -370,6 +370,20 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
         return Optional.ofNullable(sketchAll.isEmpty() ? null : sketchAll);
     }
 
+    @Override
+    public Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName){
+        List<SketchbookSearchGetDto> list = query
+                .select(Projections.constructor(SketchbookSearchGetDto.class,
+                        sketchbook.id,
+                        sketchbook.sketchbookUuid,
+                        sketchbook.name,
+                        sketchbook.tag))
+                .from(sketchbook)
+                .where(sketchbook.name.contains(sketchbookName))
+                .fetch();
+        return Optional.ofNullable(list);
+    }
+
 
 }
 
