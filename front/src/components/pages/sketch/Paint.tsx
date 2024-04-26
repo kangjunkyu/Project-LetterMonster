@@ -107,35 +107,42 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
   const currentShapeRef = useRef<string>();
 
-  const getPointerPosition = (
-    event: KonvaEventObject<MouseEvent | TouchEvent>
-  ) => {
+  // const getPointerPosition = (
+  //   event: KonvaEventObject<MouseEvent | TouchEvent>
+  // ) => {
+  //   const stage = stageRef.current;
+  //   // TouchEvent인 경우
+  //   if (event.evt instanceof TouchEvent && event.evt.touches.length > 0) {
+  //     // 첫 번째 터치 포인트를 사용합니다.
+  //     const touch = event.evt.touches[0];
+  //     return { x: touch.clientX, y: touch.clientY };
+  //   } else {
+  //     // MouseEvent를 처리합니다.
+  //     return stage.getPointerPosition();
+  //   }
+  //   // TouchEvent와 MouseEvent를 모두 처리
+  //   // if (event.evt.touches && event.evt.touches.length > 0) {
+  //   //   return stage.getPointerPosition(); // 터치 위치 얻기
+  //   // } else {
+  //   //   return stage.getPointerPosition(); // 마우스 위치 얻기
+  //   // }
+  // };
+  const getPointerPosition = (event: any) => {
     const stage = stageRef.current;
-    // TouchEvent인 경우
-    if (event.evt instanceof TouchEvent && event.evt.touches.length > 0) {
-      // 첫 번째 터치 포인트를 사용합니다.
+    if (event.evt.touches && event.evt.touches.length > 0) {
       const touch = event.evt.touches[0];
-      return { x: touch.clientX, y: touch.clientY };
+      return stage.getRelativePointerPosition(touch);
     } else {
-      // MouseEvent를 처리합니다.
       return stage.getPointerPosition();
     }
-    // TouchEvent와 MouseEvent를 모두 처리
-    // if (event.evt.touches && event.evt.touches.length > 0) {
-    //   return stage.getPointerPosition(); // 터치 위치 얻기
-    // } else {
-    //   return stage.getPointerPosition(); // 마우스 위치 얻기
-    // }
   };
-
   const onStageMouseDown = useCallback(
-    (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
+    (event: any) => {
       if (drawAction === DrawAction.Select) {
         event.cancelBubble = true;
         return;
       }
       isDrawing.current = true;
-      // const stage = stageRef?.current;
       const pos = getPointerPosition(event);
       const x = pos?.x || 0;
       const y = pos?.y || 0;
@@ -143,32 +150,63 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
       currentShapeRef.current = id;
 
       switch (drawAction) {
-        case DrawAction.Scribble: {
+        case DrawAction.Scribble:
+        case DrawAction.Erase:
           setScribbles((prevScribbles) => [
             ...prevScribbles,
             {
               id,
               points: [x, y],
-              color,
+              color: drawAction === DrawAction.Erase ? "white" : color,
             },
           ]);
           break;
-        }
-        case DrawAction.Erase: {
-          setScribbles((prevScribbles) => [
-            ...prevScribbles,
-            {
-              id,
-              points: [x, y],
-              color: "white",
-            },
-          ]);
-          break;
-        }
       }
     },
     [drawAction, color]
   );
+
+  // const onStageMouseDown = useCallback(
+  //   (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
+  //     if (drawAction === DrawAction.Select) {
+  //       event.cancelBubble = true;
+  //       return;
+  //     }
+  //     isDrawing.current = true;
+  //     // const stage = stageRef?.current;
+  //     const pos = getPointerPosition(event);
+  //     const x = pos?.x || 0;
+  //     const y = pos?.y || 0;
+  //     const id = uuidv4();
+  //     currentShapeRef.current = id;
+
+  //     switch (drawAction) {
+  //       case DrawAction.Scribble: {
+  //         setScribbles((prevScribbles) => [
+  //           ...prevScribbles,
+  //           {
+  //             id,
+  //             points: [x, y],
+  //             color,
+  //           },
+  //         ]);
+  //         break;
+  //       }
+  //       case DrawAction.Erase: {
+  //         setScribbles((prevScribbles) => [
+  //           ...prevScribbles,
+  //           {
+  //             id,
+  //             points: [x, y],
+  //             color: "white",
+  //           },
+  //         ]);
+  //         break;
+  //       }
+  //     }
+  //   },
+  //   [drawAction, color]
+  // );
 
   const onStageMouseMove = useCallback(
     (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
@@ -211,7 +249,16 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   );
 
   const isDraggable = drawAction === DrawAction.Select;
+  const onTouchMove = useCallback(
+    (event: any) => {
+      onStageMouseMove(event);
+    },
+    [onStageMouseMove]
+  );
 
+  const onTouchEnd = useCallback(() => {
+    onStageMouseUp();
+  }, [onStageMouseUp]);
   return (
     <div>
       <div className={`${styles.paintUpper}`}>
@@ -290,6 +337,9 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           onMouseUp={onStageMouseUp}
           onMouseDown={onStageMouseDown}
           onMouseMove={onStageMouseMove}
+          onTouchStart={onStageMouseDown}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
           style={{ border: "3px solid black" }}
         >
           <Layer>
