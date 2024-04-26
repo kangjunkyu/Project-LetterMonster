@@ -3,6 +3,7 @@ package com.lemon.backend.domain.users.user.service.impl;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.ChangeNicknameResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.entity.*;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
@@ -17,6 +18,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -123,6 +125,12 @@ public class UserServiceImpl implements UserService {
         Users user = userRepository.findById(userId).get();
         return UserGetDto.builder().nickname(user.getNickname()).nicknameTag(user.getNicknameTag())
                 .isLanguageSet(user.getIsLanguage()).build();
+    }
+
+    @Override
+    public List<UserSearchGetDto> searchNickname(String nickName){
+        List<UserSearchGetDto> list =  userRepository.findUsersByNickName(nickName);
+        return list;
     }
 
     private void deleteRefreshToken(Integer userId) {

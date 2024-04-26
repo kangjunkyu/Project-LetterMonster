@@ -22,4 +22,6 @@ public interface SketchbookRepositoryCustom {
     Optional<String> findHighestSketchbookTagByName(String name);
 
     Optional<List<SketchbookGetAllDto>> getSketchAll();
+
+    Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName);
 }

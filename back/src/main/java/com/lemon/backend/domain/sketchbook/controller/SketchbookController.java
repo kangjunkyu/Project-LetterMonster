@@ -4,6 +4,7 @@ import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
+import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.lemon.backend.global.response.CommonResponseEntity.getResponseEntity;
 
@@ -85,5 +87,12 @@ public class SketchbookController {
     public ResponseEntity<?> deleteSketchBook(@PathVariable(value = "sketchbookId")Long sketchbookId){
         sketchbookService.deleteSketchbook(sketchbookId);
         return getResponseEntity(SuccessCode.OK);
+    }
+
+    @Operation(summary = "스케치북 검색", description = "스케치북 이름으로 검색합니다.")
+    @GetMapping("/{sketchbookName}")
+    public ResponseEntity<?> searchNickname(@PathVariable("sketchbookName") String nickname){
+        Optional<List<SketchbookSearchGetDto>> searchList = sketchbookService.searchSkechbook(nickname);
+        return getResponseEntity(SuccessCode.OK, searchList);
     }
 }
