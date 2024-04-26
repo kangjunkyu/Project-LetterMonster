@@ -1,5 +1,5 @@
 import { KonvaEventObject } from "konva/lib/Node";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Rect,
   Stage,
@@ -19,9 +19,18 @@ import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchChara
 
 interface PaintProps {}
 
-export const SIZE = 500;
+// export const SIZE = {};
 
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
+  const navigate = useNavigate();
+
+  const [color, setColor] = useState("#000");
+  const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
+  const [scribbles, setScribbles] = useState<Scribble[]>([]);
+  const [showPopover, setShowPopover] = useState(false);
+  const [size, setSize] = useState(500);
+
+  const { image, setImage, onImportImageSelect } = useImportImageSelect(size);
   // 캐릭터 생성 뮤테이션
   const postSketchCharacterMutation = usePostSketchCharacter(
     (response, uri, nickname) => {
@@ -33,14 +42,19 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     }
   );
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const updateSize = () => {
+      const screenWidth = window.innerWidth;
+      const maxSize = 500;
+      const newSize = Math.min(maxSize, screenWidth * 0.9);
+      setSize(newSize);
+    };
 
-  const [color, setColor] = useState("#000");
-  const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
-  const [scribbles, setScribbles] = useState<Scribble[]>([]);
-  const [showPopover, setShowPopover] = useState(false);
+    window.addEventListener("resize", updateSize);
+    updateSize();
 
-  const { image, setImage, onImportImageSelect } = useImportImageSelect();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   // 닉네임 validation hook
   const [characterNickname, setCharacterNickname] = useState("");
@@ -107,35 +121,22 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
   const currentShapeRef = useRef<string>();
 
-  const getPointerPosition = (
-    event: KonvaEventObject<MouseEvent | TouchEvent>
-  ) => {
+  const getPointerPosition = (event: any) => {
     const stage = stageRef.current;
-    // TouchEvent인 경우
-    if (event.evt instanceof TouchEvent && event.evt.touches.length > 0) {
-      // 첫 번째 터치 포인트를 사용합니다.
+    if (event.evt.touches && event.evt.touches.length > 0) {
       const touch = event.evt.touches[0];
-      return { x: touch.clientX, y: touch.clientY };
+      return stage.getRelativePointerPosition(touch);
     } else {
-      // MouseEvent를 처리합니다.
       return stage.getPointerPosition();
     }
-    // TouchEvent와 MouseEvent를 모두 처리
-    // if (event.evt.touches && event.evt.touches.length > 0) {
-    //   return stage.getPointerPosition(); // 터치 위치 얻기
-    // } else {
-    //   return stage.getPointerPosition(); // 마우스 위치 얻기
-    // }
   };
-
   const onStageMouseDown = useCallback(
-    (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
+    (event: any) => {
       if (drawAction === DrawAction.Select) {
         event.cancelBubble = true;
         return;
       }
       isDrawing.current = true;
-      // const stage = stageRef?.current;
       const pos = getPointerPosition(event);
       const x = pos?.x || 0;
       const y = pos?.y || 0;
@@ -143,28 +144,17 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
       currentShapeRef.current = id;
 
       switch (drawAction) {
-        case DrawAction.Scribble: {
+        case DrawAction.Scribble:
+        case DrawAction.Erase:
           setScribbles((prevScribbles) => [
             ...prevScribbles,
             {
               id,
               points: [x, y],
-              color,
+              color: drawAction === DrawAction.Erase ? "white" : color,
             },
           ]);
           break;
-        }
-        case DrawAction.Erase: {
-          setScribbles((prevScribbles) => [
-            ...prevScribbles,
-            {
-              id,
-              points: [x, y],
-              color: "white",
-            },
-          ]);
-          break;
-        }
       }
     },
     [drawAction, color]
@@ -211,9 +201,18 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   );
 
   const isDraggable = drawAction === DrawAction.Select;
+  const onTouchMove = useCallback(
+    (event: any) => {
+      onStageMouseMove(event);
+    },
+    [onStageMouseMove]
+  );
 
+  const onTouchEnd = useCallback(() => {
+    onStageMouseUp();
+  }, [onStageMouseUp]);
   return (
-    <div>
+    <div className={styles.paintContainer} style={{ maxWidth: '479px' }}>
       <div className={`${styles.paintUpper}`}>
         <div className={styles.paintTool}>
           {PAINT_OPTIONS.map(({ id, label, icon }) => (
@@ -284,23 +283,26 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
       <div className={styles.paintCanvas}>
         <Stage
-          height={SIZE}
-          width={SIZE}
+          height={size}
+          width={size}
           ref={stageRef}
           onMouseUp={onStageMouseUp}
           onMouseDown={onStageMouseDown}
           onMouseMove={onStageMouseMove}
-          style={{ border: "3px solid black" }}
+          onTouchStart={onStageMouseDown}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          style={{ border: "3px solid black", }}
         >
           <Layer>
-            <Rect width={SIZE} height={SIZE} fill="white" />
+            <Rect width={size} height={size} fill="white" />
             {image && (
               <KonvaImage
                 image={image}
                 x={0}
                 y={0}
-                height={SIZE / 2}
-                width={SIZE / 2}
+                height={size / 2}
+                width={size / 2}
                 draggable={isDraggable}
               />
             )}
