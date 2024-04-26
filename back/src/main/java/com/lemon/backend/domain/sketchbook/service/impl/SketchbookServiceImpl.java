@@ -4,7 +4,6 @@ import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
-import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
@@ -31,6 +30,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     private final UserRepository userRepository;
     private final SketchbookRepository sketchbookRepository;
     private final SketchCharacterMotionRepository sketchbookCharacterMotionRepository;
+    String baseUrl = System.getenv("BASE_URL");
 
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
@@ -57,13 +57,20 @@ public class SketchbookServiceImpl implements SketchbookService {
         return sameSketchbookLastNumber;
     }
 
+    @Override
+    public Optional<List<SketchbookSearchGetDto>> searchSkechbook(String searchName){
+        Optional<List<SketchbookSearchGetDto>> list = sketchbookRepository.searchList(searchName);
+
+        return list;
+    }
+
     @Transactional
     @Override
     public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto){
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(sketchDto.getName());
         String uuid = UUID.randomUUID().toString();
-        String sharaLink = "http://localhost:8080/api/sketchbooks/detail/" + uuid;
+        String sharaLink = baseUrl + "/sketchbooks/detail/" + uuid;
 
         Sketchbook sketch = Sketchbook.builder()
                 .name(sketchDto.getName())
