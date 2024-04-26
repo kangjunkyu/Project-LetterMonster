@@ -18,4 +18,8 @@ public class LetterGetListDto {
     private UserGetDto receiver;
     private String content;
     private LocalDateTime write_time;
+
+    public LetterGetListDto(UserGetDto receiver) {
+        this.receiver = receiver;
+    }
 }
