@@ -4,7 +4,6 @@ import com.lemon.backend.domain.characters.dto.CharacterMotionToSketchbookDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterToSketchbookDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
-import com.lemon.backend.domain.sketchbook.repository.custom.SketchbookRepositoryCustom;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
@@ -358,6 +357,17 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .orderBy(sketchbook.tag.desc())
                 .fetchFirst();
         return Optional.ofNullable(highestSketchbookTag);
+    }
+
+    @Override
+    public Optional<List<SketchbookGetAllDto>> getSketchAll(){
+        List<SketchbookGetAllDto> sketchAll = query
+                .select(constructor(SketchbookGetAllDto.class,
+                        sketchbook.id,
+                        sketchbook.name,
+                        sketchbook.tag)).from(sketchbook)
+                .fetch();
+        return Optional.ofNullable(sketchAll.isEmpty() ? null : sketchAll);
     }
 
 

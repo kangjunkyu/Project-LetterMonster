@@ -1,5 +1,6 @@
 package com.lemon.backend.domain.friend.entity;
 
+import com.lemon.backend.domain.base.BaseEntity;
 import com.lemon.backend.domain.users.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,12 +16,17 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE groups SET is_deleted = TRUE WHERE groups_id = ?")
-public class Groups {
+public class Groups extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "groups_id")
     private Long id;
+
+    public Groups(Long id, String groupName) {
+        this.id = id;
+        this.groupName = groupName;
+    }
 
     @Setter
     @Column(name = "group_name")
@@ -31,7 +37,7 @@ public class Groups {
     @JoinColumn(name = "owner_id")
     private Users owner;  // 그룹의 소유자
 
-    @OneToMany(mappedBy = "groups", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "groups", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Friends> friendList;
 
 }

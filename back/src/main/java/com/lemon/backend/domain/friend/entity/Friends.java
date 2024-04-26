@@ -1,5 +1,6 @@
 package com.lemon.backend.domain.friend.entity;
 
+import com.lemon.backend.domain.base.BaseEntity;
 import com.lemon.backend.domain.users.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE friends SET is_deleted = TRUE WHERE friends_id = ?")
-public class Friends {
+public class Friends extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

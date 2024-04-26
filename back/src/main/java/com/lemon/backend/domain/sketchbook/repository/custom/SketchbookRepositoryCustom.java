@@ -20,4 +20,6 @@ public interface SketchbookRepositoryCustom {
     SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
 
     Optional<String> findHighestSketchbookTagByName(String name);
+
+    Optional<List<SketchbookGetAllDto>> getSketchAll();
 }

@@ -58,6 +58,12 @@ public class SketchbookController {
         return ResponseEntity.ok(detailPageDto);
     }
 
+    @Operation(summary = "스케치북 전체 조회", description = "스케치북 전체 목록 조회")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllSketchList(){
+        List<SketchbookGetAllDto> sketchAll = sketchbookService.getSketchAll();
+        return getResponseEntity(SuccessCode.OK, sketchAll);
+    }
 
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
     @PostMapping
