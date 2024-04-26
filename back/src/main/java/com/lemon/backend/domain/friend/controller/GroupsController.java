@@ -37,8 +37,9 @@ public class GroupsController {
     }
 
     @DeleteMapping("/{groupId}")
-    public ResponseEntity<?> deleteGroup(@PathVariable Long groupId) {
-        groupsService.deleteGroup(groupId);
+    public ResponseEntity<?> deleteGroup(Authentication authentication, @PathVariable Long groupId) {
+        Integer loginId = (Integer) authentication.getPrincipal();
+        groupsService.deleteGroup(loginId, groupId);
         return getResponseEntity(SuccessCode.OK);
     }
 

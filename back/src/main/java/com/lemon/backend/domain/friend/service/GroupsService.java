@@ -10,7 +10,7 @@ public interface GroupsService {
 
     Long createGroup(Integer userId, String groupName);
 
-    void deleteGroup(Long groupId);
+    void deleteGroup(Integer userId, Long groupId);
 
     Long changeGroupName(Long groupId, String newName);
 }

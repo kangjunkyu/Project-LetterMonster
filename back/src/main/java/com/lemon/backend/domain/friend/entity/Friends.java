@@ -32,6 +32,6 @@ public class Friends extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "groups_id")
-    private Groups groups;
+    private GroupsInfo groupsInfo;
 
 }

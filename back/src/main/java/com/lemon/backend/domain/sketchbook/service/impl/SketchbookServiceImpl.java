@@ -73,10 +73,10 @@ public class SketchbookServiceImpl implements SketchbookService {
                 .tag(String.valueOf(sameSketchbookLastNumber))
                 .build();
 
-        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
-                .sketchbook(sketch)
-                .build();
-        sketchbookCharacterMotionRepository.save(sketchbookCharacterMotion);
+//        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
+//                .sketchbook(sketch)
+//                .build();
+//        sketchbookCharacterMotionRepository.save(sketchbookCharacterMotion);
 
         return sketchbookRepository.save(sketch).getId();
     }
