@@ -29,7 +29,7 @@ export function useSelectMainCharacter() {
   return useMutation({
     mutationFn: (characterId: number) => patchMainCharacter(characterId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["Character"] });
+      queryClient.invalidateQueries({ queryKey: ["userCharacterList"] });
     },
   });
 }
