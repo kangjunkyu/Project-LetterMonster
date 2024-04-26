@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Page_Url } from "../router/Page_Url";
 
 export function createCustomAxios(baseURL, contentType) {
   const instance = axios.create({
@@ -31,44 +32,69 @@ API.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response) {
-      const { config } = error;
-      // 토큰 만료시
-      if (error.response.status === 401) {
-        const originRequest = config;
-        try {
-          // 리프레시 토큰 api
-          const response = await axios
-            .create({
-              baseURL: import.meta.env.VITE_BASE_URL,
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-              },
-            })
-            .post(import.meta.env.VITE_REFRESH_TOKEN);
-          // 리프레시 토큰 요청이 성공할 때
-          if (response.status === 200) {
-            const newAccessToken = response.data.data["accessToken"];
-            localStorage.setItem("accessToken", newAccessToken);
-            localStorage.setItem(
-              "refreshToken",
-              response.data.data["refreshToken"]
-            );
-            axios.defaults.headers.common.data.accessToken = `${newAccessToken}`;
-            // 진행중이던 요청 이어서하기
-            originRequest.headers.data.accessToken = `${newAccessToken}`;
-            return axios.create(originRequest);
-            // 리프레시 토큰 요청이 실패할때(리프레시 토큰도 만료되었을때 = 재로그인 안내)
-          }
-          if (response.data.status === 401 || response.data.status === 404) {
-            // window.location.href = "/login";
-          }
-        } catch (error) {
-          // window.location.href = "/login";
+    if (!error.response) {
+      // 네트워크 오류 또는 서버가 응답하지 않는 경우
+      return Promise.reject(error);
+    }
+
+    const {
+      config,
+      response: { status },
+    } = error;
+
+    // accessToken과 refreshToken이 모두 없으면 로그인 페이지로 이동
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (!accessToken && !refreshToken) {
+      window.location.href = Page_Url.Login;
+      return;
+    }
+
+    // 토큰 만료시
+    if (status === 401) {
+      if (!refreshToken) {
+        window.location.href = Page_Url.Login;
+        return;
+      }
+
+      try {
+        const baseURL = import.meta.env.VITE_BASE_URL;
+        const response = await axios
+          .create({
+            baseURL,
+            headers: {
+              Authorization: `Bearer ${refreshToken}`,
+            },
+          })
+          .post(import.meta.env.VITE_REFRESH_TOKEN);
+
+        if (response.status === 200) {
+          localStorage.setItem(
+            "accessToken",
+            response.data.data["accessToken"]
+          );
+          localStorage.setItem(
+            "refreshToken",
+            response.data.data["refreshToken"]
+          );
+
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${response.data.data["accessToken"]}`;
+          config.headers[
+            "Authorization"
+          ] = `Bearer ${response.data.data["accessToken"]}`;
+          console.log("엥여기?")
+          return axios(config);
+        } else {
+          window.location.href = Page_Url.Login;
         }
-        // window.location.href = "/login";
+      } catch (refreshError) {
+        window.location.href = Page_Url.Login;
       }
     }
+
     return Promise.reject(error);
   }
 );

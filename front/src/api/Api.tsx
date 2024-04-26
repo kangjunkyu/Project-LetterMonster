@@ -25,10 +25,7 @@ export const getUserNickname = () => API.get(`/user`).then((res) => res.data);
  * @param nickname 유저 닉네임
  */
 export const postNickname = (nickname: string) =>
-  API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
-    res.data;
-    console.log(res.data);
-  });
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
 
 // 캐릭터 관련 API
 
@@ -58,7 +55,8 @@ export const cancelCharacter = (characterId: number) =>
   API.delete(`/characters/cancel`, { params: { characterId: characterId } });
 
 /** 캐릭터 리스트 조회 */
-export const getCharacterList = () => API.get(`/characters/list`);
+export const getCharacterList = () =>
+  API.get(`/characters/list`).then((res) => res.data.data);
 
 /** 캐릭터 삭제
  * @param characterId 캐릭터 아이디
@@ -70,7 +68,7 @@ export const deleteCharacter = (characterId: number) =>
  * @param characterId 캐릭터 아이디
  */
 export const patchMainCharacter = (characterId: number) =>
-  API.patch(`/characters/my/maincharacter`, {
+  API.patch(`/characters/my/maincharacter`, {},{
     params: { characterId: characterId },
   });
 
