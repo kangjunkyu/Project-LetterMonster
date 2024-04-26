@@ -22,6 +22,7 @@ public enum ErrorCode {
 
     //캐릭터
     CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "캐릭터 정보를 찾을 수 없습니다."),
+    CHARACTER_SAVE_FAILED(HttpStatus.EXPECTATION_FAILED, "저장에 실패했습니다." ),
 
     //캐릭터모션
     CHARACTERMOTION_NOT_FOUND(HttpStatus.NOT_FOUND, "캐릭터 모션 정보를 찾을 수 없습니다."),

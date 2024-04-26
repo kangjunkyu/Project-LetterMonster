@@ -44,6 +44,7 @@ public class Sketchbook extends BaseEntity {
     private Users users;
 
     @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
 
     @Setter
@@ -56,6 +57,7 @@ public class Sketchbook extends BaseEntity {
 
     @Setter
     @Column(name="write_possible")
+    @Builder.Default
     private Boolean isWritePossible = false;
 
 

@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserGetDto {
-
+    private Boolean isLanguageSet;
     private String nickname;
     private String nicknameTag;
 

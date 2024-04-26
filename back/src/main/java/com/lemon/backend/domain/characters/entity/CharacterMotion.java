@@ -24,7 +24,7 @@ public class CharacterMotion extends BaseEntity {
     @Column(name = "character_motion_id")
     private Long id;
 
-    @Column(name = "image_url", length = 1000)
+    @Column(name = "image_url", columnDefinition = "TEXT")
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,6 +36,7 @@ public class CharacterMotion extends BaseEntity {
     private Motion motion;
 
     @OneToMany(mappedBy = "characterMotion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
 
     // 양방향 연관관계 편의 메서드
