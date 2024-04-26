@@ -7,15 +7,17 @@ import "./locales/i18n"; // 다국어 지원
 import { useScript } from "./hooks/share/useShareToKakao";
 import { useEffect } from "react";
 import { AlertProvider } from "./hooks/notice/useAlert";
-import ReactGA from "react-ga"; // 구글 애널리틱스
+import ReactGA from "react-ga4"; // 구글 애널리틱스
 import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
 
-const gaTrackingId = import.meta.env.VITE_APP_GA_TRACKING_ID;
-ReactGA.initialize(gaTrackingId, { debug: true }); // react-ga 초기화 및 debug 사용
 declare global {
   interface Window {
     Kakao: any;
   }
+}
+
+if (import.meta.env.REACT_APP_GOOGLE_ANALYTICS) {
+  ReactGA.initialize(import.meta.env.REACT_APP_GOOGLE_ANALYTICS);
 }
 
 const queryClient = new QueryClient();
