@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import CommonShareIcon from "../share/commonShareIcon";
+// import CommonShareIcon from "../share/commonShareIcon";
 import styles from "./SketchbookListItem.module.scss";
+import KakaoShareIcon from "../share/kakaoShareIcon";
 
 interface Props {
   url: string;
@@ -21,7 +22,8 @@ interface Props {
 function SketchbookListItem({ item, url }: Props) {
   return (
     <li className={styles.itemContainer}>
-      <CommonShareIcon link={item.shareLink} />
+      {/* <CommonShareIcon link={item.shareLink} /> */}
+      <KakaoShareIcon link={item.shareLink} nickname={item.holder.nickname} />
       <Link to={url} className={styles.sketchbookListItem}>
         {item.name}
       </Link>
