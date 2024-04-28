@@ -3,13 +3,12 @@ import styles from "./WriteLetterPage.module.scss";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import CrayonBox20 from "../../atoms/crayonBox/CrayonBox20";
 import Letter from "../../atoms/letter/Letter";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import useSketchbookList from "../../../hooks/sketchbook/useSketchbookList";
 // import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import { getMotionSelect, postLetter } from "../../../api/Api";
 import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
-import MotionList from "../../molecules/motion/MotionList";
 import LNB from "../../molecules/common/LNB";
 import CharacterList from "../../molecules/character/CharacterList";
 import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
@@ -20,7 +19,7 @@ function LetterWritePage() {
   const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
   const [content, setContent] = useState(""); // 편지내용
   const [target, setTarget] = useState(0); // 편지보낼스케치북
-  const location = useLocation();
+  // const location = useLocation();
   // const { gif, characterNickname } = location.state || {};
   const { data: sketchbookList, isLoading } = useSketchbookList();
   const { data: characterList } = useGetCharacterList();
@@ -33,7 +32,12 @@ function LetterWritePage() {
   const navigate = useNavigate();
 
   const onClickHandler = () => {
-    if (content && (target || sketchbookId) && characterMotionId != 0) {
+    if (
+      content &&
+      (target || sketchbookId) &&
+      motionId &&
+      characterMotionId != 0
+    ) {
       // 값 유무 확인
       postLetter(content, Number(target), characterMotionId).then((res) => {
         if (res.statusCode === 201) {
