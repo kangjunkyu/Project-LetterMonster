@@ -163,7 +163,7 @@ function LetterWritePage() {
         </article>
         <div className={styles.letterSize}>
           미리보기
-          <Letter sender="나" content={content}></Letter>
+          <Letter content={content}></Letter>
           {gif && <img src={gif} className={`${styles.characterImg}`} />}
         </div>
       </section>
