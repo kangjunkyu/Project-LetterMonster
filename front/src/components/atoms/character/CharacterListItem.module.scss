@@ -1,0 +1,41 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
+
+.characterListItem {
+  /* 데스크탑 */
+  @include flexCenterColumn();
+  border-radius: 5px;
+  background-color: $gc700;
+  list-style: none;
+  gap: 0.5em;
+  width: 100px;
+  height: 100px;
+
+  &:hover {
+    border: 1.5px solid blue;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.characterImg {
+  width: 100%;
+  height: 100%;
+  max-width: 200px;
+  border-radius: 5px 5px 0px 0px;
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    overflow-x: hidden;
+  }
+}

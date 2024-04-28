@@ -74,7 +74,8 @@ export const patchCharacterNickname = (characterId: number, nickname: string) =>
 // 모션 관련 API
 
 /** 모션 리스트 조회 */
-export const getMotionList = () => API.get(`/characters/list/motion`);
+export const getMotionList = () =>
+  API.get(`/characters/list/motion`).then((res) => res.data);
 // .then((res) => res.data);
 
 /** 모션 선택
@@ -85,7 +86,7 @@ export const getMotionSelect = (characterId: number, motionId: number) => {
   return API.get(`/characters/select/motion`, {
     params: { characterId: characterId, motionId: motionId },
   }).then((res) => {
-    return res.data.data;
+    return res.data;
   });
 };
 
