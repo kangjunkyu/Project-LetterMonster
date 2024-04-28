@@ -13,6 +13,10 @@ main {
       min-height: 100vh;
     }
 
+    @media screen AND (min-width: 768px) {
+      margin-left: 20px;
+    }
+
     @media screen and (max-width: 767px) {
       /* 타블렛 */
       margin-bottom: 5em;

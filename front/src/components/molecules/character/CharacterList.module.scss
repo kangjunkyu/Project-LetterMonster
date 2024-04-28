@@ -1,0 +1,22 @@
+@import "../../../styles/mixins/defalut";
+
+.characterList {
+  /* 데스크탑 */
+  @include wrapBox();
+  list-style: none;
+  display: flex;
+  gap: 0.5em;
+  overflow-y: hidden;
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.boxComponent {
+  @include box();
+}

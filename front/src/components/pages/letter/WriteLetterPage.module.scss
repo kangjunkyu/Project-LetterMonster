@@ -6,10 +6,10 @@ $maxWidthValue: 1024px;
 .container {
   @media screen and (min-width: 768px) {
     /* 데스크탑 */
-    @include flexCenterColumn();
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (min-width: 480px) {
     /* 타블렛 */
+    @include flexCenterColumn();
   }
 
   @media screen and (max-width: 479px) {
@@ -18,7 +18,6 @@ $maxWidthValue: 1024px;
 }
 
 .letterBox {
-  @include box();
   width: $widthValue;
   max-width: $maxWidthValue;
   display: flex;
@@ -40,9 +39,14 @@ $maxWidthValue: 1024px;
     /* 타블렛 */
   }
 
+  @media screen and (min-width: 480px) {
+    @include wrapBox();
+  }
+
   @media screen and (max-width: 479px) {
     /* 모바일 */
     flex-direction: column;
+    margin-top: calc(44px + 1em);
   }
 }
 
@@ -60,12 +64,12 @@ $maxWidthValue: 1024px;
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    margin: 0 auto;
+    display: none;
   }
 }
 
 .letterSize {
-  width: 500px;
+  width: 600px;
   height: 300px;
   @media screen and (max-width: 767px) {
     /* 타블렛 */
@@ -81,9 +85,12 @@ $maxWidthValue: 1024px;
 
 .characterList {
   /* 데스크탑 */
+  @include wrapBox();
   list-style: none;
   display: flex;
   gap: 0.5em;
+  overflow-y: hidden;
+
   @media screen and (max-width: 767px) {
     /* 타블렛 */
   }
@@ -91,13 +98,25 @@ $maxWidthValue: 1024px;
   @media screen and (max-width: 479px) {
     /* 모바일 */
   }
+}
+
+.motionList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  list-style: none;
 }
 
 .characterListItem {
   /* 데스크탑 */
-  @include flexCenterColumn();
   list-style: none;
-  gap: 0.5em;
+  width: 100px;
+  border-radius: 5px;
+  background-color: $gc900;
+  &:hover {
+    border: 1.5px solid blue;
+    border-radius: 5px;
+  }
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
@@ -107,10 +126,10 @@ $maxWidthValue: 1024px;
     /* 모바일 */
   }
 }
+
 .characterImg {
   width: 100%;
   height: 100%;
-  max-width: 200px;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
@@ -133,4 +152,8 @@ $maxWidthValue: 1024px;
 
 .sendList {
   width: 100%;
+}
+
+.selected {
+  background-color: red;
 }

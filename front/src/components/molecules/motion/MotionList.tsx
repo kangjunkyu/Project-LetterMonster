@@ -12,6 +12,7 @@ interface Prop {
   characterId: number;
   setGif: (gif: string) => void;
   setMotionId: (motinoId: number) => void;
+  setCharacterMotionId?: (characterMotionId: number) => void;
 }
 
 async function loadMotions(): Promise<Motion[]> {
