@@ -65,7 +65,7 @@ function LetterWritePage() {
 
   useEffect(() => {
     if (!isLoading) {
-      setTarget(sketchbookList.data[0].id);
+      setTarget(sketchbookList?.data[0]?.id);
     }
   }, [isLoading]);
 
@@ -107,17 +107,17 @@ function LetterWritePage() {
               <div className={styles.characterList}>
                 {baseMotionList?.data.map((item: any) => (
                   <DefaultButton
-                    onClick={() => motionSeleted(item.motionId)}
-                    key={item.motionId}
+                    onClick={() => motionSeleted(item?.motionId)}
+                    key={item?.motionId}
                     custom={true}
                   >
                     <div className={styles.characterListItem}>
                       <img
                         className={styles.characterImg}
-                        src={item.imageUrl}
+                        src={item?.imageUrl}
                         alt=""
                       />
-                      <div>{item.name}</div>
+                      <div>{item?.name}</div>
                     </div>
                   </DefaultButton>
                 ))}
@@ -136,7 +136,7 @@ function LetterWritePage() {
               }}
             >
               {sketchbookList &&
-                sketchbookList.data?.map(
+                sketchbookList?.data?.map(
                   (
                     item: {
                       id: number;
@@ -146,8 +146,8 @@ function LetterWritePage() {
                     },
                     i: number
                   ) => (
-                    <option value={item.id} key={i}>
-                      {item.name} - {item.tag} - {item.holder.nickname}
+                    <option value={item?.id} key={i}>
+                      {item?.name} - {item?.tag} - {item.holder?.nickname}
                     </option>
                   )
                 )}
