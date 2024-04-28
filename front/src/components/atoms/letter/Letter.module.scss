@@ -3,7 +3,6 @@
 .letter_container {
   @include flexCenterColumn();
   @include full();
-  background-color: blue;
 }
 
 .name_box {
