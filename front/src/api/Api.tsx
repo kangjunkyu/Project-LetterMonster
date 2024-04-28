@@ -85,7 +85,7 @@ export const getMotionSelect = (characterId: number, motionId: number) => {
   return API.get(`/characters/select/motion`, {
     params: { characterId: characterId, motionId: motionId },
   }).then((res) => {
-    return res.data.data;
+    return res.data;
   });
 };
 
