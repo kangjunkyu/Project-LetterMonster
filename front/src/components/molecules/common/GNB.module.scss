@@ -2,9 +2,9 @@
 @import "../../../styles/mixins/defalut";
 
 .header {
+  z-index: 9999;
   @media screen and (min-width: 768px) {
     gap: 1em;
-    z-index: 9999;
     top: 0;
     left: 0;
     bottom: 0;
