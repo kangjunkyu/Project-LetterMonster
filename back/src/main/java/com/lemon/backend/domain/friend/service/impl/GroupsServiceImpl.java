@@ -62,7 +62,7 @@ public class GroupsServiceImpl implements GroupsService {
             }
             groupRepository.deleteById(groupId);
         } else {
-            throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
+            throw new CustomException(ErrorCode.NOT_FOUND_GROUP);
         }
     }
 

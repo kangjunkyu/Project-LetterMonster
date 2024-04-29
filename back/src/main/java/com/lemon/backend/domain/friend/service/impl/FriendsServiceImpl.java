@@ -49,7 +49,7 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public void deleteFriend(Integer userId, Integer friendId) {
-        Friends friend = friendsRepository.findByUsers_IdAndFriend_Id(userId, friendId).orElseThrow(() -> new CustomException(ErrorCode.INVALID_AUTH_CODE));
+        Friends friend = friendsRepository.findByUsers_IdAndFriend_Id(userId, friendId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXCEPTION));
 
         friendsRepository.delete(friend);
     }

@@ -31,7 +31,7 @@ public class SketchbookCharacterMotion extends BaseEntity {
     private Sketchbook sketchbook;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "charactermotion_id", nullable = true)
+    @JoinColumn(name = "character_motion_id", nullable = true)
     private CharacterMotion characterMotion;
 
     @OneToMany(mappedBy = "sketchbookCharacterMotion", cascade = CascadeType.ALL, orphanRemoval = true)
