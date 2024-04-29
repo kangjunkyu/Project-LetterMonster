@@ -1,9 +1,13 @@
 package com.lemon.backend.domain.users.user.repository.custom;
 
 import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
+import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,6 +19,9 @@ import static com.lemon.backend.domain.users.user.entity.QUsers.users;
 public class UserRepositoryImpl implements UserRepositoryCustom{
 
     private final JPAQueryFactory query;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Optional<String> findHighestNicknameTagByNickname(String nickname) {
@@ -45,5 +52,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .where(users.nickname.contains(searchNickname))
                 .fetch();
     }
+
+
 
 }

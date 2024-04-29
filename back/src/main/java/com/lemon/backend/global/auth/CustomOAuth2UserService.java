@@ -6,6 +6,7 @@ import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.auth.userinfo.OAuth2UserInfo;
 import com.lemon.backend.global.auth.userinfo.OAuth2UserInfoFactory;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -34,23 +35,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return UserPrincipal.create(user, oauthUser.getAttributes());
     }
 
+    @Transactional
     public Users processUserLogin(OAuth2UserInfo userInfo, Social provider) {
 
         String providerId = userInfo.getId(); // UserInfo 객체를 통해 ID 가져오기
-        Users user = null;
 
-        user = userRepository.findByProviderAndProviderId(provider, providerId)
-                .orElseGet(() -> userService.createUser(userInfo, Social.KAKAO));
-
+        Users user = userRepository.findByProviderAndProviderIdIgnoreDeleted(provider.name(), providerId)
+                .orElseGet(() -> userService.createUser(userInfo, provider));
         if (user.getIsDeleted()) {
-            user = reactivateUser(user);
+            userRepository.updateIsDeleted(user.getId());
         }
 
         return user;
-    }
-
-    private Users reactivateUser(Users user) {
-        user.setIsDeleted(false);
-        return userRepository.save(user);
     }
 }
