@@ -1,20 +1,8 @@
 .sketchContainer {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1em;
   justify-content: center;
-  align-items: center;
   font-size: 14px;
-  @media screen and (max-width: 767px) {
-    /* 타블렛 */
-  }
-
-  @media screen and (max-width: 479px) {
-    /* 모바일 */
-    // margin: 0 auto;
-    // width: 90%;
-    // height: 10px;
-  }
+  width: 100%;
 }
 
