@@ -7,6 +7,7 @@ import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.entity.*;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
+import com.lemon.backend.global.badworld.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
@@ -105,6 +106,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public ChangeNicknameResponse changeNickname(Integer userId, ChangeNicknameRequest request) {
+        BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
+        if(badWordFilterUtil.blankCheck(request.getNickname())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         long sameNicknameLastNumber = getSameNicknameLastNumber(request.getNickname());
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         userRepository.changeNickname(user, request.getNickname(), String.valueOf(sameNicknameLastNumber));

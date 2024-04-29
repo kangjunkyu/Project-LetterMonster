@@ -12,6 +12,7 @@ import com.lemon.backend.domain.characters.repository.MotionRepository;
 import com.lemon.backend.domain.characters.service.CharacterService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.global.badworld.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import org.springframework.http.HttpHeaders;
@@ -44,6 +45,7 @@ public class CharacterServiceImpl implements CharacterService {
     private final MotionRepository motionRepository;
     private final UserRepository userRepository;
     private final AmazonS3Client amazonS3Client;
+    BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -59,6 +61,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Transactional
     public Long createCharacter(MultipartFile file, int userId, String nickname) {
         try {
+            if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
             Optional<Users> optionalUsers = userRepository.findById(userId);
 
             if(optionalUsers.isPresent()) {
@@ -91,6 +94,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void updateCharacterNickname(Long characterId, String nickname) {
+        if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
 
         if(optionalCharacters.isPresent()) {
