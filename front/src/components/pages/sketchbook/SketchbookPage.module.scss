@@ -10,6 +10,7 @@
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
+    height: calc(100vh - 64px);
   }
 }
 

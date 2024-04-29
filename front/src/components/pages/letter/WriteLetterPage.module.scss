@@ -113,6 +113,8 @@ $maxWidthValue: 1024px;
   width: 100px;
   border-radius: 5px;
   background-color: $gc900;
+  width: 100%;
+
   &:hover {
     border: 1.5px solid blue;
     border-radius: 5px;
@@ -156,4 +158,26 @@ $maxWidthValue: 1024px;
 
 .selected {
   background-color: red;
+}
+
+.buttonItem {
+  /* 데스크탑 */
+  list-style: none;
+  width: 100px;
+  border-radius: 5px;
+  background-color: $gc900;
+  width: 100%;
+  padding: 1em;
+  &:hover {
+    border: 1.5px solid blue;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
 }

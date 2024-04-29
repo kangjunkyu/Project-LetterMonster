@@ -158,3 +158,9 @@ export const getLetterList = (sketchbookId: number) =>
   API.get(`letter/list`, { params: { sketchbookId: sketchbookId } }).then(
     (res) => res.data
   );
+
+/** 편지 삭제
+ * @requires letterId - 편지 ID
+ */
+export const deleteLetter = (letterId: number) =>
+  API.delete(`letter/${letterId}`).then((res) => res.data);

@@ -1,4 +1,4 @@
-import icon from "../../../assets/commonIcon/shareLink.svg";
+import styles from "./shareIcon.module.scss";
 
 interface Props {
   link: string;
@@ -7,6 +7,8 @@ interface Props {
 
 function KakaoShareIcon({ link, nickname }: Props) {
   const { Kakao } = window;
+  const icon =
+    "https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png";
   const handleKakaoButton = () => {
     Kakao.Share.createCustomButton({
       container: "#kakaotalk-sharing-btn",
@@ -20,6 +22,7 @@ function KakaoShareIcon({ link, nickname }: Props) {
   return (
     <button
       id="kakaotalk-sharing-btn"
+      className={styles.kakaotalk}
       onClick={(e) => {
         e.stopPropagation();
         handleKakaoButton();
