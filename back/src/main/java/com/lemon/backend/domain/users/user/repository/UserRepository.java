@@ -26,6 +26,6 @@ public interface UserRepository extends JpaRepository<Users, Integer>, UserRepos
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Users SET is_deleted = false WHERE users_id = :id AND is_deleted = true", nativeQuery = true)
-    void updateIsDeleted(Integer id);
+    @Query(value = "UPDATE users SET is_deleted = false WHERE users_id = :id AND is_deleted = true", nativeQuery = true)
+    void updateIsDeleted(@Param("id") Integer id);
 }
