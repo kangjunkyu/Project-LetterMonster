@@ -39,17 +39,18 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String providerId = userInfo.getId(); // UserInfo 객체를 통해 ID 가져오기
         Users user = null;
 
-        //카카오 소셜로그인
-        if(provider.equals(Social.KAKAO)){
-            user = userRepository.findByProviderAndProviderId(Social.KAKAO, providerId)
-                    .orElseGet(() -> userService.createUser(userInfo, Social.KAKAO));
-        }
-        //라인 소셜 로그인
-        else if(provider == Social.LINE){
-            user = userRepository.findByProviderAndProviderId(Social.LINE, providerId)
-                    .orElseGet(() -> userService.createUser(userInfo, Social.LINE));
+        user = userRepository.findByProviderAndProviderId(provider, providerId)
+                .orElseGet(() -> userService.createUser(userInfo, Social.KAKAO));
+
+        if (user.getIsDeleted()) {
+            user = reactivateUser(user);
         }
 
         return user;
+    }
+
+    private Users reactivateUser(Users user) {
+        user.setIsDeleted(false);
+        return userRepository.save(user);
     }
 }

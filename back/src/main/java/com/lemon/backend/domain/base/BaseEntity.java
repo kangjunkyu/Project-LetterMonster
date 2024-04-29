@@ -26,4 +26,7 @@ public class BaseEntity {
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
 
+    public void setIsDeleted(boolean b) {
+        this.isDeleted = b;
+    }
 }
