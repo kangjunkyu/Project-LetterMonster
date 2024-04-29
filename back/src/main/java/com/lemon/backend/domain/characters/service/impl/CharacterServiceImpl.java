@@ -12,23 +12,21 @@ import com.lemon.backend.domain.characters.repository.MotionRepository;
 import com.lemon.backend.domain.characters.service.CharacterService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.global.badWord.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import org.springframework.http.HttpHeaders;
-import io.lettuce.core.KillArgs;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.representer.Represent;
 
 
 import java.io.IOException;
@@ -44,6 +42,7 @@ public class CharacterServiceImpl implements CharacterService {
     private final MotionRepository motionRepository;
     private final UserRepository userRepository;
     private final AmazonS3Client amazonS3Client;
+    BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -59,6 +58,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Transactional
     public Long createCharacter(MultipartFile file, int userId, String nickname) {
         try {
+            if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
             Optional<Users> optionalUsers = userRepository.findById(userId);
 
             if(optionalUsers.isPresent()) {
@@ -91,6 +91,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void updateCharacterNickname(Long characterId, String nickname) {
+        if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
 
         if(optionalCharacters.isPresent()) {
