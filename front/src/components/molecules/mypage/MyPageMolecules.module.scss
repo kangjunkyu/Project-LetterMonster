@@ -34,7 +34,7 @@
   .title {
     justify-content: space-between;
     align-self: flex-start;
-    margin-left: 20px;
+    margin: 20px;
     font-size: 14px;
     font-weight: bold;
     padding: 10px 0;
@@ -76,7 +76,7 @@
 
     div {
       text-align: center;
-      margin: 10px 0;
+      margin: 5px 0;
       font-size: 12px;
       position: relative;
 
@@ -97,3 +97,45 @@
     }
   }
 }
+
+.userCharacterListUpper{
+  display: flex;
+  gap: 1em;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.userNoCharacterListContainer{
+  text-align: center;
+  font-size: 12px;
+}
+.titleNoCharacter{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 15px 0 ;
+}
+.userNoCharacterButton{
+  margin-top: 10px;
+  background-color: $successColor;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+
+// .userCharacterInfo {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .nickname {
+//   flex: 0 0 auto; // 이 속성으로 nickname의 크기와 위치를 고정합니다.
+// }
+
+// .mainCharacterLabel {
+//   margin-left: 10px;
+//   background-color: red;
+//   color: white;
+//   padding: 2px 5px;
+//   border-radius: 3px;
+// }

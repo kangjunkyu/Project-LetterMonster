@@ -57,7 +57,7 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
   return (
     <>
       <div className={styles.motionListContainer}>
-        <div>Motion 종류</div>
+        <div>캐릭터 모션 종류</div>
         <div className={styles.motionSampleList}>
           {motions.map((motion, index) => (
             <div

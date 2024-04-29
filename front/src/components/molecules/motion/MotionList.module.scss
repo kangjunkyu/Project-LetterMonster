@@ -8,14 +8,16 @@
   gap: 1em;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 16px;
   background-color: $gc700;
-  padding: 1em;
+  padding-top: 1em;
+  border: 3px solid black;
+  border-radius: 15px;
 }
 
 .motionSampleImage {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
 }
 
 .motionSampleEach {
@@ -25,9 +27,11 @@
   align-items: center;
   cursor: pointer;
   box-sizing: border-box;
+  border: 1px solid transparent; 
+  border-radius: 15px;
+
   &.selected {
-    border: 2px solid $actionColor;
-    // transition: border-color 0.3s ease;
+    border: 1px solid black;
   }
 }
 
@@ -38,7 +42,8 @@
   flex-wrap: wrap;
   gap: 1em;
   margin-bottom: 1em;
-  font-size: 14px;
+  font-size: 12px;
   justify-content: center;
   align-items: center;
 }
+
