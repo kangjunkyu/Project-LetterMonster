@@ -1,4 +1,4 @@
-package com.lemon.backend.global.badworld;
+package com.lemon.backend.global.badWord;
 
 interface BadWords {
     String[] koreaBadWords = {

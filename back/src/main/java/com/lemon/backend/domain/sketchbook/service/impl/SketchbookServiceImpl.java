@@ -9,7 +9,7 @@ import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
-import com.lemon.backend.global.badworld.BadWordFilterUtil;
+import com.lemon.backend.global.badWord.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;

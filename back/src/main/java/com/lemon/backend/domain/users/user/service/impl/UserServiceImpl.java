@@ -7,7 +7,7 @@ import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.entity.*;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
-import com.lemon.backend.global.badworld.BadWordFilterUtil;
+import com.lemon.backend.global.badWord.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.jwt.JwtTokenProvider;

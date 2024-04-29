@@ -12,24 +12,21 @@ import com.lemon.backend.domain.characters.repository.MotionRepository;
 import com.lemon.backend.domain.characters.service.CharacterService;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
-import com.lemon.backend.global.badworld.BadWordFilterUtil;
+import com.lemon.backend.global.badWord.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import org.springframework.http.HttpHeaders;
-import io.lettuce.core.KillArgs;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.yaml.snakeyaml.representer.Represent;
 
 
 import java.io.IOException;

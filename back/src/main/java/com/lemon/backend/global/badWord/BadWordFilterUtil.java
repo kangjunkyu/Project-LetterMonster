@@ -1,4 +1,4 @@
-package com.lemon.backend.global.badworld;
+package com.lemon.backend.global.badWord;
 
 import java.util.HashSet;
 import java.util.List;
