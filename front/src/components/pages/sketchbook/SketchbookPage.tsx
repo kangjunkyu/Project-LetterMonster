@@ -100,12 +100,11 @@ function SketchbookPage() {
                 <Letter
                   receiver={"나"}
                   sender={
-                    data?.data?.sketchbookCharacterMotionList[now].letterList?.[
-                      letter
-                    ].sender.nickname
+                    data?.data?.sketchbookCharacterMotionList[now]
+                      ?.letterList?.[letter].sender.nickname
                   }
                   content={
-                    data?.data?.sketchbookCharacterMotionList[now].letterList[
+                    data?.data?.sketchbookCharacterMotionList[now]?.letterList[
                       letter
                     ]?.content
                   }
@@ -120,35 +119,40 @@ function SketchbookPage() {
                 </div>
               </div>
             )}
-            <div className={styles.characterBox}>
-              <DefaultButton
-                onClick={() => handleToggleModal("letter")}
-                custom={true}
-              >
-                <img
-                  src={
-                    data?.data?.sketchbookCharacterMotionList[now]
-                      .characterMotion?.imageUrl
-                  }
-                  alt=""
-                />
-                {
-                  data?.data?.sketchbookCharacterMotionList[now]
-                    ?.characterMotion?.nickname
-                }
-              </DefaultButton>
-              <div className={styles.letterButtons}>
+            {data?.data?.sketchbookCharacterMotionList[0] && (
+              <div className={styles.characterBox}>
                 <DefaultButton
-                  onClick={() => characterButton(-1)}
+                  onClick={() => handleToggleModal("letter")}
                   custom={true}
                 >
-                  {"<"}
+                  <img
+                    src={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.characterMotion?.imageUrl
+                    }
+                    alt=""
+                  />
+                  {
+                    data?.data?.sketchbookCharacterMotionList[now]
+                      ?.characterMotion?.nickname
+                  }
                 </DefaultButton>
-                <DefaultButton onClick={() => characterButton(1)} custom={true}>
-                  {">"}
-                </DefaultButton>
+                <div className={styles.letterButtons}>
+                  <DefaultButton
+                    onClick={() => characterButton(-1)}
+                    custom={true}
+                  >
+                    {"<"}
+                  </DefaultButton>
+                  <DefaultButton
+                    onClick={() => characterButton(1)}
+                    custom={true}
+                  >
+                    {">"}
+                  </DefaultButton>
+                </div>
               </div>
-            </div>
+            )}
           </figure>
         )}
       </article>

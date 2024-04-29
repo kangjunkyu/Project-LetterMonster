@@ -6,11 +6,20 @@ interface Props {
   children: ReactNode;
   onClick?: () => void;
   custom?: boolean;
+  className?: string;
 }
 
-function DefaultButton({ onClick, children, custom = false }: Props) {
+function DefaultButton({
+  onClick,
+  children,
+  custom = false,
+  className,
+}: Props) {
   return (
-    <button className={custom ? "" : styles.button_default} onClick={onClick}>
+    <button
+      className={custom ? className : styles.button_default}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

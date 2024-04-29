@@ -5,15 +5,16 @@ import CrayonBox20 from "../../atoms/crayonBox/CrayonBox20";
 import Letter from "../../atoms/letter/Letter";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
-import useSketchbookList from "../../../hooks/sketchbook/useSketchbookList";
+import { useSketchbookListAll } from "../../../hooks/sketchbook/useSketchbookList";
 // import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import { getMotionSelect, postLetter } from "../../../api/Api";
 import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import LNB from "../../molecules/common/LNB";
 import CharacterList from "../../molecules/character/CharacterList";
-import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import { Page_Url } from "../../../router/Page_Url";
+import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
+// import MotionExample from "../../molecules/motion/MotionExample";
 
 function LetterWritePage() {
   const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
@@ -21,7 +22,7 @@ function LetterWritePage() {
   const [target, setTarget] = useState(0); // 편지보낼스케치북
   // const location = useLocation();
   // const { gif, characterNickname } = location.state || {};
-  const { data: sketchbookList, isLoading } = useSketchbookList();
+  const { data: sketchbookList, isLoading } = useSketchbookListAll();
   const { data: characterList } = useGetCharacterList();
   const [characterId, setCharacterId] = useState(0);
   const [motionId, setMotionId] = useState(0);
@@ -30,7 +31,6 @@ function LetterWritePage() {
   const { data: baseMotionList } = useGetMotionList();
   const { showAlert } = useAlert();
   const navigate = useNavigate();
-
   const onClickHandler = () => {
     if (
       content &&
@@ -47,7 +47,7 @@ function LetterWritePage() {
         }
       });
     } else {
-      showAlert("편지를 다시 확인해주세요 ㅜㅜ");
+      showAlert("보낼 편지를 확인해주세요");
     }
   };
   const motionSeleted = async (motionId: any) => {
@@ -69,6 +69,13 @@ function LetterWritePage() {
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (sketchbookId && sketchbookId.sketchbookId && !target) {
+      // URL 파라미터에서 받은 sketchbookId가 숫자 타입이라고 가정할 때
+      setTarget(Number(sketchbookId.sketchbookId));
+    }
+  }, [sketchbookId, target]);
+
   return (
     <div className={styles.container}>
       <LNB>
@@ -85,7 +92,7 @@ function LetterWritePage() {
       <section className={styles.letterBox}>
         <article>
           <figure>
-            <p>캐릭터선택</p>
+            <p>캐릭터 고르기</p>
             {characterList && (
               <CharacterList
                 characterList={characterList}
@@ -93,14 +100,29 @@ function LetterWritePage() {
                 setId={setCharacterId}
               ></CharacterList>
             )}
+            {!characterList?.data?.data && (
+              <div className={styles.characterList}>
+                <button
+                  onClick={() => navigate(Page_Url.Sketch)}
+                  className={styles.buttonItem}
+                >
+                  내 캐릭터 그리러 가기
+                </button>
+              </div>
+            )}
           </figure>
-          {/* {characterId != 0 && (
-            <MotionList
-              characterId={characterId}
-              setGif={setGif}
-              setMotionId={setMotionId}
-            />
-          )} */}
+          {/* <figure>
+            {characterId != 0 && (
+              <>
+                <p>동작 고르기</p>
+                <MotionExample
+                  characterId={characterId}
+                  setGif={setGif}
+                  setMotionId={motionSeleted}
+                />
+              </>
+            )}
+          </figure> */}
           {characterId != 0 && baseMotionList && (
             <figure>
               <p>모션선택</p>
@@ -134,23 +156,24 @@ function LetterWritePage() {
               onChange={(e) => {
                 setTarget(Number(e.target.value));
               }}
+              value={target} // useState를 사용하여 관리되는 상태를 value로 연결합니다.
+              disabled={sketchbookId ? false : true} // sketchbookList가 로드되지 않았다면 select를 비활성화합니다.
             >
-              {sketchbookList &&
-                sketchbookList?.data?.map(
-                  (
-                    item: {
-                      id: number;
-                      name: string;
-                      tag: number;
-                      holder: { nickname: string };
-                    },
-                    i: number
-                  ) => (
-                    <option value={item?.id} key={i}>
-                      {item?.name} - {item?.tag} - {item.holder?.nickname}
-                    </option>
-                  )
-                )}
+              {sketchbookList?.data?.map(
+                (
+                  item: {
+                    id: number;
+                    name: string;
+                    tag: number;
+                    holder: { nickname: string };
+                  },
+                  i: number
+                ) => (
+                  <option value={item?.id} key={i}>
+                    {item?.name} - {item?.tag} - {item?.holder?.nickname}
+                  </option>
+                )
+              )}
             </select>
           </figure>
           <figure>
