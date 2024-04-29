@@ -1,7 +1,11 @@
-import { useState } from "react";
-import { useSelectMainCharacter } from "../../../hooks/character/useCharacter";
+import {
+  useDeleteCharacter,
+  useSelectMainCharacter,
+} from "../../../hooks/character/useCharacter";
 import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
+import { Page_Url } from "../../../router/Page_Url";
 import styles from "./MyPageMolecules.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface Character {
   characterId: number;
@@ -11,25 +15,37 @@ interface Character {
 }
 
 function MyPageCharacter() {
+  const navigate = useNavigate();
   const { data: characterList, isLoading, error } = useGetCharacterList();
   const selectMainCharacter = useSelectMainCharacter();
-  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(
-    null
-  );
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const characterId = parseInt(event.target.value, 10);
-    setSelectedCharacterId(characterId);
-    // selectMainCharacter.mutate(characterId);
-  };
+  const deleteCharacter = useDeleteCharacter();
 
   const handleCardClick = (characterId: number) => {
-    setSelectedCharacterId(characterId);
     selectMainCharacter.mutate(characterId);
+  };
+
+  const goToCreateCharacter = () => {
+    navigate(Page_Url.Sketch);
   };
 
   if (isLoading) return <div>Loading characters...</div>;
   if (error) return <div>Error loading characters!</div>;
+  if (characterList.length === 0) {
+    return (
+      <div className={styles.userNoCharacterListContainer}>
+        <div className={styles.titleNoCharacter}>캐릭터 목록</div>
+        <div>
+          <div>현재 캐릭터가 없어요!</div>
+          <button
+            className={styles.userNoCharacterButton}
+            onClick={goToCreateCharacter}
+          >
+            캐릭터 그리기
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   console.log(characterList);
 
@@ -37,14 +53,6 @@ function MyPageCharacter() {
     <div className={styles.userCharacterListContainer}>
       <div className={styles.title}>
         <div>캐릭터 목록</div>
-        <select onChange={handleSelectChange} value={selectedCharacterId || ""}>
-          <option value="">대표 캐릭터 선택</option>
-          {characterList.map((character: Character) => (
-            <option key={character.characterId} value={character.characterId}>
-              {character.nickname}
-            </option>
-          ))}
-        </select>
       </div>
       <div className={styles.userCharacterList}>
         {characterList.map((character: Character) => (
@@ -56,33 +64,30 @@ function MyPageCharacter() {
               handleCardClick(character.characterId);
             }}
           >
+            <div className={styles.userCharacterListUpper}>
+              <button
+                onClick={() =>
+                  selectMainCharacter.mutate(character.characterId)
+                }
+              >
+                대표 지정
+              </button>
+              <button
+                onClick={() => deleteCharacter.mutate(character.characterId)}
+              >
+                삭제
+              </button>
+            </div>
             <img
               src={character.imageUrl}
               alt={character.nickname}
               className={styles.userCharacterImage}
             />
             <div className={styles.userCharacterInfo}>
-              <div
-                className={
-                  character.mainCharacter ? styles.userMainCharacter : ""
-                }
-              >
-                {character.mainCharacter}
-                {character.nickname}
+                <span className={styles.nickname}>{character.nickname}</span>
                 {character.mainCharacter && (
-                  <span
-                    style={{
-                      backgroundColor: "red",
-                      color: "white",
-                      marginLeft: "5px",
-                      padding: "2px 5px",
-                      borderRadius: "3px",
-                    }}
-                  >
-                    대표
-                  </span>
+                  <span className={styles.mainCharacterLabel}>대표</span>
                 )}
-              </div>
             </div>
           </div>
         ))}
