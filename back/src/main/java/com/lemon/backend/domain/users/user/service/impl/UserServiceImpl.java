@@ -70,12 +70,12 @@ public class UserServiceImpl implements UserService {
 
         //레디스에서 리프레시토큰 가져오기
         RefreshToken redisRefreshToken = refreshTokenRepository.findById(userId).orElseThrow(() ->
-                new CustomException(ErrorCode.INVALID_AUTH_CODE)
+                new CustomException(ErrorCode.INVALID_AUTH_TOKEN)
         );
 
         //레디스에서 가져온 리프레시 토큰과 비교
         if (redisRefreshToken == null || !redisRefreshToken.getToken().equals(refreshToken)) {
-            throw new CustomException(ErrorCode.INVALID_AUTH_CODE);
+            throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
         }
 
         //헤더에 들어온 리프레시 토큰을 블랙리스트에 추가
