@@ -11,10 +11,10 @@ import { getMotionSelect, postLetter } from "../../../api/Api";
 import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import LNB from "../../molecules/common/LNB";
 import CharacterList from "../../molecules/character/CharacterList";
-// import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import { Page_Url } from "../../../router/Page_Url";
-import MotionExample from "../../molecules/motion/MotionExample";
+import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
+// import MotionExample from "../../molecules/motion/MotionExample";
 
 function LetterWritePage() {
   const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
@@ -28,10 +28,9 @@ function LetterWritePage() {
   const [motionId, setMotionId] = useState(0);
   const [characterMotionId, setCharacterMotionId] = useState(0);
   const [gif, setGif] = useState("");
-  // const { data: baseMotionList } = useGetMotionList();
+  const { data: baseMotionList } = useGetMotionList();
   const { showAlert } = useAlert();
   const navigate = useNavigate();
-
   const onClickHandler = () => {
     if (
       content &&
@@ -112,7 +111,7 @@ function LetterWritePage() {
               </div>
             )}
           </figure>
-          <figure>
+          {/* <figure>
             {characterId != 0 && (
               <>
                 <p>동작 고르기</p>
@@ -123,8 +122,8 @@ function LetterWritePage() {
                 />
               </>
             )}
-          </figure>
-          {/* {characterId != 0 && baseMotionList && (
+          </figure> */}
+          {characterId != 0 && baseMotionList && (
             <figure>
               <p>모션선택</p>
               <div className={styles.characterList}>
@@ -146,7 +145,7 @@ function LetterWritePage() {
                 ))}
               </div>
             </figure>
-          )} */}
+          )}
 
           <figure>
             <p>받을 사람</p>
