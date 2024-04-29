@@ -4,6 +4,7 @@ import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookUpdateDto;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.service.SketchbookService;
+import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.lemon.backend.global.response.CommonResponseEntity.getResponseEntity;
 
@@ -33,13 +35,6 @@ public class SketchbookController {
         Integer userId = (Integer) authentication.getPrincipal();
         List<SketchbookGetSimpleDto> sketchList = sketchbookService.getSketchList(userId);
         return getResponseEntity(SuccessCode.OK, sketchList);
-    }
-
-    @Operation(summary = "스케치북 전체 조회", description = "스케치북 전체 목록 조회")
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllSketchList(){
-        List<SketchbookGetAllDto> sketchAll = sketchbookService.getSketchAll();
-        return getResponseEntity(SuccessCode.OK, sketchAll);
     }
 
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
@@ -65,6 +60,12 @@ public class SketchbookController {
         return ResponseEntity.ok(detailPageDto);
     }
 
+    @Operation(summary = "스케치북 전체 조회", description = "스케치북 전체 목록 조회")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllSketchList(){
+        List<SketchbookGetAllDto> sketchAll = sketchbookService.getSketchAll();
+        return getResponseEntity(SuccessCode.OK, sketchAll);
+    }
 
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
     @PostMapping
@@ -86,5 +87,12 @@ public class SketchbookController {
     public ResponseEntity<?> deleteSketchBook(@PathVariable(value = "sketchbookId")Long sketchbookId){
         sketchbookService.deleteSketchbook(sketchbookId);
         return getResponseEntity(SuccessCode.OK);
+    }
+
+    @Operation(summary = "스케치북 검색", description = "스케치북 이름으로 검색합니다.")
+    @GetMapping("/{sketchbookName}")
+    public ResponseEntity<?> searchNickname(@PathVariable("sketchbookName") String nickname){
+        Optional<List<SketchbookSearchGetDto>> searchList = sketchbookService.searchSkechbook(nickname);
+        return getResponseEntity(SuccessCode.OK, searchList);
     }
 }

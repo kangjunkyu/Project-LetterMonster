@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface SketchbookRepositoryCustom {
     Optional<List<SketchbookGetSimpleDto>> getSketchList(Integer userId);
 
-    Optional<List<SketchbookGetAllDto>> getSketchAll();
-
     Optional<SketchbookGetDto> getSketchSelect(String sketchId);
 
     Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId);
@@ -22,4 +20,8 @@ public interface SketchbookRepositoryCustom {
     SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
 
     Optional<String> findHighestSketchbookTagByName(String name);
+
+    Optional<List<SketchbookGetAllDto>> getSketchAll();
+
+    Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName);
 }

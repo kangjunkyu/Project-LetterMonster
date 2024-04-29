@@ -1,6 +1,7 @@
 package com.lemon.backend.domain.letter.repository.custom;
 
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
@@ -39,6 +40,22 @@ public class LetterRepositoryImpl implements LetterRepositoryCustom{
                 .leftJoin(letter.receiver)
                 .where(letter.sketchbookCharacterMotion.sketchbook.id.eq(sketchbookId)).fetch();
         return Optional.ofNullable(letterDtos.isEmpty() ? null : letterDtos);
+    }
+
+    @Override
+    public Optional<List<LetterGetRecentListDto>> getLetterThree(Integer userId){
+        if(userId == null){throw new CustomException(ErrorCode.INVALID_ACCESS);}
+
+        List<LetterGetRecentListDto> listDtos = query
+                .select(Projections.constructor(LetterGetRecentListDto.class,
+                                letter.receiver.id,
+                                letter.receiver.nickname,
+                                letter.receiver.nicknameTag)).from(letter).leftJoin(letter.receiver)
+                .where(letter.sender.id.eq(userId))
+                .orderBy(letter.createdAt.asc())  // 여기에 정렬 조건을 추가합니다.
+                .limit(3)
+                .fetch();
+        return Optional.ofNullable(listDtos.isEmpty() ? null : listDtos);
     }
 
 }

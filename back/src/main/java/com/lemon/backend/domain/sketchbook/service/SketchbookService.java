@@ -8,15 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SketchbookService {
     List<SketchbookGetSimpleDto> getSketchList(Integer userId);
 
-    List<SketchbookGetAllDto> getSketchAll();
-
     SketchbookGetDto getSketchSelect(String sketchId);
 
     SketchbookGetDetailDto getSketchSelect2(String sketchId);
+
+    Optional<List<SketchbookSearchGetDto>> searchSkechbook(String searchName);
 
     @Transactional
     Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto);
@@ -34,4 +35,6 @@ public interface SketchbookService {
     void deleteSketchbook(Long sketchbookId);
 
     SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
+
+    List<SketchbookGetAllDto> getSketchAll();
 }

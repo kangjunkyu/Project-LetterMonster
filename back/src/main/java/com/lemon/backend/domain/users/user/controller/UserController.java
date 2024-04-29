@@ -1,6 +1,8 @@
 package com.lemon.backend.domain.users.user.controller;
 
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.List;
 
 import static com.lemon.backend.global.response.CommonResponseEntity.getResponseEntity;
 
@@ -55,5 +59,12 @@ public class UserController {
     public ResponseEntity<?> getUserInfo(Authentication authentication) {
         Integer userId = (Integer) authentication.getPrincipal();
         return ResponseEntity.ok(userService.getUserInfo(userId));
+    }
+
+    @Operation(summary = "유저 닉네임 검색", description = "유저를 닉네임으로 검색합니다.")
+    @GetMapping("/{nickname}")
+    public ResponseEntity<?> searchNickname(@PathVariable("nickname") String nickname){
+        List<UserSearchGetDto> users = userService.searchNickname(nickname);
+        return getResponseEntity(SuccessCode.OK, users);
     }
 }

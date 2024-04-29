@@ -54,17 +54,6 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
     @Override
-    public Optional<List<SketchbookGetAllDto>> getSketchAll(){
-        List<SketchbookGetAllDto> sketchAll = query
-                .select(constructor(SketchbookGetAllDto.class,
-                        sketchbook.id,
-                        sketchbook.name,
-                        sketchbook.tag)).from(sketchbook)
-                .fetch();
-        return Optional.ofNullable(sketchAll.isEmpty() ? null : sketchAll);
-    }
-
-    @Override
     public Optional<SketchbookGetDto> getSketchSelect(String sketchId) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
@@ -370,5 +359,31 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
         return Optional.ofNullable(highestSketchbookTag);
     }
 
+    @Override
+    public Optional<List<SketchbookGetAllDto>> getSketchAll(){
+        List<SketchbookGetAllDto> sketchAll = query
+                .select(constructor(SketchbookGetAllDto.class,
+                        sketchbook.id,
+                        sketchbook.name,
+                        sketchbook.tag)).from(sketchbook)
+                .fetch();
+        return Optional.ofNullable(sketchAll.isEmpty() ? null : sketchAll);
+    }
+
+    @Override
+    public Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName){
+        List<SketchbookSearchGetDto> list = query
+                .select(Projections.constructor(SketchbookSearchGetDto.class,
+                        sketchbook.id,
+                        sketchbook.sketchbookUuid,
+                        sketchbook.name,
+                        sketchbook.tag))
+                .from(sketchbook)
+                .where(sketchbook.name.contains(sketchbookName))
+                .fetch();
+        return Optional.ofNullable(list);
+    }
+
 
 }
+

@@ -1,10 +1,10 @@
 package com.lemon.backend.domain.letter.service.impl;
 
 import com.lemon.backend.domain.characters.entity.CharacterMotion;
-import com.lemon.backend.domain.characters.entity.Characters;
 import com.lemon.backend.domain.characters.repository.CharacterMotionRepository;
 import com.lemon.backend.domain.characters.repository.CharacterRepository;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateDto;
 import com.lemon.backend.domain.letter.entity.Letter;
 import com.lemon.backend.domain.letter.repository.LetterRepository;
@@ -23,7 +23,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -40,6 +39,11 @@ public class LetterServiceImpl implements LetterService {
     @Override
     public List<LetterGetListDto> getLetterList(Long sketchbookId) {
         return letterRepository.getLetterList(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+    }
+
+    @Override
+    public List<LetterGetRecentListDto> getLetterThree(Integer userId){
+        return letterRepository.getLetterThree(userId).orElseThrow(() -> new CustomException(ErrorCode.INVALID_ACCESS));
     }
 
     @Transactional
