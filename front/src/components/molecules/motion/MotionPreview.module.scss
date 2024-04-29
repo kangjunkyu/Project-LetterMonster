@@ -1,0 +1,29 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/defalut";
+
+.motionImage {
+  width: 300px;
+  height: 300px;
+}
+
+.motionPreviewContainer {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  border: 3px solid black;
+}
+
+
+.motionPreviewButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  margin-top: 3.5em;
+}
+
+.motionCharacterNickname{
+  text-align: center;
+  margin-bottom: 1em;
+}

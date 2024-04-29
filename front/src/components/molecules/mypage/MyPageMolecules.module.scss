@@ -1,0 +1,141 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/defalut";
+
+// MyPageUserInfo
+.userInfoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.userInfoDetail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userNicknameInput {
+  padding: 0.5em;
+}
+
+.userInfoReal {
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+}
+
+// MyPageCharacter
+.userCharacterListContainer {
+  display: flex;
+  flex-direction: column;
+  // gap: 1em;
+  overflow-y: auto;
+  max-height: 60vh;
+  
+  .title {
+    justify-content: space-between;
+    align-self: flex-start;
+    margin: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 0;
+  }
+}
+
+.userCharacterList {
+  display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+  padding: 0 20px;
+}
+
+.userCharacterCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .userCharacterImage {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .userCharacterInfo {
+    padding: 5px;
+    width: 100%;
+
+    div {
+      text-align: center;
+      margin: 5px 0;
+      font-size: 12px;
+      position: relative;
+
+      &.userMainCharacter {
+        font-weight: bold;
+        color: white; 
+        background-color: $errorColor; 
+        padding: 2px 5px;
+        border-radius: 4px;
+        display: inline-block;
+        &:after {
+          content: " 대표";
+          color: red;
+          background-color: white;
+          padding-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+.userCharacterListUpper{
+  display: flex;
+  gap: 1em;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.userNoCharacterListContainer{
+  text-align: center;
+  font-size: 12px;
+}
+.titleNoCharacter{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 15px 0 ;
+}
+.userNoCharacterButton{
+  margin-top: 10px;
+  background-color: $successColor;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+
+// .userCharacterInfo {
+//   display: flex;
+//   align-items: center;
+// }
+
+// .nickname {
+//   flex: 0 0 auto; // 이 속성으로 nickname의 크기와 위치를 고정합니다.
+// }
+
+// .mainCharacterLabel {
+//   margin-left: 10px;
+//   background-color: red;
+//   color: white;
+//   padding: 2px 5px;
+//   border-radius: 3px;
+// }

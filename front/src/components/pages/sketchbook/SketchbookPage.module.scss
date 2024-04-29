@@ -1,0 +1,143 @@
+@import "../../../styles/mixins/defalut";
+
+.sketchbookContainer {
+  // @include flexCenterColumn();
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    height: calc(100vh - 64px);
+  }
+}
+
+.buttonBox {
+  display: flex;
+  gap: 1em;
+  @include wrapBox();
+}
+
+.sketchbook {
+  /* 데스크탑 */
+  width: 100%;
+  position: relative;
+  height: 580px;
+  background-image: url("../../../assets/sketchbook/sDesktop.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    background-image: url("../../../assets/sketchbook/sMobile.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center;
+  }
+}
+
+.characterBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > :nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  & > .letterButtons {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 50vw;
+    & > * {
+      padding: 1em;
+      background-color: $gc700;
+      border-radius: 50px;
+    }
+  }
+
+  /* 데스크탑 */
+
+  position: absolute;
+  bottom: 15em;
+  left: 50%;
+  transform: translateX(-50%);
+  & img {
+    width: 300px;
+    height: 300px;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    position: absolute;
+    bottom: 20em;
+    left: 50%;
+    transform: translateX(-50%);
+
+    & img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    position: absolute;
+    bottom: 3em;
+    left: 50%;
+    transform: translateX(-50%);
+
+    & img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+.letterBox {
+  /* 데스크탑 */
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    position: absolute;
+    max-width: 400px;
+    top: 15em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    position: absolute;
+    top: 6em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  & > .letterButtons {
+    position: absolute;
+    top: 40%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    & > * {
+      padding: 0.5em;
+      background-color: $gc700;
+      border-radius: 50px;
+    }
+  }
+}

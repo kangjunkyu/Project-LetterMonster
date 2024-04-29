@@ -1,0 +1,24 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
+
+.button_default {
+  @include box();
+  background-color: $gc900;
+  height: 100%;
+  transition: 0.2s all;
+
+  &:hover {
+    border-color: $actionColor;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    border-color: $successColor;
+  }
+}
+.selected {
+  border-color: $successColor;
+}

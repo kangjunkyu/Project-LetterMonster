@@ -1,0 +1,107 @@
+.paintContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  margin: 30px 0;
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.paintUpper {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+
+  @media screen and (max-width: 479px) {
+    width: 80%;
+    gap: 1em;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+.paintTool,
+.paintImportExport {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    // width: 100%;
+    justify-content: center;
+  }
+}
+
+.paintCanvas {
+  position: relative;
+}
+
+.toolSelected,
+.colorButton,
+.etcButton,
+.paintEachTool {
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.toolSelected {
+  background-color: green;
+  color: white;
+  border-radius: 10px;
+}
+
+.etcButton {
+  // padding: 10px;
+  border: 1px solid black;
+}
+
+.characterNicknameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.inputCharacterNickname,
+.outputCharacterNickname {
+  width: 250px;
+  padding: 10px;
+}
+.popoverContent {
+  position: absolute;
+  z-index: 3;
+  padding: 10px;
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    right: 10%;
+  }
+}
+
+.popoverHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // width: 300px;
+}
+
+.popoverClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

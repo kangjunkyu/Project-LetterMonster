@@ -1,0 +1,33 @@
+@import "../../../styles/mixins/defalut";
+
+.itemContainer {
+  position: relative;
+  list-style: none;
+  width: 100%;
+  height: 150px;
+  & :first-child {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+  }
+  & :nth-child(2) {
+    position: absolute;
+    top: 0.5em;
+    right: 2.5em;
+  }
+}
+
+.sketchbookListItem {
+  @include box();
+  @include flexCenter();
+  height: 100%;
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}

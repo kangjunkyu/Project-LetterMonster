@@ -1,0 +1,9 @@
+spring:
+  data:
+    redis:
+      lettuce:
+        cluster:
+          refresh:
+            adaptive: true
+      host: localhost
+      port: 6379
