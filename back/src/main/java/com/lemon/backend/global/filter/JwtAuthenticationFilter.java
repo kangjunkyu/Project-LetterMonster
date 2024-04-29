@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         whiteList.add("/api/user/login");
         whiteList.add("/api/swagger-ui");
         whiteList.add("/api/v3/api-docs");
-//        whiteList.add("/api/characters/select/motion");
+        whiteList.add("/api/actuator/health");
     }
 
     @Override
