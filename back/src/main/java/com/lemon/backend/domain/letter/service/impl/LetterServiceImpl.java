@@ -15,6 +15,7 @@ import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepos
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
+import com.lemon.backend.global.badWord.BadWordFilterUtil;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
@@ -63,10 +64,12 @@ public class LetterServiceImpl implements LetterService {
         Users sender = userRepository.findById(senderId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
         Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
 
+        BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
+        String content = badWordFilterUtil.change(letterDto.getContent());
         Letter letter = Letter.builder()
                 .sender(sender)
                 .receiver(receiver)
-                .content(letterDto.getContent())
+                .content(content)
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
 
