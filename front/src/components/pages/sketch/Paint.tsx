@@ -16,13 +16,13 @@ import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 import styles from "./Paint.module.scss";
 import { useNavigate } from "react-router-dom";
 import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchCharacter";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface PaintProps {}
 
-// export const SIZE = {};
-
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
 
   const [color, setColor] = useState("#000");
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
@@ -87,6 +87,14 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   // 그림 추출
   const stageRef = useRef<any>(null);
   const onExportClick = useCallback(() => {
+    if (characterNickname.trim() === "") {
+      showAlert("닉네임을 입력해주세요");
+      return;
+    } else if (scribbles.length === 0) {
+      showAlert("캐릭터를 그려주세요");
+      return;
+    }
+
     const uri = stageRef.current.toDataURL({
       pixelRatio: 3,
       mimeType: "image/png",
@@ -212,7 +220,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     onStageMouseUp();
   }, [onStageMouseUp]);
   return (
-    <div className={styles.paintContainer} style={{ maxWidth: '479px' }}>
+    <div className={styles.paintContainer}>
       <div className={`${styles.paintUpper}`}>
         <div className={styles.paintTool}>
           {PAINT_OPTIONS.map(({ id, label, icon }) => (
@@ -240,16 +248,24 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
               }}
             ></div>
             {showPopover && (
-              <div className={styles.popoverContent} style={{ width: "300px" }}>
-                <button onClick={() => setShowPopover(false)}>
-                  <span className="material-icons">clear</span>
-                </button>
-                <SketchPicker
-                  color={color}
-                  onChangeComplete={(selectedColor) =>
-                    setColor(selectedColor.hex)
-                  }
-                />
+              <div
+                className={styles.popoverContent}
+                // style={{ width: "300px" }}
+              >
+                <div className={styles.popoverHeader}>
+                  <SketchPicker
+                    color={color}
+                    onChangeComplete={(selectedColor) =>
+                      setColor(selectedColor.hex)
+                    }
+                  />
+                  <div className={styles.popoverClose}>
+                    <button onClick={() => setShowPopover(false)}>
+                      <span className="material-icons">clear</span>
+                      <span>닫기</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -283,7 +299,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
       <div className={styles.paintCanvas}>
         <Stage
-          height={size}
+          height={500}
           width={size}
           ref={stageRef}
           onMouseUp={onStageMouseUp}
@@ -292,10 +308,10 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           onTouchStart={onStageMouseDown}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
-          style={{ border: "3px solid black", }}
+          style={{ border: "3px solid black" }}
         >
           <Layer>
-            <Rect width={size} height={size} fill="white" />
+            <Rect width={size} height={500} fill="white" />
             {image && (
               <KonvaImage
                 image={image}
