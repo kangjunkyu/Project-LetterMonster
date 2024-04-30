@@ -20,8 +20,8 @@ function MyPageUserInfo() {
             <div>닉네임 태그</div>
           </div>
           <div className={styles.userInfoReal}>
-            {userInfo && <div>{userInfo.nickname}</div>}
-            {userInfo && <div>{userInfo.nicknameTag}</div>}
+            {userInfo && <div>{userInfo?.nickname}</div>}
+            {userInfo && <div>{userInfo?.nicknameTag}</div>}
           </div>
         </div>
         <input
