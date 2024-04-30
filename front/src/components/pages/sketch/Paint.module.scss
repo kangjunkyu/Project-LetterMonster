@@ -1,16 +1,44 @@
+@media screen and (min-width: 479px) {
+  .characterNicknameContainer .etcButton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .paintImportExport .etcButton:nth-child(3) {
+    display: none; 
+  }
+  .paintImportExport .etcButton:nth-child(2) {
+    display: none; 
+  }
+
+  .characterNicknameContainer {
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: space-between; 
+  }
+
+  .inputCharacterNickname {
+    flex-grow: 1; 
+    margin-right: 10px; 
+  }
+}
+
+
 .paintContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  margin: 30px 0;
+  margin: 20px 0;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
     font-size: 12px;
+    margin-bottom: 80px;
   }
 
   @media screen and (max-width: 479px) {
@@ -18,7 +46,7 @@
   }
 }
 
-.paintUpper {
+.paintBottom {
   width: 500px;
   display: flex;
   justify-content: space-between;
@@ -28,8 +56,9 @@
   @media screen and (max-width: 479px) {
     width: 80%;
     gap: 1em;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
+    margin-bottom: 70px;
   }
 }
 
@@ -75,20 +104,38 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  @media screen and (max-width:479px){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
-.inputCharacterNickname,
-.outputCharacterNickname {
+.inputCharacterNickname {
   width: 250px;
   padding: 10px;
+  margin-bottom: 5px;
+
+  @media screen and (max-width: 479px){
+    width: 150px;
+  }
 }
+
 .popoverContent {
   position: absolute;
   z-index: 3;
   padding: 10px;
+  bottom: 80px;
+  left: 35%;
   @media screen and (max-width: 767px) {
     /* 타블렛 */
+    left: 20%;
+    bottom: 140px;
+  }
+  @media screen and (max-width: 479px) {
+    /* 타블렛 */
     right: 10%;
+    bottom: 260px;
   }
 }
 

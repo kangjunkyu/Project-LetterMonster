@@ -1,6 +1,6 @@
 import styles from "./MyPages.module.scss";
 import { useLogout } from "../../../hooks/auth/useLogout";
-import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
+// import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import MyPageLangSelect from "../../molecules/mypage/MyPageLangSelect";
 import Modal from "../../atoms/modal/Modal";
 import { useState } from "react";
@@ -26,20 +26,17 @@ function MyPages() {
     <div className={styles.myPageContainer}>
       {isLoginCheck ? (
         <>
-          <div>
-            <button onClick={() => logout()}>로그아웃</button>
-          </div>
-          <button onClick={() => handleToggleModal("userInfo")}>
+          {/* <button onClick={() => handleToggleModal("userInfo")}>
             개인 정보
           </button>
           {isModalOpen.userInfo && (
             <Modal
-              isOpen={isModalOpen.userInfo}
-              onClose={() => handleToggleModal("userInfo")}
+            isOpen={isModalOpen.userInfo}
+            onClose={() => handleToggleModal("userInfo")}
             >
-              <MyPageUserInfo />
+            <MyPageUserInfo />
             </Modal>
-          )}
+          )} */}
           <button onClick={() => handleToggleModal("characterList")}>
             캐릭터 목록
           </button>
@@ -53,15 +50,18 @@ function MyPages() {
           )}
           {/* <button onClick={() => handleToggleModal("findFriend")}>
           친구 찾기
-        </button>
-        {isModalOpen.findFriend && (
-          <Modal
+          </button>
+          {isModalOpen.findFriend && (
+            <Modal
             isOpen={isModalOpen.findFriend}
             onClose={() => handleToggleModal("findFriend")}
-          >
+            >
             <MyPageFindFriend />
-          </Modal>
-        )} */}
+            </Modal>
+          )} */}
+          <div>
+            <button onClick={() => logout()}>로그아웃</button>
+          </div>
         </>
       ) : (
         <>
