@@ -3,6 +3,7 @@ package com.lemon.backend.domain.users.user.entity;
 import com.lemon.backend.domain.base.BaseEntity;
 import com.lemon.backend.domain.characters.entity.Characters;
 import com.lemon.backend.domain.friend.entity.Friends;
+import com.lemon.backend.domain.notification.entity.Notification;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,6 +51,9 @@ public class Users extends BaseEntity {
     @Builder.Default
     private Boolean isLanguage = false;
 
+    @Column(name = "notification_token")
+    private String notificationToken = null;
+
     @Builder.Default
     @OneToMany(mappedBy = "users", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Characters> characterList = new ArrayList<>();
@@ -61,4 +65,8 @@ public class Users extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "users", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Friends> friendList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "receiver", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<Notification> notificationList = new ArrayList<>();
 }
