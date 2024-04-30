@@ -47,7 +47,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    @Value("${cloud.aws.s3.dir")
+    @Value("${cloud.aws.s3.dir}")
     private String root;
 
     @Value("${FAST_API.URL}")
