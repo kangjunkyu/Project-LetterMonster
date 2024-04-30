@@ -1,4 +1,5 @@
-.env
+.env.dev
+.env.prod
 *.pyc
 __pycache__/
 gif_temp
