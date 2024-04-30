@@ -16,4 +16,7 @@ spring:
             adaptive: true
       host: ${REDIS_HOST}
       port: ${REDIS_DEV_PORT}
-
+cloud:
+  aws:
+    s3:
+      dir: ${DIR_NAME}

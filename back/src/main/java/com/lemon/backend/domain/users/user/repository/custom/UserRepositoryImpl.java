@@ -1,14 +1,13 @@
 package com.lemon.backend.domain.users.user.repository.custom;
 
 import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
-import com.lemon.backend.domain.users.user.entity.Social;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +50,15 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .from(users)
                 .where(users.nickname.contains(searchNickname))
                 .fetch();
+    }
+
+    @Transactional
+    @Override
+    public void updateFirebaseToken(Integer userId, String firebaseToken){
+        query.update(users)
+                .set(users.notificationToken, firebaseToken)
+                .where(users.id.eq(userId))
+                .execute();
     }
 
 

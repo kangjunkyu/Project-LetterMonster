@@ -12,4 +12,6 @@ public interface UserRepositoryCustom {
     void changeNickname(Users user, String nickname, String valueOf);
 
     List<UserSearchGetDto> findUsersByNickName(String searchNickname);
+
+    void updateFirebaseToken(Integer userId, String firebaseToken);
 }

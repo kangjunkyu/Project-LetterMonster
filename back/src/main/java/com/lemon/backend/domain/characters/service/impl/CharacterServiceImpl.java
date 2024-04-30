@@ -47,6 +47,9 @@ public class CharacterServiceImpl implements CharacterService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${cloud.aws.s3.dir}")
+    private String root;
+
     @Value("${FAST_API.URL}")
     private String fastApiUrl;
     /*
@@ -69,8 +72,8 @@ public class CharacterServiceImpl implements CharacterService {
                 ObjectMetadata metadata= new ObjectMetadata();
                 metadata.setContentType(file.getContentType());
                 metadata.setContentLength(file.getSize());
-                amazonS3Client.putObject(bucket,fileName,file.getInputStream(),metadata);
-                String fileUrl = amazonS3Client.getUrl(bucket, fileName).toString();
+                amazonS3Client.putObject(bucket,root + "/" + fileName,file.getInputStream(),metadata);
+                String fileUrl = amazonS3Client.getUrl(bucket, root + "/" + fileName).toString();
                 characters.changeUrl(fileUrl);
                 return characters.getId();
             } else {
@@ -218,7 +221,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void cancelMakeCharacter(Long characterId) {
-        amazonS3Client.deleteObject(bucket, characterId.toString()+".png");
+        amazonS3Client.deleteObject(bucket, root + "/" +characterId.toString()+".png");
         characterRepository.deleteById(characterId);
     }
 
@@ -232,7 +235,7 @@ public class CharacterServiceImpl implements CharacterService {
         Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
         if(optionalCharacters.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
 
-        amazonS3Client.deleteObject(bucket, characterId.toString()+".png");
+        amazonS3Client.deleteObject(bucket, root + "/" + characterId.toString()+".png");
         Characters characters = optionalCharacters.get();
         characters.deleteUrl();
         characters.deleteUser();
