@@ -37,4 +37,7 @@ public class Notification {
     @Builder.Default
     private Boolean isCheck = false;
 
+    public void markAsChecked() {
+        this.isCheck = true;
+    }
 }
