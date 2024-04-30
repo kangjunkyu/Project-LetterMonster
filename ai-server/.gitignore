@@ -1,5 +1,11 @@
+# env 파일
 .env.dev
 .env.prod
+
+# cache 파일
 *.pyc
 __pycache__/
+
+# img, gif temp 파일
+images_temp
 gif_temp
