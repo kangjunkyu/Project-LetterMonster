@@ -30,11 +30,11 @@ public class Notification {
     @JoinColumn(name = "receiver_id")
     private Users receiver;
 
-    @Column(name = "sketchbook_name")
-    private String sketchbookName;
-
     @Column(name = "friend_name")
     private String friendName;
 
+    @Column(name = "is_check")
+    @Builder.Default
+    private Boolean isCheck = false;
 
 }

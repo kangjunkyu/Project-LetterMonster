@@ -51,6 +51,7 @@ public class Users extends BaseEntity {
     @Builder.Default
     private Boolean isLanguage = false;
 
+    @Builder.Default
     @Column(name = "notification_token")
     private String notificationToken = null;
 

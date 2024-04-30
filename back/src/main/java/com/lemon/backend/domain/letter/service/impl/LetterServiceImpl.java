@@ -9,6 +9,9 @@ import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateDto;
 import com.lemon.backend.domain.letter.entity.Letter;
 import com.lemon.backend.domain.letter.repository.LetterRepository;
 import com.lemon.backend.domain.letter.service.LetterService;
+import com.lemon.backend.domain.notification.entity.Notification;
+import com.lemon.backend.domain.notification.repository.NotificationRepository;
+import com.lemon.backend.domain.notification.service.NotificationService;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
@@ -36,6 +39,8 @@ public class LetterServiceImpl implements LetterService {
     private final SketchCharacterMotionRepository sketchCharacterMotionRepository;
     private final LetterRepository letterRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
+    private final NotificationRepository notificationRepository;
 
     @Override
     public List<LetterGetListDto> getLetterList(Long sketchbookId) {
@@ -72,6 +77,24 @@ public class LetterServiceImpl implements LetterService {
                 .content(content)
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
+
+        Notification notification = Notification.builder()
+                .receiver(receiver)
+                .type(1)
+                .friendName(sender.getNickname())
+                .build();
+
+        String body = null;
+
+        if(letter.getSender() != null){
+            body = "[ " + letter.getSender().getNickname() + " ] 님에게 편지가 도착했어요";
+            notificationRepository.save(notification);
+        }
+
+        String title = "LEMON";
+        if(!notificationService.sendNotification(receiver.getNotificationToken(), title, body)){
+            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+        }
 
         return letterRepository.save(letter).getId();
     }
