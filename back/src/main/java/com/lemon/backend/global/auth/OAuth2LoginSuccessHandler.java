@@ -1,6 +1,8 @@
 package com.lemon.backend.global.auth;
 
 import com.lemon.backend.domain.users.user.entity.Role;
+import com.lemon.backend.domain.users.user.entity.Users;
+import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.cookie.CookieUtil;
 import com.lemon.backend.global.jwt.JwtTokenProvider;
@@ -16,11 +18,13 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.lemon.backend.global.auth.OAuth2AuthorizationRequestBasedOnCookieRepository.FIREBASE_TOKEN_COOKIE_NAME;
 import static com.lemon.backend.global.auth.OAuth2AuthorizationRequestBasedOnCookieRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 @Slf4j
@@ -31,13 +35,16 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Optional<String> cookieRedirectUrl = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
         log.info("Authentication Success");
+        Optional<String> fireBaseToken = CookieUtil.getCookie(request, FIREBASE_TOKEN_COOKIE_NAME).map(Cookie::getValue);
 
         if (cookieRedirectUrl.isPresent()) {
             Integer userId = Integer.valueOf(userPrincipal.getName());
@@ -48,6 +55,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                     .queryParam("accessToken", tokenResponse.getAccessToken())
                     .queryParam("refreshToken", tokenResponse.getRefreshToken())
                     .build().toUriString();
+
+            userRepository.updateFirebaseToken(userId, fireBaseToken.get());
 
             redirectStrategy.sendRedirect(request, response, redirectUrl);
         }
