@@ -7,6 +7,7 @@ interface Props {
   onClick?: () => void;
   custom?: boolean;
   className?: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
 function DefaultButton({
@@ -14,11 +15,13 @@ function DefaultButton({
   children,
   custom = false,
   className,
+  onKeyDown,
 }: Props) {
   return (
     <button
       className={custom ? className : styles.button_default}
       onClick={onClick}
+      onKeyDown={onKeyDown}
     >
       {children}
     </button>

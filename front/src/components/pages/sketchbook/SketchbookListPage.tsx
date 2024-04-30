@@ -10,6 +10,8 @@ import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
 import LNBButton from "../../atoms/button/LNBButton";
 import { useAlert } from "../../../hooks/notice/useAlert";
+import Modal from "../../atoms/modal/Modal";
+import AddButton from "../../atoms/button/AddButton";
 
 interface IItem {
   id: string;
@@ -25,17 +27,27 @@ interface IItem {
   isWritePossible: boolean;
 }
 
+type ModalName = "sketchbookCreate";
+
 function SketchbookListPage() {
   const { data, isLoading } = useSketchbookList();
   const [data2, setData2] = useState("");
   const createSketchbook = useCreateSketchbook();
   const { showAlert } = useAlert();
 
+  const [isModalOpen, setModalOpen] = useState({
+    sketchbookCreate: false,
+  });
+
+  const handleToggleModal = (modalName: ModalName) =>
+    setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+
   const createHandler = (name: string) => {
     {
       if (name) {
         createSketchbook.mutate(name);
         showAlert(`${name} 스케치북이 생겼어요`);
+        handleToggleModal("sketchbookCreate");
       } else {
         showAlert(`스케치북 이름을 정해주세요`);
       }
@@ -63,24 +75,35 @@ function SketchbookListPage() {
       <article className={styles.sketchbookListContainer}>
         <LNB>
           <h1>스케치북 리스트</h1>
-          <LNBButton
-            onClick={() => createHandler(data2)}
-            onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) =>
-              inputEnter(e)
-            }
-          >
+          <LNBButton onClick={() => handleToggleModal("sketchbookCreate")}>
             만들기
           </LNBButton>
         </LNB>
-        <input
-          type="text"
-          onChange={(e) => {
-            setData2(e.target.value);
-          }}
-        />
-        <DefaultButton onClick={() => createHandler(data2)}>
-          만들기
-        </DefaultButton>
+
+        <Modal
+          isOpen={isModalOpen.sketchbookCreate}
+          onClose={() => handleToggleModal("sketchbookCreate")}
+        >
+          <div className={styles.createSketchbookBox}>
+            <div>스케치북 만들기</div>
+            <input
+              type="text"
+              onChange={(e) => {
+                setData2(e.target.value);
+              }}
+              placeholder="스케치북 이름"
+            />
+            <DefaultButton
+              onClick={() => createHandler(data2)}
+              onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) =>
+                inputEnter(e)
+              }
+            >
+              만들기
+            </DefaultButton>
+          </div>
+        </Modal>
+        <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
         <SketchbookList>
           {!isLoading && data?.data && data?.data?.length > 0 ? (
             renderListItems(data.data)
