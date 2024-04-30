@@ -6,11 +6,13 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import io.jsonwebtoken.io.IOException;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
 import java.util.List;
 
+@Configuration
 public class FCMConfig {
 
     @Bean
