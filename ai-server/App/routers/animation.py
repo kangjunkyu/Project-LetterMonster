@@ -12,7 +12,6 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 
 from PIL import Image, ImageSequence
-from pkg_resources import resource_filename
 from AnimatedDrawings.examples.image_to_animation import image_to_animation
 
 logging.basicConfig(level=logging.INFO)
@@ -22,6 +21,7 @@ router = APIRouter()
 
 # S3 설정
 env = os.getenv('ENV', 'dev')
+
 load_dotenv(f'.env.{env}')
 
 s3 = boto3.client(
@@ -60,13 +60,6 @@ async def create_joint_gif(request: CharacterCreateRequest):
             return JSONResponse(content={"error": "Fast API ERROR : s3 이미지 다운로드 실패"}, status_code=500)
 
         image_path = f"images_temp/{s3_img_url}"
-
-        # 이미지 저장 (테스트용 코드)
-        # imagename = f"{character_id}_" + file.filename
-        # content = await file.read()
-        # image_path = os.path.join(IMG_DIR, imagename)
-        # with open(image_path, "wb") as img:
-        #     img.write(content)
 
         # GIF 저장 경로 설정
         GIF_DIR = "gif_temp"
@@ -123,8 +116,7 @@ async def get_img_s3(s3_img_url):
     try:
         s3.download_file(
             Bucket=os.getenv("S3_BUCKET"),
-            Key=f'{s3_img_url}',  # 다운로드할 파일
-            # Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
+            Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
             Filename=f"images_temp/{s3_img_url}"  # 로컬 저장 경로
         )
         return True
@@ -137,13 +129,10 @@ async def get_img_s3(s3_img_url):
 # S3에 gif 저장하기
 async def save_gif_s3(gif_path, character_id, motion):
     try:
-        print(os.getenv("S3_BUCKET"))
-        # S3에 GIF 파일 업로드
         s3.upload_file(
             Bucket=os.getenv("S3_BUCKET"),
             Filename=gif_path + f'/{character_id}_{motion}.gif',  # 업로드할 파일
-            Key=f'{character_id}_{motion}.gif',  # s3 저장 경로
-            # Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
+            Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
             ExtraArgs={'ContentType': 'image/gif'}
         )
         return True
