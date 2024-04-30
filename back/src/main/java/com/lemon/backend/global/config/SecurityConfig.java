@@ -39,10 +39,10 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers(headers -> headers.frameOptions().disable())
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .authorizeHttpRequests(auth -> auth
                         // 인증되지 않은 사용자도 접근 가능
-                        .requestMatchers("**","/error", "/actuator/health").permitAll()
+                        .requestMatchers("/**","/error", "/actuator/health", "/public/**").permitAll()
                         // 로그인 한 사용자
                         .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
 
