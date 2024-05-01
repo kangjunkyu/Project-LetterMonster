@@ -67,7 +67,7 @@ export const patchMainCharacter = (characterId: number) =>
  * @param nickname 캐릭터 닉네임
  */
 export const patchCharacterNickname = (characterId: number, nickname: string) =>
-  API.patch(`/characters/modify/nickname`, {
+  API.patch(`/characters/public/modify/nickname`, {
     params: { characterId: characterId, nickname: nickname },
   });
 
@@ -75,7 +75,7 @@ export const patchCharacterNickname = (characterId: number, nickname: string) =>
 
 /** 모션 리스트 조회 */
 export const getMotionList = () =>
-  API.get(`/characters/list/motion`).then((res) => res.data);
+  API.get(`/characters/public/list/motion`).then((res) => res.data);
 // .then((res) => res.data);
 
 /** 모션 선택
@@ -83,7 +83,7 @@ export const getMotionList = () =>
  * @param motionId 모션 아이디
  */
 export const getMotionSelect = (characterId: number, motionId: number) => {
-  return API.get(`/characters/select/motion`, {
+  return API.get(`/characters/public/select/motion`, {
     params: { characterId: characterId, motionId: motionId },
   }).then((res) => {
     return res.data;
@@ -104,13 +104,13 @@ export const getSketchbookList = () =>
 
 /** 스케치북 목록 전체 조회 (임시)*/
 export const getSketchbookListAll = () =>
-  API.get(`/sketchbooks/all`).then((res) => res.data);
+  API.get(`/sketchbooks/public/all`).then((res) => res.data);
 
 /** 스케치북 선택 간단 조회
  * @param sketchbookId 스케치북 아이디
  */
 export const getSketchbookSelectedsimple = (uuid: string) =>
-  API.get(`/sketchbooks/simple/${uuid}`).then((res) => res.data);
+  API.get(`/sketchbooks/public/simple/${uuid}`).then((res) => res.data);
 
 /** 스케치북 선택 상세 조회
  * @param sketchbookId 스케치북 아이디
