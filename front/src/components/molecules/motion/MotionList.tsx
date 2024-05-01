@@ -56,27 +56,49 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
 
   return (
     <>
-      <div className={styles.motionListContainer}>
-        <div>캐릭터 모션 종류</div>
-        <div className={styles.motionSampleList}>
-          {motions.map((motion, index) => (
-            <div
-              className={`${styles.motionSampleEach} ${
-                clickedMotionIndex === index ? styles.selected : ""
-              }`}
-              key={index}
-              onClick={() => {
-                handleMotionClick(index);
-              }}
-            >
-              <img
-                className={styles.motionSampleImage}
-                src={motion.path}
-                alt={`${motion.name} animation`}
-              />
-              <div>{formatMotionName(motion.name)}</div>
-            </div>
-          ))}
+      <div>
+        <div className={styles.motionListContainer}>
+          <div>캐릭터 모션 종류</div>
+          <div className={styles.motionSampleList}>
+            {motions.map((motion, index) => (
+              <div
+                className={`${styles.motionSampleEach} ${
+                  clickedMotionIndex === index ? styles.selected : ""
+                }`}
+                key={index}
+                onClick={() => {
+                  handleMotionClick(index);
+                }}
+              >
+                <img
+                  className={styles.motionSampleImage}
+                  src={motion.path}
+                  alt={`${motion.name} animation`}
+                />
+                <div>{formatMotionName(motion.name)}</div>
+              </div>
+            ))}
+          </div>
+          <div className={styles.motionSampleListHorizontal}>
+            {motions.map((motion, index) => (
+              <div
+                className={`${styles.motionSampleEachHorizontal} ${
+                  clickedMotionIndex === index ? styles.selected : ""
+                }`}
+                key={index}
+                onClick={() => {
+                  handleMotionClick(index);
+                }}
+              >
+                <img
+                  className={styles.motionSampleImage}
+                  src={motion.path}
+                  alt={`${motion.name} animation`}
+                />
+                <div>{formatMotionName(motion.name)}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

@@ -58,7 +58,7 @@ function MotionPreview({
               }
             }}
           >
-            편지쓰러가기
+            편지 쓰기
           </DefaultButton>
           <DefaultButton
             onClick={() => {
