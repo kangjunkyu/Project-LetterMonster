@@ -1,12 +1,63 @@
-.motionImage {
-  width: 300px;
-  height: 300px;
+.motionRealContainer{
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  margin: auto 0;
 }
 
 .motionContainer {
   display: flex;
-  gap: 2em;
   justify-content: center;
   align-items: center;
   font-size: 14px;
+  gap: 1em;
+  // margin: 0 3em 0 4em;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    gap: 1em;
+  }
+  @media screen and (max-width: 479px) {
+    gap: 1em;
+    margin: 50px 0 0 0;
+    padding: 0 0 0 0;
+    flex-direction: column;
+  }
+}
+
+// .motionImage{
+//   width: 300px;
+//   height: 300px;
+// }
+
+.motionResultImage {
+  width: 100%;
+  max-width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 767px) {
+    max-width: 300px;
+  }
+}
+
+.motionResultContainer {
+  width: 100%;
+  max-width: 400px;
+  padding: 1em;
+  background-color: white;
+  border-radius: 15px;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    width: 90%;
+    
+  }
 }
