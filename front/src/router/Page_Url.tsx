@@ -17,6 +17,8 @@ export const Page_Url = {
   Sketch: "/sketch",
   // 캐릭터 모션 선택 페이지
   Motion: "/motion",
+  // 캐릭터 모션 결과 페이지
+  MotionResult: "/motion/result",
   // 편지쓰기 페이지
   WriteLetter: "/letter/write",
   // 특정 스케치북에 편지쓰기 페이지
