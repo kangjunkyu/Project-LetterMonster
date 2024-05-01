@@ -32,7 +32,7 @@ s3 = boto3.client(
 
 
 @router.get("/")
-async def home():
+def home():
     return {"test": "헤에"}
 
 
@@ -43,7 +43,7 @@ class CharacterCreateRequest(BaseModel):
 
 
 @router.post("/create")
-async def create_joint_gif(request: CharacterCreateRequest):
+def create_joint_gif(request: CharacterCreateRequest):
     character_id = request.character_id
     motion = request.motion_name
     s3_img_url = request.img_url
@@ -54,7 +54,7 @@ async def create_joint_gif(request: CharacterCreateRequest):
         Path(IMG_DIR).mkdir(exist_ok=True)
 
         # s3에서 이미지 다운로드
-        is_downloaded = await get_img_s3(s3_img_url)
+        is_downloaded = get_img_s3(s3_img_url)
 
         if not is_downloaded:
             return JSONResponse(content={"error": "Fast API ERROR : s3 이미지 다운로드 실패"}, status_code=500)
@@ -95,7 +95,7 @@ async def create_joint_gif(request: CharacterCreateRequest):
         #     return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
 
         # S3에 gif 업로드
-        is_saved = await save_gif_s3(gif_path, character_id, motion)
+        is_saved = save_gif_s3(gif_path, character_id, motion)
 
         if not is_saved:
             return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
@@ -114,7 +114,7 @@ async def create_joint_gif(request: CharacterCreateRequest):
 # S3에서 img 불러오기
 async def get_img_s3(s3_img_url):
     try:
-        s3.download_file(
+        await s3.download_file(
             Bucket=os.getenv("S3_BUCKET"),
             Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
             Filename=f"images_temp/{s3_img_url}"  # 로컬 저장 경로
@@ -129,7 +129,7 @@ async def get_img_s3(s3_img_url):
 # S3에 gif 저장하기
 async def save_gif_s3(gif_path, character_id, motion):
     try:
-        s3.upload_file(
+        await s3.upload_file(
             Bucket=os.getenv("S3_BUCKET"),
             Filename=gif_path + f'/{character_id}_{motion}.gif',  # 업로드할 파일
             Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
