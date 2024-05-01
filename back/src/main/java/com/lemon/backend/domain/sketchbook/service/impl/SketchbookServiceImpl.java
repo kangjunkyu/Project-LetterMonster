@@ -74,6 +74,7 @@ public class SketchbookServiceImpl implements SketchbookService {
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(sketchDto.getName());
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbooks/detail/" + uuid;
+        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(userId);
 
         Sketchbook sketch = Sketchbook.builder()
                 .name(sketchDto.getName())
@@ -81,12 +82,8 @@ public class SketchbookServiceImpl implements SketchbookService {
                 .shareLink(sharaLink)
                 .sketchbookUuid(uuid)
                 .tag(String.valueOf(sameSketchbookLastNumber))
+                .isRepresent(isRepresent)
                 .build();
-
-//        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
-//                .sketchbook(sketch)
-//                .build();
-//        sketchbookCharacterMotionRepository.save(sketchbookCharacterMotion);
 
         return sketchbookRepository.save(sketch).getId();
     }
@@ -131,4 +128,23 @@ public class SketchbookServiceImpl implements SketchbookService {
     public List<SketchbookGetAllDto> getSketchAll(){
         return sketchbookRepository.getSketchAll().orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
+
+    @Transactional
+    public void changeRepresent(Integer userId, Long newRepresentId) {
+        Optional<Sketchbook> currentRepresent = sketchbookRepository.findRepresentSkechbook(userId);
+
+        if (currentRepresent.isPresent()) {
+            Sketchbook currentSketchbook = currentRepresent.get();
+            currentSketchbook.changeRepresent(false);
+            sketchbookRepository.save(currentSketchbook);
+        }
+
+        // 새로운 스케치북을 대표로 설정
+        sketchbookRepository.findById(newRepresentId)
+                .ifPresent(sketchbook -> {
+                    sketchbook.changeRepresent(true);
+                    sketchbookRepository.save(sketchbook);
+                });
+    }
+
 }
