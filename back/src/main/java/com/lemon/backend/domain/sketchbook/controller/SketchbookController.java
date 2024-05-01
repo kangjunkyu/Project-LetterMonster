@@ -95,4 +95,12 @@ public class SketchbookController {
         Optional<List<SketchbookSearchGetDto>> searchList = sketchbookService.searchSkechbook(nickname);
         return getResponseEntity(SuccessCode.OK, searchList);
     }
+
+    @Operation(summary = "대표 스케치북 수정", description = "대표 스케치북 수정 / sketchbookId 필요")
+    @PutMapping("/representative/{changeRepresentSketchbookId}")
+    public ResponseEntity<?> updateSketch(Authentication authentication, @PathVariable(value = "changeRepresentSketchbookId")Long sketchbookId){
+        Integer userId = (Integer) authentication.getPrincipal();
+        sketchbookService.changeRepresent(userId, sketchbookId);
+        return getResponseEntity(SuccessCode.OK);
+    }
 }

@@ -129,6 +129,7 @@ public class SketchbookServiceImpl implements SketchbookService {
         return sketchbookRepository.getSketchAll().orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
 
+    @Override
     @Transactional
     public void changeRepresent(Integer userId, Long newRepresentId) {
         Optional<Sketchbook> currentRepresent = sketchbookRepository.findRepresentSkechbook(userId);
