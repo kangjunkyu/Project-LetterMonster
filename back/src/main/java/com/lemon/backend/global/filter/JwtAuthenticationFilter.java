@@ -42,6 +42,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         whiteList.add("/api/swagger-ui");
         whiteList.add("/api/v3/api-docs");
         whiteList.add("/api/actuator/health");
+
+        whiteList.add("/api/user/public");
+        whiteList.add("/api/sketchbooks/public");
+        whiteList.add("/api/characters/public");
+        whiteList.add("/api/letter/public");
     }
 
     @Override
@@ -57,6 +62,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         try {
             String bearerToken = httpRequest.getHeader("Authorization");
+            log.info(requestURI);
             if (bearerToken != null && !bearerToken.isEmpty()) {
                 String accessToken = jwtTokenProvider.resolveToken(bearerToken);
                 if (jwtTokenProvider.validateToken(accessToken)) {

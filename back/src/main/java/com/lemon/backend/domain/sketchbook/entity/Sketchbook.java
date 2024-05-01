@@ -43,10 +43,6 @@ public class Sketchbook extends BaseEntity {
     @JoinColumn(name = "users_id")
     private Users users;
 
-    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
-
     @Setter
     @Column(name = "sketchbook_uuid")
     private String sketchbookUuid;
@@ -60,6 +56,9 @@ public class Sketchbook extends BaseEntity {
     @Builder.Default
     private Boolean isWritePossible = false;
 
+    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
 
     public void addSketchbook(Users users) {
         this.users = users;

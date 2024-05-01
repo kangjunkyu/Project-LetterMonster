@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @Operation(summary = "유저 닉네임 검색", description = "유저를 닉네임으로 검색합니다.")
-    @GetMapping("/{nickname}")
+    @GetMapping("/public/search/{nickname}")
     public ResponseEntity<?> searchNickname(@PathVariable("nickname") String nickname){
         List<UserSearchGetDto> users = userService.searchNickname(nickname);
         return getResponseEntity(SuccessCode.OK, users);

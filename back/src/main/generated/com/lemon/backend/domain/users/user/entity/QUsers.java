@@ -43,6 +43,10 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final StringPath nicknameTag = createString("nicknameTag");
 
+    public final ListPath<com.lemon.backend.domain.notification.entity.Notification, com.lemon.backend.domain.notification.entity.QNotification> notificationList = this.<com.lemon.backend.domain.notification.entity.Notification, com.lemon.backend.domain.notification.entity.QNotification>createList("notificationList", com.lemon.backend.domain.notification.entity.Notification.class, com.lemon.backend.domain.notification.entity.QNotification.class, PathInits.DIRECT2);
+
+    public final StringPath notificationToken = createString("notificationToken");
+
     public final EnumPath<Social> provider = createEnum("provider", Social.class);
 
     public final StringPath providerId = createString("providerId");

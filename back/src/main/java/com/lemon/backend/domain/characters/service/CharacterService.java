@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface CharacterService {
-    Long createCharacter(MultipartFile file, int userId, String nickname);
+    Long createCharacter(MultipartFile file, Integer userId, String nickname);
 
     void deleteCharacter(Long characterId);
 
