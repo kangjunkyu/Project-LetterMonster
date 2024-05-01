@@ -1,8 +1,5 @@
 FROM python:3.9
 
-WORKDIR /src
-COPY . .
-
 # 라이브러리 설치
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
@@ -11,6 +8,9 @@ RUN apt-get update && apt-get install -y \
     libosmesa6-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workdir
+COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
