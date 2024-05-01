@@ -42,16 +42,11 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .authorizeHttpRequests(auth -> auth
                         // 인증되지 않은 사용자도 접근 가능
-                        .requestMatchers("/**","/error", "/actuator/health", "/public/**").permitAll()
-                        // 로그인 한 사용자
-                        .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**").authenticated()
+                        .requestMatchers("/**","/error", "/actuator/health").permitAll()
+                        .requestMatchers("/public/**", "/user/public/**", "/sketchbooks/public/**", "/characters/public/**", "/letter/public/**").permitAll()
 
-//                        // 인증된 사용자만 접근 가능
-//                        .requestMatchers("/user/**", "/sketchbooks/**", "/letters/*",
-//                                "/characters/**", "/ai/**").hasRole("USER")
-//
-//                        // ADMIN 권한을 가진 인증된 사용자만 접근 가능
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // 로그인 한 사용자
+                        .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**", "/notification/**").authenticated()
                 )
 
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

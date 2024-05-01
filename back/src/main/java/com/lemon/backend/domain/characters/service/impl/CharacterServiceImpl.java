@@ -59,33 +59,32 @@ public class CharacterServiceImpl implements CharacterService {
      */
     @Override
     @Transactional
-    public Long createCharacter(MultipartFile file, int userId, String nickname) {
+    public Long createCharacter(MultipartFile file, Integer userId, String nickname) {
         try {
             if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
-            Optional<Users> optionalUsers = userRepository.findById(userId);
+            Characters characters = null;
 
-            if(optionalUsers.isPresent()) {
-                Users users = optionalUsers.get();
-                Characters characters = Characters.builder().nickname(nickname).users(users).build();
-                characterRepository.save(characters);
-                String fileName = characters.getId().toString() + ".png";
-                ObjectMetadata metadata= new ObjectMetadata();
-                metadata.setContentType(file.getContentType());
-                metadata.setContentLength(file.getSize());
-                amazonS3Client.putObject(bucket,root + "/" + fileName,file.getInputStream(),metadata);
-                String fileUrl = amazonS3Client.getUrl(bucket, root + "/" + fileName).toString();
-                characters.changeUrl(fileUrl);
-                return characters.getId();
-            } else {
-                throw new CustomException(ErrorCode.USERS_NOT_FOUND);
+            if(userId == null){
+                characters = Characters.builder().nickname(nickname).build();
+            }else{
+                Users users = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+                characters = Characters.builder().nickname(nickname).users(users).build();
+
             }
-
+            characterRepository.save(characters);
+            String fileName = characters.getId().toString() + ".png";
+            ObjectMetadata metadata= new ObjectMetadata();
+            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(file.getSize());
+            amazonS3Client.putObject(bucket,root + "/" + fileName,file.getInputStream(),metadata);
+            String fileUrl = amazonS3Client.getUrl(bucket, root + "/" + fileName).toString();
+            characters.changeUrl(fileUrl);
+            return characters.getId();
 
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomException(ErrorCode.CHARACTER_SAVE_FAILED);
         }
-
     }
 
     /*
