@@ -29,22 +29,25 @@
   flex-direction: column;
   overflow-y: auto;
   max-height: 60vh;
-  
+
   .title {
     justify-content: space-between;
     align-self: flex-start;
-    margin: 20px;
-    font-size: 14px;
+    margin: 10px 20px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 10px 0;
   }
 }
 
 .userCharacterList {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 1em;
   padding: 0 20px;
+
+  @media screen and (min-width: 390px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .userCharacterCard {
@@ -76,53 +79,54 @@
     align-items: center;
 
     &.justifyRight {
-      justify-content: flex-end; 
+      justify-content: flex-end;
     }
-  
+
     &.justifyBetween {
       justify-content: space-between;
     }
-    
+
     .nickname {
       display: inline-block;
-      margin-left: 3px; 
+      margin-left: 3px;
       text-align: center;
       align-items: center;
       justify-content: center;
       width: 70px;
+      font-size: 12px;
     }
-    
+
     .mainCharacterLabel {
       display: inline-block;
       height: 22px;
       width: 35px;
       margin-right: 5px;
-      background-color: red; 
-      color: white; 
-      padding: 2px 5px; 
-      border-radius: 5px; 
+      background-color: red;
+      color: white;
+      padding: 2px 5px;
+      border-radius: 5px;
     }
   }
 }
 
-.userCharacterListUpper{
+.userCharacterListUpper {
   display: flex;
   gap: 1em;
   padding: 10px;
   font-size: 12px;
 }
 
-// MyPageCharacter에서 캐릭터가 0개일때 
-.userNoCharacterListContainer{
+// MyPageCharacter에서 캐릭터가 0개일때
+.userNoCharacterListContainer {
   text-align: center;
   font-size: 12px;
 }
-.titleNoCharacter{
+.titleNoCharacter {
   font-size: 14px;
   font-weight: bold;
-  margin: 15px 0 ;
+  margin: 15px 0;
 }
-.userNoCharacterButton{
+.userNoCharacterButton {
   margin-top: 10px;
   background-color: $successColor;
   color: white;
