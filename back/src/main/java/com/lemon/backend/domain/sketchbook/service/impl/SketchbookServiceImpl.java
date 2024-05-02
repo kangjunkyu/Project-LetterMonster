@@ -33,10 +33,10 @@ public class SketchbookServiceImpl implements SketchbookService {
     private final SketchbookRepository sketchbookRepository;
     private final SketchCharacterMotionRepository sketchbookCharacterMotionRepository;
     BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
-    String baseUrl = System.getenv("BASE_URL");
+//    String baseUrl = System.getenv("BASE_URL");
 
-//    @Value("${base.url}")
-//    private String baseUrl;
+    @Value("${base.url}")
+    private String baseUrl;
 
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
