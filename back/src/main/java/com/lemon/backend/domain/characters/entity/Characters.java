@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
@@ -28,32 +27,41 @@ public class Characters extends BaseEntity {
     private String nickname;
 
     @Column(name = "main_character")
-    @Builder.Default
-    private Boolean mainCharacter = false;
+    private Boolean mainCharacter;
 
     @Column(name = "image_url", columnDefinition = "TEXT")
-    @Builder.Default
-    private String url = "";
+    private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id", nullable = true)
     private Users users;
 
     @OneToMany(mappedBy = "characters", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    @Builder.Default
-    private List<CharacterMotion> characterMotionList = new ArrayList<>();
+
+    private List<CharacterMotion> characterMotionList;
 
 
     public void addCharacter(Users user){
-        this.users = user;
         user.getCharacterList().add(this);
     }
 
-    @Builder(toBuilder = true)
-    Characters(String nickname, Users user){
+    @Builder
+    Characters(String nickname, Users users){
         this.nickname = nickname;
-        this.users = user;
-        addCharacter(user);
+        this.users = users;
+        this.url = "";
+        this.mainCharacter =false;
+        this.characterMotionList = new ArrayList<>();
+        addCharacter(users);
+    }
+
+    @Builder
+    Characters(String nickname){
+        this.nickname = nickname;
+        this.users = null;
+        this.url = "";
+        this.mainCharacter =false;
+        this.characterMotionList = new ArrayList<>();
     }
 
     public void changeMainCharacter() {
