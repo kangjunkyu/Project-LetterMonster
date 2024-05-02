@@ -2,14 +2,19 @@
 
 main {
   position: relative;
-  min-height: 100vh;
   min-width: 100vw;
+
+  @media screen AND (min-width: 480px) {
+    min-height: 100vh;
+  }
+
   & .layoutSection {
     /* 데스크탑 */
-    min-height: 100vh;
+    // min-height: 100vh;
     @media screen AND (min-width: 768px) {
       min-height: 100vh;
       & > * {
+        min-height: 100vh;
         padding-left: 54px;
       }
     }
@@ -26,6 +31,7 @@ main {
       /* 모바일 */
       & > * {
         min-height: calc(100vh - 44px - 64px);
+        margin-top: 44px;
       }
     }
   }
