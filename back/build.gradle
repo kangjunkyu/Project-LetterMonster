@@ -51,6 +51,10 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Mockito
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+
     // QueryDsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
@@ -84,6 +88,7 @@ dependencies {
     implementation 'io.github.vaneproject:badwordfiltering:1.0.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
     // S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
@@ -91,6 +96,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-admin:9.2.0'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
     implementation 'com.google.firebase:firebase-admin:7.3.0'
+
 
 }
 
