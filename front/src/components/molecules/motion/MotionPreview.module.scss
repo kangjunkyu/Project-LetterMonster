@@ -1,14 +1,6 @@
 @import "../../../styles/variables.scss";
 @import "../../../styles/mixins/defalut";
 
-// @media screen and (min-width: 767px) {
-//   .motionImage{
-//      width: 300px;
-//      height: 300px;
- 
-//   }
-// }
-
 .motionImage {
   width: 100%;
   max-width: 300px;
@@ -17,6 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   @media screen and (max-width: 767px) {
     max-width: 300px;
   }
@@ -36,7 +29,6 @@
 
   @media screen and (max-width: 767px) {
     width: 90%;
-    
   }
 }
 
@@ -46,11 +38,10 @@
   justify-content: center;
   align-items: center;
   gap: 2em;
-  // margin-top: 3.5em;
+  
   @media screen and (max-width: 479px) {
     button:nth-child(1){
        display: none;
- 
     }
   }
 }

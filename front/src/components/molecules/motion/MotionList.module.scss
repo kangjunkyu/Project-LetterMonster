@@ -3,16 +3,20 @@
 
 .motionListContainer {
   width: 100%;
+  max-width: 400px;
+  padding: 1em 0;
+  background-color: white;
+  border-radius: 15px;
+  border: 3px solid black;
   display: flex;
   flex-direction: column;
-  gap: 1em;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
-  background-color: $gc700;
-  padding-top: 1em;
-  border: 3px solid black;
-  border-radius: 15px;
+  gap: 1em;
+
+  @media screen and (max-width: 767px) {
+    width: 90%;
+  }
 }
 
 .motionSampleImage {
@@ -20,86 +24,8 @@
   height: 100px;
 }
 
-// .motionSampleEach {
-//   display: flex;
-//   flex-direction: column;
-//   background-color: yellow;
-//   align-items: center;
-//   cursor: pointer;
-//   box-sizing: border-box;
-//   border: 1px solid transparent;
-//   border-radius: 15px;
-//   &:hover {
-//     border: 1.5px solid green;
-//     border-radius: 15px;
-//   }
-//   &.selected {
-//     border: 1px solid black;
-//   }
-// }
-
-// .motionSampleList {
-//   width: 350px;
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   gap: 1em;
-//   margin-bottom: 1em;
-//   font-size: 12px;
-//   justify-content: center;
-//   align-items: center;
-// }
-
-// .motionSampleListHorizontal {
-//   list-style: none;
-//   display: flex;
-//   gap: 0.5em;
-//   overflow-y: hidden;
-// }
-
-// .motionSampleEachHorizontal{
-//   display: flex;
-//   flex-direction: column;
-//   background-color: yellow;
-//   align-items: center;
-//   cursor: pointer;
-//   box-sizing: border-box;
-//   border: 1px solid transparent;
-//   border-radius: 15px;
-//   text-align: center;
-
-//   &.selected {
-//     border: 1px solid black;
-//   }
-//   &:hover {
-//     border: 1.5px solid green;
-//     border-radius: 15px;
-//   }
-// }
-
-@import "../../../styles/variables.scss";
-@import "../../../styles/mixins/defalut";
-
-.motionListContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  background-color: $gc700;
-  padding-top: 1em;
-  border: 3px solid black;
-  border-radius: 15px;
-}
-
-.motionSampleImage {
-  width: 100px;
-  height: 100px;
-}
-
-.motionSampleEach, .motionSampleEachHorizontal {
+.motionSampleEach,
+.motionSampleEachHorizontal {
   display: flex;
   flex-direction: column;
   background-color: yellow;
@@ -119,7 +45,7 @@
 
 .motionSampleList {
   display: none;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 767px) {
     display: flex;
     width: 350px;
     flex-direction: row;
@@ -134,15 +60,13 @@
 
 .motionSampleListHorizontal {
   display: flex;
-  width: 350px;
+  padding: 1em;
+  width: 100%;
   gap: 0.5em;
   overflow-x: auto;
-  // scrollbar-width: none; // Firefox
-  -ms-overflow-style: none; // IE and Edge
-  &scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
-  @media screen and (min-width: 768px) {
+  text-align: center;
+
+  @media screen and (min-width: 767px) {
     display: none;
   }
 }
