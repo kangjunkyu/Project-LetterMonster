@@ -11,7 +11,7 @@ main {
 
     /* 데스크탑 */
 
-    @media screen AND (min-width: 768px) {
+    @media screen AND (min-width: 767px) {
       min-height: 100vh;
       & > *{
         padding-left: 54px;
