@@ -5,10 +5,14 @@ import com.lemon.backend.domain.characters.repository.CharacterMotionRepository;
 import com.lemon.backend.domain.characters.repository.CharacterRepository;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
-import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterCreateDto;
+import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateResponse;
 import com.lemon.backend.domain.letter.entity.Letter;
 import com.lemon.backend.domain.letter.repository.LetterRepository;
 import com.lemon.backend.domain.letter.service.LetterService;
+import com.lemon.backend.domain.notification.entity.Notification;
+import com.lemon.backend.domain.notification.repository.NotificationRepository;
+import com.lemon.backend.domain.notification.service.NotificationService;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
@@ -36,6 +40,8 @@ public class LetterServiceImpl implements LetterService {
     private final SketchCharacterMotionRepository sketchCharacterMotionRepository;
     private final LetterRepository letterRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
+    private final NotificationRepository notificationRepository;
 
     @Override
     public List<LetterGetListDto> getLetterList(Long sketchbookId) {
@@ -73,7 +79,71 @@ public class LetterServiceImpl implements LetterService {
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
 
+        Notification notification = Notification.builder()
+                .receiver(receiver)
+                .type(1)
+                .friendName(sender.getNickname())
+                .build();
+
+        String body = null;
+
+        if(letter.getSender() != null){
+            body = "[ " + letter.getSender().getNickname() + " ] 님에게 편지가 도착했어요";
+            notificationRepository.save(notification);
+        }
+
+        String title = "LEMON";
+        if(!notificationService.sendNotification(receiver.getNotificationToken(), title, body)){
+            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+        }
+
         return letterRepository.save(letter).getId();
+    }
+
+    @Override
+    public LetterCreateResponse createAnonymousLetter(LetterCreateDto letterDto) {
+        SketchbookCharacterMotion sketchbookCharacterMotion = sketchbookRepository.findByCharacterMotionAndSketchbook(letterDto.getSketchbookId(), letterDto.getCharacterMotionId())
+                .orElseGet(() -> {
+                    Sketchbook sketchbook = sketchbookRepository.findById(letterDto.getSketchbookId()).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+                    CharacterMotion characterMotion = characterMotionRepository.findById(letterDto.getCharacterMotionId()).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
+                    SketchbookCharacterMotion newSketchbookCharacterMotion = SketchbookCharacterMotion.builder()
+                            .sketchbook(sketchbook)
+                            .characterMotion(characterMotion)
+                            .build();
+                    return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
+                });
+
+        Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+
+        BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
+        String content = badWordFilterUtil.change(letterDto.getContent());
+        Letter letter = Letter.builder()
+                .receiver(receiver)
+                .content(content)
+                .sketchbookCharacterMotion(sketchbookCharacterMotion)
+                .build();
+
+        Notification notification = Notification.builder()
+                .receiver(receiver)
+                .type(1)
+                .friendName("비회원")
+                .build();
+
+        String body = null;
+
+        if(letter.getSender() != null){
+            body = "[ 비회원 ] 으로부터 편지가 도착했어요";
+            notificationRepository.save(notification);
+        }
+
+        String title = "LEMON";
+        if(!notificationService.sendNotification(receiver.getNotificationToken(), title, body)){
+            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+        }
+
+        LetterCreateResponse response = new LetterCreateResponse();
+        response.setLetterId(letterRepository.save(letter).getId());
+        return response;
     }
 
 

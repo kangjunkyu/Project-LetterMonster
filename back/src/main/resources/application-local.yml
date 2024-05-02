@@ -13,7 +13,7 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     defer-datasource-initialization: true
   data:
     redis:
@@ -30,4 +30,7 @@ spring:
     swagger-ui:
       path: /swagger-ui.html
       enabled: true
-
+cloud:
+  aws:
+    s3:
+      dir: ${DIR_NAME}

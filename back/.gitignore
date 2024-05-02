@@ -46,3 +46,6 @@ bin/
 ### generated ###
 /generated/
 /src/main/generated/
+
+### firebase ###
+/src/main/resources/firebase/lemon-8e34d-firebase-adminsdk-vjl60-ea10a56333.json

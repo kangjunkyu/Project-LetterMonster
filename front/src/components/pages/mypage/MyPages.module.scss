@@ -1,11 +1,30 @@
+@import "../../../styles/mixins/_defalut.scss";
+
+$widthValue: 90%;
+$maxWidthValue: 1024px;
+
+
 .myPageContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
+  // width: 100%;
+  // display: flex;
+  // flex-direction: column;
+  // gap: 1em;
+  // justify-content: center;
+  // align-items: center;
+  // font-size: 14px;
+  // margin: 0 auto;
+  @media screen and (min-width: 768px) {
+    /* 데스크탑 */
+  }
+  @media screen and (min-width: 480px) {
+    /* 타블렛 */
+    @include flexCenterColumn();
+  }
+  
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    @include flexCenterColumn();
+  }
 }
 
 .content {
@@ -13,7 +32,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   width: 100%;
-  @media (max-width: 479px) {
-    display: none;
-  }
+  // @media (max-width: 479px) {
+  //   display: none;
+  // }
 }

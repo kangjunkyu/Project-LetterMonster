@@ -5,6 +5,7 @@ buildscript {
     }
 }
 
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.3'
@@ -84,6 +85,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     // S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
+    implementation 'com.google.firebase:firebase-admin:7.3.0'
 
 }
 

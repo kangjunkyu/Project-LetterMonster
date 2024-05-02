@@ -4,9 +4,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.lemon.backend.domain.characters.dto.response.*;
 import com.lemon.backend.domain.characters.service.CharacterService;
 import com.lemon.backend.global.response.SuccessCode;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.protocol.HTTP;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +24,13 @@ public class CharacterController {
     public ResponseEntity<?> makeCharacter(Authentication authentication, @RequestParam("file")MultipartFile file, @RequestParam("nickname")String nickname) {
         Integer userId = (Integer) authentication.getPrincipal();
         Long characterId = characterService.createCharacter(file, userId, nickname);
+        return getResponseEntity(SuccessCode.CREATED, characterId);
+    }
+
+    //비회원 캐릭터 생성
+    @PostMapping("/public/create")
+    public ResponseEntity<?> makeCharacter(@RequestParam("file")MultipartFile file, @RequestParam("nickname")String nickname) {
+        Long characterId = characterService.createCharacter(file, null, nickname);
         return getResponseEntity(SuccessCode.CREATED, characterId);
     }
 
@@ -54,14 +59,14 @@ public class CharacterController {
         characterService.changeMainCharacter(characterId, userId);
         return getResponseEntity(SuccessCode.OK, null);
     }
-    @GetMapping("/list/motion")
+    @GetMapping("/public/list/motion")
     public ResponseEntity<?> showMotions() {
         List<RepresentMotionDto> representMotionDtoList = characterService.showMotions();
         return getResponseEntity(SuccessCode.OK, representMotionDtoList);
     }
 
     // 선택한 캐릭터 모션에 따른 gif 주소를 반환한다.
-    @GetMapping("/select/motion")
+    @GetMapping("/public/select/motion")
     public ResponseEntity<?> selectCharacterMotion(@RequestParam(name="characterId") Long characterId, @RequestParam(name="motionId") Long motionId) {
         SelectCharacterMotionDto selectCharacterMotionDto = characterService.selectCharacterMotion(characterId, motionId);
         return getResponseEntity(SuccessCode.OK, selectCharacterMotionDto);
