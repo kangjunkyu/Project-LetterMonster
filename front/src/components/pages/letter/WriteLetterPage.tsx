@@ -54,9 +54,10 @@ function LetterWritePage() {
     setMotionId(motionId);
     const data = await getMotionSelect(characterId, motionId);
     if (data) {
+      console.log(data);
       setMotionId(motionId);
-      setGif(data.data.imageUrl);
-      setCharacterMotionId(data.data.characterMotionId);
+      setGif(data.imageUrl);
+      setCharacterMotionId(data.characterMotionId);
       console.log(data.data);
     } else {
       console.log("No motion data available");
