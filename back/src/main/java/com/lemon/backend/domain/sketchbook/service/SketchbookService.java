@@ -37,4 +37,7 @@ public interface SketchbookService {
     SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
 
     List<SketchbookGetAllDto> getSketchAll();
+
+    @Transactional
+    void changeRepresent(Integer userId, Long newRepresentId);
 }

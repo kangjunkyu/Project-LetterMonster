@@ -61,7 +61,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Transactional
     public Long createCharacter(MultipartFile file, Integer userId, String nickname) {
         try {
-            if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+            if(badWordFilterUtil.checkBadWord(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
             Characters characters = null;
 
             if(userId == null){
@@ -93,7 +93,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void updateCharacterNickname(Long characterId, String nickname) {
-        if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
 
         if(optionalCharacters.isPresent()) {

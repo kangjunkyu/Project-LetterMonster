@@ -4,11 +4,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class BadWordFilterUtil extends HashSet<String> implements BadWords{
+public class BadWordFilterUtil extends HashSet<String> implements BadWords {
     private String substituteValue = "*";
+    String[] delimiters = { " ", ",", ".", "!", "?", "@", "1", "2", "3", "4","5", "6",
+            "7", "8" ,"9", "0", "^", "&", "*", "%", "$", "#", "(", ")", "-", "=", "_",
+            "{", "}", "[", "'\'", "|" ,"/", "]", "~", "`", "ㅣ", "ㅏ", "ㅗ", "ㅅ"};
 
-    //대체 문자 지정
-    //기본값 : *
     public BadWordFilterUtil() {
         addAll(List.of(koreaBadWords));
     }
@@ -18,7 +19,15 @@ public class BadWordFilterUtil extends HashSet<String> implements BadWords{
         addAll(List.of(koreaBadWords));
     }
 
-    //비속어 있다면 대체
+    private String buildPatternText() {
+        StringBuilder delimiterBuilder = new StringBuilder("[");
+        for (String delimiter : delimiters) {
+            delimiterBuilder.append(Pattern.quote(delimiter));
+        }
+        delimiterBuilder.append("]*");
+        return delimiterBuilder.toString();
+    }
+
     public String change(String text) {
         String[] badWords = stream().filter(text::contains).toArray(String[]::new);
         for (String v : badWords) {
@@ -28,30 +37,15 @@ public class BadWordFilterUtil extends HashSet<String> implements BadWords{
         return text;
     }
 
-    public String change(String text, String[] sings) {
-        StringBuilder singBuilder = new StringBuilder("[");
-        for (String sing : sings) singBuilder.append(Pattern.quote(sing));
-        singBuilder.append("]*");
-        String patternText = singBuilder.toString();
-
-        for (String word : this) {
-            if (word.length() == 1) text = text.replace(word, substituteValue);
-            String[] chars = word.chars().mapToObj(Character::toString).toArray(String[]::new);
-            text = Pattern.compile(String.join(patternText, chars))
-                    .matcher(text)
-                    .replaceAll(v -> substituteValue.repeat(v.group().length()));
-        }
-
-        return text;
-    }
-
-    //비속어가 1개라도 존재하면 true 반환
     public boolean check(String text) {
         return stream().anyMatch(text::contains);
     }
 
-    //공백을 없는 상태 체크
-    public boolean blankCheck(String text) {
-        return check(text.replace(" ", ""));
+    public boolean checkBadWord(String text) {
+        String patternText = buildPatternText();
+        return stream().anyMatch(badWord -> {
+            String pattern = String.join(patternText, badWord.split(""));
+            return Pattern.compile(pattern).matcher(text).find();
+        });
     }
 }

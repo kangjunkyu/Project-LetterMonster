@@ -1,6 +1,7 @@
 package com.lemon.backend.domain.sketchbook.repository.custom;
 
 import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
+import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,4 +25,9 @@ public interface SketchbookRepositoryCustom {
     Optional<List<SketchbookGetAllDto>> getSketchAll();
 
     Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName);
+
+    Optional<Sketchbook> findRepresentSkechbook(Integer userId);
+
+    boolean existsRepresentSketchbook(Integer userId);
+
 }

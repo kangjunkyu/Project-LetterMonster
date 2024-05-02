@@ -56,6 +56,10 @@ public class Sketchbook extends BaseEntity {
     @Builder.Default
     private Boolean isWritePossible = false;
 
+    @Setter
+    @Column(name="is_represent")
+    private Boolean isRepresent;
+
     @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<SketchbookCharacterMotion> sketchbookCharacterMotionList = new ArrayList<>();
@@ -63,6 +67,10 @@ public class Sketchbook extends BaseEntity {
     public void addSketchbook(Users users) {
         this.users = users;
         users.getSketchbookList().add(this);
+    }
+
+    public void changeRepresent(Boolean changeRepresent) {
+        this.isRepresent = changeRepresent;
     }
 
     @Builder(toBuilder = true)

@@ -4,12 +4,16 @@ import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.service.UserService;
+import com.lemon.backend.global.exception.CustomException;
+import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,9 +45,11 @@ public class UserController {
 
     @Operation(summary = "닉네임 변경", description = "Header의 액세스 토큰을 이용하여 닉네임 변경을 합니다.")
     @PostMapping("/nickname")
-    public ResponseEntity<?> changeNickname(Authentication authentication, @RequestBody ChangeNicknameRequest request){
+    public ResponseEntity<?> changeNickname(Authentication authentication, @Validated @RequestBody ChangeNicknameRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new CustomException(ErrorCode.INVALID_USER_NICKNAME);
+
         Integer userId = (Integer) authentication.getPrincipal();
-        return getResponseEntity(SuccessCode.OK, userService.changeNickname(userId, request));
+        return ResponseEntity.ok(userService.changeNickname(userId, request));
     }
 
     @Operation(summary = "회원탈퇴", description = "회원 탈퇴를 진행합니다.")

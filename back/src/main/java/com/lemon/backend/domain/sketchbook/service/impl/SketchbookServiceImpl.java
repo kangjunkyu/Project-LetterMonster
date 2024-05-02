@@ -70,10 +70,11 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto){
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
-        if(badWordFilterUtil.blankCheck(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(sketchDto.getName());
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbooks/detail/" + uuid;
+        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(userId);
 
         Sketchbook sketch = Sketchbook.builder()
                 .name(sketchDto.getName())
@@ -81,12 +82,8 @@ public class SketchbookServiceImpl implements SketchbookService {
                 .shareLink(sharaLink)
                 .sketchbookUuid(uuid)
                 .tag(String.valueOf(sameSketchbookLastNumber))
+                .isRepresent(isRepresent)
                 .build();
-
-//        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
-//                .sketchbook(sketch)
-//                .build();
-//        sketchbookCharacterMotionRepository.save(sketchbookCharacterMotion);
 
         return sketchbookRepository.save(sketch).getId();
     }
@@ -105,7 +102,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public Long updateSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto){
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
-        if(badWordFilterUtil.blankCheck(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         sketch.setName(sketchDto.getName());
 
         return sketch.getId();
@@ -131,4 +128,24 @@ public class SketchbookServiceImpl implements SketchbookService {
     public List<SketchbookGetAllDto> getSketchAll(){
         return sketchbookRepository.getSketchAll().orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
+
+    @Override
+    @Transactional
+    public void changeRepresent(Integer userId, Long newRepresentId) {
+        Optional<Sketchbook> currentRepresent = sketchbookRepository.findRepresentSkechbook(userId);
+
+        if (currentRepresent.isPresent()) {
+            Sketchbook currentSketchbook = currentRepresent.get();
+            currentSketchbook.changeRepresent(false);
+            sketchbookRepository.save(currentSketchbook);
+        }
+
+        // 새로운 스케치북을 대표로 설정
+        sketchbookRepository.findById(newRepresentId)
+                .ifPresent(sketchbook -> {
+                    sketchbook.changeRepresent(true);
+                    sketchbookRepository.save(sketchbook);
+                });
+    }
+
 }
