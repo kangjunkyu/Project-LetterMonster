@@ -9,7 +9,7 @@ import { useState } from "react";
 interface MotionPreviewProps {
   characterNickname: string;
   characterId: number;
-  gif: string;
+  gif: { imageUrl: string };
   motionId: number;
 }
 
@@ -22,9 +22,11 @@ function MotionPreview({
   const navigate = useNavigate();
   const location = useLocation();
   const { image } = location.state || {};
-  const displayImage = gif || image;
+  const displayImage = gif.imageUrl || image;
   const [isModalOpen, setModalOpen] = useState(false);
   const handleToggleModal = () => setModalOpen((prev) => !prev);
+
+  console.log(gif);
 
   return (
     <>
