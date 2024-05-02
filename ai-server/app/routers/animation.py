@@ -31,11 +31,6 @@ s3 = boto3.client(
 )
 
 
-@router.get("/")
-def home():
-    return {"test": "헤에"}
-
-
 class CharacterCreateRequest(BaseModel):
     character_id: str
     motion_name: str
@@ -43,26 +38,26 @@ class CharacterCreateRequest(BaseModel):
 
 
 @router.post("/create")
-def create_joint_gif(request: CharacterCreateRequest):
+async def create_joint_gif(request: CharacterCreateRequest):
     character_id = request.character_id
     motion = request.motion_name
     s3_img_url = request.img_url
 
     try:
-        # 이미지 저장 경로 설정
-        IMG_DIR = "images_temp"
+        # 이미지 저장 경로
+        IMG_DIR = "temp_image"
         Path(IMG_DIR).mkdir(exist_ok=True)
 
         # s3에서 이미지 다운로드
-        is_downloaded = get_img_s3(s3_img_url)
+        is_downloaded = await get_img_s3(s3_img_url)
 
         if not is_downloaded:
             return JSONResponse(content={"error": "Fast API ERROR : s3 이미지 다운로드 실패"}, status_code=500)
 
-        image_path = f"images_temp/{s3_img_url}"
+        image_path = f"temp_image/{s3_img_url}"
 
-        # GIF 저장 경로 설정
-        GIF_DIR = "gif_temp"
+        # GIF 저장 경로
+        GIF_DIR = "temp_gif"
         gif_dir_name = f"{str(uuid.uuid4())}"
         Path(GIF_DIR).mkdir(exist_ok=True)
 
@@ -95,7 +90,7 @@ def create_joint_gif(request: CharacterCreateRequest):
         #     return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
 
         # S3에 gif 업로드
-        is_saved = save_gif_s3(gif_path, character_id, motion)
+        is_saved = await save_gif_s3(gif_path, character_id, motion)
 
         if not is_saved:
             return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
@@ -104,7 +99,7 @@ def create_joint_gif(request: CharacterCreateRequest):
         os.remove(image_path)
         shutil.rmtree(gif_path)
 
-        return JSONResponse(content={"gif_path": f"{character_id}_{motion}.gif"}, status_code=200)
+        return JSONResponse(content={"gif_path": f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'}, status_code=200)
 
     except Exception as e:
         logger.error("create_joint_gif => 에러 발생", exc_info=True)
@@ -117,7 +112,7 @@ async def get_img_s3(s3_img_url):
         await s3.download_file(
             Bucket=os.getenv("S3_BUCKET"),
             Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
-            Filename=f"images_temp/{s3_img_url}"  # 로컬 저장 경로
+            Filename=f"temp_image/{s3_img_url}"  # 로컬 저장 경로
         )
         return True
 
