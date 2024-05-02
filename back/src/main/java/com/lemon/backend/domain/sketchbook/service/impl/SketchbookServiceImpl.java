@@ -15,6 +15,7 @@ import com.lemon.backend.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,10 @@ public class SketchbookServiceImpl implements SketchbookService {
     private final SketchbookRepository sketchbookRepository;
     private final SketchCharacterMotionRepository sketchbookCharacterMotionRepository;
     BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
-    String baseUrl = System.getenv("BASE_URL");
+//    String baseUrl = System.getenv("BASE_URL");
+
+    @Value("${base.url}")
+    private String baseUrl;
 
     @Override
     public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
