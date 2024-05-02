@@ -200,6 +200,7 @@ public class CharacterServiceImpl implements CharacterService {
     사용자가 가진 캐릭터중 대표캐릭터로 선정된 캐릭의 대표 여부를 false로, 선택한 캐릭터의 대표 여부를 true로 변경한다.
      */
     @Override
+    @Transactional
     public void changeMainCharacter(Long characterId, int userId) {
         Optional<Users> optionalUsers = userRepository.findByIdFetch(userId);
 
@@ -207,7 +208,6 @@ public class CharacterServiceImpl implements CharacterService {
 
         Users user = optionalUsers.get();
         for(Characters c : user.getCharacterList()) {
-            System.out.println(c.getNickname() + c.getId()+ c.getMainCharacter());
             if(c.getMainCharacter()) c.changeMainCharacter();
             if(c.getId().equals(characterId)) c.changeMainCharacter();
         }
