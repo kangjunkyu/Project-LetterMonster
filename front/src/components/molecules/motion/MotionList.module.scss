@@ -12,7 +12,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1em;
+  font-size: 16px;
 
   @media screen and (max-width: 767px) {
     width: 90%;
@@ -44,6 +44,7 @@
 }
 
 .motionSampleList {
+  font-size: 14px;
   display: none;
   @media screen and (min-width: 767px) {
     display: flex;
@@ -52,13 +53,13 @@
     flex-wrap: wrap;
     gap: 1em;
     margin-bottom: 1em;
-    font-size: 12px;
     justify-content: center;
     align-items: center;
   }
 }
 
 .motionSampleListHorizontal {
+  font-size: 14px;
   display: flex;
   padding: 1em;
   width: 100%;
