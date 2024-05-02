@@ -16,7 +16,6 @@ export const getUserNickname = () => API.get(`/user`).then((res) => res.data);
  */
 export const postNickname = (nickname: string) =>
   API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
-    // console.log(res);
     res.data;
   });
 
@@ -61,13 +60,13 @@ export const deleteCharacter = (characterId: number) =>
  * @param characterId 캐릭터 아이디
  */
 export const patchMainCharacter = (characterId: number) =>
-  API.patch(
-    `/characters/my/maincharacter`,
-    {},
-    {
-      params: { characterId: characterId },
-    }
-  );
+  API.patch(`/characters/my/maincharacter`, {},{ params:{characterId: characterId }})
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      console.error("Error:", error.response);
+    });
 
 /** 캐릭터 닉네임 설정
  * @param characterId 캐릭터 아이디
@@ -93,7 +92,7 @@ export const getMotionSelect = (characterId: number, motionId: number) => {
   return API.get(`/characters/public/select/motion`, {
     params: { characterId: characterId, motionId: motionId },
   }).then((res) => {
-    return res.data;
+    return res.data.data.imageUrl;
   });
 };
 
