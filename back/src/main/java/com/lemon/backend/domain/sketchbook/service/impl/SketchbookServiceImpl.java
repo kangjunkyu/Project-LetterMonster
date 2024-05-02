@@ -70,7 +70,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto){
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
-        if(badWordFilterUtil.blankCheck(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(sketchDto.getName());
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbooks/detail/" + uuid;
@@ -102,7 +102,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public Long updateSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto){
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
-        if(badWordFilterUtil.blankCheck(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         sketch.setName(sketchDto.getName());
 
         return sketch.getId();

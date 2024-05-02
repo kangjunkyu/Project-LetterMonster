@@ -34,6 +34,8 @@ public class QSketchbook extends EntityPathBase<Sketchbook> {
 
     public final BooleanPath isPublic = createBoolean("isPublic");
 
+    public final BooleanPath isRepresent = createBoolean("isRepresent");
+
     public final BooleanPath isWritePossible = createBoolean("isWritePossible");
 
     //inherited

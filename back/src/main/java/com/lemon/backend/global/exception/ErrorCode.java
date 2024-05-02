@@ -11,7 +11,7 @@ public enum ErrorCode {
     //기타
     INVALID_ACCESS(HttpStatus.BAD_REQUEST, "잘못된 접근이거나 권한이 없습니다."),
     NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "찾을 수 없습니다."),
-    CANT_USING_BAD_WORD(HttpStatus.BAD_REQUEST, "닉네임에 욕설이 포함되었습니다."),
+    CANT_USING_BAD_WORD(HttpStatus.BAD_REQUEST, "닉네임에 욕설이 포함되어 있어요. 다른 닉네임으로 설정해주세요"),
 
     //스케치북
     SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "스케치북 정보를 찾을 수 없습니다."),
@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     //회원
     USERS_NOT_FOUND(HttpStatus.NOT_FOUND, "회원 정보를 찾을 수 없습니다."),
+    INVALID_USER_NICKNAME(HttpStatus.BAD_REQUEST, "닉네임이 공백이거나 특수문자가 포함되어 있습니다."),
 
     //캐릭터
     CHARACTER_NOT_FOUND(HttpStatus.NOT_FOUND, "캐릭터 정보를 찾을 수 없습니다."),

@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public ChangeNicknameResponse changeNickname(Integer userId, ChangeNicknameRequest request) {
         BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
-        if(badWordFilterUtil.blankCheck(request.getNickname())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(request.getNickname())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         long sameNicknameLastNumber = getSameNicknameLastNumber(request.getNickname());
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         userRepository.changeNickname(user, request.getNickname(), String.valueOf(sameNicknameLastNumber));
