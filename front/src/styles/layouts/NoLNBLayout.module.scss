@@ -10,7 +10,8 @@ main {
 
   & .layoutSection {
     /* 데스크탑 */
-    @media screen AND (min-width: 767px) {
+    // min-height: 100vh;
+    @media screen AND (min-width: 768px) {
       min-height: 100vh;
       & > * {
         min-height: 100vh;
@@ -28,10 +29,6 @@ main {
 
     @media screen and (max-width: 479px) {
       /* 모바일 */
-      & > * {
-        min-height: calc(100vh - 44px - 64px);
-        margin-top: 44px;
-      }
     }
   }
 }

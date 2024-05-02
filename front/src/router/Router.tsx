@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Page_Url } from "./Page_Url";
 // 레이아웃
 import DefaultLayouts from "../styles/layouts/DefaultLayouts";
+import NoLNBLayout from "../styles/layouts/NoLNBLayout";
 
 // 페이지
 import WelcomePage from "../components/pages/welcome/WelcomePage";
@@ -22,12 +23,17 @@ function Router() {
   return (
     <Routes>
       <Route path={Page_Url.Welcome} element={<WelcomePage />}></Route>
-      <Route element={<DefaultLayouts />}>
+      <Route element={<NoLNBLayout />}>
         <Route path={Page_Url.Main} element={<MainPage />}></Route>
+      </Route>
+      <Route element={<DefaultLayouts />}>
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
         <Route path={Page_Url.Motion} element={<MotionPage />}></Route>
-        <Route path={Page_Url.MotionResult} element={<MotionResultPage />}></Route>
+        <Route
+          path={Page_Url.MotionResult}
+          element={<MotionResultPage />}
+        ></Route>
         <Route path={Page_Url.MyPage} element={<MyPage />}></Route>
         <Route
           path={Page_Url.SketchbookList}
