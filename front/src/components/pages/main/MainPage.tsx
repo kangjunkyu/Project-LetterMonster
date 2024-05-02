@@ -11,11 +11,16 @@ function MainPage() {
     <div className={styles.mainContainer}>
       <LanguageSwitcher />
       <h1>Letter Monster</h1>
+      <h2>내 캐릭터로 편지보내기!</h2>
       <div className={styles.characterDiv}>
         <img className={styles.character} src={lemon} alt="lettermon" />
       </div>
-      <button onClick={() => navigate(Page_Url.Login)}>카카오로그인</button>
-      <button onClick={() => navigate(Page_Url.Sketch)}>캐릭터그리기</button>
+      <button
+        className={styles.startButton}
+        onClick={() => navigate(Page_Url.Login)}
+      >
+        로그인 하기
+      </button>
     </div>
   );
 }
