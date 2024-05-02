@@ -1,34 +1,32 @@
 @import "../variables.scss";
 
 main {
-  width: 100%;
-  height: 100%;
   position: relative;
-
+  min-height: 100vh;
+  min-width: 100vw;
   & .layoutSection {
-    width: 100%;
-    height: 100%;
-
     /* 데스크탑 */
-
+    min-height: 100vh;
     @media screen AND (min-width: 768px) {
       min-height: 100vh;
-      & > *{
+      & > * {
         padding-left: 54px;
       }
     }
 
     @media screen and (max-width: 767px) {
       /* 타블렛 */
-      min-height: calc(100vh - 64px);
-      margin-bottom: 64px;
+      & > * {
+        min-height: calc(100vh - 64px);
+        margin-bottom: 64px;
+      }
     }
 
     @media screen and (max-width: 479px) {
       /* 모바일 */
-      min-height: calc( 100vh - 44px - 64px );
-      margin: 44px 0 64px 0;
-      
+      & > * {
+        min-height: calc(100vh - 44px - 64px);
+      }
     }
   }
 }

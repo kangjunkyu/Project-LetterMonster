@@ -1,14 +1,18 @@
 @import "../../../styles/mixins/defalut";
 
-.container {
+.mainContainer {
   @include flexCenter();
   flex-direction: column;
   gap: 1em;
   font-size: 100px;
-
+  height: 100vh;
   & section {
     @include body2();
     padding: 10px;
+  }
+
+  & h1 {
+    @include title();
   }
 }
 
