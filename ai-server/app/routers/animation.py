@@ -109,7 +109,7 @@ async def create_joint_gif(request: CharacterCreateRequest):
 # S3에서 img 불러오기
 async def get_img_s3(s3_img_url):
     try:
-        await s3.download_file(
+        s3.download_file(
             Bucket=os.getenv("S3_BUCKET"),
             Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
             Filename=f"temp_image/{s3_img_url}"  # 로컬 저장 경로
@@ -124,7 +124,7 @@ async def get_img_s3(s3_img_url):
 # S3에 gif 저장하기
 async def save_gif_s3(gif_path, character_id, motion):
     try:
-        await s3.upload_file(
+        s3.upload_file(
             Bucket=os.getenv("S3_BUCKET"),
             Filename=gif_path + f'/{character_id}_{motion}.gif',  # 업로드할 파일
             Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
