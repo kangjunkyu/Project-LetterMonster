@@ -30,7 +30,9 @@ function MotionPreview({
     <>
       <div className={styles.motionPreviewContainer}>
         <div className={styles.motionImage}>
-          <div>{characterNickname} 탄생!</div>
+          <div className={styles.motionCharacterNickname}>
+            {characterNickname}
+          </div>
           {displayImage && (
             <img
               className={styles.motionImage}
@@ -56,7 +58,7 @@ function MotionPreview({
               }
             }}
           >
-            편지쓰러가기
+            편지 쓰기
           </DefaultButton>
           <DefaultButton
             onClick={() => {

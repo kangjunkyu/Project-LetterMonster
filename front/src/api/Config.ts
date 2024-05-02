@@ -1,12 +1,12 @@
 import axios from "axios";
 import { Page_Url } from "../router/Page_Url";
 
-export function createCustomAxios(baseURL, contentType) {
+export function createCustomAxios(baseURL: any, contentType: any) {
   const instance = axios.create({
     baseURL,
   });
 
-  instance.interceptors.request.use((config) => ({
+  instance.interceptors.request.use((config: any) => ({
     ...config,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -85,7 +85,6 @@ API.interceptors.response.use(
           config.headers[
             "Authorization"
           ] = `Bearer ${response.data.data["accessToken"]}`;
-          console.log("엥여기?")
           return axios(config);
         } else {
           window.location.href = Page_Url.Login;

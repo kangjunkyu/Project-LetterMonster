@@ -2,10 +2,48 @@
 
 .sketchbookListContainer {
   @include flexCenterColumn();
-  padding: 1em;
   gap: 1em;
-
+  position: relative;
   & h1 {
     @include subtitle();
   }
+
+  & > button {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    z-index: 9999;
+  }
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    & > button {
+      position: fixed;
+      bottom: calc(64px + 1em);
+      right: 1em;
+      z-index: 9999;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    & > button {
+      display: none;
+    }
+  }
+}
+
+.createSketchbookBox {
+  @include flexCenterColumn();
+  gap: 1em;
+  & input {
+    padding: 1em;
+  }
+}
+
+
+.centerContainer{
+  margin: auto 0;
+  // margin: auto 0;
 }

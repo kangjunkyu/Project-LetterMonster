@@ -16,13 +16,15 @@ import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 import styles from "./Paint.module.scss";
 import { useNavigate } from "react-router-dom";
 import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchCharacter";
+import { useAlert } from "../../../hooks/notice/useAlert";
+import LNB from "../../molecules/common/LNB";
+import DefaultButton from "../../atoms/button/DefaultButton";
 
 interface PaintProps {}
 
-// export const SIZE = {};
-
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const navigate = useNavigate();
+  const { showAlert } = useAlert();
 
   const [color, setColor] = useState("#000");
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
@@ -56,6 +58,26 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent | TouchEvent) {
+      if (
+        showPopover &&
+        popoverRef.current &&
+        event.target instanceof Node &&
+        !popoverRef.current.contains(event.target)
+      ) {
+        setShowPopover(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showPopover]);
+
+  const popoverRef = useRef<HTMLDivElement>(null);
+
   // 닉네임 validation hook
   const [characterNickname, setCharacterNickname] = useState("");
   const [nicknameError, setNicknameError] = useState("");
@@ -87,6 +109,14 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   // 그림 추출
   const stageRef = useRef<any>(null);
   const onExportClick = useCallback(() => {
+    if (characterNickname.trim() === "") {
+      showAlert("닉네임을 입력해주세요");
+      return;
+    } else if (scribbles.length === 0) {
+      showAlert("캐릭터를 그려주세요");
+      return;
+    }
+
     const uri = stageRef.current.toDataURL({
       pixelRatio: 3,
       mimeType: "image/png",
@@ -212,78 +242,41 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     onStageMouseUp();
   }, [onStageMouseUp]);
   return (
-    <div className={styles.paintContainer} style={{ maxWidth: '479px' }}>
-      <div className={`${styles.paintUpper}`}>
-        <div className={styles.paintTool}>
-          {PAINT_OPTIONS.map(({ id, label, icon }) => (
-            <div
-              key={id}
-              aria-label={label}
-              onClick={() => setDrawAction(id)}
-              className={`${styles.paintEachTool} ${
-                id === drawAction ? styles.toolSelected : ""
-              }`}
-            >
-              {icon}
-            </div>
-          ))}
-
-          <div className={styles.colorButton}>
-            <div
-              onClick={() => setShowPopover(true)}
-              style={{
-                backgroundColor: color,
-                height: "32px",
-                width: "32px",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            ></div>
-            {showPopover && (
-              <div className={styles.popoverContent} style={{ width: "300px" }}>
-                <button onClick={() => setShowPopover(false)}>
-                  <span className="material-icons">clear</span>
-                </button>
-                <SketchPicker
-                  color={color}
-                  onChangeComplete={(selectedColor) =>
-                    setColor(selectedColor.hex)
-                  }
-                />
+    <div className={styles.paintContainer}>
+      <LNB>
+        <h1>그림 그리기</h1>
+        <DefaultButton onClick={() => onExportClick()} custom={true}>
+          만나기
+        </DefaultButton>
+      </LNB>
+      <div className={styles.characterNicknameContainer}>
+        <div>
+          <input
+            type="text"
+            value={characterNickname}
+            onChange={handleCharacterNicknameChange}
+            placeholder="캐릭터 별명을 입력해주세요"
+            className={styles.inputCharacterNickname}
+          />
+          <div>
+            {nicknameError && (
+              <div className={styles.nicknameError} style={{ color: "red" }}>
+                {nicknameError}
               </div>
             )}
           </div>
-
-          <button
-            className={styles.etcButton}
-            aria-label={"Clear"}
-            onClick={onClear}
-          >
-            <span className="material-icons">delete_forever</span>
-          </button>
         </div>
-        <div className={styles.paintImportExport}>
-          <input
-            type="file"
-            ref={fileRef}
-            onChange={
-              onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
-            }
-            style={{ display: "none" }}
-            accept="image/*"
-          />
-          <button className={styles.etcButton} onClick={onImportImageClick}>
-            그림 올리기
-          </button>
-          <button className={styles.etcButton} onClick={onExportClick}>
-            만나러 가기
-          </button>
-        </div>
+        <button
+          className={styles.etcButton}
+          onClick={onImportImageClick}
+        >
+          그림 올리기
+        </button>
       </div>
 
       <div className={styles.paintCanvas}>
         <Stage
-          height={size}
+          height={500}
           width={size}
           ref={stageRef}
           onMouseUp={onStageMouseUp}
@@ -292,10 +285,10 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           onTouchStart={onStageMouseDown}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
-          style={{ border: "3px solid black", }}
+          style={{ border: "3px solid black" }}
         >
           <Layer>
-            <Rect width={size} height={size} fill="white" />
+            <Rect width={size} height={500} fill="white" />
             {image && (
               <KonvaImage
                 image={image}
@@ -323,20 +316,79 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           </Layer>
         </Stage>
       </div>
-      <div className={styles.characterNicknameContainer}>
-        <input
-          type="text"
-          value={characterNickname}
-          onChange={handleCharacterNicknameChange}
-          placeholder="캐릭터 별명을 입력해주세요"
-          className={styles.inputCharacterNickname}
-        />
-        <div className={styles.outputCharacterNickname}>
-          {nicknameError && (
-            <div className={styles.nicknameError} style={{ color: "red" }}>
-              {nicknameError}
+
+      <div className={`${styles.paintBottom}`}>
+        <div className={styles.paintTool}>
+          {PAINT_OPTIONS.map(({ id, label, icon }) => (
+            <div
+              key={id}
+              aria-label={label}
+              onClick={() => setDrawAction(id)}
+              className={`${styles.paintEachTool} ${
+                id === drawAction ? styles.toolSelected : ""
+              }`}
+            >
+              {icon}
             </div>
-          )}
+          ))}
+
+          <div className={styles.colorButton}>
+            {showPopover && (
+              <div ref={popoverRef} className={styles.popoverContent}>
+                <div className={styles.popoverHeader}>
+                  <button
+                    className={styles.popoverClose}
+                    onClick={() => setShowPopover(false)}
+                  >
+                    <span className="material-icons">clear</span>
+                    <span>닫기</span>
+                  </button>
+                  <SketchPicker
+                    color={color}
+                    onChangeComplete={(selectedColor) =>
+                      setColor(selectedColor.hex)
+                    }
+                  />
+                </div>
+              </div>
+            )}
+            <div
+              onClick={() => setShowPopover(true)}
+              style={{
+                backgroundColor: color,
+                height: "32px",
+                width: "32px",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            ></div>
+          </div>
+
+          <button
+            className={styles.etcButton}
+            aria-label={"Clear"}
+            onClick={onClear}
+          >
+            <span className="material-icons">delete_forever</span>
+          </button>
+        </div>
+
+        <div className={styles.paintImportExport}>
+          <input
+            type="file"
+            ref={fileRef}
+            onChange={
+              onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
+            }
+            style={{ display: "none" }}
+            accept="image/*"
+          />
+          <button className={styles.etcButton} onClick={onImportImageClick}>
+            그림 올리기
+          </button>
+          <button className={styles.etcButton} onClick={onExportClick}>
+            만나러 가기
+          </button>
         </div>
       </div>
     </div>

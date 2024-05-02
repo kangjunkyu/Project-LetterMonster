@@ -1,50 +1,90 @@
-.paintContainer{
+@media screen and (min-width: 479px) {
+  .characterNicknameContainer .etcButton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .paintImportExport .etcButton:nth-child(3) {
+    display: none; 
+  }
+  .paintImportExport .etcButton:nth-child(2) {
+    display: none; 
+  }
+
+  .characterNicknameContainer {
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: space-between; 
+  }
+
+  .inputCharacterNickname {
+    flex-grow: 1; 
+    margin-right: 10px; 
+  }
+}
+
+
+.paintContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  // font-size: 14px;
+  margin: 20px 0;
+
   @media screen and (max-width: 767px) {
     /* 타블렛 */
+    // font-size: 12px;
+    margin-bottom: 80px;
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    margin: 0 auto;
-    width: 90%;
-    // height: 10px;
   }
 }
 
-.paintUpper {
-  width: 50%;
+.paintBottom {
+  width: 500px;
   display: flex;
   justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.paintTool {
-  display: flex;
-  gap: 10px;
   align-items: center;
+  padding: 0 20px;
+
+  @media screen and (max-width: 479px) {
+    width: 80%;
+    gap: 1em;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 70px;
+  }
 }
 
+.paintTool,
 .paintImportExport {
   display: flex;
-  gap: 10px;
-}
+  gap: 5px;
+  align-items: center;
 
-.popoverContent {
-  position: absolute;
-  z-index: 3;
-  padding: 10px;
+  @media screen and (max-width: 767px) {
+    // width: 100%;
+    justify-content: center;
+  }
 }
 
 .paintCanvas {
   position: relative;
+}
+
+.toolSelected,
+.colorButton,
+.etcButton,
+.paintEachTool {
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .toolSelected {
@@ -53,40 +93,62 @@
   border-radius: 10px;
 }
 
-.colorButton {
-  padding: 10px;
-}
-
 .etcButton {
+  // padding: 10px;
   border: 1px solid black;
-  border-radius: 10px;
-  padding: 10px;
-  align-items: center;
-  cursor: pointer;
 }
 
-.paintEachTool {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
-
-
-.characterNicknameContainer{
+.characterNicknameContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px;
-  width: 200px;
+  align-items: center;
+  width: 100%;
+  @media screen and (max-width:479px){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }
 
-.inputCharacterNickname{
+.inputCharacterNickname {
+  width: 250px;
   padding: 10px;
+  margin-bottom: 5px;
+
+  @media screen and (max-width: 479px){
+    width: 150px;
+  }
 }
 
-.outputCharacterNickname{
+.popoverContent {
+  position: absolute;
+  z-index: 3;
+  padding: 10px;
+  bottom: 80px;
+  left: 35%;
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    left: 20%;
+    bottom: 140px;
+  }
+  @media screen and (max-width: 479px) {
+    /* 타블렛 */
+    right: 10%;
+    bottom: 260px;
+  }
+}
+
+.popoverHeader {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // width: 300px;
+}
+
+.popoverClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
