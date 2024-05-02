@@ -71,45 +71,45 @@ function SketchbookListPage() {
   };
 
   return (
-  <article className={styles.centerContainer}>
-      {/* <LNB>
+    <article className={styles.centerContainer}>
+      <LNB>
         <h1>스케치북 리스트</h1>
         <LNBButton onClick={() => handleToggleModal("sketchbookCreate")}>
           만들기
         </LNBButton>
-      </LNB> */}
+      </LNB>
       <article className={styles.sketchbookListContainer}>
-      <Modal
-        isOpen={isModalOpen.sketchbookCreate}
-        onClose={() => handleToggleModal("sketchbookCreate")}
-      >
-        <div className={styles.createSketchbookBox}>
-          <div>스케치북 만들기</div>
-          <input
-            type="text"
-            onChange={(e) => {
-              setData2(e.target.value);
-            }}
-            placeholder="스케치북 이름"
-          />
-          <DefaultButton
-            onClick={() => createHandler(data2)}
-            onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) =>
-              inputEnter(e)
-            }
-          >
-            만들기
-          </DefaultButton>
-        </div>
-      </Modal>
-      <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
-      <SketchbookList>
-        {!isLoading && data?.data && data?.data?.length > 0 ? (
-          renderListItems(data.data)
-        ) : (
-          <div>비었어요.</div>
-        )}
-      </SketchbookList>
+        <Modal
+          isOpen={isModalOpen.sketchbookCreate}
+          onClose={() => handleToggleModal("sketchbookCreate")}
+        >
+          <div className={styles.createSketchbookBox}>
+            <div>스케치북 만들기</div>
+            <input
+              type="text"
+              onChange={(e) => {
+                setData2(e.target.value);
+              }}
+              placeholder="스케치북 이름"
+            />
+            <DefaultButton
+              onClick={() => createHandler(data2)}
+              onKeyDown={(e: React.KeyboardEvent<HTMLButtonElement>) =>
+                inputEnter(e)
+              }
+            >
+              만들기
+            </DefaultButton>
+          </div>
+        </Modal>
+        <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
+        <SketchbookList>
+          {!isLoading && data?.data && data?.data?.length > 0 ? (
+            renderListItems(data.data)
+          ) : (
+            <div>비었어요.</div>
+          )}
+        </SketchbookList>
       </article>
     </article>
   );
