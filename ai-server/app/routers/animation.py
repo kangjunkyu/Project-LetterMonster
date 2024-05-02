@@ -103,7 +103,7 @@ async def create_joint_gif(request: CharacterCreateRequest):
 
     except Exception as e:
         logger.error("create_joint_gif => 에러 발생", exc_info=True)
-        return JSONResponse(content={"error": f"Fast API ERROR : create_joint_gif => {e}"}, status_code=500)
+        return JSONResponse(content={"error": f"Fast API 에러 : create_joint_gif => {e}"}, status_code=500)
 
 
 # S3에서 img 불러오기
