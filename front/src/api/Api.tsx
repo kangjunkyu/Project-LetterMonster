@@ -15,7 +15,10 @@ export const getUserNickname = () => API.get(`/user`).then((res) => res.data);
  * @param nickname 유저 닉네임
  */
 export const postNickname = (nickname: string) =>
-  API.post(`/user/nickname`, { nickname: nickname }).then((res) => res.data);
+  API.post(`/user/nickname`, { nickname: nickname }).then((res) => {
+    // console.log(res);
+    res.data;
+  });
 
 // 캐릭터 관련 API
 
@@ -58,9 +61,13 @@ export const deleteCharacter = (characterId: number) =>
  * @param characterId 캐릭터 아이디
  */
 export const patchMainCharacter = (characterId: number) =>
-  API.patch(`/characters/my/maincharacter`, {},{
-    params: { characterId: characterId },
-  });
+  API.patch(
+    `/characters/my/maincharacter`,
+    {},
+    {
+      params: { characterId: characterId },
+    }
+  );
 
 /** 캐릭터 닉네임 설정
  * @param characterId 캐릭터 아이디
