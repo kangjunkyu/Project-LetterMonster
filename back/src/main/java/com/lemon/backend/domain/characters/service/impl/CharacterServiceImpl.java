@@ -207,6 +207,7 @@ public class CharacterServiceImpl implements CharacterService {
 
         Users user = optionalUsers.get();
         for(Characters c : user.getCharacterList()) {
+            System.out.println(c.getNickname() + c.getId()+ c.getMainCharacter());
             if(c.getMainCharacter()) c.changeMainCharacter();
             if(c.getId().equals(characterId)) c.changeMainCharacter();
         }
