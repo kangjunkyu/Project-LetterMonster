@@ -56,7 +56,6 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
 
   return (
     <>
-      <div>
         <div className={styles.motionListContainer}>
           <div>캐릭터 모션 종류</div>
           <div className={styles.motionSampleList}>
@@ -100,7 +99,6 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
             ))}
           </div>
         </div>
-      </div>
     </>
   );
 }

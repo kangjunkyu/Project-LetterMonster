@@ -1,6 +1,6 @@
 import styles from "./MyPages.module.scss";
 import { useLogout } from "../../../hooks/auth/useLogout";
-// import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
+import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import MyPageLangSelect from "../../molecules/mypage/MyPageLangSelect";
 import Modal from "../../atoms/modal/Modal";
 import { useState } from "react";
@@ -26,7 +26,7 @@ function MyPages() {
     <div className={styles.myPageContainer}>
       {isLoginCheck ? (
         <>
-          {/* <button onClick={() => handleToggleModal("userInfo")}>
+          <button onClick={() => handleToggleModal("userInfo")}>
             개인 정보
           </button>
           {isModalOpen.userInfo && (
@@ -36,7 +36,7 @@ function MyPages() {
             >
             <MyPageUserInfo />
             </Modal>
-          )} */}
+          )}
           <button onClick={() => handleToggleModal("characterList")}>
             캐릭터 목록
           </button>

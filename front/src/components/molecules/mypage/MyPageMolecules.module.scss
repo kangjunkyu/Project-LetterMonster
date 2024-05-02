@@ -27,7 +27,6 @@
 .userCharacterListContainer {
   display: flex;
   flex-direction: column;
-  // gap: 1em;
   overflow-y: auto;
   max-height: 60vh;
   
@@ -43,7 +42,6 @@
 
 .userCharacterList {
   display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-template-columns: repeat(2, 1fr);
   gap: 1em;
   padding: 0 20px;
@@ -73,27 +71,36 @@
   .userCharacterInfo {
     padding: 5px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-    div {
+    &.justifyRight {
+      justify-content: flex-end; 
+    }
+  
+    &.justifyBetween {
+      justify-content: space-between;
+    }
+    
+    .nickname {
+      display: inline-block;
+      margin-left: 3px; 
       text-align: center;
-      margin: 5px 0;
-      font-size: 12px;
-      position: relative;
-
-      &.userMainCharacter {
-        font-weight: bold;
-        color: white; 
-        background-color: $errorColor; 
-        padding: 2px 5px;
-        border-radius: 4px;
-        display: inline-block;
-        &:after {
-          content: " 대표";
-          color: red;
-          background-color: white;
-          padding-left: 8px;
-        }
-      }
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+    }
+    
+    .mainCharacterLabel {
+      display: inline-block;
+      height: 22px;
+      width: 35px;
+      margin-right: 5px;
+      background-color: red; 
+      color: white; 
+      padding: 2px 5px; 
+      border-radius: 5px; 
     }
   }
 }
@@ -105,6 +112,7 @@
   font-size: 12px;
 }
 
+// MyPageCharacter에서 캐릭터가 0개일때 
 .userNoCharacterListContainer{
   text-align: center;
   font-size: 12px;
@@ -121,21 +129,3 @@
   padding: 5px;
   border-radius: 5px;
 }
-
-
-// .userCharacterInfo {
-//   display: flex;
-//   align-items: center;
-// }
-
-// .nickname {
-//   flex: 0 0 auto; // 이 속성으로 nickname의 크기와 위치를 고정합니다.
-// }
-
-// .mainCharacterLabel {
-//   margin-left: 10px;
-//   background-color: red;
-//   color: white;
-//   padding: 2px 5px;
-//   border-radius: 3px;
-// }

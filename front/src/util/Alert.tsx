@@ -5,7 +5,6 @@ interface Props {
 }
 
 function Alert({ content }: Props) {
-  console.log("되는거아냐?");
   return () => <AlertNotice content={content} />;
 }
 

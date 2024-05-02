@@ -28,7 +28,6 @@ function MotionPage() {
           <h1>모션 선택</h1>
           <DefaultButton
             onClick={() => {
-              console.log(motionId);
               if (motionId == 0) {
                 setModalOpen(true);
               } else {
