@@ -69,7 +69,6 @@ public class CharacterServiceImpl implements CharacterService {
             }else{
                 Users users = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
                 characters = Characters.builder().nickname(nickname).users(users).build();
-
             }
             characterRepository.save(characters);
             String fileName = characters.getId().toString() + ".png";
@@ -209,7 +208,7 @@ public class CharacterServiceImpl implements CharacterService {
         Users user = optionalUsers.get();
         for(Characters c : user.getCharacterList()) {
             if(c.getMainCharacter()) c.changeMainCharacter();
-            if(c.getId()==characterId) c.changeMainCharacter();
+            if(c.getId().equals(characterId)) c.changeMainCharacter();
         }
 
     }
