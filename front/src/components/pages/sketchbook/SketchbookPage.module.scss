@@ -3,14 +3,22 @@
 .sketchbookContainer {
   // @include flexCenterColumn();
   /* 데스크탑 */
+  height: calc(100vh - 44px);
+  @media screen and (min-width: 480px) {
+    /* 타블렛 */
+    & h1 {
+      padding: 1em;
+    }
+  }
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
+    height: calc(100vh - 64px);
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    height: calc(100vh - 64px);
+    height: calc(100vh - 44px - 64px);
   }
 }
 
@@ -24,21 +32,18 @@
   /* 데스크탑 */
   width: 100%;
   position: relative;
-  height: 580px;
-  background-image: url("../../../assets/sketchbook/sDesktop.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1em;
+  height: calc(100vh);
   @media screen and (max-width: 767px) {
     /* 타블렛 */
+    height: calc(100vh - 64px - 44px);
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    background-image: url("../../../assets/sketchbook/sMobile.png");
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: center;
   }
 }
 
@@ -114,16 +119,14 @@
   @media screen and (max-width: 767px) {
     /* 타블렛 */
     position: absolute;
-    max-width: 400px;
-    top: 15em;
     left: 50%;
     transform: translateX(-50%);
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
+    top: 2em;
     position: absolute;
-    top: 6em;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -138,6 +141,40 @@
       padding: 0.5em;
       background-color: $gc700;
       border-radius: 50px;
+    }
+  }
+}
+
+.characterGrid {
+  /* 데스크탑 */
+  transition: 0.3 all;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  & > button {
+    & > img {
+      width: 100px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-rows: repeat(2, 1fr);
+    & > button {
+      & > img {
+        width: 100px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    & > button {
+      & > img {
+        width: 80px;
+      }
     }
   }
 }
