@@ -104,6 +104,25 @@ public class UserServiceTest {
         assertEquals(NICKNAME, userDto.getNickname());
         assertEquals(NICKNAME_TAG, userDto.getNicknameTag());
     }
+    @Test
+    public void changeNicknameTest(){
+        // given
+        Users user = Users.builder()
+                .id(USER_ID)
+                .nickname(NICKNAME)
+                .nicknameTag(NICKNAME_TAG)
+                .provider(Social.KAKAO)
+                .build();
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
+
+        String change = "하이";
+        ChangeNicknameRequest request = new ChangeNicknameRequest();
+        request.setNickname(change);
+
+        ChangeNicknameResponse response = userService.changeNickname(user.getId(), request);
+
+        assertEquals(change, response.getNickname());
+    }
 
 }
 
