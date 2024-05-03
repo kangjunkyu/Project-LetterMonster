@@ -47,14 +47,14 @@ API.interceptors.response.use(
     const refreshToken = localStorage.getItem("refreshToken");
 
     if (!accessToken && !refreshToken) {
-      window.location.href = Page_Url.Login;
+      window.location.href = Page_Url.Main;
       return;
     }
 
     // 토큰 만료시
     if (status === 401) {
       if (!refreshToken) {
-        window.location.href = Page_Url.Login;
+        window.location.href = Page_Url.Main;
         return;
       }
 
@@ -87,10 +87,10 @@ API.interceptors.response.use(
           ] = `Bearer ${response.data.data["accessToken"]}`;
           return axios(config);
         } else {
-          window.location.href = Page_Url.Login;
+          window.location.href = Page_Url.Main;
         }
       } catch (refreshError) {
-        window.location.href = Page_Url.Login;
+        window.location.href = Page_Url.Main;
       }
     }
 
