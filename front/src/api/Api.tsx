@@ -60,7 +60,11 @@ export const deleteCharacter = (characterId: number) =>
  * @param characterId 캐릭터 아이디
  */
 export const patchMainCharacter = (characterId: number) =>
-  API.patch(`/characters/my/maincharacter`, {},{ params:{characterId: characterId }})
+  API.patch(
+    `/characters/my/maincharacter`,
+    {},
+    { params: { characterId: characterId } }
+  )
     .then((res) => {
       return res.data;
     })
@@ -170,3 +174,12 @@ export const getLetterList = (sketchbookId: number) =>
  */
 export const deleteLetter = (letterId: number) =>
   API.delete(`letter/${letterId}`).then((res) => res.data);
+
+// 친구 찾기
+/** 유저 검색
+ * @requires nickname = 유저 닉네임
+ */
+export const searchUserNickname = (nickname: string) =>
+  API.get(`user/public/search/${nickname}`).then((res) => {
+    return res.data.data;
+  });
