@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./MotionExample.module.scss";
-import { useGetMotionSelect } from "../../../hooks/motion/useGetMotionSelect";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import CharacterListItem from "../../atoms/character/CharacterListItem";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface Motion {
   name: string;
@@ -10,10 +10,8 @@ interface Motion {
 }
 
 interface Prop {
-  characterId: number;
-  setGif: (gif: string) => void;
+  isLoad: boolean;
   setMotionId: (motinoId: number) => void;
-  setCharacterMotionId?: (characterMotionId: number) => void;
 }
 
 async function loadMotions(): Promise<Motion[]> {
@@ -30,23 +28,19 @@ async function loadMotions(): Promise<Motion[]> {
   return motions;
 }
 
-function MotionExample({ characterId, setGif, setMotionId }: Prop) {
+function MotionExample({ isLoad, setMotionId }: Prop) {
   const [motions, setMotions] = useState<Motion[]>([]);
   const [clickedMotionIndex, setClickedMotionIndex] = useState<number | null>(
     null
   );
-  const getMotionSelect = useGetMotionSelect();
-
+  const { showAlert } = useAlert();
   const handleMotionClick = async (index: number) => {
-    const motionId = index + 1;
-    setClickedMotionIndex(index);
-    setGif("");
-    const data = await getMotionSelect(characterId, motionId);
-    if (data) {
+    if (!isLoad) {
+      const motionId = index + 1;
+      setClickedMotionIndex(index);
       setMotionId(motionId);
-      setGif(data);
     } else {
-      console.log("No motion data available");
+      showAlert("이전 요청을 처리하는 중이에요.");
     }
   };
   // 모션 샘플 관련
