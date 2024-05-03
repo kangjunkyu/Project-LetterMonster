@@ -38,15 +38,15 @@ class CharacterCreateRequest(BaseModel):
 
 
 @router.post("/create")
-def crate_character(request: CharacterCreateRequest):
+async def crate_character(request: CharacterCreateRequest):
     character_id = request.character_id
     motion = request.motion_name
     s3_img_url = request.img_url
 
-    create_gif(character_id, motion, s3_img_url)
+    await create_gif(character_id, motion, s3_img_url)
 
 
-async def create_gif(character_id, motion, s3_img_url):
+async def create_gif(character_id: str, motion: str, s3_img_url: str):
     try:
         # 이미지 저장 경로
         IMG_DIR = "temp_image"
@@ -80,7 +80,7 @@ async def create_gif(character_id, motion, s3_img_url):
         else:
             retarget_cfg_fn = os.path.abspath('AnimatedDrawings/examples/config/retarget/mixamo_fff.yaml')
 
-        # joint, gif 생성 함수 호출
+        # animated drawings 함수 호출
         image_to_animation(image_path, gif_path, motion_cfg_fn, retarget_cfg_fn, character_id, motion)
 
         # gif 압축
