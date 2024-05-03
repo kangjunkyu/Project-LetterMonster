@@ -2,54 +2,44 @@
 @import "../../../styles/colors";
 
 .letter_container {
-  position: relative;
   @include flexCenterColumn();
   @include full();
+  position: relative;
   background-image: url("../../../assets/sketchbook/letterImg.png");
   background-size: contain;
   background-repeat: no-repeat;
+  white-space: pre-line;
   /* 데스크탑 */
+  width: 400px;
+  height: 300px;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
+    width: 400px;
+    height: 300px;
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
     width: 300px;
-    height: 300px;
-  }
-}
-
-.receivername_box {
-  /* 데스크탑 */
-
-  @media screen and (max-width: 767px) {
-    /* 타블렛 */
-  }
-
-  @media screen and (max-width: 479px) {
-    /* 모바일 */
-    position: absolute;
-    top: 3.5em;
-    left: 4.5em;
-    white-space: nowrap;
-    background-color: $gc900;
+    height: 250px;
   }
 }
 
 .name_box {
   /* 데스크탑 */
-
+  position: relative;
+  white-space: nowrap;
+  background-color: $gc900;
+  top: 1em;
+  @include subtitle();
   @media screen and (max-width: 767px) {
     /* 타블렛 */
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    position: absolute;
-    right: 1em;
-    bottom: 6.4em;
+    position: relative;
     white-space: nowrap;
     background-color: $gc900;
   }
@@ -58,15 +48,23 @@
 .content_box {
   padding: 1em;
   /* 데스크탑 */
-
+  position: relative;
+  overflow-y: scroll;
+  @include body();
+  width: 300px;
+  height: 130px;
+  white-space: wrap;
+  overflow-wrap: break-word;
   @media screen and (max-width: 767px) {
     /* 타블렛 */
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    position: absolute;
-    top: 4.5em;
-    left: 2em;
+    position: relative;
+    width: 250px;
+    max-width: 250px;
+    height: 100px;
+    overflow-y: scroll;
   }
 }
