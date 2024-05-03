@@ -1,10 +1,13 @@
 package com.lemon.backend.domain.friend.service.impl;
 
+import com.lemon.backend.domain.friend.dto.response.FriendResponseDto;
+import com.lemon.backend.domain.friend.dto.response.GroupResponseDto;
 import com.lemon.backend.domain.friend.entity.Friends;
 import com.lemon.backend.domain.friend.entity.GroupsInfo;
 import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.lemon.backend.domain.friend.repository.GroupsRepository;
 import com.lemon.backend.domain.friend.service.FriendsService;
+import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.CustomException;
@@ -12,6 +15,8 @@ import com.lemon.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -34,6 +39,16 @@ public class FriendsServiceImpl implements FriendsService {
                     .build();
             return groupsRepository.save(newGroup);
         });
+
+        List<GroupResponseDto> list = groupsRepository.findAllByUsersId(userId);
+
+        for(GroupResponseDto group : list){
+                for(FriendResponseDto group2 : group.getFriendList()){
+                    if(group2.getId().equals(friendId)){
+                throw new CustomException(ErrorCode.CAN_NOT_ADD_FRIEND);
+                    }
+                }
+        }
 
         Friends friend = Friends.builder()
                 .users(user)
