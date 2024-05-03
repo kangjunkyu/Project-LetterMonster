@@ -15,6 +15,7 @@ import com.lemon.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class FriendsServiceImpl implements FriendsService {
         return friendsRepository.save(friend).getFriend().getNickname();
     }
 
+    @Transactional
     @Override
     public void deleteFriend(Integer userId, Integer friendId) {
         Friends friend = friendsRepository.findByUsers_IdAndFriend_Id(userId, friendId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_EXCEPTION));
@@ -69,6 +71,7 @@ public class FriendsServiceImpl implements FriendsService {
         friendsRepository.delete(friend);
     }
 
+    @Transactional
     @Override
     public void changeFriendGroup(Long friendId, Long newGroupId) {
         Friends friend = friendsRepository.findById(friendId)
