@@ -47,7 +47,10 @@ public enum ErrorCode {
     NOT_FOUND_GROUP(HttpStatus.NOT_FOUND, "그룹을 찾을 수 없습니다."),
 
     //알림
-    NOT_FOUND_NOTIFICATION(HttpStatus.NOT_FOUND, "알림 정보를 찾을 수 없습니다.");
+    NOT_FOUND_NOTIFICATION(HttpStatus.NOT_FOUND, "알림 정보를 찾을 수 없습니다."),
+
+    //친구
+    CAN_NOT_ADD_FRIEND(HttpStatus.BAD_REQUEST, "이미 등록된 친구입니다.");
 
     private final HttpStatus status;
     private final String message;

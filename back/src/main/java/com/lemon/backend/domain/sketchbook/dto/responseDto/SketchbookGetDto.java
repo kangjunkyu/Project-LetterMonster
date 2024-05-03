@@ -17,11 +17,22 @@ public class SketchbookGetDto {
     private Boolean isPublic;
     private String shareLink;
     private String name;
+    private Boolean isWritePossible;
     private UserGetDto holder;
     private String uuid;
     private String tag;
-    private Boolean isWritePossible;
     private Boolean isRepresent;
+
+    public SketchbookGetDto(Long id, Boolean isPublic, String shareLink, String name, Boolean isWritePossible, UserGetDto holder, String uuid, String tag) {
+        this.id = id;
+        this.isPublic = isPublic;
+        this.shareLink = shareLink;
+        this.name = name;
+        this.isWritePossible = isWritePossible;
+        this.holder = holder;
+        this.uuid = uuid;
+        this.tag = tag;
+    }
 
     public SketchbookGetDto(Long id, Boolean isPublic, String shareLink, String name, UserGetDto holder, String uuid, String tag, Boolean isWritePossible) {
         this.id = id;
