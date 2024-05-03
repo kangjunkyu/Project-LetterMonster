@@ -19,7 +19,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -27,7 +26,6 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -105,7 +103,7 @@ public class UserServiceTest {
         assertEquals(NICKNAME_TAG, userDto.getNicknameTag());
     }
     @Test
-    public void changeNicknameTest(){
+    public void changeNicknameTest() {
         // given
         Users user = Users.builder()
                 .id(USER_ID)
