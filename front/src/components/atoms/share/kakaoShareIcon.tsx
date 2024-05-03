@@ -14,7 +14,7 @@ function KakaoShareIcon({ link, nickname }: Props) {
       container: "#kakaotalk-sharing-btn",
       templateId: 107259,
       templateArgs: {
-        path: link,
+        link: link,
         NICKNAME: nickname,
       },
     });
