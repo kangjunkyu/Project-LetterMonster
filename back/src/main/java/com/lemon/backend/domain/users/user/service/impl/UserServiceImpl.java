@@ -3,6 +3,7 @@ package com.lemon.backend.domain.users.user.service.impl;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.ChangeNicknameResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.domain.users.user.dto.response.UserSearchAndFriendResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.entity.*;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
@@ -145,5 +146,12 @@ public class UserServiceImpl implements UserService {
             //리프레시 토큰을 블랙리스트에 추가
             jwtTokenProvider.addTokenIntoBlackList(refreshToken.getToken());
         });
+    }
+
+    @Override
+    public List<UserSearchAndFriendResponse> userSearchUserByNickname(Integer userId, String nickname){
+        List<UserSearchAndFriendResponse> list = userRepository.findUserAndFriend(userId, nickname);
+
+        return list;
     }
 }
