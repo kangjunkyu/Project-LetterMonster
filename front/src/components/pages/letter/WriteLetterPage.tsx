@@ -26,6 +26,8 @@ function LetterWritePage() {
   const [motionId, setMotionId] = useState(0);
   const { showAlert } = useAlert();
   const navigate = useNavigate();
+  const [mounted, setMounted] = useState(false);
+
   const {
     data: selectedMotion,
     isLoading: isLoad,
@@ -63,14 +65,16 @@ function LetterWritePage() {
     setMotionId(motionId);
   };
 
-  useEffect(() => {}, [isError]);
-
   useEffect(() => {
     if (!isLoading) {
       setTarget(sketchbookList?.data[0]?.id);
     }
-    if (isError) showAlert("이 동작은 못하겠대요 ㅜ");
   }, [isLoading]);
+
+  useEffect(() => {
+    if (mounted && isError && motionId != 0)
+      showAlert("이 동작은 못하겠대요 ㅜ");
+  }, [isError]);
 
   useEffect(() => {
     if (sketchbookId && sketchbookId.sketchbookId && !target) {
@@ -78,6 +82,10 @@ function LetterWritePage() {
       setTarget(Number(sketchbookId.sketchbookId));
     }
   }, [sketchbookId, target]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className={styles.writeContainer}>
