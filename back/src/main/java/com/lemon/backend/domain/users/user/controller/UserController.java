@@ -2,6 +2,7 @@ package com.lemon.backend.domain.users.user.controller;
 
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.domain.users.user.dto.response.UserSearchAndFriendResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.service.UserService;
 import com.lemon.backend.global.exception.CustomException;
@@ -67,10 +68,18 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserInfo(userId));
     }
 
-    @Operation(summary = "유저 닉네임 검색", description = "유저를 닉네임으로 검색합니다.")
+    @Operation(summary = "비회원 전용 유저 닉네임 검색", description = "비회원이 유저를 닉네임으로 검색합니다.")
     @GetMapping("/public/search/{nickname}")
     public ResponseEntity<?> searchNickname(@PathVariable("nickname") String nickname){
         List<UserSearchGetDto> users = userService.searchNickname(nickname);
+        return getResponseEntity(SuccessCode.OK, users);
+    }
+
+    @Operation(summary = "회원 전용 유저 닉네임 검색", description = "회원이 유저를 닉네임으로 검색합니다.")
+    @GetMapping("/search/{nickname}")
+    public ResponseEntity<?> searchNickname(Authentication authentication, @PathVariable("nickname") String nickname){
+        Integer userId = (Integer) authentication.getPrincipal();
+        List<UserSearchAndFriendResponse> users = userService.userSearchUserByNickname(userId, nickname);
         return getResponseEntity(SuccessCode.OK, users);
     }
 }

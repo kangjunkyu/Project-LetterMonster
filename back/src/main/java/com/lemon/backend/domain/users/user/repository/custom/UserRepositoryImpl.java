@@ -1,8 +1,10 @@
 package com.lemon.backend.domain.users.user.repository.custom;
 
+import com.lemon.backend.domain.users.user.dto.response.UserSearchAndFriendResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserSearchGetDto;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -12,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.lemon.backend.domain.friend.entity.QFriends.friends;
 import static com.lemon.backend.domain.users.user.entity.QUsers.users;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepositoryCustom{
@@ -61,6 +65,24 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .execute();
     }
 
+    @Override
+    public List<UserSearchAndFriendResponse> findUserAndFriend(Integer userId, String nickname) {
 
+        var isFriendSubquery = select(friends.id)
+                .from(friends)
+                .where(friends.users.id.eq(userId)
+                        .and(friends.friend.id.eq(users.id)));
+
+
+        return query.select(Projections.constructor(UserSearchAndFriendResponse.class,
+                        users.id,
+                        users.nickname,
+                        users.nicknameTag,
+                        Expressions.asBoolean(isFriendSubquery.exists()).as("isFriend")))
+                .from(users)
+                .where(users.nickname.containsIgnoreCase(nickname)
+                        .and(users.id.ne(userId)))  // 검색하는 사용자 제외
+                .fetch();
+    }
 
 }
