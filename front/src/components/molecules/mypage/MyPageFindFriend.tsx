@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./MyPageMolecules.module.scss";
-import { useSearchUserNickname } from "../../../hooks/friend/useSearchUserNickname";
+import { useSearchUserNickname } from "../../../hooks/friendGroup/useSearchUserNickname";
+import { usePostFriend } from "../../../hooks/friendGroup/useGroup";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface FriendProps {
   id: number;
@@ -11,6 +13,25 @@ interface FriendProps {
 function MyPageFindFriend() {
   const [nickname, setNickname] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [friendId, setFriendId] = useState(0);
+  const { showAlert } = useAlert();
+  const addFriend = usePostFriend();
+
+  const addFriendMutation = () => {
+    console.log(friendId);
+    addFriend.mutate(friendId, {
+      onSuccess: () => {
+        showAlert("친구를 추가했어요!");
+      },
+      onError: (err: any) => {
+        if (err.response.data.status == 400) {
+          showAlert("다시 추가해주세요.");
+        } else {
+          showAlert("다시 추가해주세요.");
+        }
+      },
+    });
+  };
 
   const {
     data: friendList,
@@ -46,27 +67,30 @@ function MyPageFindFriend() {
         <div className={styles.findFriendDivider}></div>
         <div className={styles.findFriendColumn}>
           <p>닉네임</p>
-          <p>닉네임 태그</p>
+          <p>태그</p>
         </div>
         <div className={styles.findFriendResult}>
-          <div>
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : error ? (
-              <p>Error: {error.message}</p>
-            ) : (
-              friendList &&
-              friendList.map((friend: FriendProps) => (
-                <div key={friend.id}>{friend.nickname}</div>
-              ))
-            )}
-          </div>
-          <div>
-            {friendList &&
-              friendList.map((friend: FriendProps) => (
-                <div key={friend.id}>{friend.nicknameTag}</div>
-              ))}
-          </div>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Error: {error.message}</p>
+          ) : (
+            friendList &&
+            friendList.map((friend: FriendProps) => (
+              <div className={styles.findFriendResultContent} key={friend.id}>
+                <div>{friend.nickname}</div>
+                <div>{friend.nicknameTag}</div>
+                <button
+                  onClick={() => {
+                    setFriendId(friend.id);
+                    addFriendMutation();
+                  }}
+                >
+                  추가
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </>
