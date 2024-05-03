@@ -77,7 +77,7 @@ public class SketchbookServiceImpl implements SketchbookService {
         if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(sketchDto.getName());
         String uuid = UUID.randomUUID().toString();
-        String sharaLink = baseUrl + "/sketchbooks/detail/" + uuid;
+        String sharaLink = baseUrl + "/sketchbook/" + uuid;
         boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(userId);
 
         Sketchbook sketch = Sketchbook.builder()
