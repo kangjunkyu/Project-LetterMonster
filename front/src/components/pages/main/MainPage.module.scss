@@ -4,7 +4,7 @@
 .mainContainer {
   @include flexCenter();
   flex-direction: column;
-  gap: 1em;
+  gap: 0.7em;
   font-size: 100px;
   padding: 1rem;
   & section {
@@ -37,4 +37,16 @@
   width: 100%;
   max-width: 500px;
   border: 1px solid $gc600;
+}
+
+.mainLoginButton{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mainMenuContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
