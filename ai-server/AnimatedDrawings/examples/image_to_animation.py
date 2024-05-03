@@ -10,7 +10,7 @@ import sys
 from pkg_resources import resource_filename
 
 
-def image_to_animation(img_fn: str, char_anno_dir: str, motion_cfg_fn: str, retarget_cfg_fn: str, userId: str, motion: str):
+def image_to_animation(img_fn: str, char_anno_dir: str, motion_cfg_fn: str, retarget_cfg_fn: str, character_id: str, motion: str):
     print("------------------")
     print("image_to_animation")
     print("------------------")
@@ -27,7 +27,7 @@ def image_to_animation(img_fn: str, char_anno_dir: str, motion_cfg_fn: str, reta
     image_to_annotations(img_fn, char_anno_dir)
 
     # create the animation
-    annotations_to_animation(char_anno_dir, motion_cfg_fn, retarget_cfg_fn, userId, motion)
+    annotations_to_animation(char_anno_dir, motion_cfg_fn, retarget_cfg_fn, character_id, motion)
 
 
 if __name__ == '__main__':
