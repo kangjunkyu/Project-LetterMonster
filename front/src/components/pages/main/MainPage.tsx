@@ -10,6 +10,7 @@ import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
 import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import KakaoLogin from "../../atoms/auth/KakaoLoginButton";
 import LineLogin from "../../atoms/auth/LineLoginButton";
+import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 
 type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList";
 
@@ -59,18 +60,18 @@ function MainPage() {
                 <MyPageCharacter />
               </Modal>
             )}
-            {/* <button onClick={() => handleToggleModal("findFriend")}>
-          친구 찾기
-          </button>
-          {isModalOpen.findFriend && (
-            <Modal
-            isOpen={isModalOpen.findFriend}
-            onClose={() => handleToggleModal("findFriend")}
-            >
-            <MyPageFindFriend />
-            </Modal>
-          )} */}
-              <button onClick={() => logout()}>로그아웃</button>
+            <button onClick={() => handleToggleModal("findFriend")}>
+              친구 찾기
+            </button>
+            {isModalOpen.findFriend && (
+              <Modal
+                isOpen={isModalOpen.findFriend}
+                onClose={() => handleToggleModal("findFriend")}
+              >
+                <MyPageFindFriend />
+              </Modal>
+            )}
+            <button onClick={() => logout()}>로그아웃</button>
           </div>
         </>
       ) : (
