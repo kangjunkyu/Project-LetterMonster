@@ -12,9 +12,10 @@
     "logout": "Sign Out",
     "login": "Sign In",
     "register": "Sign Up",
-    "drawing": "drawing",
+    "drawing": "Drawing",
     "letter": "Letter",
-    "more": "More"
+    "more": "More",
+    "home": "Home"
   },
   "error": "Unfortunately, there's no page like that"
 }
