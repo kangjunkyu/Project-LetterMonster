@@ -11,5 +11,5 @@ public class UserSearchAndFriendResponse {
     private Integer userId;
     private String nickname;
     private String nicknameTag;
-    private boolean isFriend;
+    private Boolean isFriend;
 }
