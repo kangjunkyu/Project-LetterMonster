@@ -75,5 +75,15 @@ public class UserServiceTest {
         Users createdUser = userService.createUser(mockedUserInfo, Social.KAKAO);
         assertThat(createdUser).isNotNull();
     }
+
+    @Test
+    public void withdrawUser_test(){
+        Users createdUser = userService.createUser(mockedUserInfo, Social.KAKAO);
+        userService.withdrawUser(createdUser.getId());
+
+        Optional<Users> deleteUser = userRepository.findById(createdUser.getId());
+        assertFalse(deleteUser.isPresent());
+    }
+
 }
 
