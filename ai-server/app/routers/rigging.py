@@ -8,13 +8,11 @@ from fastapi.responses import JSONResponse, FileResponse
 from pathlib import Path
 
 import mediapipe as mp
-# from mediapipe import solutions
-# from mediapipe.tasks import python
-# from mediapipe.framework.formats import landmark_pb2
-
 import cv2
 import numpy as np
 import pandas as pd
+
+from app.routers.animation import create_gif
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -54,7 +52,7 @@ joint_rename = {
 # 2. 캐릭터 -> 리깅 -> 영상으로 만든 bvh적용하여 img로 만들기
 
 @router.post("/create")
-def rigging(
+def create_custom_motion(
         video: UploadFile = File(...),
         character_id: str = Form(...),
         motion_name: str = Form(...),
@@ -68,12 +66,14 @@ def rigging(
     print(img_url)
 
     try:
-        # 비디오 저장 경로
-        VIDEO_DIR = 'temp_video'
-        Path(VIDEO_DIR).mkdir(exist_ok=True)
+        # -------------------------------------------------------------------------------
+        # 모션 인식
+        # -------------------------------------------------------------------------------
 
+        # 비디오 저장 경로
         UUID = str(uuid.uuid4())
-        video_path = os.path.join(VIDEO_DIR, UUID)
+
+        video_path = f'temp_video/{UUID}'
         Path(video_path).mkdir(exist_ok=True)
 
         print(f'{video_path}/{video.filename}')
@@ -83,9 +83,7 @@ def rigging(
             shutil.copyfileobj(video.file, buffer)
 
         # 리깅 결과 저장 경로
-        RIG_DIR = 'temp_rig'
-        Path(RIG_DIR).mkdir(exist_ok=True)
-        rig_path = os.path.join(RIG_DIR, UUID)
+        rig_path = f'temp_rig/{UUID}'
         Path(rig_path).mkdir(exist_ok=True)
 
         # 리깅 결과 파일
@@ -156,7 +154,106 @@ def rigging(
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
-        return FileResponse(path=f'{rig_path}/output.avi', media_type='application/octet-stream', filename="output.avi")
+            # -------------------------------------------------------------------------------
+            # bvh 생성
+            # -------------------------------------------------------------------------------
+
+            df = pd.DataFrame(frame_landmarks)
+
+            angle_data = []
+
+            for frame in frame_landmarks:
+                angle = {
+                    'Spine': calculate_angle(frame['Spine2'], frame['Spine'], frame['Hips']),
+                    'LeftUpLeg': calculate_angle(frame['LeftLeg'], frame['LeftUpLeg'], frame['Hips']),
+                    'RightUpLeg': calculate_angle(frame['RightLeg'], frame['RightUpLeg'], frame['Hips']),
+                    'Spine2': calculate_angle(frame['Neck'], frame['Spine2'], frame['Spine']),
+                    'Neck': calculate_angle(frame['Head'], frame['Neck'], frame['Spine2']),
+                    'RightArm': calculate_angle(frame['RightHand'], frame['RightArm'], frame['RightShoulder']),
+                    'RightShoulder': calculate_angle(frame['RightArm'], frame['RightShoulder'], frame['Spine2']),
+                    'LeftArm': calculate_angle(frame['LeftHand'], frame['LeftArm'], frame['LeftShoulder']),
+                    'LeftShoulder': calculate_angle(frame['LeftArm'], frame['LeftShoulder'], frame['Spine2']),
+                    'RightLeg': calculate_angle(frame['RightFoot'], frame['RightLeg'], frame['RightUpLeg']),
+                    'LeftLeg': calculate_angle(frame['LeftFoot'], frame['LeftLeg'], frame['LeftUpLeg'])
+                }
+                angle_data.append(angle)
+
+            df_angles = pd.DataFrame(angle_data)
+
+            df.to_csv('rigging/df.csv', index=False)
+            df_angles.to_csv('rigging/df_angles.csv', index=False)
+
+            joints = [
+                "Hips", "Spine", "Spine1", "Spine2",
+                "LeftShoulder", "LeftArm", "LeftForeArm", "LeftHand",
+                "LeftHandIndex1", "LeftHandIndex2", "LeftHandIndex3", "LeftHandMiddle1",
+                "LeftHandMiddle2", "LeftHandMiddle3", "LeftHandPinky1", "LeftHandPinky2",
+                "LeftHandPinky3", "LeftHandRing1", "LeftHandRing2",
+                "LeftHandRing3", "LeftHandThumb1", "LeftHandThumb2",
+                "LeftHandThumb3", "Neck", "Head", "RightShoulder", "RightArm",
+                "RightForeArm", "RightHand", "RightHandIndex1",
+                "RightHandIndex2", "RightHandIndex3", "RightHandMiddle1",
+                "RightHandMiddle2", "RightHandMiddle3", "RightHandPinky1",
+                "RightHandPinky2", "RightHandPinky3", "RightHandRing1",
+                "RightHandRing2", "RightHandRing3", "RightHandThumb1",
+                "RightHandThumb2", "RightHandThumb3", "LeftUpLeg", "LeftLeg",
+                "LeftFoot", "LeftToeBase", "RightUpLeg", "RightLeg", "RightFoot",
+                "RightToeBase"
+            ]
+
+            with open('rigging.template_g.bvh', 'a', encoding='utf-8') as bvh:
+                bvh.write('\nFrames: {}\nFrameTime: 0.033333\n'.format(len(df)))
+
+                for row in range(len(df)):
+                    frameAni = ""
+
+                    for joint in joints:
+                        if joint == 'Hips':
+                            hips = df['Hips'].iloc[row]
+
+                            temp = (hips[0], hips[1], hips[2])
+                            rounded_hips = tuple(round(t, 4) for t in temp)
+                            frameAni += "{} {} {} ".format(*rounded_hips)
+
+                        if joint in df_angles.columns:
+                            joint_angles = df_angles[joint].iloc[row]
+                            joint_angles = list(joint_angles)
+
+                            if row != 0:
+                                pre_angles = df_angles[joint].iloc[row - 1]
+                                pre_angle_x = joint_angles[0] if joint_angles[0] != 0 and not np.isnan(joint_angles[0]) else pre_angles[0]
+                                pre_angle_y = joint_angles[1] if joint_angles[1] != 0 and not np.isnan(joint_angles[1]) else pre_angles[1]
+                                pre_angle_z = joint_angles[2] if joint_angles[2] != 0 and not np.isnan(joint_angles[2]) else pre_angles[2]
+                            else:
+                                pre_angle_x = 0
+                                pre_angle_y = 0
+                                pre_angle_z = 0
+
+                            joint_angles[0] = pre_angle_x
+                            joint_angles[1] = pre_angle_y
+                            joint_angles[2] = pre_angle_z
+
+                            frameAni += "{} {} {} ".format(joint_angles[1], joint_angles[0], joint_angles[2])
+
+                            pre_angle_x = joint_angles[0]
+                            pre_angle_y = joint_angles[1]
+                            pre_angle_z = joint_angles[2]
+
+                        else:
+                            frameAni += "0.0000 0.0000 0.0000 "
+
+                    bvh.write(frameAni.strip() + '\n')
+
+        # -------------------------------------------------------------------------------
+        # 커스텀 gif 만들기
+        # -------------------------------------------------------------------------------
+
+        create_gif(
+            character_id=character_id,
+            motion=motion_name,
+            s3_img_url=img_url
+        )
+
 
     except Exception as e:
         logger.error("rigging => 에러 발생", exc_info=True)
@@ -168,3 +265,25 @@ def rigging(
         if 'pose' in globals() and pose is not None:
             pose.close()
         cv2.destroyAllWindows()
+
+
+def calculate_angle(a, b, c):
+    a = np.array(a)  # 첫 번째 점
+    b = np.array(b)  # 중간 점 (관절)
+    c = np.array(c)  # 세 번째 점
+
+    # 각 축에 대한 벡터 계산
+    ba = a - b  # b에서 a로의 벡터
+    bc = c - b  # b에서 c로의 벡터
+
+    # 각 축에 대한 각도 계산
+    cos_angle_x = np.dot(ba[[1, 2]], bc[[1, 2]]) / (np.linalg.norm(ba[[1, 2]]) * np.linalg.norm(bc[[1, 2]]))
+    cos_angle_y = np.dot(ba[[0, 2]], bc[[0, 2]]) / (np.linalg.norm(ba[[0, 2]]) * np.linalg.norm(bc[[0, 2]]))
+    cos_angle_z = np.dot(ba[[0, 1]], bc[[0, 1]]) / (np.linalg.norm(ba[[0, 1]]) * np.linalg.norm(bc[[0, 1]]))
+
+    angle_x = np.arccos(cos_angle_x) * 180.0 / np.pi
+    angle_y = np.arccos(cos_angle_y) * 180.0 / np.pi
+    angle_z = np.arccos(cos_angle_z) * 180.0 / np.pi
+
+    # 결과 반환
+    return (round(angle_x, 4), round(angle_y, 4), round(angle_z, 4))  # 각 축에 대해 소수점 네 자리까지 반올림

@@ -38,11 +38,15 @@ class CharacterCreateRequest(BaseModel):
 
 
 @router.post("/create")
-async def create_joint_gif(request: CharacterCreateRequest):
+def crate_character(request: CharacterCreateRequest):
     character_id = request.character_id
     motion = request.motion_name
     s3_img_url = request.img_url
 
+    create_gif(character_id, motion, s3_img_url)
+
+
+async def create_gif(character_id, motion, s3_img_url):
     try:
         # 이미지 저장 경로
         IMG_DIR = "temp_image"
