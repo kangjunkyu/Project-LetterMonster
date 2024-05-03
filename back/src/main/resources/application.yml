@@ -49,4 +49,4 @@ FAST_API:
   URL: ${AI_URL}
 
 base:
-  url: ${BASE_URL}
+  url: ${SHARE_URL}
