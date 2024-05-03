@@ -127,6 +127,7 @@ async def get_img_s3(s3_img_url):
             Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
             Filename=f"temp_image/{s3_img_url}"  # 로컬 저장 경로
         )
+        print("s3 다운로드 성공")
         return True
 
     except Exception as e:
@@ -143,6 +144,7 @@ async def save_gif_s3(gif_path, character_id, motion):
             Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
             ExtraArgs={'ContentType': 'image/gif'}
         )
+        print("s3 업로드 성공")
         return True
 
     except Exception as e:
