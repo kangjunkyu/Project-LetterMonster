@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.lemon.backend.global.response.CommonResponseEntity.getResponseEntity;
@@ -25,13 +26,13 @@ public class FriendsController {
 
     private final FriendsService friendsService;
 
-    @PostMapping
-    public ResponseEntity<?> addFriend(Authentication authentication, @RequestParam(value = "friendId") Integer friendId) {
+    @PostMapping("/{friendId}")
+    public ResponseEntity<?> addFriend(Authentication authentication, @PathVariable(value = "friendId") Integer friendId) {
         Integer loginId = (Integer) authentication.getPrincipal();
 
-        Long addFriendId = friendsService.addFriend(loginId, friendId);
+        String addFriendNickname = friendsService.addFriend(loginId, friendId);
 
-        return getResponseEntity(SuccessCode.CREATED, addFriendId);
+        return getResponseEntity(SuccessCode.CREATED, addFriendNickname);
     }
 
     @DeleteMapping("/{friendId}")

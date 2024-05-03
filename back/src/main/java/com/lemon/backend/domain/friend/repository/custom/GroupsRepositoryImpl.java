@@ -52,6 +52,7 @@ public class GroupsRepositoryImpl implements GroupsRepositoryCustom {
         for (GroupResponseDto groupDto : groupDtos) {
             List<FriendResponseDto> friendDtos = query
                     .select(Projections.constructor(FriendResponseDto.class,
+                            friends.friend.id,
                             friends.friend.nickname,
                             friends.friend.nicknameTag
                     )).from(friends)
