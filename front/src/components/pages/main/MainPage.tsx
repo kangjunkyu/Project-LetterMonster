@@ -11,8 +11,9 @@ import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import KakaoLogin from "../../atoms/auth/KakaoLoginButton";
 import LineLogin from "../../atoms/auth/LineLoginButton";
 import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
+import MyPageFriendList from "../../molecules/mypage/MyPageFriendList";
 
-type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList";
+type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList" | "friendList";
 
 function MainPage() {
   // const navigate = useNavigate();
@@ -21,6 +22,7 @@ function MainPage() {
     langSelect: false,
     findFriend: false,
     characterList: false,
+    friendList: false,
   });
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
@@ -69,6 +71,17 @@ function MainPage() {
                 onClose={() => handleToggleModal("findFriend")}
               >
                 <MyPageFindFriend />
+              </Modal>
+            )}
+            <button onClick={() => handleToggleModal("friendList")}>
+              내 친구 목록
+            </button>
+            {isModalOpen.friendList && (
+              <Modal
+                isOpen={isModalOpen.friendList}
+                onClose={() => handleToggleModal("friendList")}
+              >
+                <MyPageFriendList />
               </Modal>
             )}
             <button onClick={() => logout()}>로그아웃</button>
