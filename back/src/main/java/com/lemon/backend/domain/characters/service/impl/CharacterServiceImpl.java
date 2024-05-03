@@ -61,7 +61,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Transactional
     public Long createCharacter(MultipartFile file, Integer userId, String nickname) {
         try {
-            if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+            if(badWordFilterUtil.checkBadWord(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
             Characters characters = null;
 
             if(userId == null){
@@ -69,7 +69,6 @@ public class CharacterServiceImpl implements CharacterService {
             }else{
                 Users users = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
                 characters = Characters.builder().nickname(nickname).users(users).build();
-
             }
             characterRepository.save(characters);
             String fileName = characters.getId().toString() + ".png";
@@ -93,7 +92,7 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void updateCharacterNickname(Long characterId, String nickname) {
-        if(badWordFilterUtil.blankCheck(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(badWordFilterUtil.checkBadWord(nickname)) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         Optional<Characters> optionalCharacters = characterRepository.findById(characterId);
 
         if(optionalCharacters.isPresent()) {
@@ -201,6 +200,7 @@ public class CharacterServiceImpl implements CharacterService {
     사용자가 가진 캐릭터중 대표캐릭터로 선정된 캐릭의 대표 여부를 false로, 선택한 캐릭터의 대표 여부를 true로 변경한다.
      */
     @Override
+    @Transactional
     public void changeMainCharacter(Long characterId, int userId) {
         Optional<Users> optionalUsers = userRepository.findByIdFetch(userId);
 
@@ -209,7 +209,7 @@ public class CharacterServiceImpl implements CharacterService {
         Users user = optionalUsers.get();
         for(Characters c : user.getCharacterList()) {
             if(c.getMainCharacter()) c.changeMainCharacter();
-            if(c.getId()==characterId) c.changeMainCharacter();
+            if(c.getId().equals(characterId)) c.changeMainCharacter();
         }
 
     }

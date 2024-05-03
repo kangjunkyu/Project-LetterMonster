@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<Users, Integer>, UserRepos
 
     Optional<Users> findByProviderAndProviderId(Social social, String providerId);
 
-    @Query("select u from Users u left join fetch u.characterList where u.id = :userId")
+    @Query("select distinct u from Users u left join fetch u.characterList where u.id = :userId")
     Optional<Users> findByIdFetch(@Param("userId")int userId);
 
     @Query(value = "SELECT * FROM users WHERE provider = :provider AND provider_id = :providerId", nativeQuery=true)

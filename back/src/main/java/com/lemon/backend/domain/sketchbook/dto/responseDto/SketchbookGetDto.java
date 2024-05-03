@@ -21,5 +21,21 @@ public class SketchbookGetDto {
     private String uuid;
     private String tag;
     private Boolean isWritePossible;
-//    private List<LetterToSketchbookDto> letters;
+    private Boolean isRepresent;
+
+    public SketchbookGetDto(Long id, Boolean isPublic, String shareLink, String name, UserGetDto holder, String uuid, String tag, Boolean isWritePossible) {
+        this.id = id;
+        this.isPublic = isPublic;
+        this.shareLink = shareLink;
+        this.name = name;
+        this.holder = holder;
+        this.uuid = uuid;
+        this.tag = tag;
+        this.isWritePossible = isWritePossible;
+    }
+
+    public SketchbookGetDto(Boolean isRepresent) {
+        this.isRepresent = isRepresent;
+    }
+
 }
