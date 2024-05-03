@@ -1,27 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./SketchbookPage.module.scss";
-import useSketchbook, {
-  useDeleteSketchbook,
-  usePutSketchbook,
-} from "../../../hooks/sketchbook/useSketchbook";
+import useSketchbook from "../../../hooks/sketchbook/useSketchbook";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useState } from "react";
 import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
-import Modal from "../../atoms/modal/Modal";
 import Letter from "../../atoms/letter/Letter";
 
 function SketchbookPage() {
   const params = useParams() as { uuid: string };
   const { data } = useSketchbook(params.uuid);
-  const putSketchbook = usePutSketchbook();
-  const deleteSketchbook = useDeleteSketchbook();
-  const [
-    name,
-    // setName
-  ] = useState("임시수정");
   const navigate = useNavigate();
-  const [now, setNow] = useState(0);
+  const [now, setNow] = useState(-1);
   const [letter, setLetter] = useState(0);
 
   type ModalName = "sketchbookInfo" | "letter";
@@ -30,8 +20,18 @@ function SketchbookPage() {
     sketchbookInfo: false,
     letter: false,
   });
-  const handleToggleModal = (modalName: ModalName) =>
-    setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+
+  const handleToggleModal = (modalName: ModalName, index: number) => {
+    if (now === -1 || index === now) {
+      setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+    } else if (index !== now) {
+      setNow(index);
+      setLetter(0);
+      if (!isModalOpen.letter) {
+        setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+      }
+    }
+  };
 
   const letterButton = (value: number) => {
     if (data) {
@@ -43,54 +43,18 @@ function SketchbookPage() {
     }
   };
 
-  const characterButton = (value: number) => {
-    setLetter(0);
-    if (data) {
-      const len = data?.data?.sketchbookCharacterMotionList.length;
-      if (now + value >= 0 && now + value < len) {
-        setNow(now + value);
-      }
-    }
-  };
   return (
     <>
-      <Modal
-        isOpen={isModalOpen.sketchbookInfo}
-        onClose={() => handleToggleModal("sketchbookInfo")}
-      >
-        <div className={styles.buttonBox}>
-          <DefaultButton
-            onClick={() =>
-              putSketchbook.mutate({
-                sketchbookId: Number(data?.data?.id),
-                name: name,
-              })
-            }
-          >
-            수정
-          </DefaultButton>
-          <DefaultButton
-            onClick={() => deleteSketchbook.mutate(Number(data?.data?.id))}
-          >
-            삭제
-          </DefaultButton>
+      <article className={styles.sketchbookContainer}>
+        <LNB>
+          {data && <h1>{data?.data?.name}</h1>}
           <DefaultButton
             onClick={() => {
               navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`);
             }}
-          >
-            편지쓰기
-          </DefaultButton>
-        </div>
-      </Modal>
-      <article className={styles.sketchbookContainer}>
-        <LNB>
-          {data && <div>{data?.data?.name} 스케치북</div>}
-          <DefaultButton
-            onClick={() => handleToggleModal("sketchbookInfo")}
             custom={true}
           >
-            더보기
+            편지 남기기
           </DefaultButton>
         </LNB>
         {data && (
@@ -98,7 +62,6 @@ function SketchbookPage() {
             {isModalOpen.letter && (
               <div className={styles.letterBox}>
                 <Letter
-                  receiver={"나"}
                   sender={
                     data?.data?.sketchbookCharacterMotionList[now]
                       ?.letterList?.[letter].sender.nickname
@@ -119,40 +82,23 @@ function SketchbookPage() {
                 </div>
               </div>
             )}
-            {data?.data?.sketchbookCharacterMotionList[0] && (
-              <div className={styles.characterBox}>
-                <DefaultButton
-                  onClick={() => handleToggleModal("letter")}
-                  custom={true}
-                >
-                  <img
-                    src={
-                      data?.data?.sketchbookCharacterMotionList[now]
-                        ?.characterMotion?.imageUrl
-                    }
-                    alt=""
-                  />
-                  {
-                    data?.data?.sketchbookCharacterMotionList[now]
-                      ?.characterMotion?.nickname
-                  }
-                </DefaultButton>
-                <div className={styles.letterButtons}>
-                  <DefaultButton
-                    onClick={() => characterButton(-1)}
-                    custom={true}
-                  >
-                    {"<"}
-                  </DefaultButton>
-                  <DefaultButton
-                    onClick={() => characterButton(1)}
-                    custom={true}
-                  >
-                    {">"}
-                  </DefaultButton>
-                </div>
-              </div>
-            )}
+            <div className={styles.characterGrid}>
+              {data?.data?.sketchbookCharacterMotionList[0] &&
+                data?.data?.sketchbookCharacterMotionList.map(
+                  (item: any, i: number) => (
+                    <DefaultButton
+                      onClick={() => {
+                        setNow(i);
+                        handleToggleModal("letter", i);
+                      }}
+                      custom={true}
+                    >
+                      <img src={item?.characterMotion?.imageUrl} />
+                      <div>{item?.characterMotion?.nickname}</div>
+                    </DefaultButton>
+                  )
+                )}
+            </div>
           </figure>
         )}
       </article>
