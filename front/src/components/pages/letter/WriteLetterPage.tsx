@@ -9,12 +9,12 @@ import CharacterList from "../../molecules/character/CharacterList";
 import MotionExample from "../../molecules/motion/MotionExample";
 
 import { useSketchbookListAll } from "../../../hooks/sketchbook/useSketchbookList";
-import { postLetter } from "../../../api/Api";
 import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import { Page_Url } from "../../../router/Page_Url";
 import useGetSelectedMotion from "../../../hooks/motion/useGetSelectedMotion";
 import LoadingSpinner from "../../atoms/loadingSpinner/LoadingSpinner";
+import useWriteLetter from "../../../hooks/letter/useWriteLetter";
 
 function LetterWritePage() {
   const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
@@ -35,33 +35,23 @@ function LetterWritePage() {
     isRefetching,
     isError,
   } = useGetSelectedMotion(characterId, motionId);
+  const write = useWriteLetter();
 
   const onClickHandler = () => {
-    if (
-      content &&
-      (target || sketchbookId) &&
-      motionId &&
-      selectedMotion?.data?.characterMotionId != 0
-    ) {
-      // 값 유무 확인
-      postLetter(
-        content,
-        Number(target),
-        selectedMotion?.data?.characterMotionId
-      ).then((res) => {
-        if (res.statusCode === 201) {
-          setContent("");
-          showAlert("편지를 보냈어요!");
-          navigate(Page_Url.SketchbookList);
-        }
-      });
-    } else if (isLoad) {
-      showAlert("캐릭터가 아직 동작을 연습중이에요");
-    } else {
-      showAlert("보낼 편지를 확인해주세요");
+    if (sketchbookId.sketchbookId) {
+      setTarget(Number(sketchbookId.sketchbookId));
     }
+    write({
+      content: content,
+      target: target,
+      motionId: motionId,
+      characterMotionId: selectedMotion?.characterMotionId,
+      setContent: setContent,
+      isLoad: isLoad,
+    });
   };
-  const motionSeleted = async (motionId: any) => {
+
+  const motionSeleted = async (motionId: number) => {
     setMotionId(motionId);
   };
 
@@ -73,7 +63,7 @@ function LetterWritePage() {
 
   useEffect(() => {
     if (mounted && isError && motionId != 0)
-      showAlert("이 동작은 못하겠대요 ㅜ");
+      showAlert("이 동작은 못하겠대요. 다른 동작으로 시도해주세요!");
   }, [isError]);
 
   useEffect(() => {
@@ -138,7 +128,7 @@ function LetterWritePage() {
                 setTarget(Number(e.target.value));
               }}
               value={target} // useState를 사용하여 관리되는 상태를 value로 연결합니다.
-              disabled={sketchbookId ? true : false} // sketchbookList가 로드되지 않았다면 select를 비활성화합니다.
+              disabled={sketchbookId.sketchbookId ? true : false} // sketchbookList가 로드되지 않았다면 select를 비활성화합니다.
             >
               {sketchbookList?.data?.map(
                 (
