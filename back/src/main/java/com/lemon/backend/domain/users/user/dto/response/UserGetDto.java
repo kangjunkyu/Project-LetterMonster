@@ -7,6 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class UserGetDto {
     private Integer id;
     private Boolean isLanguageSet;

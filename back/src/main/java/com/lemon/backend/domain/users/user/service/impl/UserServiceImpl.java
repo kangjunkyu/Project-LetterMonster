@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-
     public TokenResponse recreateToken(String bearerToken) {
         //유효성 검사
         String refreshToken = jwtTokenProvider.resolveToken(bearerToken);

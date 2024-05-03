@@ -23,7 +23,7 @@ public class FriendsServiceImpl implements FriendsService {
     private final GroupsRepository groupsRepository;
 
     @Override
-    public Long addFriend(Integer userId, Integer friendId) {
+    public String addFriend(Integer userId, Integer friendId) {
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         Users friendUser = userRepository.findById(friendId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 
@@ -44,7 +44,7 @@ public class FriendsServiceImpl implements FriendsService {
         user.getFriendList().add(friend);
         friendUser.getFriendList().add(friend);
 
-        return friendsRepository.save(friend).getId();
+        return friendsRepository.save(friend).getFriend().getNickname();
     }
 
     @Override
