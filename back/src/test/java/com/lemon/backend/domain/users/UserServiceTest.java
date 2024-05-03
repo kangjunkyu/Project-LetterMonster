@@ -85,5 +85,25 @@ public class UserServiceTest {
         assertFalse(deleteUser.isPresent());
     }
 
+    @Test
+    public void getUserInfoTest() {
+        // given
+        Users user = Users.builder()
+                .id(USER_ID)
+                .nickname(NICKNAME)
+                .nicknameTag(NICKNAME_TAG)
+                .provider(Social.KAKAO)
+                .build();
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
+
+        // when
+        UserGetDto userDto = userService.getUserInfo(USER_ID);
+
+        // then
+        assertNotNull(userDto);
+        assertEquals(NICKNAME, userDto.getNickname());
+        assertEquals(NICKNAME_TAG, userDto.getNicknameTag());
+    }
+
 }
 
