@@ -10,7 +10,7 @@ interface Motion {
 
 interface Prop {
   characterId: number;
-  setGif: (gif: string) => void;
+  setGif: (gif: { imageUrl: string }) => void;
   setMotionId: (motinoId: number) => void;
   setCharacterMotionId?: (characterMotionId: number) => void;
 }
@@ -39,7 +39,7 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
   const handleMotionClick = async (index: number) => {
     const motionId = index + 1;
     setClickedMotionIndex(index);
-    setGif("");
+    setGif({ imageUrl: "" });
     const data = await getMotionSelect(characterId, motionId);
     if (data) {
       setMotionId(motionId);
@@ -56,49 +56,47 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
 
   return (
     <>
-      <div>
-        <div className={styles.motionListContainer}>
-          <div>캐릭터 모션 종류</div>
-          <div className={styles.motionSampleList}>
-            {motions.map((motion, index) => (
-              <div
-                className={`${styles.motionSampleEach} ${
-                  clickedMotionIndex === index ? styles.selected : ""
-                }`}
-                key={index}
-                onClick={() => {
-                  handleMotionClick(index);
-                }}
-              >
-                <img
-                  className={styles.motionSampleImage}
-                  src={motion.path}
-                  alt={`${motion.name} animation`}
-                />
-                <div>{formatMotionName(motion.name)}</div>
-              </div>
-            ))}
-          </div>
-          <div className={styles.motionSampleListHorizontal}>
-            {motions.map((motion, index) => (
-              <div
-                className={`${styles.motionSampleEachHorizontal} ${
-                  clickedMotionIndex === index ? styles.selected : ""
-                }`}
-                key={index}
-                onClick={() => {
-                  handleMotionClick(index);
-                }}
-              >
-                <img
-                  className={styles.motionSampleImage}
-                  src={motion.path}
-                  alt={`${motion.name} animation`}
-                />
-                <div>{formatMotionName(motion.name)}</div>
-              </div>
-            ))}
-          </div>
+      <div className={styles.motionListContainer}>
+        <div>캐릭터 모션 종류</div>
+        <div className={styles.motionSampleList}>
+          {motions.map((motion, index) => (
+            <div
+              className={`${styles.motionSampleEach} ${
+                clickedMotionIndex === index ? styles.selected : ""
+              }`}
+              key={index}
+              onClick={() => {
+                handleMotionClick(index);
+              }}
+            >
+              <img
+                className={styles.motionSampleImage}
+                src={motion.path}
+                alt={`${motion.name} animation`}
+              />
+              <div>{formatMotionName(motion.name)}</div>
+            </div>
+          ))}
+        </div>
+        <div className={styles.motionSampleListHorizontal}>
+          {motions.map((motion, index) => (
+            <div
+              className={`${styles.motionSampleEachHorizontal} ${
+                clickedMotionIndex === index ? styles.selected : ""
+              }`}
+              key={index}
+              onClick={() => {
+                handleMotionClick(index);
+              }}
+            >
+              <img
+                className={styles.motionSampleImage}
+                src={motion.path}
+                alt={`${motion.name} animation`}
+              />
+              <div>{formatMotionName(motion.name)}</div>
+            </div>
+          ))}
         </div>
       </div>
     </>

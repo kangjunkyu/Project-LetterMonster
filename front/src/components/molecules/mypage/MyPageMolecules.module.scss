@@ -27,26 +27,27 @@
 .userCharacterListContainer {
   display: flex;
   flex-direction: column;
-  // gap: 1em;
   overflow-y: auto;
   max-height: 60vh;
-  
+
   .title {
     justify-content: space-between;
     align-self: flex-start;
-    margin: 20px;
-    font-size: 14px;
+    margin: 10px 20px;
+    font-size: 16px;
     font-weight: bold;
-    padding: 10px 0;
   }
 }
 
 .userCharacterList {
   display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 1em;
   padding: 0 20px;
+
+  @media screen and (min-width: 390px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .userCharacterCard {
@@ -73,69 +74,62 @@
   .userCharacterInfo {
     padding: 5px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-    div {
+    &.justifyRight {
+      justify-content: flex-end;
+    }
+
+    &.justifyBetween {
+      justify-content: space-between;
+    }
+
+    .nickname {
+      display: inline-block;
+      margin-left: 3px;
       text-align: center;
-      margin: 5px 0;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
       font-size: 12px;
-      position: relative;
+    }
 
-      &.userMainCharacter {
-        font-weight: bold;
-        color: white; 
-        background-color: $errorColor; 
-        padding: 2px 5px;
-        border-radius: 4px;
-        display: inline-block;
-        &:after {
-          content: " 대표";
-          color: red;
-          background-color: white;
-          padding-left: 8px;
-        }
-      }
+    .mainCharacterLabel {
+      display: inline-block;
+      height: 22px;
+      width: 35px;
+      margin-right: 5px;
+      background-color: red;
+      color: white;
+      padding: 2px 5px;
+      border-radius: 5px;
     }
   }
 }
 
-.userCharacterListUpper{
+.userCharacterListUpper {
   display: flex;
   gap: 1em;
   padding: 10px;
   font-size: 12px;
 }
 
-.userNoCharacterListContainer{
+// MyPageCharacter에서 캐릭터가 0개일때
+.userNoCharacterListContainer {
   text-align: center;
   font-size: 12px;
 }
-.titleNoCharacter{
+.titleNoCharacter {
   font-size: 14px;
   font-weight: bold;
-  margin: 15px 0 ;
+  margin: 15px 0;
 }
-.userNoCharacterButton{
+.userNoCharacterButton {
   margin-top: 10px;
   background-color: $successColor;
   color: white;
   padding: 5px;
   border-radius: 5px;
 }
-
-
-// .userCharacterInfo {
-//   display: flex;
-//   align-items: center;
-// }
-
-// .nickname {
-//   flex: 0 0 auto; // 이 속성으로 nickname의 크기와 위치를 고정합니다.
-// }
-
-// .mainCharacterLabel {
-//   margin-left: 10px;
-//   background-color: red;
-//   color: white;
-//   padding: 2px 5px;
-//   border-radius: 3px;
-// }

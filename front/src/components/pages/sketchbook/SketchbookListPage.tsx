@@ -54,7 +54,11 @@ function SketchbookListPage() {
     }
   };
 
-  const inputEnter = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+  const inputEnter = (
+    e:
+      | React.KeyboardEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (e.key === "Enter") {
       createHandler(data2);
     }
@@ -71,15 +75,14 @@ function SketchbookListPage() {
   };
 
   return (
-    <>
+    <article className={styles.centerContainer}>
+      <LNB>
+        <h1>스케치북 리스트</h1>
+        <LNBButton onClick={() => handleToggleModal("sketchbookCreate")}>
+          만들기
+        </LNBButton>
+      </LNB>
       <article className={styles.sketchbookListContainer}>
-        <LNB>
-          <h1>스케치북 리스트</h1>
-          <LNBButton onClick={() => handleToggleModal("sketchbookCreate")}>
-            만들기
-          </LNBButton>
-        </LNB>
-
         <Modal
           isOpen={isModalOpen.sketchbookCreate}
           onClose={() => handleToggleModal("sketchbookCreate")}
@@ -88,9 +91,13 @@ function SketchbookListPage() {
             <div>스케치북 만들기</div>
             <input
               type="text"
+              autoFocus
               onChange={(e) => {
                 setData2(e.target.value);
               }}
+              onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                inputEnter(e)
+              }
               placeholder="스케치북 이름"
             />
             <DefaultButton
@@ -112,7 +119,7 @@ function SketchbookListPage() {
           )}
         </SketchbookList>
       </article>
-    </>
+    </article>
   );
 }
 

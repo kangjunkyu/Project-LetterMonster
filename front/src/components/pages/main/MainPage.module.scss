@@ -1,14 +1,23 @@
 @import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
 
-.container {
+.mainContainer {
   @include flexCenter();
   flex-direction: column;
   gap: 1em;
   font-size: 100px;
-
+  padding: 1rem;
   & section {
     @include body2();
     padding: 10px;
+  }
+
+  & h1 {
+    @include title();
+  }
+
+  & h2 {
+    @include subtitle();
   }
 }
 
@@ -20,4 +29,12 @@
 .characterDiv {
   display: flex;
   flex-wrap: wrap;
+}
+
+.startButton {
+  padding: 1em;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid $gc600;
 }

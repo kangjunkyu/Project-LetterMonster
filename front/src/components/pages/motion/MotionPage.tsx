@@ -12,13 +12,13 @@ function MotionPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { characterId, nickname } = location.state || {};
-  const [gif, setGif] = useState("");
+  const [gif, setGif] = useState({ imageUrl: "" });
   const [motionId, setMotionId] = useState(0);
   const [isModalOpen, setModalOpen] = useState(false);
   const handleToggleModal = () => setModalOpen((prev) => !prev);
 
   const onHandleClick = useCallback(() => {
-    navigate(Page_Url.MotionResult, { state: { gif: gif } });
+    navigate(Page_Url.MotionResult, { state: { gif: gif.imageUrl } });
   }, [gif, navigate]);
 
   return (
@@ -28,7 +28,6 @@ function MotionPage() {
           <h1>모션 선택</h1>
           <DefaultButton
             onClick={() => {
-              console.log(motionId);
               if (motionId == 0) {
                 setModalOpen(true);
               } else {
@@ -41,21 +40,17 @@ function MotionPage() {
           </DefaultButton>
         </LNB>
         <div className={styles.motionContainer}>
-          {/* <div> */}
           <MotionPreview
             gif={gif}
             characterNickname={nickname}
             characterId={characterId}
             motionId={motionId}
           />
-          {/* </div>
-        <div> */}
           <MotionList
             setGif={setGif}
             setMotionId={setMotionId}
             characterId={characterId}
           />
-          {/* </div> */}
         </div>
       </div>
       {isModalOpen && (

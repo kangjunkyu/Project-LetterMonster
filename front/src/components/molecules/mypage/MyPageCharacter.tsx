@@ -1,3 +1,4 @@
+// import { useState } from "react";
 import {
   useDeleteCharacter,
   useSelectMainCharacter,
@@ -19,8 +20,14 @@ function MyPageCharacter() {
   const { data: characterList, isLoading, error } = useGetCharacterList();
   const selectMainCharacter = useSelectMainCharacter();
   const deleteCharacter = useDeleteCharacter();
+  // const [mainCharacterId, setMainCharacterId] = useState<number>();
 
-  const handleCardClick = (characterId: number) => {
+  // const handleCardClick = (characterId: number) => {
+  //   selectMainCharacter.mutate(characterId);
+  // };
+
+  const handleMainCharacterClick = (characterId: number) => {
+    // setMainCharacterId(characterId);
     selectMainCharacter.mutate(characterId);
   };
 
@@ -47,8 +54,6 @@ function MyPageCharacter() {
     );
   }
 
-  console.log(characterList);
-
   return (
     <div className={styles.userCharacterListContainer}>
       <div className={styles.title}>
@@ -59,16 +64,13 @@ function MyPageCharacter() {
           <div
             key={character.characterId}
             className={styles.userCharacterCard}
-            onClick={() => {
-              console.log(character.characterId);
-              handleCardClick(character.characterId);
-            }}
+            // onClick={() => {
+            //   handleCardClick(character.characterId);
+            // }}
           >
             <div className={styles.userCharacterListUpper}>
               <button
-                onClick={() =>
-                  selectMainCharacter.mutate(character.characterId)
-                }
+                onClick={() => handleMainCharacterClick(character.characterId)}
               >
                 대표 지정
               </button>
@@ -83,11 +85,17 @@ function MyPageCharacter() {
               alt={character.nickname}
               className={styles.userCharacterImage}
             />
-            <div className={styles.userCharacterInfo}>
-                <span className={styles.nickname}>{character.nickname}</span>
-                {character.mainCharacter && (
-                  <span className={styles.mainCharacterLabel}>대표</span>
-                )}
+            <div
+              className={`${styles.userCharacterInfo} ${
+                character.mainCharacter
+                  ? styles.justifyBetween
+                  : styles.justifyRight
+              }`}
+            >
+              {character.mainCharacter && (
+                <span className={styles.mainCharacterLabel}>대표</span>
+              )}
+              <span className={styles.nickname}>{character.nickname}</span>
             </div>
           </div>
         ))}

@@ -5,24 +5,27 @@ $maxWidthValue: 1024px;
 
 
 .myPageContainer {
-  // width: 100%;
-  // display: flex;
-  // flex-direction: column;
-  // gap: 1em;
-  // justify-content: center;
-  // align-items: center;
-  // font-size: 14px;
-  // margin: 0 auto;
-  @media screen and (min-width: 768px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: $maxWidthValue;
+  margin: 0 auto;
+
+  @media screen and (min-width: 767px) {
     /* 데스크탑 */
+    height: 100vh;  // 전체 화면 높이
   }
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 479px) {
     /* 타블렛 */
+    height: 100vh;  // 전체 화면 높이
     @include flexCenterColumn();
   }
   
   @media screen and (max-width: 479px) {
     /* 모바일 */
+    height: 80vh;  // 전체 화면 높이
     @include flexCenterColumn();
   }
 }
@@ -32,7 +35,4 @@ $maxWidthValue: 1024px;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   width: 100%;
-  // @media (max-width: 479px) {
-  //   display: none;
-  // }
 }
