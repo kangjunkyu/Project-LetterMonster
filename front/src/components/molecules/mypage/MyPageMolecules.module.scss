@@ -135,3 +135,43 @@
   padding: 5px;
   border-radius: 5px;
 }
+
+// 친구 찾기
+.findFriendContainer{
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  height: 200px;
+  gap: 0.7em;
+}
+
+.findFriendInput{
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  
+  input{
+    // width: 120px;
+    padding: 3px;
+  }
+}
+.findFriendDivider::after {
+  content: '';
+  display: block;
+  height: 2px; // 선의 두께 설정
+  background-color: $gc400; // 선의 색상 설정
+  width: 100%; // 부모 요소의 전체 너비에 걸쳐 선을 그림
+}
+
+.findFriendResult{
+  height: 130px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.findFriendColumn{
+  display: flex;
+  justify-content: space-between;
+}
