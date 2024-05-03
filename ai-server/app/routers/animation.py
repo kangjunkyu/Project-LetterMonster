@@ -43,10 +43,16 @@ async def crate_character(request: CharacterCreateRequest):
     motion = request.motion_name
     s3_img_url = request.img_url
 
-    await create_gif(character_id, motion, s3_img_url)
+    try:
+        gif_path = await create_gif(character_id, motion, s3_img_url)
+        return JSONResponse(content={"gif_path": gif_path}, status_code=200)
+    except Exception as e:
+        logger.error("create_gif => 에러", exc_info=True)
+        return JSONResponse(content={"Fast API 에러": str(e)}, status_code=500)
 
 
 async def create_gif(character_id: str, motion: str, s3_img_url: str):
+
     try:
         # 이미지 저장 경로
         IMG_DIR = "temp_image"
@@ -103,11 +109,14 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
         os.remove(image_path)
         shutil.rmtree(gif_path)
 
-        return JSONResponse(content={"gif_path": f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'}, status_code=200)
+        response_path = f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'
 
-    except Exception as e:
-        logger.error("create_joint_gif => 에러 발생", exc_info=True)
-        return JSONResponse(content={"error": f"Fast API 에러 : create_joint_gif => {e}"}, status_code=500)
+        return response_path
+
+    finally:
+        print("")
+        # os.remove(image_path)
+        # shutil.rmtree(gif_path)
 
 
 # S3에서 img 불러오기
@@ -118,6 +127,7 @@ async def get_img_s3(s3_img_url):
             Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
             Filename=f"temp_image/{s3_img_url}"  # 로컬 저장 경로
         )
+        print("s3 다운로드 성공")
         return True
 
     except Exception as e:
@@ -134,6 +144,7 @@ async def save_gif_s3(gif_path, character_id, motion):
             Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
             ExtraArgs={'ContentType': 'image/gif'}
         )
+        print("s3 업로드 성공")
         return True
 
     except Exception as e:
