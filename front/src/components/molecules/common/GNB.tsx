@@ -8,12 +8,17 @@ import { Page_Url } from "../../../router/Page_Url";
 import sketchbook from "../../../assets/GNBIcon/sketchbook.svg";
 import draw from "../../../assets/GNBIcon/draw.svg";
 import letter from "../../../assets/GNBIcon/letter.svg";
-import more from "../../../assets/GNBIcon/more.svg";
+// import more from "../../../assets/GNBIcon/more.svg";
+import home from "../../../assets/GNBIcon/home.svg";
 
 function GNB() {
   const { t } = useTranslation();
   return (
     <header className={styles.header}>
+      <Link className={styles.GNBbutton} to={Page_Url.Main}>
+        <img src={home} alt="집으로" />
+        {t("nav.home")}
+      </Link>
       <Link className={styles.GNBbutton} to={Page_Url.Sketch}>
         <img src={draw} alt="그리기" />
         {t("nav.drawing")}
@@ -26,10 +31,10 @@ function GNB() {
         <img src={letter} alt="편지 쓰기" />
         {t("nav.letter")}
       </Link>
-      <Link className={styles.GNBbutton} to={Page_Url.MyPage}>
+      {/* <Link className={styles.GNBbutton} to={Page_Url.MyPage}>
         <img src={more} alt="메인" />
         {t("nav.more")}
-      </Link>
+      </Link> */}
     </header>
   );
 }

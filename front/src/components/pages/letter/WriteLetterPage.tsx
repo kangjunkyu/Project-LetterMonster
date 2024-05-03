@@ -138,7 +138,7 @@ function LetterWritePage() {
                 setTarget(Number(e.target.value));
               }}
               value={target} // useState를 사용하여 관리되는 상태를 value로 연결합니다.
-              disabled={sketchbookId ? false : true} // sketchbookList가 로드되지 않았다면 select를 비활성화합니다.
+              disabled={sketchbookId ? true : false} // sketchbookList가 로드되지 않았다면 select를 비활성화합니다.
             >
               {sketchbookList?.data?.map(
                 (
@@ -160,7 +160,7 @@ function LetterWritePage() {
         </article>
         <article>
           {isFetching && <LoadingSpinner />}
-          {!isRefetching && <img src={selectedMotion?.data?.imageUrl} />}
+          {!isRefetching && <img src={selectedMotion?.imageUrl} />}
           <figure>
             <div>편지 내용</div>
             <textarea
