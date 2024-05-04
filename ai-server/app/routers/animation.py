@@ -45,17 +45,19 @@ async def crate_character(request: CharacterCreateRequest):
 
     try:
         gif_path = await create_gif(character_id, motion, s3_img_url)
-        return JSONResponse(content={"gif_path": gif_path}, status_code=200)
+        if gif_path:
+            return JSONResponse(content={"gif_path": gif_path}, status_code=200)
+
     except Exception as e:
         logger.error("create_gif => 에러", exc_info=True)
         return JSONResponse(content={"Fast API 에러": str(e)}, status_code=500)
 
 
 async def create_gif(character_id: str, motion: str, s3_img_url: str):
-
+    IMG_DIR = "temp_image"
+    GIF_DIR = "temp_gif"
     try:
         # 이미지 저장 경로
-        IMG_DIR = "temp_image"
         Path(IMG_DIR).mkdir(exist_ok=True)
 
         # s3에서 이미지 다운로드
@@ -67,7 +69,6 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
         image_path = f"temp_image/{s3_img_url}"
 
         # GIF 저장 경로
-        GIF_DIR = "temp_gif"
         gif_dir_name = f"{str(uuid.uuid4())}"
         Path(GIF_DIR).mkdir(exist_ok=True)
 
@@ -114,9 +115,8 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
         return response_path
 
     finally:
-        print("")
-        # os.remove(image_path)
-        # shutil.rmtree(gif_path)
+        shutil.rmtree(IMG_DIR)
+        shutil.rmtree(GIF_DIR)
 
 
 # S3에서 img 불러오기
