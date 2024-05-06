@@ -38,7 +38,7 @@ class CharacterCreateRequest(BaseModel):
 
 
 @router.post("/create")
-async def crate_character(request: CharacterCreateRequest):
+async def create_character(request: CharacterCreateRequest):
     character_id = request.character_id
     motion = request.motion_name
     s3_img_url = request.img_url
@@ -106,13 +106,9 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
         if not is_saved:
             return JSONResponse(content={"error": "Fast API 에러 : s3 gif 업로드 실패"}, status_code=500)
 
-        # 로컬에 저장된 img, gif 삭제
-        os.remove(image_path)
-        shutil.rmtree(gif_path)
+        s3_path = f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'
 
-        response_path = f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'
-
-        return response_path
+        return s3_path
 
     finally:
         shutil.rmtree(IMG_DIR)
