@@ -17,9 +17,6 @@ from app.routers.animation import create_gif
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# model_path ='rigging/pose_landmarker.task'
-# base_option = python.baseOptions(model_asset_path='pose_landmarker.task')
-
 router = APIRouter()
 
 joint_names = [
@@ -52,7 +49,7 @@ joint_rename = {
 # 2. 캐릭터 -> 리깅 -> 영상으로 만든 bvh적용하여 img로 만들기
 
 @router.post("/create")
-def create_custom_motion(
+async def create_custom_motion(
         video: UploadFile = File(...),
         character_id: str = Form(...),
         motion_name: str = Form(...),
@@ -72,9 +69,11 @@ def create_custom_motion(
 
         # 비디오 저장 경로
         UUID = str(uuid.uuid4())
+        VID_DIR = "temp_video"
+        RIG_DIR = "temp_rig"
 
-        video_path = f'temp_video/{UUID}'
-        Path(video_path).mkdir(exist_ok=True)
+        Path(VID_DIR).mkdir(exist_ok=True)
+        video_path = os.path.join(VID_DIR, UUID)
 
         print(f'{video_path}/{video.filename}')
 
@@ -83,8 +82,8 @@ def create_custom_motion(
             shutil.copyfileobj(video.file, buffer)
 
         # 리깅 결과 저장 경로
-        rig_path = f'temp_rig/{UUID}'
-        Path(rig_path).mkdir(exist_ok=True)
+        Path(RIG_DIR).mkdir(exist_ok=True)
+        rig_path = os.path.join(RIG_DIR, UUID)
 
         # 리깅 결과 파일
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -102,6 +101,11 @@ def create_custom_motion(
         # 비디오 열기
         cap = cv2.VideoCapture(f'{video_path}/{video.filename}')
         frame_landmarks = []
+
+        # bvh 템플릿 복사
+        template_bvh_path = 'custom_motion/template_g.bvh'
+        custom_bvh_path = f'AnimatedDrawings/examples/bvh/rokoko/{motion_name}.bvh'
+        shutil.copyfile(template_bvh_path, custom_bvh_path)
 
         while cap.isOpened():
             success, image = cap.read()
@@ -154,9 +158,7 @@ def create_custom_motion(
             if cv2.waitKey(5) & 0xFF == 27:
                 break
 
-            # -------------------------------------------------------------------------------
-            # bvh 생성
-            # -------------------------------------------------------------------------------
+            # 커스텀 bvh 파일 제작
 
             df = pd.DataFrame(frame_landmarks)
 
@@ -180,8 +182,8 @@ def create_custom_motion(
 
             df_angles = pd.DataFrame(angle_data)
 
-            df.to_csv('rigging/df.csv', index=False)
-            df_angles.to_csv('rigging/df_angles.csv', index=False)
+            df.to_csv('custom_motion/df.csv', index=False)
+            df_angles.to_csv('custom_motion/df_angles.csv', index=False)
 
             joints = [
                 "Hips", "Spine", "Spine1", "Spine2",
@@ -201,7 +203,7 @@ def create_custom_motion(
                 "RightToeBase"
             ]
 
-            with open('rigging.template_g.bvh', 'a', encoding='utf-8') as bvh:
+            with open(custom_bvh_path, 'a', encoding='utf-8') as bvh:
                 bvh.write('\nFrames: {}\nFrameTime: 0.033333\n'.format(len(df)))
 
                 for row in range(len(df)):
@@ -244,26 +246,34 @@ def create_custom_motion(
 
                     bvh.write(frameAni.strip() + '\n')
 
-        # -------------------------------------------------------------------------------
-        # 아래 경로에 motion config 생성
-        # 경로: AnimatedDrawings/examples/config/motion/{모션이름}.yaml
-        motion_config_template = 'rigging/template.yaml'
-        # -------------------------------------------------------------------------------
+        # AnimatedDrawings/examples/config/motion/{모션이름}.yaml 생성
+        
+        template_motion_config_path = 'custom_motion/template.yaml'
+        custom_motion_config_path = f'AnimatedDrawings/examples/config/motion/{character_id}_{motion_name}.yaml'
+        
 
-        # -------------------------------------------------------------------------------
+        with open(template_motion_config_path, 'r', encoding='utf-8') as file:
+            template_content = file.read()
+
+        new_file = template_content.replace('motion_name', motion_name)
+
+        with open(custom_motion_config_path, 'w', encoding='utf-8') as file:
+            file.write(new_file)
+
         # 커스텀 gif 만들기
-        # -------------------------------------------------------------------------------
-
-        create_gif(
+        
+        gif_path = await create_gif(
             character_id=character_id,
-            motion=motion_name,
+            motion=f'{character_id}_{motion_name}',
             s3_img_url=img_url
         )
 
+        if gif_path:
+            return JSONResponse(content={"gif_path": gif_path}, status_code=200)
 
     except Exception as e:
-        logger.error("rigging => 에러 발생", exc_info=True)
-        return JSONResponse(content={"error": f"Fast API 에러 : rigging => {e}"}, status_code=500)
+        logger.error("custom_motion => 에러 발생", exc_info=True)
+        return JSONResponse(content={"error": f"Fast API 에러 : custom_motion => {e}"}, status_code=500)
 
     finally:
         if 'cap' in globals() and cap is not None:
