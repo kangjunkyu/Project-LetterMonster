@@ -11,7 +11,7 @@ images_temp
 gif_temp
 
 # osmesa 관련 파일 변경사항 무시
-# git ls-files -z AnimatedDrawings/examples/config/mvc/ | xargs -0 git update-index --assume-uncanged
+# git ls-files -z AnimatedDrawings/examples/config/mvc/ | xargs -0 git update-index --assume-unchanged
 # git update-index --assume-unchanged animated_drawings/mvc_base_cfg.yaml
 # git update-index --assume-unchanged animated_drawings/view/mesa_view.py
 
