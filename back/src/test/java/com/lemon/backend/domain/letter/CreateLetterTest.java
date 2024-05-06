@@ -64,73 +64,74 @@ public class CreateLetterTest {
 //    }
 
 
-//    @Test
-//    public void testCreateLetter() {
-//        // Arrange
-//        Integer senderId = 1;
-//        Integer receiverId = 2;
-//        Long sketchId = 2L;
-//        Long characterMotionId = 3L;
-//
-//        Users sender = Users.builder().id(senderId).build();
-//        Users receiver = Users.builder().id(receiverId).build();
-//
-//        Sketchbook sketchbook = Sketchbook.builder()
-//                .id(sketchId)
-//                .name("Test Sketchbook")
-//                .users(receiver)
-//                .build();
-//
-//        CharacterMotion characterMotion = CharacterMotion.builder()
-//                .id(characterMotionId)
-//                .build();
-//
-//        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
-//                .characterMotion(characterMotion)
-//                .sketchbook(sketchbook)
-//                .build();
-//
-//        LetterCreateDto letterCreateDto = LetterCreateDto.builder()
-//                .content("test")
-//                .characterMotionId(characterMotionId)
-//                .sketchbookId(sketchId)
-//                .build();
-//
-//        Letter letter = Letter.builder()
-//                .id(1L)
-//                .sketchbookCharacterMotion(sketchbookCharacterMotion)
-//                .sender(sender)
-//                .receiver(receiver)
-//                .content("test")
-//                .build();
-//
-//        Notification notification = Notification.builder()
-//                .id(1L)
-//                .type(1)
-//                .receiver(receiver)
-//                .friendName("test")
-//                .isCheck(false)
-//                                                        .build();
-//
-//        // 목킹
-//        when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
-//        when(userRepository.findById(receiverId)).thenReturn(Optional.of(receiver));
+    @Test
+    public void testCreateLetter() {
+        // Arrange
+        Integer senderId = 1;
+        Integer receiverId = 2;
+        Long sketchId = 2L;
+        Long characterMotionId = 3L;
+        String notificationToken = "notificationToken";
+
+        Users sender = Users.builder().id(senderId).build();
+        Users receiver = Users.builder().id(receiverId).notificationToken(notificationToken).build();
+
+        Sketchbook sketchbook = Sketchbook.builder()
+                .id(sketchId)
+                .name("Test Sketchbook")
+                .users(receiver)
+                .build();
+
+        CharacterMotion characterMotion = CharacterMotion.builder()
+                .id(characterMotionId)
+                .build();
+
+        SketchbookCharacterMotion sketchbookCharacterMotion = SketchbookCharacterMotion.builder()
+                .characterMotion(characterMotion)
+                .sketchbook(sketchbook)
+                .build();
+
+        LetterCreateDto letterCreateDto = LetterCreateDto.builder()
+                .content("test")
+                .characterMotionId(characterMotionId)
+                .sketchbookId(sketchId)
+                .build();
+
+        Letter letter = Letter.builder()
+                .id(1L)
+                .sketchbookCharacterMotion(sketchbookCharacterMotion)
+                .sender(sender)
+                .receiver(receiver)
+                .content("test")
+                .build();
+
+        Notification notification = Notification.builder()
+                .id(1L)
+                .type(1)
+                .receiver(receiver)
+                .friendName("test")
+                .isCheck(false)
+                                                        .build();
+
+        // 목킹
+        when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
+        when(userRepository.findById(receiverId)).thenReturn(Optional.of(receiver));
 //        when(sketchbookRepository.findById(sketchId)).thenReturn(Optional.of(sketchbook));
 //        when(characterMotionRepository.findById(characterMotionId)).thenReturn(Optional.of(characterMotion));
-//        when(letterRepository.save(any(Letter.class))).thenReturn(letter);
-//        when(notificationRepository.save(any(Notification.class))).thenReturn(notification);
-//        when(sketchbookRepository.findByCharacterMotionAndSketchbook(sketchId, characterMotionId))
-//                .thenReturn(Optional.of(sketchbookCharacterMotion));
-//        when(notificationService.sendNotification(anyString(), anyString(), anyString())).thenReturn(true);
-//        // Act
-//        Long createdLetterId = letterService.createLetter(senderId, letterCreateDto);
-//
-//
-//        // Assert
-//        assertNotNull(createdLetterId, "Created letter ID should not be null");
-//        verify(letterRepository).save(any(Letter.class));
-//        verify(notificationService).sendNotification(anyString(), anyString(), anyString());
-//    }
+        when(letterRepository.save(any(Letter.class))).thenReturn(letter);
+        when(notificationRepository.save(any(Notification.class))).thenReturn(notification);
+        when(sketchbookRepository.findByCharacterMotionAndSketchbook(sketchId, characterMotionId))
+                .thenReturn(Optional.of(sketchbookCharacterMotion));
+        when(notificationService.sendNotification(anyString(), anyString(), anyString())).thenReturn(true);
+        // Act
+        Long createdLetterId = letterService.createLetter(senderId, letterCreateDto);
+
+
+        // Assert
+        assertNotNull(createdLetterId, "Created letter ID should not be null");
+        verify(letterRepository).save(any(Letter.class));
+        verify(notificationService).sendNotification(anyString(), anyString(), anyString());
+    }
 
 
 
