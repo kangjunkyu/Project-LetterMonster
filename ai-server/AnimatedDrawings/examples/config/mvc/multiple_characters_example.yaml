@@ -9,5 +9,5 @@ scene:
 controller:
   MODE: video_render
   OUTPUT_VIDEO_PATH: ./video.gif
-#view:
-#  USE_MESA: True
+view:
+  USE_MESA: True
