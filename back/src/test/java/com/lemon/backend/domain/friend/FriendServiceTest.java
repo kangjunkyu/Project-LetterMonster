@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
 
-class CreateFriendTest {
+class FriendServiceTest {
 
     @Mock
     private FriendsRepository friendsRepository;

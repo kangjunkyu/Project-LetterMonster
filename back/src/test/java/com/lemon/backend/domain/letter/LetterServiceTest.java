@@ -12,28 +12,22 @@ import com.lemon.backend.domain.letter.service.impl.LetterServiceImpl;
 import com.lemon.backend.domain.notification.entity.Notification;
 import com.lemon.backend.domain.notification.repository.NotificationRepository;
 import com.lemon.backend.domain.notification.service.NotificationService;
-import com.lemon.backend.domain.notification.service.impl.NotificationServiceImpl;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
-import com.lemon.backend.domain.sketchbook.repository.SketchCharacterMotionRepository;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.CustomException;
-import com.lemon.backend.global.exception.ErrorCode;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateLetterTest {
+public class LetterServiceTest {
 
     @Mock
     private LetterRepository letterRepository;
@@ -113,7 +107,6 @@ public class CreateLetterTest {
                 .isCheck(false)
                                                         .build();
 
-        // 목킹
         when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
         when(userRepository.findById(receiverId)).thenReturn(Optional.of(receiver));
 //        when(sketchbookRepository.findById(sketchId)).thenReturn(Optional.of(sketchbook));
@@ -123,11 +116,9 @@ public class CreateLetterTest {
         when(sketchbookRepository.findByCharacterMotionAndSketchbook(sketchId, characterMotionId))
                 .thenReturn(Optional.of(sketchbookCharacterMotion));
         when(notificationService.sendNotification(anyString(), anyString(), anyString())).thenReturn(true);
-        // Act
         Long createdLetterId = letterService.createLetter(senderId, letterCreateDto);
 
 
-        // Assert
         assertNotNull(createdLetterId, "Created letter ID should not be null");
         verify(letterRepository).save(any(Letter.class));
         verify(notificationService).sendNotification(anyString(), anyString(), anyString());
@@ -137,7 +128,6 @@ public class CreateLetterTest {
 
     @Test
     public void testCreateLetterNotFound() {
-        // Arrange
         Integer senderId = 1;
         Long sketchId = 2L;
         Long characterMotionId = 3L;
@@ -156,7 +146,6 @@ public class CreateLetterTest {
                 .content("test")
                 .build();
 
-        // Act & Assert
         assertThrows(CustomException.class, () -> letterService.createLetter(senderId, letterCreateDto));
     }
 

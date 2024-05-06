@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateSketchbookTest {
+public class SketchbookServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -49,10 +49,8 @@ public class CreateSketchbookTest {
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(sketchbookRepository.save(any(Sketchbook.class))).thenReturn(sketchbook);
 
-        // Act
         Long sketchbookId = sketchbookService.createSketchbook(userId, sketchDto);
 
-        // Assert
         assertNotNull(sketchbookId);  // Changed to assertNotNull to explicitly check for non-null value
         verify(userRepository, times(1)).findById(userId);
         verify(sketchbookRepository, times(1)).save(any(Sketchbook.class));
@@ -68,7 +66,6 @@ public class CreateSketchbookTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(CustomException.class, () -> sketchbookService.createSketchbook(userId, sketchDto));
     }
 
@@ -86,10 +83,8 @@ public class CreateSketchbookTest {
 
         when(sketchbookRepository.findById(sketchbookId)).thenReturn(Optional.of(existingSketchbook));
 
-        // Act
         sketchbookService.updateSketchbook(sketchbookId, updateDto);
 
-        // Assert
         verify(sketchbookRepository, times(1)).findById(sketchbookId);
         verify(sketchbookRepository, times(1)).save(existingSketchbook); // Ensure the existing sketchbook is saved with updated data
         assertEquals("Updated Sketchbook", existingSketchbook.getName());
@@ -105,7 +100,6 @@ public class CreateSketchbookTest {
 
         when(sketchbookRepository.findById(sketchbookId)).thenReturn(Optional.empty());
 
-        // CustomException을 기대
         assertThrows(CustomException.class, () -> sketchbookService.updateSketchbook(sketchbookId, sketchDto));
     }
 
@@ -121,21 +115,17 @@ public class CreateSketchbookTest {
         when(sketchbookRepository.findById(sketchbookId)).thenReturn(Optional.of(sketchbook));
         doNothing().when(sketchbookRepository).delete(sketchbook);
 
-        // Act
         sketchbookService.deleteSketchbook(sketchbookId);
 
-        // Assert
         verify(sketchbookRepository).delete(sketchbook);
     }
 
     @Test
     public void testDeleteSketchbookNotFound() {
-        // Arrange
         Long sketchbookId = 1L;
 
         when(sketchbookRepository.findById(sketchbookId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(CustomException.class, () -> sketchbookService.deleteSketchbook(sketchbookId));
     }
 
