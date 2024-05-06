@@ -150,6 +150,7 @@ public class LetterServiceImpl implements LetterService {
     @Transactional
     @Override
     public void deleteLetter(Long letterId) {
-        letterRepository.deleteById(letterId);
+        Letter letter = letterRepository.findById(letterId).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
+        letterRepository.delete(letter);
     }
 }

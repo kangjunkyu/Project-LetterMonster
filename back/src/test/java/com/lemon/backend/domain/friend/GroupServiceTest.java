@@ -4,7 +4,7 @@ import com.lemon.backend.domain.friend.entity.Friends;
 import com.lemon.backend.domain.friend.entity.GroupsInfo;
 import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.lemon.backend.domain.friend.repository.GroupsRepository;
-import com.lemon.backend.domain.friend.service.impl.FriendsServiceImpl;
+import com.lemon.backend.domain.friend.service.impl.GroupsServiceImpl;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
 import com.lemon.backend.global.exception.CustomException;
@@ -18,19 +18,20 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
-class CreateFriendTest {
+class GroupServiceTest {
 
+    @Mock
+    private GroupsRepository groupRepository;
     @Mock
     private FriendsRepository friendsRepository;
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private GroupsRepository groupsRepository;
 
     @InjectMocks
-    private FriendsServiceImpl friendsService;
+    private GroupsServiceImpl groupsService;
 
     @BeforeEach
     void setup() {
@@ -38,64 +39,56 @@ class CreateFriendTest {
     }
 
     @Test
-    void addFriend_Success() {
+    void createGroup_Success() {
         Users user = Users.builder()
                 .id(1)
                 .build();
-        Users friendUser = Users.builder()
-                .id(2)
-                .build();
-        GroupsInfo defaultGroup = GroupsInfo.builder()
+        GroupsInfo groupsInfo = GroupsInfo.builder()
                 .id(1L)
-                .owner(user)
                 .groupName("test")
+                .owner(user)
                 .build();
-
-        Friends friends = Friends.builder()
-                .id(1L)
-                .friend(friendUser)
-                .users(user)
-                .build();
-
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(userRepository.findById(2)).thenReturn(Optional.of(friendUser));
-        when(groupsRepository.findFirstByUsersId(1)).thenReturn(Optional.of(defaultGroup));
-        when(friendsRepository.save(any(Friends.class))).thenReturn(friends);
+        when(groupRepository.save(any(GroupsInfo.class))).thenReturn(groupsInfo);
 
-        assertDoesNotThrow(() -> friendsService.addFriend(1, 2));
-        verify(friendsRepository).save(any(Friends.class));
+        assertDoesNotThrow(() -> groupsService.createGroup(1, "New Group"));
+        verify(groupRepository).save(any(GroupsInfo.class));
     }
 
     @Test
-    void deleteFriend_Success() {
+    void deleteGroup_Success() {
         Users user = Users.builder()
                 .id(1)
                 .build();
-        Users friendUser = Users.builder()
+        Users friend = Users.builder()
                 .id(2)
                 .build();
-        GroupsInfo defaultGroup = GroupsInfo.builder()
+
+        GroupsInfo groupsInfo = GroupsInfo.builder()
                 .id(1L)
-                .owner(user)
                 .groupName("test")
+                .owner(user)
+                .friendList(new ArrayList<>())
                 .build();
 
         Friends friends = Friends.builder()
                 .id(1L)
-                .friend(friendUser)
+                .friend(friend)
                 .users(user)
+                .groupsInfo(groupsInfo)
                 .build();
-        when(friendsRepository.findByUsers_IdAndFriend_Id(1, 2)).thenReturn(Optional.of(friends));
-        doNothing().when(friendsRepository).delete(friends);
+        groupsInfo.getFriendList().add(friends);
+        when(groupRepository.findById(1L)).thenReturn(Optional.of(groupsInfo));
+        when(groupRepository.findFirstByUsersId(1)).thenReturn(Optional.of(groupsInfo));
 
-        assertDoesNotThrow(() -> friendsService.deleteFriend(1, 2));
-        verify(friendsRepository).delete(friends);
+        assertDoesNotThrow(() -> groupsService.deleteGroup(1, 1L));
+        verify(groupRepository).deleteById(1L);
     }
 
     @Test
-    void deleteFriend_NotFound() {
-        when(friendsRepository.findByUsers_IdAndFriend_Id(1, 2)).thenReturn(Optional.empty());
+    void deleteGroup_NotFound() {
+        when(groupRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(CustomException.class, () -> friendsService.deleteFriend(1, 2));
+        assertThrows(CustomException.class, () -> groupsService.deleteGroup(1, 1L));
     }
 }
