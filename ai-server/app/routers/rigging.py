@@ -247,19 +247,7 @@ def create_custom_motion(
         # -------------------------------------------------------------------------------
         # 아래 경로에 motion config 생성
         # 경로: AnimatedDrawings/examples/config/motion/{모션이름}.yaml
-            # filepath: AnimatedDrawings / examples / bvh / rokoko / 모션이름.bvh
-            # start_frame_idx: 0
-            # end_frame_idx: null
-            # groundplane_joint: LeftFoot
-            # forward_perp_joint_vectors:
-            # - - LeftShoulder
-            # - RightShoulder
-            # - - LeftUpLeg
-            # - RightUpLeg
-            #
-            #
-            # scale: 0.005
-            # up: +y
+        motion_config_template = 'rigging/template.yaml'
         # -------------------------------------------------------------------------------
 
         # -------------------------------------------------------------------------------
