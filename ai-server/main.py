@@ -20,7 +20,7 @@ app.add_middleware(
 )
 
 app.include_router(router=animation.router, prefix="/ai/character", tags=["character"])  # characters
-app.include_router(router=custom_motion.router, prefix="/ai/character/custom", tags=["custom"])
+app.include_router(router=custom_motion.router, prefix="/ai/motion", tags=["motion"])
 
 
 @app.get("/")

@@ -69,9 +69,11 @@ async def create_custom_motion(
 
         # 비디오 저장 경로
         UUID = str(uuid.uuid4())
+        VID_DIR = "temp_video"
+        RIG_DIR = "temp_rig"
 
-        video_path = f'temp_video/{UUID}'
-        Path(video_path).mkdir(exist_ok=True)
+        Path(VID_DIR).mkdir(exist_ok=True)
+        video_path = os.path.join(VID_DIR, UUID)
 
         print(f'{video_path}/{video.filename}')
 
@@ -80,8 +82,8 @@ async def create_custom_motion(
             shutil.copyfileobj(video.file, buffer)
 
         # 리깅 결과 저장 경로
-        rig_path = f'temp_rig/{UUID}'
-        Path(rig_path).mkdir(exist_ok=True)
+        Path(RIG_DIR).mkdir(exist_ok=True)
+        rig_path = os.path.join(RIG_DIR, UUID)
 
         # 리깅 결과 파일
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
