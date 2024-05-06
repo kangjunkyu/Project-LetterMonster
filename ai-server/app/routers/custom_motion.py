@@ -72,8 +72,8 @@ async def create_custom_motion(
         VID_DIR = "temp_video"
         RIG_DIR = "temp_rig"
 
-        Path(VID_DIR).mkdir(exist_ok=True)
-        video_path = os.path.join(VID_DIR, UUID)
+        video_path = f'{VID_DIR}/{UUID}'
+        Path(video_path).mkdir(exist_ok=True)
 
         print(f'{video_path}/{video.filename}')
 
@@ -82,8 +82,8 @@ async def create_custom_motion(
             shutil.copyfileobj(video.file, buffer)
 
         # 리깅 결과 저장 경로
-        Path(RIG_DIR).mkdir(exist_ok=True)
-        rig_path = os.path.join(RIG_DIR, UUID)
+        rig_path = f'{RIG_DIR}/{UUID}'
+        Path(rig_path).mkdir(exist_ok=True)
 
         # 리깅 결과 파일
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -182,8 +182,8 @@ async def create_custom_motion(
 
             df_angles = pd.DataFrame(angle_data)
 
-            df.to_csv('custom_motion/df.csv', index=False)
-            df_angles.to_csv('custom_motion/df_angles.csv', index=False)
+            df.to_csv(f'{rig_path}/df.csv', index=False)
+            df_angles.to_csv(f'{rig_path}/df_angles.csv', index=False)
 
             joints = [
                 "Hips", "Spine", "Spine1", "Spine2",
@@ -247,10 +247,10 @@ async def create_custom_motion(
                     bvh.write(frameAni.strip() + '\n')
 
         # AnimatedDrawings/examples/config/motion/{모션이름}.yaml 생성
-        
+
         template_motion_config_path = 'custom_motion/template.yaml'
         custom_motion_config_path = f'AnimatedDrawings/examples/config/motion/{character_id}_{motion_name}.yaml'
-        
+
 
         with open(template_motion_config_path, 'r', encoding='utf-8') as file:
             template_content = file.read()
@@ -261,7 +261,7 @@ async def create_custom_motion(
             file.write(new_file)
 
         # 커스텀 gif 만들기
-        
+
         gif_path = await create_gif(
             character_id=character_id,
             motion=f'{character_id}_{motion_name}',
