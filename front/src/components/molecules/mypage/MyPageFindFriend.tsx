@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import styles from "./MyPageMolecules.module.scss";
 import { useSearchUserNickname } from "../../../hooks/friendGroup/useSearchUserNickname";
-import { usePostFriend } from "../../../hooks/friendGroup/useFriend";
+import {
+  useDeleteFriend,
+  usePostFriend,
+} from "../../../hooks/friendGroup/useFriend";
 import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface FriendProps {
-  id: number;
+  userId: number;
   nickname: string;
   nicknameTag: number;
+  isFriend: boolean;
 }
 
 function MyPageFindFriend() {
@@ -15,9 +19,24 @@ function MyPageFindFriend() {
   const [searchTerm, setSearchTerm] = useState("");
   const { showAlert } = useAlert();
   const addFriend = usePostFriend();
+  const deleteFriend = useDeleteFriend();
 
-  const addFriendMutation = (friendId:number) => {
-    console.log(friendId);
+  const deleteFriendMutation = (friendId: number) => {
+    deleteFriend.mutate(friendId, {
+      onSuccess: () => {
+        showAlert("친구를 삭제했어요!");
+      },
+      onError: (err: any) => {
+        if (err.response.data.status == 400) {
+          showAlert("다시 삭제해주세요.");
+        } else {
+          showAlert("다시 삭제해주세요.");
+        }
+      },
+    });
+  };
+
+  const addFriendMutation = (friendId: number) => {
     addFriend.mutate(friendId, {
       onSuccess: () => {
         showAlert("친구를 추가했어요!");
@@ -48,8 +67,6 @@ function MyPageFindFriend() {
     return () => clearTimeout(timeoutId);
   }, [nickname]);
 
-  console.log(friendList);
-
   return (
     <>
       <div className={styles.findFriendContainer}>
@@ -76,16 +93,31 @@ function MyPageFindFriend() {
           ) : (
             friendList &&
             friendList.map((friend: FriendProps) => (
-              <div className={styles.findFriendResultContent} key={friend.id}>
+              <div
+                className={styles.findFriendResultContent}
+                key={friend.userId}
+              >
                 <div>{friend.nickname}</div>
                 <div>{friend.nicknameTag}</div>
-                <button
-                  onClick={() => {
-                    addFriendMutation(friend.id);
-                  }}
-                >
-                  추가
-                </button>
+                {friend.isFriend ? (
+                  <button
+                    className={styles.deleteFriendButton}
+                    onClick={() => {
+                      deleteFriendMutation(friend.userId);
+                    }}
+                  >
+                    삭제
+                  </button>
+                ) : (
+                  <button
+                    className={styles.addFriendButton}
+                    onClick={() => {
+                      addFriendMutation(friend.userId);
+                    }}
+                  >
+                    추가
+                  </button>
+                )}
               </div>
             ))
           )}
