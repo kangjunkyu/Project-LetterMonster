@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @AllArgsConstructor
+@Builder(builderClassName = "characterBuilder")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE characters SET is_deleted = TRUE WHERE characters_id = ?")
@@ -45,22 +46,22 @@ public class Characters extends BaseEntity {
         user.getCharacterList().add(this);
     }
 
-    @Builder
-    Characters(String nickname, Users users){
+    @Builder(builderClassName = "builderWithUser", builderMethodName = "builderWithUser")
+    Characters(String nickname, Users users) {
         this.nickname = nickname;
         this.users = users;
         this.url = "";
-        this.mainCharacter =false;
+        this.mainCharacter = false;
         this.characterMotionList = new ArrayList<>();
         addCharacter(users);
     }
 
-    @Builder
-    Characters(String nickname){
+    @Builder(builderClassName = "builderWithoutUser", builderMethodName = "builderWithoutUser")
+    Characters(String nickname) {
         this.nickname = nickname;
         this.users = null;
         this.url = "";
-        this.mainCharacter =false;
+        this.mainCharacter = false;
         this.characterMotionList = new ArrayList<>();
     }
 

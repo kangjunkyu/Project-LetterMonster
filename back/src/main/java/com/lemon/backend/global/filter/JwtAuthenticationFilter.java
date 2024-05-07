@@ -56,6 +56,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String requestURI = httpRequest.getRequestURI();
 
         if (requestURI.equals("/") || checkWhiteList(requestURI)) {
+            log.info(requestURI);
             chain.doFilter(request, response);
             return;
         }
