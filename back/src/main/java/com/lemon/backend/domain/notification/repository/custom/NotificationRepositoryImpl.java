@@ -19,9 +19,10 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     @Override
     public Optional<List<NotificationGetDto>> getNotification(Integer userId) {
         return Optional.ofNullable(query.select(Projections.constructor(NotificationGetDto.class,
-                notification.id,
-                notification.friendName,
-                notification.type))
+                        notification.id,
+                        notification.type,
+                        notification.friendName
+                ))
                 .where(notification.receiver.id.eq(userId)
                         .and(notification.isCheck.eq(false)))
                 .fetch());
@@ -31,8 +32,9 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
     public Optional<List<NotificationGetDto>> getAllNotification(Integer userId) {
         return Optional.ofNullable(query.select(Projections.constructor(NotificationGetDto.class,
                         notification.id,
-                        notification.friendName,
-                        notification.type))
+                        notification.type,
+                        notification.friendName
+                        ))
                 .where(notification.receiver.id.eq(userId))
                 .fetch());
     }
@@ -42,8 +44,8 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         return Optional.ofNullable(query.select(Projections.constructor(Notification.class,
                 notification.id,
                 notification.type,
-                notification.friendName,
                 notification.receiver,
+                notification.friendName,
                 notification.isCheck)).where(notification.receiver.id.eq(userId)).fetch());
     }
 }
