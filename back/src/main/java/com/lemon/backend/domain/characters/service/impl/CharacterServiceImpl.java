@@ -65,10 +65,10 @@ public class CharacterServiceImpl implements CharacterService {
             Characters characters = null;
 
             if(userId == null){
-                characters = Characters.builder().nickname(nickname).build();
+                characters = Characters.builderWithoutUser().nickname(nickname).build();
             }else{
                 Users users = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
-                characters = Characters.builder().nickname(nickname).users(users).build();
+                characters = Characters.builderWithUser().nickname(nickname).users(users).build();
             }
             characterRepository.save(characters);
             String fileName = characters.getId().toString() + ".png";
