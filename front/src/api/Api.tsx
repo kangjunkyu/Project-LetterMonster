@@ -207,3 +207,23 @@ export const postFriendGroupList = (friendId: number) => {
 */
 export const deleteFriend = (friendId: number) =>
   API.delete(`friends/${friendId}`).then((res) => res);
+// 알람 관련 API
+
+/** 알림 전체 조회
+ * 조회만 하고 읽음 처리는 안함
+ */
+export const getNotification = () =>
+  API.get(`/notification/all`).then((res) => res.data.data);
+
+/** 안읽은 알림 조회
+ *
+ * 조회만 하고 읽음 처리는 안함
+ */
+export const getUncheckedNotification = () =>
+  API.get(`/notification/uncheck`).then((res) => res.data.data);
+
+/** 알림 전부 읽음 처리
+ * 읽음 처리만 하고 조회는 안함
+ */
+export const putNotification = () =>
+  API.put(`/notification`).then((res) => res.data);
