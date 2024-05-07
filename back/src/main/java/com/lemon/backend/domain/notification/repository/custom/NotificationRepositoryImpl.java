@@ -23,6 +23,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
                         notification.type,
                         notification.friendName
                 ))
+                        .from(notification)
                 .where(notification.receiver.id.eq(userId)
                         .and(notification.isCheck.eq(false)))
                 .fetch());
@@ -35,6 +36,7 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
                         notification.type,
                         notification.friendName
                         ))
+                        .from(notification)
                 .where(notification.receiver.id.eq(userId))
                 .fetch());
     }
@@ -46,6 +48,6 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
                 notification.type,
                 notification.receiver,
                 notification.friendName,
-                notification.isCheck)).where(notification.receiver.id.eq(userId)).fetch());
+                notification.isCheck)).from(notification).where(notification.receiver.id.eq(userId)).fetch());
     }
 }
