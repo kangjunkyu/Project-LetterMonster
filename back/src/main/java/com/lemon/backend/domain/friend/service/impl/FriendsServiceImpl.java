@@ -7,6 +7,9 @@ import com.lemon.backend.domain.friend.entity.GroupsInfo;
 import com.lemon.backend.domain.friend.repository.FriendsRepository;
 import com.lemon.backend.domain.friend.repository.GroupsRepository;
 import com.lemon.backend.domain.friend.service.FriendsService;
+import com.lemon.backend.domain.notification.entity.Notification;
+import com.lemon.backend.domain.notification.repository.NotificationRepository;
+import com.lemon.backend.domain.notification.service.NotificationService;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.domain.users.user.entity.Users;
 import com.lemon.backend.domain.users.user.repository.UserRepository;
@@ -27,6 +30,8 @@ public class FriendsServiceImpl implements FriendsService {
     private final FriendsRepository friendsRepository;
     private final UserRepository userRepository;
     private final GroupsRepository groupsRepository;
+    private final NotificationRepository notificationRepository;
+    private final NotificationService notificationService;
 
     @Override
     public String addFriend(Integer userId, Integer friendId) {
@@ -59,6 +64,24 @@ public class FriendsServiceImpl implements FriendsService {
 
         user.getFriendList().add(friend);
         friendUser.getFriendList().add(friend);
+
+        Notification notification = Notification.builder()
+                .receiver(user)
+                .type(2)
+                .friendName(friend.getFriend().getNickname())
+                .build();
+
+        String body = null;
+
+        if(friend.getFriend().getNickname() != null){
+            body = "[ " + friend.getFriend().getNickname() + " ] 님께서 친구로 추가했어요";
+            notificationRepository.save(notification);
+        }
+
+        String title = "LEMON";
+        if(!notificationService.sendNotification(user.getNotificationToken(), title, body)){
+            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+        }
 
         return friendsRepository.save(friend).getFriend().getNickname();
     }
