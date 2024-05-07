@@ -194,19 +194,18 @@ export const getFriendGroupList = () =>
  */
 export const postFriendGroupList = (friendId: number) => {
   console.log(friendId);
-  return API.post(`/friends/${friendId}`).then(
-    (res) => {
-      console.log(res);
-      return res;
-    }
-  );
+  return API.post(`/friends/${friendId}`).then((res) => {
+    console.log(res);
+    return res;
+  });
 };
 
-/** 친구 삭제 
+/** 친구 삭제
  * @param friendId - 친구삭제
-*/
+ */
 export const deleteFriend = (friendId: number) =>
   API.delete(`friends/${friendId}`).then((res) => res);
+
 // 알람 관련 API
 
 /** 알림 전체 조회
