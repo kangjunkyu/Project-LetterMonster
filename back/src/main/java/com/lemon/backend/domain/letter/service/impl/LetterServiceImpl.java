@@ -131,7 +131,7 @@ public class LetterServiceImpl implements LetterService {
 
         String body = null;
 
-        if(letter.getSender() != null){
+        if(letter.getSender() == null){
             body = "[ 비회원 ] 으로부터 편지가 도착했어요";
             notificationRepository.save(notification);
         }
