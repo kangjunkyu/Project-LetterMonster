@@ -6,6 +6,8 @@ import Modal from "../../atoms/modal/Modal";
 import { useState } from "react";
 import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
 import LoginPage from "../login/LoginPage";
+import { useNavigate } from "react-router-dom";
+import { Page_Url } from "../../../router/Page_Url";
 // import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 
 type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList";
@@ -21,6 +23,7 @@ function MyPages() {
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
   const logout = useLogout();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
+  const navigate = useNavigate();
 
   return (
     <div className={styles.myPageContainer}>
@@ -31,10 +34,10 @@ function MyPages() {
           </button>
           {isModalOpen.userInfo && (
             <Modal
-            isOpen={isModalOpen.userInfo}
-            onClose={() => handleToggleModal("userInfo")}
+              isOpen={isModalOpen.userInfo}
+              onClose={() => handleToggleModal("userInfo")}
             >
-            <MyPageUserInfo />
+              <MyPageUserInfo />
             </Modal>
           )}
           <button onClick={() => handleToggleModal("characterList")}>
@@ -60,7 +63,14 @@ function MyPages() {
             </Modal>
           )} */}
           <div>
-            <button onClick={() => logout()}>로그아웃</button>
+            <button
+              onClick={() => {
+                logout();
+                navigate(Page_Url.Main)
+              }}
+            >
+              로그아웃
+            </button>
           </div>
         </>
       ) : (
