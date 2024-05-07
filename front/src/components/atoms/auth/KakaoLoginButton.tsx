@@ -4,7 +4,9 @@ import styles from "./AuthButton.module.scss";
 function KakaoLogin() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
-  const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${REDIRECT_URI}`;
+  const KAKAO_AUTH_URL = `${BASE_URL}/oauth2/authorization/kakao?redirect_uri=${REDIRECT_URI}&firebase_token=${localStorage.getItem(
+    "fcm_token"
+  )}`;
 
   const Login = () => {
     window.location.href = KAKAO_AUTH_URL;
