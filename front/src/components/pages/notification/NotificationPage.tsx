@@ -1,7 +1,7 @@
 import useNotification, {
   useUncheckedNotification,
 } from "../../../hooks/notification/useNotification";
-import styles from "./NotificationPage.module.scss";
+// import styles from "./NotificationPage.module.scss";
 
 function NotificationPage() {
   const { data } = useNotification();
