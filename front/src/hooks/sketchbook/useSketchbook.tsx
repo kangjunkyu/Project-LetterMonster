@@ -4,6 +4,7 @@ import {
   getSketchbookSelected,
   putSketchbookName,
   deleteSketchbook,
+  getSketchbookSelectedsimple,
 } from "../../api/Api";
 import { Page_Url } from "../../router/Page_Url";
 
@@ -11,12 +12,17 @@ import { Page_Url } from "../../router/Page_Url";
 //   sketchbookId: number;
 //   name: string;
 // }
-
 /** 스케치북 불러오기 */
 export default function useSketchbook(uuid: string) {
   return useQuery({
     queryKey: ["sketchbook"],
-    queryFn: () => getSketchbookSelected(uuid),
+    queryFn: () => {
+      if (localStorage.getItem("accessToken")) {
+        return getSketchbookSelected(uuid);
+      } else {
+        return getSketchbookSelectedsimple(uuid);
+      }
+    },
   });
 }
 

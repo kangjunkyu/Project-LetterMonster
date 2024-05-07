@@ -59,12 +59,12 @@ function SketchbookPage() {
         </LNB>
         {data && (
           <figure className={styles.sketchbook}>
-            {isModalOpen.letter && (
+            {isModalOpen?.letter && (
               <div className={styles.letterBox}>
                 <Letter
                   sender={
                     data?.data?.sketchbookCharacterMotionList[now]
-                      ?.letterList?.[letter].sender.nickname
+                      ?.letterList?.[letter]?.sender?.nickname
                   }
                   content={
                     data?.data?.sketchbookCharacterMotionList[now]?.letterList[

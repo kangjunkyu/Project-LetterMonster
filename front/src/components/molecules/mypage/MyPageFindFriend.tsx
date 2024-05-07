@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./MyPageMolecules.module.scss";
 import { useSearchUserNickname } from "../../../hooks/friendGroup/useSearchUserNickname";
-import { usePostFriend } from "../../../hooks/friendGroup/useGroup";
+import { usePostFriend } from "../../../hooks/friendGroup/useFriend";
 import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface FriendProps {
@@ -13,11 +13,10 @@ interface FriendProps {
 function MyPageFindFriend() {
   const [nickname, setNickname] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [friendId, setFriendId] = useState(0);
   const { showAlert } = useAlert();
   const addFriend = usePostFriend();
 
-  const addFriendMutation = () => {
+  const addFriendMutation = (friendId:number) => {
     console.log(friendId);
     addFriend.mutate(friendId, {
       onSuccess: () => {
@@ -49,7 +48,7 @@ function MyPageFindFriend() {
     return () => clearTimeout(timeoutId);
   }, [nickname]);
 
-  // console.log(friendList);
+  console.log(friendList);
 
   return (
     <>
@@ -82,8 +81,7 @@ function MyPageFindFriend() {
                 <div>{friend.nicknameTag}</div>
                 <button
                   onClick={() => {
-                    setFriendId(friend.id);
-                    addFriendMutation();
+                    addFriendMutation(friend.id);
                   }}
                 >
                   추가

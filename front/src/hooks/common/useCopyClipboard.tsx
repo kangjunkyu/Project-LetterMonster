@@ -4,7 +4,7 @@ function useCopyClipboard() {
   const { showAlert } = useAlert();
   return (textToCopy: string) =>
     navigator.clipboard
-      .writeText(textToCopy)
+      ?.writeText(textToCopy)
       .then(() => {
         // 복사가 성공적으로 이루어졌을 때의 로직
         showAlert("복사 완료");
