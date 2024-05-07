@@ -7,8 +7,8 @@ import "./locales/i18n"; // 다국어 지원
 import { useScript } from "./hooks/share/useShareToKakao";
 import { useEffect } from "react";
 import { AlertProvider } from "./hooks/notice/useAlert";
-import ReactGA from "react-ga4"; // 구글 애널리틱스
 import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
+import GetToken from "./util/fcm/messaging_get_token";
 
 declare global {
   interface Window {
@@ -19,6 +19,7 @@ declare global {
 const queryClient = new QueryClient();
 
 const App = () => {
+  GetToken();
   const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
   useEffect(() => {
     if (status === "ready" && window.Kakao && !window.Kakao.isInitialized()) {
