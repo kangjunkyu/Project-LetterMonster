@@ -28,4 +28,6 @@ export const Page_Url = {
   SketchbookList: "/sketchbook/list",
   // 스케치북 페이지
   Sketchbook: "/sketchbook/",
+
+  Noti: "/notitest",
 };
