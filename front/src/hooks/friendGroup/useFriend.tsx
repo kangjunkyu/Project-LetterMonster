@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getFriendGroupList, postFriendGroupList } from "../../api/Api";
+import {
+  deleteFriend,
+  getFriendGroupList,
+  postFriendGroupList,
+} from "../../api/Api";
 
 export function useGetFriendGroupList() {
   return useQuery({
@@ -12,6 +16,16 @@ export function usePostFriend() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (friendId: number) => postFriendGroupList(friendId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["friend"] });
+    },
+  });
+}
+
+export function useDeleteFriend() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (friendId: number) => deleteFriend(friendId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["friend"] });
     },

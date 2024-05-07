@@ -187,10 +187,10 @@ export const searchUserNickname = (nickname: string) =>
 
 /** 친구(그룹) 목록 조회 */
 export const getFriendGroupList = () =>
-  API.get(`/groups/all`).then((res) => res);
+  API.get(`/groups/all`).then((res) => res.data.data);
 
 /** 친구 추가
- * @param userId - 친구 아이디
+ * @param friendId - 친구 아이디
  */
 export const postFriendGroupList = (friendId: number) => {
   console.log(friendId);
@@ -201,3 +201,9 @@ export const postFriendGroupList = (friendId: number) => {
     }
   );
 };
+
+/** 친구 삭제 
+ * @param friendId - 친구삭제
+*/
+export const deleteFriend = (friendId: number) =>
+  API.delete(`friends/${friendId}`).then((res) => res);

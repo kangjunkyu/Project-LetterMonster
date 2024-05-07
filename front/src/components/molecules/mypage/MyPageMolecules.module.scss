@@ -158,19 +158,19 @@
 .findFriendDivider::after {
   content: '';
   display: block;
-  height: 2px; // 선의 두께 설정
-  background-color: $gc400; // 선의 색상 설정
-  width: 100%; // 부모 요소의 전체 너비에 걸쳐 선을 그림
+  height: 2px; 
+  background-color: $gc400; 
+  width: 100%; 
 }
 
 .findFriendResult{
   height: 150px;
   overflow-y: auto;
+  padding-right: 10px;
 }
 
 .findFriendColumn{
   display: flex;
-  // justify-content: space-between;
   margin-bottom: 3px;
   
   p:nth-child(1){
@@ -193,5 +193,44 @@
 
 // 내 친구 목록
 .friendListContainer{
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
+  height: 300px;
+  gap: 0.7em;
+  width: 250px;
+}
+
+.friendListAllContent{
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.myFriendEachContent{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  margin: 3px 0;
+
+  button{
+    padding: 3px;
+    background-color: $errorColor;
+    color: white;
+    border-radius: 5px;
+  }
+}
+
+.friendListUpper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  button{
+    padding: 5px;
+    background-color: $successColor;
+    color: white;
+    border-radius: 5px;
+  }
 }
