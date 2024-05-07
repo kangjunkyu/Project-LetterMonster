@@ -105,7 +105,7 @@ public class LetterServiceTest {
                 .receiver(receiver)
                 .friendName("test")
                 .isCheck(false)
-                                                        .build();
+                .build();
 
         when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
         when(userRepository.findById(receiverId)).thenReturn(Optional.of(receiver));
