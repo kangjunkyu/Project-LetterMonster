@@ -155,7 +155,7 @@ export const postLetter = (
   sketchbookId: number,
   characterMotionId: number
 ) =>
-  API.post(`/letter`, {
+  API.post(localStorage.getItem("accessToken") ? `/letter` : `/letter/public`, {
     content: content,
     sketchbookId: sketchbookId,
     characterMotionId: characterMotionId,
