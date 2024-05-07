@@ -16,10 +16,6 @@ declare global {
   }
 }
 
-if (import.meta.env.REACT_APP_GOOGLE_ANALYTICS) {
-  ReactGA.initialize(import.meta.env.REACT_APP_GOOGLE_ANALYTICS);
-}
-
 const queryClient = new QueryClient();
 
 const App = () => {
