@@ -12,6 +12,7 @@ interface MyFriendProps {
   id: number;
   nickname: string;
   nicknameTag: string;
+  isFriend: boolean;
 }
 
 type ModalName = "findFriend";
