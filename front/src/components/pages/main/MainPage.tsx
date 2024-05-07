@@ -12,8 +12,15 @@ import KakaoLogin from "../../atoms/auth/KakaoLoginButton";
 import LineLogin from "../../atoms/auth/LineLoginButton";
 import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 import MyPageFriendList from "../../molecules/mypage/MyPageFriendList";
+import { useNavigate } from "react-router-dom";
+import { Page_Url } from "../../../router/Page_Url";
 
-type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList" | "friendList";
+type ModalName =
+  | "userInfo"
+  | "langSelect"
+  | "findFriend"
+  | "characterList"
+  | "friendList";
 
 function MainPage() {
   // const navigate = useNavigate();
@@ -28,7 +35,8 @@ function MainPage() {
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
   const logout = useLogout();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
-
+  const navigate = useNavigate();
+  
   return (
     <div className={styles.mainContainer}>
       <LanguageSwitcher />
@@ -84,7 +92,14 @@ function MainPage() {
                 <MyPageFriendList />
               </Modal>
             )}
-            <button onClick={() => logout()}>로그아웃</button>
+            <button
+              onClick={() => {
+                logout();
+                navigate(Page_Url.Main);
+              }}
+            >
+              로그아웃
+            </button>
           </div>
         </>
       ) : (

@@ -29,8 +29,7 @@ function MyPageFriendList() {
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
 
-  const deleteFriendMutation = (friendId:number) => {
-    console.log(friendId);
+  const deleteFriendMutation = (friendId: number) => {
     deleteFriend.mutate(friendId, {
       onSuccess: () => {
         showAlert("친구를 삭제했어요!");
@@ -44,8 +43,6 @@ function MyPageFriendList() {
       },
     });
   };
-
-  console.log(myFriend);
 
   return (
     <>
@@ -71,6 +68,7 @@ function MyPageFriendList() {
                 <div>{friend.nickname}</div>
                 <div>{friend.nicknameTag}</div>
                 <button
+                  className={styles.deleteFriendButton}
                   onClick={() => {
                     deleteFriendMutation(friend.id);
                   }}
