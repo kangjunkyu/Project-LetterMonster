@@ -213,6 +213,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+
+  button{
+    background-color: $successColor;
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
 }
 
 .addFriendButton {
@@ -223,8 +231,19 @@
 }
 
 .deleteFriendButton {
-  padding: 3px;
   background-color: $errorColor;
   color: white;
+  padding: 3px;
   border-radius: 5px;
+}
+
+.myFriendListNull{
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.socialMediaLinks{
+  width: 300px;
 }

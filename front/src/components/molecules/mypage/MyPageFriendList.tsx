@@ -62,7 +62,7 @@ function MyPageFriendList() {
           )}
         </div>
         <div className={styles.friendListAllContent}>
-          {myFriend &&
+          {myFriend && myFriend[0].length > 0 ? (
             myFriend[0].friendList.map((friend: MyFriendProps) => (
               <div key={friend.id} className={styles.myFriendEachContent}>
                 <div>{friend.nickname}</div>
@@ -76,7 +76,12 @@ function MyPageFriendList() {
                   삭제
                 </button>
               </div>
-            ))}
+            ))
+          ) : (
+            <div className={styles.myFriendListNull}>
+              현재 등록된 친구가 없습니다.
+            </div>
+          )}
         </div>
       </div>
     </>

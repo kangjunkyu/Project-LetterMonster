@@ -10,10 +10,12 @@ import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
 import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import KakaoLogin from "../../atoms/auth/KakaoLoginButton";
 import LineLogin from "../../atoms/auth/LineLoginButton";
-import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
+// import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 import MyPageFriendList from "../../molecules/mypage/MyPageFriendList";
 import { useNavigate } from "react-router-dom";
 import { Page_Url } from "../../../router/Page_Url";
+import instagramLogo from "../../../assets/snslogo/instagramLogo.svg";
+import twitterLogo from "../../../assets/snslogo/twitterLogo.svg";
 
 type ModalName =
   | "userInfo"
@@ -70,7 +72,7 @@ function MainPage() {
                 <MyPageCharacter />
               </Modal>
             )}
-            <button onClick={() => handleToggleModal("findFriend")}>
+            {/* <button onClick={() => handleToggleModal("findFriend")}>
               친구 찾기
             </button>
             {isModalOpen.findFriend && (
@@ -80,7 +82,7 @@ function MainPage() {
               >
                 <MyPageFindFriend />
               </Modal>
-            )}
+            )} */}
             <button onClick={() => handleToggleModal("friendList")}>
               내 친구 목록
             </button>
@@ -110,6 +112,14 @@ function MainPage() {
           </div>
         </>
       )}
+      <div className={styles.socialMediaLinks}>
+        <a href="https://www.instagram.com/lettermonster_official/" target="_blank" rel="noopener noreferrer">
+          <img className={styles.snsInstagram} src={instagramLogo} alt="Instagram" />
+        </a>
+        <a href="https://twitter.com/LetterMonster_" target="_blank" rel="noopener noreferrer">
+          <img className={styles.snsTwitter} src={twitterLogo} alt="Twitter" />
+        </a>
+      </div>
     </div>
   );
 }
