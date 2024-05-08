@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface SketchbookService {
     List<SketchbookGetSimpleDto> getSketchList(Integer userId);
 
+    List<SketchbookGetSimpleDto> getFriendSketchList(Integer userId);
+
     SketchbookGetDto getSketchSelect(String sketchId);
 
     SketchbookGetDetailDto getSketchSelect2(String sketchId);

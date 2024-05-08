@@ -73,6 +73,10 @@ public class Sketchbook extends BaseEntity {
         this.isRepresent = changeRepresent;
     }
 
+    public void changePublic() {
+        this.isPublic = !this.isPublic;
+    }
+
     @Builder(toBuilder = true)
     Sketchbook(Users users, String name){
         this.name = name;

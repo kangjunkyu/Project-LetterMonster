@@ -55,6 +55,30 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
     @Override
+    public Optional<List<SketchbookGetSimpleDto>> getFriendSketchList(Integer userId) {
+        if (userId == null) {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+        List<SketchbookGetSimpleDto> sketchDtos = query
+                .select(constructor(SketchbookGetSimpleDto.class,
+                        sketchbook.id,
+                        sketchbook.isPublic,
+                        sketchbook.shareLink,
+                        sketchbook.name,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag),
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag,
+                        sketchbook.isWritePossible
+                )).from(sketchbook)
+                .where(sketchbook.users.id.eq(userId).and(sketchbook.isPublic.eq(true)))
+                .fetch();
+        return Optional.ofNullable(sketchDtos.isEmpty() ? null : sketchDtos);
+    }
+
+
+    @Override
     public Optional<SketchbookGetDto> getSketchSelect(String sketchId) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
