@@ -65,7 +65,7 @@ public class FriendsServiceImpl implements FriendsService {
         user.getFriendList().add(friend);
         friendUser.getFriendList().add(friend);
 
-        if (friendUser.getNotificationToken() != null) {
+        if (friendUser.getNotificationToken() != null && !friendUser.getNotificationToken().equals("null")) {
 
             Notification notification = Notification.builder()
                     .receiver(user)
@@ -75,7 +75,7 @@ public class FriendsServiceImpl implements FriendsService {
 
             String body = null;
 
-            if (friend.getFriend().getNickname() != null) {
+            if (friend.getFriend().getNickname() != null ) {
                 body = "[ " + user.getNickname() + " ] 님께서 친구로 추가했어요";
                 notificationRepository.save(notification);
             }
