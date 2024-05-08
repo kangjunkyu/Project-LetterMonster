@@ -12,7 +12,6 @@ public interface NotificationService {
 
     Optional<List<NotificationGetDto>> getNotCheckNotifications(Integer userId);
 
-    @Transactional
     boolean sendNotification(String token, String title, String body);
 
     void checkAllNotification(Integer userId);

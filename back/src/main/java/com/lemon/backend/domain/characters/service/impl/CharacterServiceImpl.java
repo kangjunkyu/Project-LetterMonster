@@ -240,4 +240,26 @@ public class CharacterServiceImpl implements CharacterService {
         characters.deleteUser();
 
     }
+
+
+    @Override
+    public Optional<List<CharacterMotionSketchbookProjection>> findCharacterMotionByUsers(Integer userId){
+        Optional<List<CharacterMotionSketchbookProjection>> list = characterMotionRepository.findDistinctCharacterMotionsByUserId(userId);
+        if(list.isEmpty()) throw new CustomException(ErrorCode.CHARACTERMOTION_NOT_FOUND);
+        return list;
+    }
+
+    @Override
+    public Optional<List<CharacterMotionProjection>> findCharacterMotionBySelf(Integer userId){
+        Optional<List<CharacterMotionProjection>> list = characterMotionRepository.findDistinctCharacterMotionsByUserIdOnlySelf(userId);
+        if(list.isEmpty()) throw new CustomException(ErrorCode.CHARACTERMOTION_NOT_FOUND);
+        return list;
+    }
+
+    @Override
+    public Optional<CharacterInfoDto> findCharacterByUser(Long characterId){
+        Optional<CharacterInfoDto> characterInfoDto = characterRepository.findAllByUserId(characterId);
+        if(characterInfoDto.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
+        return characterInfoDto;
+    }
 }

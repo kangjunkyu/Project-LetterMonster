@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface CharacterService {
@@ -23,4 +24,10 @@ public interface CharacterService {
     void changeMainCharacter(Long characterId, int userId);
 
     void cancelMakeCharacter(Long characterId);
+
+    Optional<List<CharacterMotionSketchbookProjection>> findCharacterMotionByUsers(Integer userId);
+
+    Optional<List<CharacterMotionProjection>> findCharacterMotionBySelf(Integer userId);
+
+    Optional<CharacterInfoDto> findCharacterByUser(Long characterId);
 }

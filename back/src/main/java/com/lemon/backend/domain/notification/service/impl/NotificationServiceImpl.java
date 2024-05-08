@@ -54,11 +54,12 @@ public class NotificationServiceImpl implements NotificationService {
             firebaseMessaging.send(message);
             return true;
         } catch (FirebaseMessagingException e) {
+            System.out.println("Failed to send notification: " + e.getMessage());
             return false;
         }
     }
 
-
+    @Transactional
     @Override
     public void checkAllNotification(Integer userId){
         List<com.lemon.backend.domain.notification.entity.Notification> allNotification = notificationRepository.findByAll(userId).get();

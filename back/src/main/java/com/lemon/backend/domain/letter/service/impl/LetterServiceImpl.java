@@ -137,9 +137,10 @@ public class LetterServiceImpl implements LetterService {
         }
 
         String title = "LEMON";
-        if(!notificationService.sendNotification(receiver.getNotificationToken(), title, body)){
-            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
-        }
+            if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+            }
+
 
         LetterCreateResponse response = new LetterCreateResponse();
         response.setLetterId(letterRepository.save(letter).getId());

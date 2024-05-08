@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.lemon.backend.global.response.CommonResponseEntity.getResponseEntity;
 
@@ -77,5 +78,25 @@ public class CharacterController {
     public ResponseEntity<?> deleteCharacter(@RequestParam(name="characterId") Long characterId) {
         characterService.deleteCharacter(characterId);
         return getResponseEntity(SuccessCode.OK, null);
+    }
+
+    @GetMapping("/characterreceive")
+    public ResponseEntity<?> showChracterMotionsByUsers(Authentication authentication){
+        Integer userId = (Integer) authentication.getPrincipal();
+        Optional<List<CharacterMotionSketchbookProjection>> list = characterService.findCharacterMotionByUsers(userId);
+        return getResponseEntity(SuccessCode.OK, list);
+    }
+
+    @GetMapping("/charactermine")
+    public ResponseEntity<?> showCharacterMotionsBySelf(Authentication authentication){
+        Integer userId = (Integer) authentication.getPrincipal();
+        Optional<List<CharacterMotionProjection>> list = characterService.findCharacterMotionBySelf(userId);
+        return getResponseEntity(SuccessCode.OK, list);
+    }
+
+    @GetMapping("/{characterId}")
+    public ResponseEntity<?> showCharacter(@PathVariable Long characterId) {
+        Optional<CharacterInfoDto> list = characterService.findCharacterByUser(characterId);
+        return getResponseEntity(SuccessCode.OK, list);
     }
 }
