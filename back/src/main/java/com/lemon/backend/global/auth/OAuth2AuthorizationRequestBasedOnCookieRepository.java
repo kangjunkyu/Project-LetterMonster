@@ -9,9 +9,9 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 
 /*
-* oauth2를 이용한 로그인을 구현할 때 관련된 필요한 정보들을 쿠키에 임시로 저장한다.
-* 상태 유지를 하기 위해서 저장함
-* */
+ * oauth2를 이용한 로그인을 구현할 때 관련된 필요한 정보들을 쿠키에 임시로 저장한다.
+ * 상태 유지를 하기 위해서 저장함
+ * */
 
 @Slf4j
 public class OAuth2AuthorizationRequestBasedOnCookieRepository implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
@@ -48,14 +48,14 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
         // 쿠키에 REDIRECT URL 첨부
         CookieUtil.addCookie(response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME, CookieUtil.serialize(authorizationRequest), cookieExpireSeconds);
         String redirectUriAfterLogin = request.getParameter(REDIRECT_URI_PARAM_COOKIE_NAME);
-        String firebaseTokenAfterLogin = request.getParameter(FIREBASE_TOKEN_COOKIE_NAME);
+        if (request.getParameter(FIREBASE_TOKEN_COOKIE_NAME) != null) {
+            String firebaseTokenAfterLogin = request.getParameter(FIREBASE_TOKEN_COOKIE_NAME);
+            CookieUtil.addCookie(response, FIREBASE_TOKEN_COOKIE_NAME, firebaseTokenAfterLogin, cookieExpireSeconds);
+            log.info("파이어베이스 토큰 진짜 있음");
+        }
         if (StringUtils.isNotBlank(redirectUriAfterLogin)) {
             log.info("쿠키 진짜 넣음");
             CookieUtil.addCookie(response, REDIRECT_URI_PARAM_COOKIE_NAME, redirectUriAfterLogin, cookieExpireSeconds);
-        }
-        if (StringUtils.isNotBlank(firebaseTokenAfterLogin)) {
-            log.info("파이어베이스 토큰 진짜 있음");
-            CookieUtil.addCookie(response, FIREBASE_TOKEN_COOKIE_NAME, firebaseTokenAfterLogin, cookieExpireSeconds);
         }
     }
 
