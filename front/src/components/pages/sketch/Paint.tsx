@@ -134,7 +134,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         postSketchCharacterMutation.mutate({ nickname, file, uri });
       });
 
-    navigate("/motion", { state: { image: uri, nickname: characterNickname } });
+    // navigate("/motion", { state: { image: uri, nickname: characterNickname } });
   }, [navigate, characterNickname, postSketchCharacterMutation]);
 
   // 그림판 초기화
