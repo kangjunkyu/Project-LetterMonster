@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./MotionList.module.scss";
 import formatMotionName from "../../../hooks/motion/useFormatMotionName";
 import { useGetMotionSelect } from "../../../hooks/motion/useGetMotionSelect";
+import { useTranslation } from "react-i18next";
 
 interface Motion {
   name: string;
@@ -30,6 +31,7 @@ async function loadMotions(): Promise<Motion[]> {
 }
 
 function MotionList({ characterId, setGif, setMotionId }: Prop) {
+  const { t } = useTranslation();
   const [motions, setMotions] = useState<Motion[]>([]);
   const [clickedMotionIndex, setClickedMotionIndex] = useState<number | null>(
     null
@@ -57,7 +59,7 @@ function MotionList({ characterId, setGif, setMotionId }: Prop) {
   return (
     <>
       <div className={styles.motionListContainer}>
-        <div>캐릭터 모션 종류</div>
+        <div>{t("motion.motions")}</div>
         <div className={styles.motionSampleList}>
           {motions.map((motion, index) => (
             <div
