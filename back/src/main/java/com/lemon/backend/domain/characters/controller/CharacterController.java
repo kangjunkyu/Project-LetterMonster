@@ -80,14 +80,14 @@ public class CharacterController {
         return getResponseEntity(SuccessCode.OK, null);
     }
 
-    @GetMapping("/characterreceive")
+    @GetMapping("/receive")
     public ResponseEntity<?> showChracterMotionsByUsers(Authentication authentication){
         Integer userId = (Integer) authentication.getPrincipal();
         Optional<List<CharacterMotionSketchbookProjection>> list = characterService.findCharacterMotionByUsers(userId);
         return getResponseEntity(SuccessCode.OK, list);
     }
 
-    @GetMapping("/charactermine")
+    @GetMapping("/mine")
     public ResponseEntity<?> showCharacterMotionsBySelf(Authentication authentication){
         Integer userId = (Integer) authentication.getPrincipal();
         Optional<List<CharacterMotionProjection>> list = characterService.findCharacterMotionBySelf(userId);
