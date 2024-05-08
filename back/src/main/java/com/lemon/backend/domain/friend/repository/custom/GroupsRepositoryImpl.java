@@ -56,7 +56,7 @@ public class GroupsRepositoryImpl implements GroupsRepositoryCustom {
             var isFriendSubquery = select(friends.id)
                     .from(friends)
                     .where(friends.users.id.eq(userId)
-                            .and(friends.friend.id.eq(users.id)));
+                            .and(friends.friend.id.eq(userId)));
 
             List<FriendResponseDto> friendDtos = query
                     .select(Projections.constructor(FriendResponseDto.class,
