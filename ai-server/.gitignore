@@ -7,8 +7,10 @@
 __pycache__/
 
 # img, gif temp 파일
-images_temp
-gif_temp
+temp_image
+temp_video
+temp_gif
+temp_rig
 
 # osmesa 관련 파일 변경사항 무시
 # git ls-files -z AnimatedDrawings/examples/config/mvc/ | xargs -0 git update-index --assume-unchanged
