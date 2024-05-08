@@ -213,18 +213,10 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-
-  button{
-    background-color: $successColor;
-    color: white;
-    padding: 3px;
-    border-radius: 5px;
-    font-size: 14px;
-  }
 }
 
 .addFriendButton {
-  padding: 3px;
+  padding: 4px;
   background-color: $successColor;
   color: white;
   border-radius: 5px;
@@ -233,7 +225,7 @@
 .deleteFriendButton {
   background-color: $errorColor;
   color: white;
-  padding: 3px;
+  padding: 4px;
   border-radius: 5px;
 }
 
