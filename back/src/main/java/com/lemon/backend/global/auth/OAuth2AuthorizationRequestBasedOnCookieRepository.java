@@ -40,6 +40,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
             log.info("쿠키 삭제");
             CookieUtil.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
             CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
+            System.out.println(request.getParameter(FIREBASE_TOKEN_COOKIE_NAME) + " 삭제될 파이어베이스 토큰");
             if (request.getParameter(FIREBASE_TOKEN_COOKIE_NAME) == null) {
                 log.info("파이어베이스 토큰 쿠키 삭제");
                 CookieUtil.deleteCookie(request, response, FIREBASE_TOKEN_COOKIE_NAME);
@@ -52,6 +53,7 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
         CookieUtil.addCookie(response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME, CookieUtil.serialize(authorizationRequest), cookieExpireSeconds);
         String redirectUriAfterLogin = request.getParameter(REDIRECT_URI_PARAM_COOKIE_NAME);
         if (request.getParameter(FIREBASE_TOKEN_COOKIE_NAME) != null) {
+            System.out.println(request.getParameter(FIREBASE_TOKEN_COOKIE_NAME) + " 들어갈 파이어베이스 토큰");
             String firebaseTokenAfterLogin = request.getParameter(FIREBASE_TOKEN_COOKIE_NAME);
             CookieUtil.addCookie(response, FIREBASE_TOKEN_COOKIE_NAME, firebaseTokenAfterLogin, cookieExpireSeconds);
             log.info("파이어베이스 토큰 진짜 있음");
