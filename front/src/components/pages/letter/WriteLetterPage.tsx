@@ -110,7 +110,7 @@ function LetterWritePage() {
       </LNB>
       <section className={styles.letterBox}>
         <article>
-          {!gif && (
+          {!chId && (
             <>
               <figure>
                 <p>{t("writeletter.characterSelect")}</p>
