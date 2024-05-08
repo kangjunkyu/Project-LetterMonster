@@ -37,7 +37,7 @@ function MyPageCharacter() {
 
   if (isLoading) return <div>Loading characters...</div>;
   if (error) return <div>Error loading characters!</div>;
-  if (characterList.length === 0) {
+  if (characterList?.length === 0) {
     return (
       <div className={styles.userNoCharacterListContainer}>
         <div className={styles.titleNoCharacter}>캐릭터 목록</div>

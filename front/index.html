@@ -1,36 +1,140 @@
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/styles/globalStyles.scss" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/ico" href="/favicon.ico" />
-  <link rel="menifest" href="/manifest.json" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./src/styles/globalStyles.scss">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  
-  <title>Letter Monster - 움직이는 내 캐릭터</title>
-  <meta name="description" content="내가 그린 캐릭터로 친구와 편지를 주고 받아보세요!">
-  <meta name="keywords" content="lettermonster, LetterMonster, 레터몬스터, レターモンスター, 手紙, 落書き, character, 그림편지">
-  <meta property="og:title" content="LetterMonster - 움직이는 내 캐릭터! My Character is alive! 自分の落書きが生きてる？！">
-  <meta property="og:description"
-    content="내가 그린 캐릭터로 친구와 편지를 주고 받아보세요! My Letter with Wiggly Letter Monster! 落書きが伝えてくれる手紙！">
-  <meta property="og:image" content="/image.png">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="ko_KR">
-  <meta name="twitter:title" content="LetterMonster">
-  <meta name="twitter:creator" content="@LetterMonster_">
-  <meta name="twitter:site" content="https://lettermon.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:description"
-    content="내가 그린 캐릭터로 친구와 편지를 주고 받아보세요! My Letter with Wiggly Letter Monster! 落書きが伝えてくれる手紙！">
-  <meta name="twitter:image" content="/image.png">
-</head>
+    <title>Letter Monster - 움직이는 내 캐릭터</title>
+    <meta
+      name="description"
+      content="내가 그린 캐릭터로 친구와 편지를 주고 받아보세요!"
+    />
+    <meta
+      name="keywords"
+      content="lettermonster, LetterMonster, 레터몬스터, レターモンスター, 手紙, 落書き, character, 그림편지"
+    />
+    <meta
+      property="og:title"
+      content="LetterMonster - 움직이는 내 캐릭터! My Character is alive! 自分の落書きが生きてる？！"
+    />
 
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
+    <meta
+      property="og:description"
+      content="내가 그린 캐릭터로 친구와 편지를 주고 받아보세요! My Letter with Wiggly Letter Monster! 落書きが伝えてくれる手紙！"
+    />
+    <meta property="og:image" content="/image.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:title" content="LetterMonster" />
+    <meta name="twitter:creator" content="@LetterMonster_" />
+    <meta name="twitter:site" content="https://lettermon.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:description"
+      content="내가 그린 캐릭터로 친구와 편지를 주고 받아보세요! My Letter with Wiggly Letter Monster! 落書きが伝えてくれる手紙！"
+    />
+    <meta name="twitter:image" content="/image.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/icons/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="/icons/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/icons/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/icons/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/icons/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/icons/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/icons/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/icons/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/icons/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/icons/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png" />
+  </head>
 
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then((registration) => {
+            console.log("Service worker registration succeeded:", registration);
+          })
+          .catch((err) => {
+            console.log("Service worker registration failed:", error);
+          });
+      } else {
+        console.log("Service workers are not supported.");
+      }
+    </script>
+  </body>
 </html>
