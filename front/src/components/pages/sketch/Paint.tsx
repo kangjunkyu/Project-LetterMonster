@@ -133,7 +133,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         const nickname = characterNickname;
 
         // usePostSketchCharacter 훅을 통해 데이터 전송
-        postSketchCharacterMutation.mutate({ nickname, file, uri });
+        return postSketchCharacterMutation.mutate({ nickname, file, uri });
       });
 
     navigate("/motion", { state: { image: uri, nickname: characterNickname } });
