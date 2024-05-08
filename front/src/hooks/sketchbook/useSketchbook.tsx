@@ -4,7 +4,6 @@ import {
   getSketchbookSelected,
   putSketchbookName,
   deleteSketchbook,
-  getSketchbookSelectedsimple,
 } from "../../api/Api";
 import { Page_Url } from "../../router/Page_Url";
 
@@ -12,13 +11,7 @@ import { Page_Url } from "../../router/Page_Url";
 export default function useSketchbook(uuid: string) {
   return useQuery({
     queryKey: ["sketchbook"],
-    queryFn: () => {
-      if (localStorage.getItem("accessToken")) {
-        return getSketchbookSelected(uuid);
-      } else {
-        return getSketchbookSelectedsimple(uuid);
-      }
-    },
+    queryFn: () => getSketchbookSelected(uuid),
   });
 }
 

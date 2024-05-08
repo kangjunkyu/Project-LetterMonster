@@ -125,17 +125,16 @@ export const getSketchbookList = () =>
 export const getSketchbookListAll = () =>
   API.get(`/sketchbooks/public/all`).then((res) => res.data);
 
-/** 스케치북 선택 간단 조회
+/** 스케치북 선택 조회
  * @requires sketchbookId 스케치북 아이디
- */
-export const getSketchbookSelectedsimple = (uuid: string) =>
-  API.get(`/sketchbooks/public/simple/${uuid}`).then((res) => res.data);
-
-/** 스케치북 선택 상세 조회
- * @requires sketchbookId 스케치북 아이디
+ * @summary 로그인 유저는 상세, 아니면 간단
  */
 export const getSketchbookSelected = (uuid: string) =>
-  API.get(`/sketchbooks/detail/${uuid}`).then((res) => res.data);
+  API.get(
+    localStorage.getItem("accessToken")
+      ? `/sketchbooks/detail/${uuid}`
+      : `/sketchbooks/public/simple/${uuid}`
+  ).then((res) => res.data);
 
 /** 스케치북 수정
  * @requires sketchbookId 스케치북 아이디
