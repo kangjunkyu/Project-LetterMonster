@@ -37,13 +37,17 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional
     @Override
     public boolean sendNotification(String token, String title, String body) {
-        if(token == null || token.isEmpty() || title == null || title.isEmpty() || body == null || body.isEmpty()) {
+        if (token == null || token.isEmpty() || title == null || title.isEmpty() || body == null || body.isEmpty()) {
             return false;
         }
-            Notification notification = Notification.builder()
-                    .setTitle(title)
-                    .setBody(body)
-                    .build();
+
+        String url = "file:///C:/Users/SSAFY/Desktop/LastProject/S10P31B103/back/src/main/resources/img/notification_logo.png";
+
+        Notification notification = Notification.builder()
+                .setTitle(title)
+                .setBody(body)
+                .setImage(url)
+                .build();
 
         Message message = Message.builder()
                 .setToken(token)
@@ -54,19 +58,20 @@ public class NotificationServiceImpl implements NotificationService {
             firebaseMessaging.send(message);
             return true;
         } catch (FirebaseMessagingException e) {
+            System.out.println("Failed to send notification: " + e.getMessage());
             return false;
         }
     }
 
-
+    @Transactional
     @Override
-    public void checkAllNotification(Integer userId){
+    public void checkAllNotification(Integer userId) {
         List<com.lemon.backend.domain.notification.entity.Notification> allNotification = notificationRepository.findByAll(userId).get();
-        if(!allNotification.isEmpty()){
-            for(com.lemon.backend.domain.notification.entity.Notification notification : allNotification){
+        if (!allNotification.isEmpty()) {
+            for (com.lemon.backend.domain.notification.entity.Notification notification : allNotification) {
                 notification.markAsChecked();
 
-            notificationRepository.save(notification);
+                notificationRepository.save(notification);
             }
         }
     }

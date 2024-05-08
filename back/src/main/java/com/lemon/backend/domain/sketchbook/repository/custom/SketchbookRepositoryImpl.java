@@ -259,13 +259,20 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
 
     @Override
     public Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName) {
+
+        if (sketchbookName == null || sketchbookName.trim().isEmpty()) {
+            return Optional.empty(); // 또는 기본 목록 반환
+        }
+        
         List<SketchbookSearchGetDto> list = query
                 .select(Projections.constructor(SketchbookSearchGetDto.class,
                         sketchbook.id,
                         sketchbook.sketchbookUuid,
                         sketchbook.name,
-                        sketchbook.tag))
+                        sketchbook.tag,
+                        sketchbook.users.nickname))
                 .from(sketchbook)
+                .leftJoin(sketchbook.users)
                 .where(sketchbook.name.contains(sketchbookName))
                 .fetch();
         return Optional.ofNullable(list);

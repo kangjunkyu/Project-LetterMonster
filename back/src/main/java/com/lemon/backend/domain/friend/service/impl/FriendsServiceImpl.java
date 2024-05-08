@@ -48,12 +48,12 @@ public class FriendsServiceImpl implements FriendsService {
 
         List<GroupResponseDto> list = groupsRepository.findAllByUsersId(userId);
 
-        for(GroupResponseDto group : list){
-                for(FriendResponseDto group2 : group.getFriendList()){
-                    if(group2.getId().equals(friendId)){
-                throw new CustomException(ErrorCode.CAN_NOT_ADD_FRIEND);
-                    }
+        for (GroupResponseDto group : list) {
+            for (FriendResponseDto group2 : group.getFriendList()) {
+                if (group2.getId().equals(friendId)) {
+                    throw new CustomException(ErrorCode.CAN_NOT_ADD_FRIEND);
                 }
+            }
         }
 
         Friends friend = Friends.builder()
@@ -65,24 +65,26 @@ public class FriendsServiceImpl implements FriendsService {
         user.getFriendList().add(friend);
         friendUser.getFriendList().add(friend);
 
-        Notification notification = Notification.builder()
-                .receiver(user)
-                .type(2)
-                .friendName(friend.getFriend().getNickname())
-                .build();
+        if (friendUser.getNotificationToken() != null) {
 
-        String body = null;
+            Notification notification = Notification.builder()
+                    .receiver(user)
+                    .type(2)
+                    .friendName(friend.getFriend().getNickname())
+                    .build();
 
-        if(friend.getFriend().getNickname() != null){
-            body = "[ " + friend.getFriend().getNickname() + " ] 님께서 친구로 추가했어요";
-            notificationRepository.save(notification);
+            String body = null;
+
+            if (friend.getFriend().getNickname() != null) {
+                body = "[ " + user.getNickname() + " ] 님께서 친구로 추가했어요";
+                notificationRepository.save(notification);
+            }
+
+            String title = "LEMON";
+            if (!notificationService.sendNotification(friendUser.getNotificationToken(), title, body)) {
+                throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+            }
         }
-
-        String title = "LEMON";
-        if(!notificationService.sendNotification(user.getNotificationToken(), title, body)){
-            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
-        }
-
         return friendsRepository.save(friend).getFriend().getNickname();
     }
 

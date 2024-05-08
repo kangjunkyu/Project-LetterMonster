@@ -49,7 +49,7 @@ public class LetterServiceImpl implements LetterService {
     }
 
     @Override
-    public List<LetterGetRecentListDto> getLetterThree(Integer userId){
+    public List<LetterGetRecentListDto> getLetterThree(Integer userId) {
         return letterRepository.getLetterThree(userId).orElseThrow(() -> new CustomException(ErrorCode.INVALID_ACCESS));
     }
 
@@ -79,22 +79,25 @@ public class LetterServiceImpl implements LetterService {
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
 
-        Notification notification = Notification.builder()
-                .receiver(receiver)
-                .type(1)
-                .friendName(sender.getNickname())
-                .build();
+        if (receiver.getNotificationToken() != null) {
 
-        String body = null;
+            Notification notification = Notification.builder()
+                    .receiver(receiver)
+                    .type(1)
+                    .friendName(sender.getNickname())
+                    .build();
 
-        if(letter.getSender() != null){
-            body = "[ " + letter.getSender().getNickname() + " ] 님에게 편지가 도착했어요";
-            notificationRepository.save(notification);
-        }
+            String body = null;
 
-        String title = "LEMON";
-        if(!notificationService.sendNotification(receiver.getNotificationToken(), title, body)){
-            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+            if (letter.getSender() != null) {
+                body = "[ " + letter.getSender().getNickname() + " ] 님에게 편지가 도착했어요";
+                notificationRepository.save(notification);
+            }
+
+            String title = "LEMON";
+            if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+            }
         }
 
         return letterRepository.save(letter).getId();
@@ -131,15 +134,16 @@ public class LetterServiceImpl implements LetterService {
 
         String body = null;
 
-        if(letter.getSender() == null){
+        if (letter.getSender() == null) {
             body = "[ 비회원 ] 으로부터 편지가 도착했어요";
             notificationRepository.save(notification);
         }
 
         String title = "LEMON";
-        if(!notificationService.sendNotification(receiver.getNotificationToken(), title, body)){
+        if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
             throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
         }
+
 
         LetterCreateResponse response = new LetterCreateResponse();
         response.setLetterId(letterRepository.save(letter).getId());

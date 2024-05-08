@@ -17,6 +17,25 @@ $maxWidthValue: 1024px;
   }
 }
 
+.writeBox {
+  /* 데스크탑 */
+  & button {
+    width: 100%;
+    background-color: $primary;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    & button {
+      display: none;
+    }
+  }
+}
+
 .letterBox {
   width: $widthValue;
   max-width: $maxWidthValue;
@@ -157,8 +176,14 @@ $maxWidthValue: 1024px;
   width: 100%;
 }
 
+.cursor {
+  cursor: pointer;
+  background-color: $gc900;
+}
+
 .sendList {
   width: 100%;
+  font-size: 16px;
 }
 
 .selected {

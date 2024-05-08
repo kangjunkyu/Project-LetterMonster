@@ -56,7 +56,7 @@ function MyPageFindFriend() {
     isLoading,
     error,
   } = useSearchUserNickname(searchTerm, {
-    enabled: searchTerm.trim().length > 0,
+    enabled: searchTerm.trim()?.length > 0,
   });
 
   useEffect(() => {

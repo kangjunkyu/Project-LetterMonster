@@ -17,5 +17,46 @@
     "more": "더보기",
     "home": "홈"
   },
-  "error": "아쉽게도 그런 페이지는 없어요"
+  "error": "아쉽게도 그런 페이지는 없어요",
+  "close": "닫기",
+  "writeletter": {
+    "title": "편지 쓰기",
+    "characterSelect": "캐릭터 고르기",
+    "characterDrawing": "내 캐릭터 그리러 가기",
+    "motionSelect": "동작 고르기",
+    "sketchbookSelect": "편지를 보낼 스케치북",
+    "sketchbookSearch": "스케치북 이름으로 검색",
+    "sketchbookSelectSentence": "편지를 보낼 스케치북을 선택해주세요",
+    "letterContent": "편지 내용",
+    "send": "보내기"
+  },
+  "sketchbookList": {
+    "title": "내 스케치북 목록",
+    "generate": "만들기",
+    "generateModal": "내 스케치북 만들기",
+    "name": "스케치북 이름",
+    "create": "스케치북이 생겼어요",
+    "namePlease": "스케치북 이름을 정해주세요",
+    "copy": "복사 완료"
+  },
+  "sketchbook": {
+    "letter": "편지남기기"
+  },
+  "paint": {
+    "title": "그림 그리기",
+    "create": "만나기",
+    "upload": "그림 올리기",
+    "nickname": "캐릭터 별명을 입력해주세요",
+    "pleaseRename": "닉네임은 영문, 숫자, 한글만 가능합니다.",
+    "pleaseDont": "첫 글자로 띄어쓰기를 사용할 수 없습니다.",
+    "pleaseTen": "닉네임은 10글자 이하만 가능합니다.",
+    "pleaseDraw": "캐릭터를 그려주세요"
+  },
+  "motion": {
+    "title": "동작 선택",
+    "create": "결정",
+    "repaint": "다시 그리기",
+    "motions": "캐릭터 동작 종류",
+    "warn": "동작을 선택해주세요!"
+  }
 }

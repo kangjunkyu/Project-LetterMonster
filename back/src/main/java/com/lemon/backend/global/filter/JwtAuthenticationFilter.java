@@ -55,15 +55,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         String requestURI = httpRequest.getRequestURI();
 
+        log.info(requestURI);
+
         if (requestURI.equals("/") || checkWhiteList(requestURI)) {
-            log.info(requestURI);
             chain.doFilter(request, response);
             return;
         }
 
         try {
             String bearerToken = httpRequest.getHeader("Authorization");
-            log.info(requestURI);
+
             if (bearerToken != null && !bearerToken.isEmpty()) {
                 String accessToken = jwtTokenProvider.resolveToken(bearerToken);
                 if (jwtTokenProvider.validateToken(accessToken)) {
