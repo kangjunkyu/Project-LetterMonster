@@ -44,6 +44,11 @@ public class SketchbookServiceImpl implements SketchbookService {
     }
 
     @Override
+    public List<SketchbookGetSimpleDto> getFriendSketchList(Integer userId){
+        return sketchbookRepository.getFriendSketchList(userId).orElse(Collections.emptyList());
+    }
+
+    @Override
     public SketchbookGetDto getSketchSelect(String sketchId){
         return sketchbookRepository.getSketchSelect(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
@@ -96,9 +101,9 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public boolean changePublic(Long sketchbookId){
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
-        boolean changePublicStatus = !sketch.getIsPublic();
-        sketch.setIsPublic(changePublicStatus);
-
+//        boolean changePublicStatus = !sketch.getIsPublic();
+        sketch.changePublic();
+        sketchbookRepository.save(sketch);
         return sketch.getIsPublic();
     }
 
