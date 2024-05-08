@@ -35,7 +35,7 @@ public class CharacterController {
         return getResponseEntity(SuccessCode.CREATED, characterId);
     }
 
-    @DeleteMapping("/cancel")
+    @DeleteMapping("/public/cancel")
     public ResponseEntity<?> cancelMakeCharacter(@RequestParam(name="characterId") Long characterId) {
         characterService.cancelMakeCharacter(characterId);
         return getResponseEntity(SuccessCode.OK, null);
