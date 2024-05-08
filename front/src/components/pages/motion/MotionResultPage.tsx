@@ -6,7 +6,7 @@ import styles from "./MotionPage.module.scss";
 function MotionResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { gif } = location.state || {};
+  const { gif, characterId, nickname, motionId } = location.state || {};
   return (
     <>
       <div className={styles.motionResultContainer}>
@@ -18,7 +18,14 @@ function MotionResultPage() {
         />
         <DefaultButton
           onClick={() => {
-            navigate(Page_Url.WriteLetter);
+            navigate(Page_Url.WriteLetter, {
+              state: {
+                gif: gif.imageUrl,
+                characterId: characterId,
+                nickname: nickname,
+                motionId: motionId,
+              },
+            });
           }}
         >
           편지 쓰기

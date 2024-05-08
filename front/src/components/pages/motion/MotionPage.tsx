@@ -20,14 +20,21 @@ function MotionPage() {
   const handleToggleModal = () => setModalOpen((prev) => !prev);
 
   const onHandleClick = useCallback(() => {
-    navigate(Page_Url.MotionResult, { state: { gif: gif.imageUrl } });
+    navigate(Page_Url.MotionResult, {
+      state: {
+        gif: gif.imageUrl,
+        characterId: characterId,
+        nickname: nickname,
+        motionId: motionId,
+      },
+    });
   }, [gif, navigate]);
 
   return (
     <>
       <div className={styles.motionRealContainer}>
         <LNB>
-          <h1>모션 선택</h1>
+          <h1>{t("motion.title")}</h1>
           <DefaultButton
             onClick={() => {
               if (motionId == 0) {
