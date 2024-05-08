@@ -137,7 +137,7 @@
 }
 
 // 친구 찾기
-.findFriendContainer{
+.findFriendContainer {
   display: flex;
   flex-direction: column;
   font-size: 14px;
@@ -145,54 +145,48 @@
   gap: 0.7em;
 }
 
-.findFriendInput{
+.findFriendInput {
   display: flex;
   justify-content: space-between;
   gap: 2em;
-  
-  input{
+
+  input {
     // width: 120px;
     padding: 3px;
   }
 }
 .findFriendDivider::after {
-  content: '';
+  content: "";
   display: block;
-  height: 2px; 
-  background-color: $gc400; 
-  width: 100%; 
+  height: 2px;
+  background-color: $gc400;
+  width: 100%;
 }
 
-.findFriendResult{
+.findFriendResult {
   height: 150px;
   overflow-y: auto;
   padding-right: 10px;
 }
 
-.findFriendColumn{
+.findFriendColumn {
   display: flex;
   margin-bottom: 3px;
-  
-  p:nth-child(1){
+
+  p:nth-child(1) {
     margin-right: 5.5em;
   }
 }
 
-.findFriendResultContent{
+.findFriendResultContent {
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 
-  button{
-    padding: 3px;
-    background-color: $successColor;
-    color: white;
-    border-radius: 5px;
-  }
 }
 
 // 내 친구 목록
-.friendListContainer{
+.friendListContainer {
   display: flex;
   flex-direction: column;
   font-size: 14px;
@@ -201,36 +195,36 @@
   width: 250px;
 }
 
-.friendListAllContent{
+.friendListAllContent {
   overflow-y: auto;
   padding-right: 10px;
 }
 
-.myFriendEachContent{
+.myFriendEachContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   margin: 3px 0;
-
-  button{
-    padding: 3px;
-    background-color: $errorColor;
-    color: white;
-    border-radius: 5px;
-  }
 }
 
-.friendListUpper{
+.friendListUpper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+}
 
-  button{
-    padding: 5px;
-    background-color: $successColor;
-    color: white;
-    border-radius: 5px;
-  }
+.addFriendButton {
+  padding: 3px;
+  background-color: $successColor;
+  color: white;
+  border-radius: 5px;
+}
+
+.deleteFriendButton {
+  padding: 3px;
+  background-color: $errorColor;
+  color: white;
+  border-radius: 5px;
 }

@@ -38,9 +38,6 @@ function LetterWritePage() {
   const write = useWriteLetter();
 
   const onClickHandler = () => {
-    if (sketchbookId.sketchbookId) {
-      setTarget(Number(sketchbookId.sketchbookId));
-    }
     write({
       content: content,
       target: target,
@@ -58,6 +55,9 @@ function LetterWritePage() {
   useEffect(() => {
     if (!isLoading) {
       setTarget(sketchbookList?.data[0]?.id);
+    }
+    if (sketchbookId.sketchbookId) {
+      setTarget(Number(sketchbookId.sketchbookId));
     }
   }, [isLoading]);
 

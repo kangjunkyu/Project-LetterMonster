@@ -26,8 +26,6 @@ function MotionPreview({
   const [isModalOpen, setModalOpen] = useState(false);
   const handleToggleModal = () => setModalOpen((prev) => !prev);
 
-  console.log(gif);
-
   return (
     <>
       <div className={styles.motionPreviewContainer}>

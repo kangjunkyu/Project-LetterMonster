@@ -8,10 +8,6 @@ import {
 } from "../../api/Api";
 import { Page_Url } from "../../router/Page_Url";
 
-// interface IProps {
-//   sketchbookId: number;
-//   name: string;
-// }
 /** 스케치북 불러오기 */
 export default function useSketchbook(uuid: string) {
   return useQuery({

@@ -33,8 +33,15 @@ export const postSketchCharacter = async (nickname: string, file: File) => {
 
   // ImgAPI를 사용하여 요청 보내기
   try {
-    const response = await ImgAPI.post(`/characters/create`, formData);
-    return response.data;
+    if (localStorage.getItem("accessToken") != null) {
+      console.log("토큰 있으면");
+      const response = await ImgAPI.post(`/characters/create`, formData);
+      return response.data;
+    } else {
+      console.log("토큰 없으면");
+      const response = await ImgAPI.post(`/characters/public/create`, formData);
+      return response.data;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -86,7 +93,6 @@ export const patchCharacterNickname = (characterId: number, nickname: string) =>
 /** 모션 리스트 조회 */
 export const getMotionList = () =>
   API.get(`/characters/public/list/motion`).then((res) => res.data);
-// .then((res) => res.data);
 
 /** 모션 선택
  * @param characterId 캐릭터 아이디
@@ -155,7 +161,7 @@ export const postLetter = (
   sketchbookId: number,
   characterMotionId: number
 ) =>
-  API.post(`/letter`, {
+  API.post(localStorage.getItem("accessToken") ? `/letter` : `/letter/public`, {
     content: content,
     sketchbookId: sketchbookId,
     characterMotionId: characterMotionId,
@@ -177,18 +183,17 @@ export const deleteLetter = (letterId: number) =>
 
 // 친구 관련 API
 
-/** 유저 검색
+/** 유저 검색 - 회원 전용
  * @requires nickname = 유저 닉네임
  */
 export const searchUserNickname = (nickname: string) =>
-  API.get(`/user/public/search/${nickname}`).then((res) => {
+  API.get(`/user/search/${nickname}`).then((res) => {
     return res.data.data;
   });
 
 /** 친구(그룹) 목록 조회 */
 export const getFriendGroupList = () =>
   API.get(`/groups/all`).then((res) => {
-    console.log(res.data);
     return res.data.data;
   });
 
@@ -196,9 +201,7 @@ export const getFriendGroupList = () =>
  * @param friendId - 친구 아이디
  */
 export const postFriendGroupList = (friendId: number) => {
-  console.log(friendId);
   return API.post(`/friends/${friendId}`).then((res) => {
-    console.log(res);
     return res;
   });
 };
@@ -208,3 +211,29 @@ export const postFriendGroupList = (friendId: number) => {
  */
 export const deleteFriend = (friendId: number) =>
   API.delete(`friends/${friendId}`).then((res) => res);
+
+
+// 알람 관련 API
+
+/** 알림 전체 조회
+ * 조회만 하고 읽음 처리는 안함
+ */
+
+export const getNotification = () =>
+  API.get(`/notification/all`).then((res) => res.data.data);
+
+/** 안읽은 알림 조회
+ *
+ * 조회만 하고 읽음 처리는 안함
+ */
+
+export const getUncheckedNotification = () =>
+  API.get(`/notification/uncheck`).then((res) => res.data.data);
+
+/** 알림 전부 읽음 처리
+ * 읽음 처리만 하고 조회는 안함
+ */
+
+export const putNotification = () =>
+  API.put(`/notification`).then((res) => res.data);
+
