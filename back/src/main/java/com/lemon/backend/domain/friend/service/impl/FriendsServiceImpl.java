@@ -79,7 +79,7 @@ public class FriendsServiceImpl implements FriendsService {
         }
 
         String title = "LEMON";
-        if(!notificationService.sendNotification(user.getNotificationToken(), title, body)){
+        if(!notificationService.sendNotification(friendUser.getNotificationToken(), title, body)){
             throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
         }
 
