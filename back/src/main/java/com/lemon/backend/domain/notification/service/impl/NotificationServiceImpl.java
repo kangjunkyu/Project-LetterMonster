@@ -1,9 +1,6 @@
 package com.lemon.backend.domain.notification.service.impl;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.*;
 import com.lemon.backend.domain.notification.dto.NotificationGetDto;
 import com.lemon.backend.domain.notification.repository.NotificationRepository;
 import com.lemon.backend.domain.notification.service.NotificationService;
@@ -41,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
             return false;
         }
 
-        String url = "file:///C:/Users/SSAFY/Desktop/LastProject/S10P31B103/back/src/main/resources/img/notification_logo.png";
+        String url = "https://letter-monster.s3.ap-northeast-2.amazonaws.com/notify-logo.png";
 
         Notification notification = Notification.builder()
                 .setTitle(title)
@@ -53,6 +50,29 @@ public class NotificationServiceImpl implements NotificationService {
                 .setToken(token)
                 .setNotification(notification)
                 .build();
+
+//        Message message = Message.builder()
+//                .setNotification(notification)
+//                .setToken(token)
+//                .setAndroidConfig(AndroidConfig.builder()
+//                        .setNotification(AndroidNotification.builder()
+//                                .setIcon("your_icon_resource_name")
+//                                .setColor("#ff0000") // 예: 빨간색
+//                                .setClickAction("YOUR_INTENT_FILTER")
+//                                .build())
+//                        .build())
+//                .setApnsConfig(ApnsConfig.builder()
+//                        .setAps(Aps.builder()
+//                                .setCategory("your_notification_category")
+//                                .setThreadId("your_specific_thread")
+//                                .build())
+//                        .build())
+//                .setWebpushConfig(WebpushConfig.builder()
+//                        .setNotification(new WebpushNotification(title, body, url))
+//                        .setFcmOptions(WebpushFcmOptions.withLink("https://lettermon.com"))
+//                        .build())
+//                .build();
+
 
         try {
             firebaseMessaging.send(message);
