@@ -7,8 +7,6 @@ export function createCustomAxios(baseURL: any, contentType: any) {
   });
 
   instance.interceptors.request.use((config: any) => ({
-    
-
     ...config,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

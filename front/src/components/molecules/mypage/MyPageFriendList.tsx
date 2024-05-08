@@ -44,6 +44,8 @@ function MyPageFriendList() {
     });
   };
 
+  // console.log(myFriend)
+
   return (
     <>
       <div className={styles.friendListContainer}>
@@ -62,7 +64,7 @@ function MyPageFriendList() {
           )}
         </div>
         <div className={styles.friendListAllContent}>
-          {myFriend && myFriend[0].length > 0 ? (
+          {myFriend && myFriend[0].friendList.length > 0 ? (
             myFriend[0].friendList.map((friend: MyFriendProps) => (
               <div key={friend.id} className={styles.myFriendEachContent}>
                 <div>{friend.nickname}</div>
