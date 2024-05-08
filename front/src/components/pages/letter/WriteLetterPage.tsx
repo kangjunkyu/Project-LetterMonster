@@ -1,4 +1,4 @@
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ function LetterWritePage() {
   const {
     gif,
     characterId: chId,
-    nickname,
+    // nickname,
     motionId: mId,
   } = location.state || {};
   const [content, setContent] = useState(""); // 편지내용
@@ -114,7 +114,7 @@ function LetterWritePage() {
             <>
               <figure>
                 <p>{t("writeletter.characterSelect")}</p>
-                {characterList && (
+                {characterList?.data && (
                   <CharacterList
                     characterList={characterList}
                     characterId={characterId}
