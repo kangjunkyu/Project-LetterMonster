@@ -12,5 +12,6 @@ public class SketchbookSearchGetDto {
     private String uuid;
     private String name;
     private String tag;
+    private String userNickName;
 
 }
