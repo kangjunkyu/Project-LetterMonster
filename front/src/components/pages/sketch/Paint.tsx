@@ -91,8 +91,8 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         newNickname.includes("　")
       ) {
         setNicknameError("닉네임은 영문, 숫자, 한글만 가능합니다.");
-      } else if (newNickname.length > 20) {
-        setNicknameError("닉네임은 20글자 이하만 가능합니다.");
+      } else if (newNickname.length > 10) {
+        setNicknameError("닉네임은 10글자 이하만 가능합니다.");
       } else {
         setCharacterNickname(newNickname);
         setNicknameError("");

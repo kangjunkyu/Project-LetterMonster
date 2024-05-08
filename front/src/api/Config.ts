@@ -7,6 +7,8 @@ export function createCustomAxios(baseURL: any, contentType: any) {
   });
 
   instance.interceptors.request.use((config: any) => ({
+    
+
     ...config,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -43,18 +45,18 @@ API.interceptors.response.use(
     } = error;
 
     // accessToken과 refreshToken이 모두 없으면 로그인 페이지로 이동
-    const accessToken = localStorage.getItem("accessToken");
+    // const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
 
-    if (!accessToken && !refreshToken) {
-      window.location.href = Page_Url.Login;
-      return;
-    }
+    // if (!accessToken && !refreshToken) {
+    //   window.location.href = Page_Url.Main;
+    //   return;
+    // }
 
     // 토큰 만료시
     if (status === 401) {
       if (!refreshToken) {
-        window.location.href = Page_Url.Login;
+        window.location.href = Page_Url.Main;
         return;
       }
 
@@ -87,10 +89,10 @@ API.interceptors.response.use(
           ] = `Bearer ${response.data.data["accessToken"]}`;
           return axios(config);
         } else {
-          window.location.href = Page_Url.Login;
+          window.location.href = Page_Url.Main;
         }
       } catch (refreshError) {
-        window.location.href = Page_Url.Login;
+        window.location.href = Page_Url.Main;
       }
     }
 

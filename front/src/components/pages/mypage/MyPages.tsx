@@ -1,11 +1,13 @@
 import styles from "./MyPages.module.scss";
 import { useLogout } from "../../../hooks/auth/useLogout";
-// import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
+import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import MyPageLangSelect from "../../molecules/mypage/MyPageLangSelect";
 import Modal from "../../atoms/modal/Modal";
 import { useState } from "react";
 import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
 import LoginPage from "../login/LoginPage";
+import { useNavigate } from "react-router-dom";
+import { Page_Url } from "../../../router/Page_Url";
 // import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 
 type ModalName = "userInfo" | "langSelect" | "findFriend" | "characterList";
@@ -21,22 +23,23 @@ function MyPages() {
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
   const logout = useLogout();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
+  const navigate = useNavigate();
 
   return (
     <div className={styles.myPageContainer}>
       {isLoginCheck ? (
         <>
-          {/* <button onClick={() => handleToggleModal("userInfo")}>
+          <button onClick={() => handleToggleModal("userInfo")}>
             개인 정보
           </button>
           {isModalOpen.userInfo && (
             <Modal
-            isOpen={isModalOpen.userInfo}
-            onClose={() => handleToggleModal("userInfo")}
+              isOpen={isModalOpen.userInfo}
+              onClose={() => handleToggleModal("userInfo")}
             >
-            <MyPageUserInfo />
+              <MyPageUserInfo />
             </Modal>
-          )} */}
+          )}
           <button onClick={() => handleToggleModal("characterList")}>
             캐릭터 목록
           </button>
@@ -60,7 +63,14 @@ function MyPages() {
             </Modal>
           )} */}
           <div>
-            <button onClick={() => logout()}>로그아웃</button>
+            <button
+              onClick={() => {
+                logout();
+                navigate(Page_Url.Main)
+              }}
+            >
+              로그아웃
+            </button>
           </div>
         </>
       ) : (

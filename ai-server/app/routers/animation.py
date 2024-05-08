@@ -38,26 +38,37 @@ class CharacterCreateRequest(BaseModel):
 
 
 @router.post("/create")
-async def create_joint_gif(request: CharacterCreateRequest):
+async def create_character(request: CharacterCreateRequest):
     character_id = request.character_id
     motion = request.motion_name
     s3_img_url = request.img_url
 
     try:
+        gif_path = await create_gif(character_id, motion, s3_img_url)
+        if gif_path:
+            return JSONResponse(content={"gif_path": gif_path}, status_code=200)
+
+    except Exception as e:
+        logger.error("create_gif => 에러", exc_info=True)
+        return JSONResponse(content={"Fast API 에러": str(e)}, status_code=500)
+
+
+async def create_gif(character_id: str, motion: str, s3_img_url: str):
+    IMG_DIR = "temp_image"
+    GIF_DIR = "temp_gif"
+    try:
         # 이미지 저장 경로
-        IMG_DIR = "temp_image"
         Path(IMG_DIR).mkdir(exist_ok=True)
 
         # s3에서 이미지 다운로드
         is_downloaded = await get_img_s3(s3_img_url)
 
         if not is_downloaded:
-            return JSONResponse(content={"error": "Fast API ERROR : s3 이미지 다운로드 실패"}, status_code=500)
+            return JSONResponse(content={"error": "Fast API 에러 : s3 이미지 다운로드 실패"}, status_code=500)
 
         image_path = f"temp_image/{s3_img_url}"
 
         # GIF 저장 경로
-        GIF_DIR = "temp_gif"
         gif_dir_name = f"{str(uuid.uuid4())}"
         Path(GIF_DIR).mkdir(exist_ok=True)
 
@@ -76,34 +87,32 @@ async def create_joint_gif(request: CharacterCreateRequest):
         else:
             retarget_cfg_fn = os.path.abspath('AnimatedDrawings/examples/config/retarget/mixamo_fff.yaml')
 
-        # joint, gif 생성 함수 호출
+        # animated drawings 함수 호출
         image_to_animation(image_path, gif_path, motion_cfg_fn, retarget_cfg_fn, character_id, motion)
 
         # gif 압축
-        # is_compressed = await gif_compress(
-        #     original_path=gif_path + f"/{character_id}_{motion}.gif",
-        #     compressed_path=gif_path + f"/{character_id}_{motion}_compressed.gif"
-        # )
-        #
-        # if not is_compressed:
-        #     print("압축 실패")
-        #     return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
+        is_compressed = await gif_compress(
+            original_path=gif_path + f"/{character_id}_{motion}.gif",
+            compressed_path=gif_path + f"/{character_id}_{motion}_compressed.gif"
+        )
+
+        if not is_compressed:
+            print("압축 실패")
+            return JSONResponse(content={"error": "Fast API 에러 : s3 gif 업로드 실패"}, status_code=500)
 
         # S3에 gif 업로드
         is_saved = await save_gif_s3(gif_path, character_id, motion)
 
         if not is_saved:
-            return JSONResponse(content={"error": "Fast API ERROR : s3 gif 업로드 실패"}, status_code=500)
+            return JSONResponse(content={"error": "Fast API 에러 : s3 gif 업로드 실패"}, status_code=500)
 
-        # 로컬에 저장된 img, gif 삭제
-        os.remove(image_path)
-        shutil.rmtree(gif_path)
+        s3_path = f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'
 
-        return JSONResponse(content={"gif_path": f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'}, status_code=200)
+        return s3_path
 
-    except Exception as e:
-        logger.error("create_joint_gif => 에러 발생", exc_info=True)
-        return JSONResponse(content={"error": f"Fast API ERROR : create_joint_gif => {e}"}, status_code=500)
+    finally:
+        shutil.rmtree(IMG_DIR)
+        shutil.rmtree(GIF_DIR)
 
 
 # S3에서 img 불러오기
@@ -114,6 +123,7 @@ async def get_img_s3(s3_img_url):
             Key=f'{os.getenv("S3_PATH")}/{s3_img_url}',  # 다운로드할 파일
             Filename=f"temp_image/{s3_img_url}"  # 로컬 저장 경로
         )
+        print("s3 다운로드 성공")
         return True
 
     except Exception as e:
@@ -126,10 +136,11 @@ async def save_gif_s3(gif_path, character_id, motion):
     try:
         s3.upload_file(
             Bucket=os.getenv("S3_BUCKET"),
-            Filename=gif_path + f'/{character_id}_{motion}.gif',  # 업로드할 파일
+            Filename=gif_path + f'/{character_id}_{motion}_compressed.gif',  # 업로드할 파일
             Key=f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif',  # s3 저장 경로
             ExtraArgs={'ContentType': 'image/gif'}
         )
+        print("s3 업로드 성공")
         return True
 
     except Exception as e:
@@ -138,7 +149,7 @@ async def save_gif_s3(gif_path, character_id, motion):
 
 
 # gif 압축
-async def gif_compress(original_path, compressed_path):
+async def gif_compress(original_path, compressed_path, quality=0.5):
     try:
         with Image.open(original_path) as origin:
             # 프레임 목록 추출
@@ -146,7 +157,7 @@ async def gif_compress(original_path, compressed_path):
 
             # 각 프레임을 조정하여 크기를 줄임
             compressed_frames = [
-                frame.resize((int(frame.width * 0.7), int(frame.height * 0.7)), Image.Resampling.LANCZOS)
+                frame.resize((int(frame.width * quality), int(frame.height * quality)), Image.Resampling.LANCZOS)
                 for frame in frames
             ]
 

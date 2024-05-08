@@ -4,10 +4,10 @@ $widthValue: 90%;
 $maxWidthValue: 1024px;
 
 .container {
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 767px) {
     /* 데스크탑 */
   }
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 479px) {
     /* 타블렛 */
     @include flexCenterColumn();
   }
@@ -32,21 +32,26 @@ $maxWidthValue: 1024px;
     flex-direction: column;
     gap: 1em;
   }
-
-  /* 데스크탑 */
+  @media screen and (min-width: 768px) {
+    /* 데스크탑 */
+    flex-direction: row;
+    & > * {
+      max-width: 50%;
+    }
+  }
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
+    flex-direction: column;
   }
 
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 479px) {
     @include wrapBox();
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
     flex-direction: column;
-    margin-top: calc(44px + 1em);
   }
 }
 

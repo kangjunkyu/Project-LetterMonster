@@ -28,7 +28,7 @@ public class GroupsController {
         Integer loginId = (Integer) authentication.getPrincipal();
 
         List<GroupResponseDto> group = groupsService.getGroupForUser(loginId);
-        return getResponseEntity(SuccessCode.CREATED, group);
+        return getResponseEntity(SuccessCode.OK, group);
     }
     @PutMapping("/{groupId}")
     public ResponseEntity<?> updateGroup(@PathVariable Long groupId, @RequestParam(value = "newName") String newName) {

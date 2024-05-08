@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import animation
-from app.routers import rigging
+from app.routers import custom_motion
 
 app = FastAPI()
 
@@ -20,7 +20,7 @@ app.add_middleware(
 )
 
 app.include_router(router=animation.router, prefix="/ai/character", tags=["character"])  # characters
-app.include_router(router=rigging.router, prefix="/ai/rigging", tags=["rigging"])
+app.include_router(router=custom_motion.router, prefix="/ai/motion", tags=["motion"])
 
 
 @app.get("/")

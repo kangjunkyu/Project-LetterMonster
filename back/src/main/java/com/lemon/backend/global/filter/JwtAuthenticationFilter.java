@@ -56,6 +56,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String requestURI = httpRequest.getRequestURI();
 
         if (requestURI.equals("/") || checkWhiteList(requestURI)) {
+            log.info(requestURI);
             chain.doFilter(request, response);
             return;
         }
@@ -77,7 +78,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                     log.info("Token validation failed");
                 }
             } else {
-                log.info("No Authorization token provided");
+                throw new CustomException(ErrorCode.UNAUTHORIZED_FUNCTION_ACCESS);
             }
             chain.doFilter(request, response);
         } catch (CustomException e) {

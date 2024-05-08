@@ -25,19 +25,20 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Optional<List<NotificationGetDto>> getAllNotifications(Integer userId) {
-        return Optional.of(notificationRepository.getAllNotification(userId).get());
+        return notificationRepository.getAllNotification(userId); // Optional을 직접 반환
     }
 
     @Override
     public Optional<List<NotificationGetDto>> getNotCheckNotifications(Integer userId) {
-        return Optional.of(notificationRepository.getNotification(userId).get());
+        return notificationRepository.getNotification(userId); // Optional을 직접 반환
     }
+
 
     @Transactional
     @Override
     public boolean sendNotification(String token, String title, String body) {
         if(token == null || token.isEmpty() || title == null || title.isEmpty() || body == null || body.isEmpty()) {
-            return true;
+            return false;
         }
             Notification notification = Notification.builder()
                     .setTitle(title)

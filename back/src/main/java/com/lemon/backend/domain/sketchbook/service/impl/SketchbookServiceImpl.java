@@ -108,7 +108,7 @@ public class SketchbookServiceImpl implements SketchbookService {
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
         if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         sketch.setName(sketchDto.getName());
-
+        sketchbookRepository.save(sketch);
         return sketch.getId();
     }
 
@@ -125,7 +125,9 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Transactional
     @Override
     public void deleteSketchbook(Long sketchbookId){
-        sketchbookRepository.deleteById(sketchbookId);
+        Sketchbook sketchbook = sketchbookRepository.findById(sketchbookId)
+                .orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+        sketchbookRepository.delete(sketchbook);
     }
 
     @Override

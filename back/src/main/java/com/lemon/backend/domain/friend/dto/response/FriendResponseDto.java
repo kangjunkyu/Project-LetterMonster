@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FriendResponseDto {
-    private Long id;
+    private Integer id;
     private String nickname;
     private String nicknameTag;
 

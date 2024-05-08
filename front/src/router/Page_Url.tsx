@@ -1,7 +1,8 @@
 export const Page_Url = {
-  Welcome: "/",
+  // Welcome: "/",
   // 메인 페이지
-  Main: "/main",
+  // Main: "/main",
+  Main: "/",
   // 로그인 페이지
   Login: "/login",
   // 카카오 콜백 페이지
@@ -27,4 +28,6 @@ export const Page_Url = {
   SketchbookList: "/sketchbook/list",
   // 스케치북 페이지
   Sketchbook: "/sketchbook/",
+
+  Noti: "/notitest",
 };

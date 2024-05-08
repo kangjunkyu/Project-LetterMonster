@@ -1,5 +1,6 @@
 package com.lemon.backend.domain.notification.entity;
 
+import com.lemon.backend.domain.base.BaseEntity;
 import com.lemon.backend.domain.users.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @Where(clause = "is_deleted = false")
 @SQLDelete(sql = "UPDATE notification SET is_deleted = TRUE WHERE notification_id = ?")
-public class Notification {
+public class Notification extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

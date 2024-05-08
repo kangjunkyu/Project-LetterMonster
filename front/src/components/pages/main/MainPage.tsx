@@ -1,67 +1,115 @@
-import { useNavigate } from "react-router-dom";
-import { Page_Url } from "../../../router/Page_Url";
+// import { useNavigate } from "react-router-dom";
+// import { Page_Url } from "../../../router/Page_Url";
 import styles from "./MainPage.module.scss";
 import LanguageSwitcher from "../../molecules/language/LanguageSwitcher";
-import gom from "../../../assets/characterSample/gom.gif";
-import egypt from "../../../assets/characterSample/egypt.gif";
-import hojin from "../../../assets/characterSample/hojin_character.gif";
-import rabbit from "../../../assets/characterSample/rabbit.gif";
-import shinzzang from "../../../assets/characterSample/shinzzang.gif";
-import television from "../../../assets/characterSample/television.gif";
-import juhyeon from "../../../assets/characterSample/juhyeon.gif";
-import attamoma from "../../../assets/characterSample/attamoma.gif";
+import lemon from "../../../assets/characterSample/test_dab.gif";
+import { useState } from "react";
+import { useLogout } from "../../../hooks/auth/useLogout";
+import Modal from "../../atoms/modal/Modal";
+import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
+import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
+import KakaoLogin from "../../atoms/auth/KakaoLoginButton";
+import LineLogin from "../../atoms/auth/LineLoginButton";
+import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
+import MyPageFriendList from "../../molecules/mypage/MyPageFriendList";
+import { useNavigate } from "react-router-dom";
+import { Page_Url } from "../../../router/Page_Url";
+
+type ModalName =
+  | "userInfo"
+  | "langSelect"
+  | "findFriend"
+  | "characterList"
+  | "friendList";
 
 function MainPage() {
+  // const navigate = useNavigate();
+  const [isModalOpen, setModalOpen] = useState({
+    userInfo: false,
+    langSelect: false,
+    findFriend: false,
+    characterList: false,
+    friendList: false,
+  });
+  const handleToggleModal = (modalName: ModalName) =>
+    setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+  const logout = useLogout();
+  const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
   const navigate = useNavigate();
-
+  
   return (
-    <div className={styles.container}>
+    <div className={styles.mainContainer}>
       <LanguageSwitcher />
-      <div>Letter Monster / 레터몬스터</div>
+      <h1>Letter Monster</h1>
+      <h2>내 캐릭터로 편지보내기!</h2>
       <div className={styles.characterDiv}>
-        <img
-          className={styles.character}
-          src={gom}
-          alt="gom"
-        />
-        <img
-          className={styles.character}
-          src={hojin}
-          alt="hojin"
-        />
-        <img
-          className={styles.character}
-          src={egypt}
-          alt="egypt"
-        />
-        <img
-          className={styles.character}
-          src={rabbit}
-          alt="rabbit"
-        />
-        <img
-          className={styles.character}
-          src={shinzzang}
-          alt="shinzzang"
-        />
-        <img
-          className={styles.character}
-          src={television}
-          alt="television"
-        />
-        <img
-          className={styles.character}
-          src={attamoma}
-          alt="attamoma"
-        />
-        <img
-          className={styles.character}
-          src={juhyeon}
-          alt="juhyeon"
-        />
+        <img className={styles.character} src={lemon} alt="lettermon" />
       </div>
-      <button onClick={() => navigate(Page_Url.Login)}>카카오로그인</button>
-      <button onClick={() => navigate(Page_Url.Sketch)}>캐릭터그리기</button>
+      {isLoginCheck ? (
+        <>
+          <div className={styles.mainMenuContainer}>
+            <button onClick={() => handleToggleModal("userInfo")}>
+              개인 정보
+            </button>
+            {isModalOpen.userInfo && (
+              <Modal
+                isOpen={isModalOpen.userInfo}
+                onClose={() => handleToggleModal("userInfo")}
+              >
+                <MyPageUserInfo />
+              </Modal>
+            )}
+            <button onClick={() => handleToggleModal("characterList")}>
+              캐릭터 목록
+            </button>
+            {isModalOpen.characterList && (
+              <Modal
+                isOpen={isModalOpen.characterList}
+                onClose={() => handleToggleModal("characterList")}
+              >
+                <MyPageCharacter />
+              </Modal>
+            )}
+            <button onClick={() => handleToggleModal("findFriend")}>
+              친구 찾기
+            </button>
+            {isModalOpen.findFriend && (
+              <Modal
+                isOpen={isModalOpen.findFriend}
+                onClose={() => handleToggleModal("findFriend")}
+              >
+                <MyPageFindFriend />
+              </Modal>
+            )}
+            <button onClick={() => handleToggleModal("friendList")}>
+              내 친구 목록
+            </button>
+            {isModalOpen.friendList && (
+              <Modal
+                isOpen={isModalOpen.friendList}
+                onClose={() => handleToggleModal("friendList")}
+              >
+                <MyPageFriendList />
+              </Modal>
+            )}
+            <button
+              onClick={() => {
+                logout();
+                navigate(Page_Url.Main);
+              }}
+            >
+              로그아웃
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className={styles.mainLoginButton}>
+            <KakaoLogin />
+            <LineLogin />
+          </div>
+        </>
+      )}
     </div>
   );
 }

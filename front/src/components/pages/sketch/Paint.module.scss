@@ -6,24 +6,23 @@
 
 @media screen and (max-width: 479px) {
   .paintImportExport .etcButton:nth-child(3) {
-    display: none; 
+    display: none;
   }
   .paintImportExport .etcButton:nth-child(2) {
-    display: none; 
+    display: none;
   }
 
   .characterNicknameContainer {
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: space-between; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .inputCharacterNickname {
-    flex-grow: 1; 
-    margin-right: 10px; 
+    flex-grow: 1;
+    margin-right: 10px;
   }
 }
-
 
 .paintContainer {
   width: 100%;
@@ -33,12 +32,12 @@
   justify-content: center;
   align-items: center;
   // font-size: 14px;
-  margin: 20px 0;
+  // margin: 20px 0;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
     // font-size: 12px;
-    margin-bottom: 80px;
+    // margin-bottom: 80px;
   }
 
   @media screen and (max-width: 479px) {
@@ -104,7 +103,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  @media screen and (max-width:479px){
+  @media screen and (max-width: 479px) {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -116,7 +115,7 @@
   padding: 10px;
   margin-bottom: 5px;
 
-  @media screen and (max-width: 479px){
+  @media screen and (max-width: 479px) {
     width: 150px;
   }
 }

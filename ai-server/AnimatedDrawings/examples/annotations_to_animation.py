@@ -10,13 +10,14 @@ import yaml
 from pkg_resources import resource_filename
 
 
-def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cfg_fn: str, userId: str, motion: str):
+def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cfg_fn: str, character_id: str, motion: str):
     print("------------------")
     print("annotations_to_animation")
     print("------------------")
     print("char_anno_dir : ", char_anno_dir)
     print("motion_cfg_fn : ", motion_cfg_fn)
     print("retarget_cfg_fn : ", retarget_cfg_fn)
+
     """
     Given a path to a directory with character annotations, a motion configuration file, and a retarget configuration file,
     creates an animation and saves it to {annotation_dir}/video.png
@@ -30,7 +31,7 @@ def annotations_to_animation(char_anno_dir: str, motion_cfg_fn: str, retarget_cf
         'retarget_cfg': str(Path(retarget_cfg_fn).resolve())
     }
 
-    filename = f"{userId}_{motion}"+".gif" #여기에 gif 파일 이름 설정
+    filename = f"{character_id}_{motion}" + ".gif" # gif 파일 이름 설정
 
     print("- create mvc config")
     # create mvc config
