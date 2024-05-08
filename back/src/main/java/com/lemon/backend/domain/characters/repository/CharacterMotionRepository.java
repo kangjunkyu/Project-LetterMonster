@@ -19,15 +19,13 @@ public interface CharacterMotionRepository extends JpaRepository<CharacterMotion
 
     List<CharacterMotion> findAllByCharacters(Characters characters);
 
-    List<Character> findAllByUserId(Integer userId);
-    //
     @Query(value = "SELECT DISTINCT cm.character_motion_id AS id, cm.image_url AS imageUrl " +
             "FROM users u " +
             "JOIN sketchbook s ON u.users_id = s.users_id " +
             "JOIN sketchbook_character_motion scm ON s.sketchbook_id = scm.sketchbook_id " +
             "JOIN character_motion cm ON scm.character_motion_id = cm.character_motion_id " +
             "WHERE u.users_id = :userId", nativeQuery = true)
-    List<CharacterMotionSketchbookProjection> findDistinctCharacterMotionsByUserId(Long userId);
+    Optional<List<CharacterMotionSketchbookProjection>> findDistinctCharacterMotionsByUserId(Integer userId);
 
     @Query(value = "SELECT MIN(cm.character_motion_id) AS id, cm.image_url AS imageUrl, m.name AS motionName, ch.nickname AS characterNickname " +
             "FROM character_motion cm " +
@@ -35,11 +33,7 @@ public interface CharacterMotionRepository extends JpaRepository<CharacterMotion
             "JOIN motion m ON cm.motion_id = m.motion_id " +
             "WHERE ch.users_id = :userId " +
             "GROUP BY cm.image_url, m.name, ch.nickname", nativeQuery = true)
-    List<CharacterMotionProjection> findDistinctCharacterMotionsByUserIdOnlySelf(Long userId);
+    Optional<List<CharacterMotionProjection>> findDistinctCharacterMotionsByUserIdOnlySelf(Integer userId);
 
-    @Query("SELECT new com.lemon.backend.domain.characters.dto.response.CharacterInfoDto(c.nickname, c.url) " +
-            "FROM Characters c " +
-            "WHERE c.users.id = :userId")
-    List<CharacterInfoDto> findAllByUserId(Long userId);
 }
 
