@@ -30,4 +30,5 @@ export const Page_Url = {
   Sketchbook: "/sketchbook/",
 
   Noti: "/notitest",
+  Camera : "/camera"
 };

@@ -93,6 +93,7 @@ export const patchCharacterNickname = (characterId: number, nickname: string) =>
 /** 모션 리스트 조회 */
 export const getMotionList = () =>
   API.get(`/characters/public/list/motion`).then((res) => res.data);
+// .then((res) => res.data);
 
 /** 모션 선택
  * @param characterId 캐릭터 아이디
@@ -237,3 +238,6 @@ export const getUncheckedNotification = () =>
 export const putNotification = () =>
   API.put(`/notification`).then((res) => res.data);
 
+
+export const getMyCharacters = () =>
+    API.get(`/characters/mine`).then((res) => res.data.data);

@@ -19,6 +19,7 @@ import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
 import MyPage from "../components/pages/mypage/MyPages";
 import MotionResultPage from "../components/pages/motion/MotionResultPage";
 import NotificationPage from "../components/pages/notification/NotificationPage";
+import Cameras from "../components/pages/camera/CameraPage"
 
 function Router() {
   return (
@@ -65,6 +66,7 @@ function Router() {
         ></Route>
         <Route path={Page_Url.LineCallback} element={<LineCallback />}></Route>
       </Route>
+      <Route path={Page_Url.Camera} element={<Cameras />}></Route>
       <Route path={Page_Url.Error404} element={<ErrorPage />}></Route>
     </Routes>
   );

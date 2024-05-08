@@ -55,10 +55,10 @@ API.interceptors.response.use(
 
     // 토큰 만료시
     if (status === 401) {
-      if (!refreshToken) {
-        window.location.href = Page_Url.Main;
-        return;
-      }
+      // if (!refreshToken) {
+      //   window.location.href = Page_Url.Main;
+      //   return;
+      // }
 
       try {
         const baseURL = import.meta.env.VITE_BASE_URL;
@@ -92,7 +92,7 @@ API.interceptors.response.use(
           window.location.href = Page_Url.Main;
         }
       } catch (refreshError) {
-        window.location.href = Page_Url.Main;
+        // window.location.href = Page_Url.Main;
       }
     }
 
