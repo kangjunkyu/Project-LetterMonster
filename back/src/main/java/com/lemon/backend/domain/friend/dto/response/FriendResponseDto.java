@@ -12,6 +12,14 @@ public class FriendResponseDto {
     private Integer id;
     private String nickname;
     private String nicknameTag;
+    private Boolean isFriend;
+
+    public FriendResponseDto(Integer id, String nickname, String nicknameTag) {
+        this.id = id;
+        this.nickname = nickname;
+        this.nicknameTag = nicknameTag;
+    }
+
 
     public FriendResponseDto(String nickname, String nicknameTag) {
         this.nickname = nickname;
