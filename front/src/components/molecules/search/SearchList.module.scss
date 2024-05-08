@@ -1,0 +1,17 @@
+@import "../../../styles/mixins/defalut";
+
+.ListContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 400px;
+  overflow: scroll;
+  & button {
+    padding: 1em;
+    &:hover {
+      border: 0.1px solid $actionColor;
+    }
+    &:active {
+      border: 0.1px solid $successColor;
+    }
+  }
+}

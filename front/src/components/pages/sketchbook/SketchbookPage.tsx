@@ -6,8 +6,10 @@ import { useState } from "react";
 import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
 import Letter from "../../atoms/letter/Letter";
+import { useTranslation } from "react-i18next";
 
 function SketchbookPage() {
+  const { t } = useTranslation();
   const params = useParams() as { uuid: string };
   const { data } = useSketchbook(params.uuid);
   const navigate = useNavigate();
@@ -54,7 +56,7 @@ function SketchbookPage() {
             }}
             custom={true}
           >
-            편지 남기기
+            {t("sketchbook.letter")}
           </DefaultButton>
         </LNB>
         {data && (

@@ -8,9 +8,10 @@ export default function useGetSelectedMotion(
   return useQuery({
     queryKey: ["motion", characterId, motionId],
     queryFn: () => {
-      if (characterId && motionId) {
-        return getMotionSelect(characterId, motionId);
-      }
+      // sketchbookName이 비어 있지 않을 때만 API 호출
+      return characterId != 0 && motionId != 0
+        ? getMotionSelect(characterId, motionId)
+        : Promise.resolve({});
     },
   });
 }

@@ -54,8 +54,13 @@ export const cancelCharacter = (characterId: number) =>
   API.delete(`/characters/cancel`, { params: { characterId: characterId } });
 
 /** 캐릭터 리스트 조회 */
-export const getCharacterList = () =>
-  API.get(`/characters/list`).then((res) => res.data.data);
+export const getCharacterList = () => {
+  if (localStorage.getItem("accessToken")) {
+    return API.get(`/characters/list`).then((res) => res.data.data);
+  } else {
+    return Promise.resolve({});
+  }
+};
 
 /** 캐릭터 삭제
  * @param characterId 캐릭터 아이디
@@ -123,13 +128,13 @@ export const getSketchbookListAll = () =>
   API.get(`/sketchbooks/public/all`).then((res) => res.data);
 
 /** 스케치북 선택 간단 조회
- * @param sketchbookId 스케치북 아이디
+ * @requires sketchbookId 스케치북 아이디
  */
 export const getSketchbookSelectedsimple = (uuid: string) =>
   API.get(`/sketchbooks/public/simple/${uuid}`).then((res) => res.data);
 
 /** 스케치북 선택 상세 조회
- * @param sketchbookId 스케치북 아이디
+ * @requires sketchbookId 스케치북 아이디
  */
 export const getSketchbookSelected = (uuid: string) =>
   API.get(`/sketchbooks/detail/${uuid}`).then((res) => res.data);
@@ -148,6 +153,14 @@ export const putSketchbookName = (sketchbookId: number, name: string) =>
  */
 export const deleteSketchbook = (sketchbookId: number) =>
   API.delete(`/sketchbooks/${sketchbookId}`).then((res) => res.data);
+
+/** 스케치북 이름 검색
+ * @requires sketchbookName 스케치북 이름
+ */
+export const getSearchSketchbook = (sketchbookName: string) =>
+  API.get(`/sketchbooks/public/search/${sketchbookName}`).then(
+    (res) => res.data
+  );
 
 // 편지 관련 API
 
@@ -212,7 +225,6 @@ export const postFriendGroupList = (friendId: number) => {
 export const deleteFriend = (friendId: number) =>
   API.delete(`friends/${friendId}`).then((res) => res);
 
-
 // 알람 관련 API
 
 /** 알림 전체 조회
@@ -236,4 +248,3 @@ export const getUncheckedNotification = () =>
 
 export const putNotification = () =>
   API.put(`/notification`).then((res) => res.data);
-
