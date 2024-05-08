@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useNavigate } from "react-router";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import styles from "./WriteLetterPage.module.scss";
 import DefaultButton from "../../atoms/button/DefaultButton";
@@ -15,18 +16,41 @@ import { Page_Url } from "../../../router/Page_Url";
 import useGetSelectedMotion from "../../../hooks/motion/useGetSelectedMotion";
 import LoadingSpinner from "../../atoms/loadingSpinner/LoadingSpinner";
 import useWriteLetter from "../../../hooks/letter/useWriteLetter";
+import useSearchSketchbook from "../../../hooks/sketchbook/useSearchSketchbook";
+import Modal from "../../atoms/modal/Modal";
+import SearchList from "../../molecules/search/SearchList";
 
 function LetterWritePage() {
+  const location = useLocation();
+  const { t } = useTranslation();
   const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
+  const {
+    gif,
+    characterId: chId,
+    nickname,
+    motionId: mId,
+  } = location.state || {};
   const [content, setContent] = useState(""); // 편지내용
+  const [to, setTo] = useState(t("writeletter.sketchbookSelectSentence"));
   const [target, setTarget] = useState(0); // 편지보낼스케치북
   const { data: sketchbookList, isLoading } = useSketchbookListAll();
   const { data: characterList } = useGetCharacterList();
-  const [characterId, setCharacterId] = useState(0);
-  const [motionId, setMotionId] = useState(0);
+  const [characterId, setCharacterId] = useState(chId | 0);
+  const [motionId, setMotionId] = useState(mId | 0);
   const { showAlert } = useAlert();
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const { data: searchResult } = useSearchSketchbook(searchKeyword);
+
+  const [isModalOpen, setModalOpen] = useState({
+    findsketchbook: false,
+  });
+
+  type ModalName = "findsketchbook";
+
+  const handleToggleModal = (modalName: ModalName) =>
+    setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
 
   const {
     data: selectedMotion,
@@ -68,7 +92,6 @@ function LetterWritePage() {
 
   useEffect(() => {
     if (sketchbookId && sketchbookId.sketchbookId && !target) {
-      // URL 파라미터에서 받은 sketchbookId가 숫자 타입이라고 가정할 때
       setTarget(Number(sketchbookId.sketchbookId));
     }
   }, [sketchbookId, target]);
@@ -80,79 +103,109 @@ function LetterWritePage() {
   return (
     <div className={styles.writeContainer}>
       <LNB>
-        <h1>편지 쓰기</h1>
+        <h1>{t("writeletter.title")}</h1>
         <DefaultButton onClick={() => onClickHandler()} custom={true}>
-          보내기
+          {t("writeletter.send")}
         </DefaultButton>
       </LNB>
       <section className={styles.letterBox}>
         <article>
+          {!gif && (
+            <>
+              <figure>
+                <p>{t("writeletter.characterSelect")}</p>
+                {characterList && (
+                  <CharacterList
+                    characterList={characterList}
+                    characterId={characterId}
+                    setId={setCharacterId}
+                  ></CharacterList>
+                )}
+                {!characterList?.data && !gif && (
+                  <div className={styles.characterList}>
+                    <button
+                      onClick={() => navigate(Page_Url.Sketch)}
+                      className={styles.buttonItem}
+                    >
+                      {t("writeletter.characterDrawing")}
+                    </button>
+                  </div>
+                )}
+              </figure>
+              <figure>
+                {characterId != 0 && (
+                  <>
+                    <p>{t("writeletter.motionSelect")}</p>
+                    <MotionExample
+                      isLoad={isFetching}
+                      setMotionId={motionSeleted}
+                    />
+                  </>
+                )}
+              </figure>
+            </>
+          )}
           <figure>
-            <p>캐릭터 고르기</p>
-            {characterList && (
-              <CharacterList
-                characterList={characterList}
-                characterId={characterId}
-                setId={setCharacterId}
-              ></CharacterList>
-            )}
-            {!characterList?.data?.data && (
-              <div className={styles.characterList}>
-                <button
-                  onClick={() => navigate(Page_Url.Sketch)}
-                  className={styles.buttonItem}
-                >
-                  내 캐릭터 그리러 가기
-                </button>
-              </div>
-            )}
-          </figure>
-          <figure>
-            {characterId != 0 && (
-              <>
-                <p>동작 고르기</p>
-                <MotionExample
-                  isLoad={isFetching}
-                  setMotionId={motionSeleted}
+            <span>{t("writeletter.sketchbookSelect")}</span>
+            {isModalOpen.findsketchbook && (
+              <Modal
+                isOpen={isModalOpen.findsketchbook}
+                onClose={() => handleToggleModal("findsketchbook")}
+              >
+                <input
+                  type="text"
+                  className={`${styles.sendList} ${styles.boxComponent}`}
+                  placeholder={t("writeletter.sketchbookSearch")}
+                  value={searchKeyword}
+                  onChange={(e) => {
+                    setSearchKeyword(e.target.value);
+                  }}
                 />
-              </>
+                <SearchList>
+                  {searchResult?.data?.map(
+                    (item: {
+                      id: number;
+                      uuid: string;
+                      name: string;
+                      tag: number;
+                    }) => (
+                      <DefaultButton
+                        key={item.id}
+                        onClick={() => {
+                          setTarget(item.id);
+                          setSearchKeyword("");
+                          setTo(`${item.name} - ${item.tag}`);
+                          handleToggleModal("findsketchbook");
+                        }}
+                        custom={true}
+                      >
+                        <div>
+                          {item.name} - {item.tag}
+                        </div>
+                      </DefaultButton>
+                    )
+                  )}
+                  <DefaultButton
+                    onClick={() => handleToggleModal("findsketchbook")}
+                  >
+                    {t("close")}
+                  </DefaultButton>
+                </SearchList>
+              </Modal>
             )}
-          </figure>
-          <figure>
-            <p>받을 사람</p>
-            <select
-              name="sendTo"
-              id="sendTo"
-              className={`${styles.sendList} ${styles.boxComponent}`}
-              onChange={(e) => {
-                setTarget(Number(e.target.value));
-              }}
-              value={target} // useState를 사용하여 관리되는 상태를 value로 연결합니다.
-              disabled={sketchbookId.sketchbookId ? true : false} // sketchbookList가 로드되지 않았다면 select를 비활성화합니다.
+            <div
+              className={`${styles.sendList} ${styles.boxComponent} ${styles.cursor}`}
+              onClick={() => handleToggleModal("findsketchbook")}
             >
-              {sketchbookList?.data?.map(
-                (
-                  item: {
-                    id: number;
-                    name: string;
-                    tag: number;
-                    holder: { nickname: string };
-                  },
-                  i: number
-                ) => (
-                  <option value={item?.id} key={i}>
-                    {item?.name} - {item?.tag} - {item?.holder?.nickname}
-                  </option>
-                )
-              )}
-            </select>
+              {to}
+            </div>
           </figure>
         </article>
         <article>
           {isFetching && <LoadingSpinner />}
           {!isRefetching && <img src={selectedMotion?.imageUrl} />}
-          <figure>
-            <div>편지 내용</div>
+          <figure className={styles.writeBox}>
+            <div>{t("writeletter.letterContent")}</div>
             <textarea
               name="letterContent"
               id="letterContent"
@@ -161,6 +214,9 @@ function LetterWritePage() {
               rows={10}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
+            <DefaultButton onClick={() => onClickHandler()}>
+              {t("writeletter.send")}
+            </DefaultButton>
           </figure>
         </article>
       </section>
