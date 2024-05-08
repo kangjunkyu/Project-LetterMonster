@@ -40,7 +40,10 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
             log.info("쿠키 삭제");
             CookieUtil.deleteCookie(request, response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
             CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
-            CookieUtil.deleteCookie(request, response, FIREBASE_TOKEN_COOKIE_NAME);
+            if (request.getParameter(FIREBASE_TOKEN_COOKIE_NAME) == null) {
+                log.info("파이어베이스 토큰 쿠키 삭제");
+                CookieUtil.deleteCookie(request, response, FIREBASE_TOKEN_COOKIE_NAME);
+            }
             return;
         }
 
