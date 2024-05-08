@@ -264,8 +264,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                         sketchbook.id,
                         sketchbook.sketchbookUuid,
                         sketchbook.name,
-                        sketchbook.tag))
+                        sketchbook.tag,
+                        sketchbook.users.nickname))
                 .from(sketchbook)
+                .leftJoin(sketchbook.users)
                 .where(sketchbook.name.contains(sketchbookName))
                 .fetch();
         return Optional.ofNullable(list);
