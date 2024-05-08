@@ -7,8 +7,10 @@ import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { Page_Url } from "../../../router/Page_Url";
 import Modal from "../../atoms/modal/Modal";
+import { useTranslation } from "react-i18next";
 
 function MotionPage() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { characterId, nickname } = location.state || {};
@@ -36,7 +38,7 @@ function MotionPage() {
             }}
             custom={true}
           >
-            모션 결정
+            {t("motion.create")}
           </DefaultButton>
         </LNB>
         <div className={styles.motionContainer}>
@@ -55,7 +57,7 @@ function MotionPage() {
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleToggleModal}>
-          <div>Motion을 선택해주세요!</div>
+          <div>{t("motion.warn")}</div>
         </Modal>
       )}
     </>

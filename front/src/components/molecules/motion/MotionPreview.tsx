@@ -5,6 +5,7 @@ import { Page_Url } from "../../../router/Page_Url";
 import { cancelCharacter } from "../../../api/Api";
 import Modal from "../../atoms/modal/Modal";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface MotionPreviewProps {
   characterNickname: string;
@@ -19,6 +20,7 @@ function MotionPreview({
   characterId,
   motionId,
 }: MotionPreviewProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { image } = location.state || {};
@@ -58,7 +60,7 @@ function MotionPreview({
               }
             }}
           >
-            편지 쓰기
+            {t("writeletter.title")}
           </DefaultButton>
           <DefaultButton
             onClick={() => {
@@ -66,13 +68,13 @@ function MotionPreview({
               navigate(Page_Url.Sketch);
             }}
           >
-            다시 그리기
+            {t("motion.repaint")}
           </DefaultButton>
         </div>
       </div>
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={handleToggleModal}>
-          <div>Motion을 선택해주세요!</div>
+          <div>{t("motion.warn")}</div>
         </Modal>
       )}
     </>

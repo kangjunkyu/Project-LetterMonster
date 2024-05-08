@@ -19,10 +19,12 @@ import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchChara
 import { useAlert } from "../../../hooks/notice/useAlert";
 import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
+import { useTranslation } from "react-i18next";
 
 interface PaintProps {}
 
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { showAlert } = useAlert();
 
@@ -85,14 +87,14 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newNickname = event.target.value;
       if (newNickname.startsWith(" ")) {
-        setNicknameError("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+        setNicknameError(t("paint.pleaseDont"));
       } else if (
         /[^a-zA-Z0-9ㄱ-힣\s]/.test(newNickname) ||
         newNickname.includes("　")
       ) {
-        setNicknameError("닉네임은 영문, 숫자, 한글만 가능합니다.");
+        setNicknameError(t("paint.pleaseRename"));
       } else if (newNickname.length > 10) {
-        setNicknameError("닉네임은 10글자 이하만 가능합니다.");
+        setNicknameError(t("paint.pleaseTen"));
       } else {
         setCharacterNickname(newNickname);
         setNicknameError("");
@@ -110,10 +112,10 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const stageRef = useRef<any>(null);
   const onExportClick = useCallback(() => {
     if (characterNickname.trim() === "") {
-      showAlert("닉네임을 입력해주세요");
+      showAlert(t("paint.nickname"));
       return;
     } else if (scribbles.length === 0) {
-      showAlert("캐릭터를 그려주세요");
+      showAlert(t("paint.pleaseDraw"));
       return;
     }
 
@@ -244,9 +246,9 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   return (
     <div className={styles.paintContainer}>
       <LNB>
-        <h1>그림 그리기</h1>
+        <h1>{t("paint.title")}</h1>
         <DefaultButton onClick={() => onExportClick()} custom={true}>
-          만나기
+          {t("paint.create")}
         </DefaultButton>
       </LNB>
       <div className={styles.characterNicknameContainer}>
@@ -255,7 +257,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             type="text"
             value={characterNickname}
             onChange={handleCharacterNicknameChange}
-            placeholder="캐릭터 별명을 입력해주세요"
+            placeholder={t("paint.nickname")}
             className={styles.inputCharacterNickname}
           />
           <div>
@@ -266,11 +268,8 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             )}
           </div>
         </div>
-        <button
-          className={styles.etcButton}
-          onClick={onImportImageClick}
-        >
-          그림 올리기
+        <button className={styles.etcButton} onClick={onImportImageClick}>
+          {t("paint.upload")}
         </button>
       </div>
 
@@ -341,7 +340,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
                     onClick={() => setShowPopover(false)}
                   >
                     <span className="material-icons">clear</span>
-                    <span>닫기</span>
+                    <span>{t("close")}</span>
                   </button>
                   <SketchPicker
                     color={color}
@@ -384,10 +383,10 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             accept="image/*"
           />
           <button className={styles.etcButton} onClick={onImportImageClick}>
-            그림 올리기
+            {t("paint.upload")}
           </button>
           <button className={styles.etcButton} onClick={onExportClick}>
-            만나러 가기
+            {t("paint.create")}
           </button>
         </div>
       </div>

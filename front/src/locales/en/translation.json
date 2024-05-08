@@ -17,5 +17,46 @@
     "more": "More",
     "home": "Home"
   },
-  "error": "Unfortunately, there's no page like that"
+  "error": "Unfortunately, there's no page like that",
+  "close": "Close",
+  "writeletter": {
+    "title": "Write",
+    "characterSelect": "Character Select",
+    "characterDrawing": "Go draw my character",
+    "motionSelect": "Motion Select",
+    "sketchbookSelect": "Select a sketchbook to send a letter",
+    "sketchbookSearch": "Search by name",
+    "sketchbookSelectSentence": "Please select a sketchbook to send the letter",
+    "letterContent": "Content",
+    "send": "Send"
+  },
+  "sketchbookList": {
+    "title": "My Sketchbook List",
+    "generate": "Create",
+    "generateModal": "Create My Sketchbook",
+    "name": "Sketchbook Name",
+    "create": "sketchbook has been created",
+    "namePlease": "Please name your sketchbook",
+    "copy": "Copy Completed"
+  },
+  "sketchbook": {
+    "letter": "Leaving a letter"
+  },
+  "paint": {
+    "title": "Painting",
+    "create": "Create",
+    "upload": "Upload Painting",
+    "nickname": "Please enter a nickname for the character",
+    "pleaseRename": "Nicknames can only contain letters, numbers, and Korean characters.",
+    "pleaseDont": "You cannot use a space as the first character.",
+    "pleaseTen": "Nicknames must be 10 characters or fewer.",
+    "pleaseDraw": "Please draw the character"
+  },
+  "motion": {
+    "title": "Select Motion",
+    "create": "Set Motion",
+    "repaint": "Redraw",
+    "motions": "Types of Character Motions",
+    "warn": "Please select a Motion!"
+  }
 }
