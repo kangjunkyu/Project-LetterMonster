@@ -56,7 +56,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                     .queryParam("refreshToken", tokenResponse.getRefreshToken())
                     .build().toUriString();
 
-            if(fireBaseToken.isPresent()) {
+            if (fireBaseToken.isPresent() && !fireBaseToken.get().isEmpty()) {
                 userRepository.updateFirebaseToken(userId, fireBaseToken.get());
             }
             redirectStrategy.sendRedirect(request, response, redirectUrl);

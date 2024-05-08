@@ -79,7 +79,7 @@ public class LetterServiceImpl implements LetterService {
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
 
-        if (receiver.getNotificationToken() != null) {
+        if (receiver.getNotificationToken() != null && !receiver.getNotificationToken().equals("null")) {
 
             Notification notification = Notification.builder()
                     .receiver(receiver)

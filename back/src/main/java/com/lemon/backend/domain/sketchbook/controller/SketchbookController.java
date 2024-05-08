@@ -103,4 +103,16 @@ public class SketchbookController {
         sketchbookService.changeRepresent(userId, sketchbookId);
         return getResponseEntity(SuccessCode.OK);
     }
+
+    @GetMapping("/friend")
+    public ResponseEntity<?> getFriendSketchbook(@RequestParam Integer userId){
+        List<SketchbookGetSimpleDto> list = sketchbookService.getFriendSketchList(userId);
+        return getResponseEntity(SuccessCode.OK, list);
+    }
+
+    @PutMapping("/changepublic")
+    public ResponseEntity<?> changePublicSketchbook(@RequestParam Long skechbookId){
+        Boolean changePublic = sketchbookService.changePublic(skechbookId);
+        return getResponseEntity(SuccessCode.OK, changePublic);
+    }
 }

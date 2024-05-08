@@ -67,6 +67,8 @@ function MyPageFindFriend() {
     return () => clearTimeout(timeoutId);
   }, [nickname]);
 
+  // console.log(friendList);
+
   return (
     <>
       <div className={styles.findFriendContainer}>

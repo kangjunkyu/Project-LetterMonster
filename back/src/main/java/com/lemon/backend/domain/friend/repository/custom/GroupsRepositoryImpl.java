@@ -7,6 +7,7 @@ import com.lemon.backend.domain.friend.entity.QGroupsInfo;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,9 @@ import java.util.Optional;
 
 import static com.lemon.backend.domain.friend.entity.QFriends.friends;
 import static com.lemon.backend.domain.friend.entity.QGroupsInfo.groupsInfo;
+import static com.lemon.backend.domain.users.user.entity.QUsers.users;
 import static com.querydsl.core.types.Projections.constructor;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 @RequiredArgsConstructor
 public class GroupsRepositoryImpl implements GroupsRepositoryCustom {
@@ -50,11 +53,17 @@ public class GroupsRepositoryImpl implements GroupsRepositoryCustom {
                 .fetch();
 
         for (GroupResponseDto groupDto : groupDtos) {
+            var isFriendSubquery = select(friends.id)
+                    .from(friends)
+                    .where(friends.users.id.eq(userId)
+                            .and(friends.friend.id.eq(userId)));
+
             List<FriendResponseDto> friendDtos = query
                     .select(Projections.constructor(FriendResponseDto.class,
                             friends.friend.id,
                             friends.friend.nickname,
-                            friends.friend.nicknameTag
+                            friends.friend.nicknameTag,
+                            Expressions.asBoolean(isFriendSubquery.exists()).as("isFriend")
                     )).from(friends)
                     .where(friends.groupsInfo.id.eq(groupDto.getId()))
                     .fetch();
