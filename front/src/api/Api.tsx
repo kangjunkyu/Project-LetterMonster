@@ -34,11 +34,9 @@ export const postSketchCharacter = async (nickname: string, file: File) => {
   // ImgAPI를 사용하여 요청 보내기
   try {
     if (localStorage.getItem("accessToken") != null) {
-      console.log("토큰 있으면");
       const response = await ImgAPI.post(`/characters/create`, formData);
       return response.data;
     } else {
-      console.log("토큰 없으면");
       const response = await ImgAPI.post(`/characters/public/create`, formData);
       return response.data;
     }
