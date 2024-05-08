@@ -110,41 +110,37 @@ function LetterWritePage() {
       </LNB>
       <section className={styles.letterBox}>
         <article>
-          {!chId && (
-            <>
-              <figure>
-                <p>{t("writeletter.characterSelect")}</p>
-                {characterList?.data && (
-                  <CharacterList
-                    characterList={characterList}
-                    characterId={characterId}
-                    setId={setCharacterId}
-                  ></CharacterList>
-                )}
-                {!characterList?.data && !gif && (
-                  <div className={styles.characterList}>
-                    <button
-                      onClick={() => navigate(Page_Url.Sketch)}
-                      className={styles.buttonItem}
-                    >
-                      {t("writeletter.characterDrawing")}
-                    </button>
-                  </div>
-                )}
-              </figure>
-              <figure>
-                {characterId != 0 && (
-                  <>
-                    <p>{t("writeletter.motionSelect")}</p>
-                    <MotionExample
-                      isLoad={isFetching}
-                      setMotionId={motionSeleted}
-                    />
-                  </>
-                )}
-              </figure>
-            </>
-          )}
+          <figure>
+            <p>{t("writeletter.characterSelect")}</p>
+            {characterList?.data && (
+              <CharacterList
+                characterList={characterList}
+                characterId={characterId}
+                setId={setCharacterId}
+              ></CharacterList>
+            )}
+            {!characterList?.data && !gif && (
+              <div className={styles.characterList}>
+                <button
+                  onClick={() => navigate(Page_Url.Sketch)}
+                  className={styles.buttonItem}
+                >
+                  {t("writeletter.characterDrawing")}
+                </button>
+              </div>
+            )}
+          </figure>
+          <figure>
+            {characterId != 0 && (
+              <>
+                <p>{t("writeletter.motionSelect")}</p>
+                <MotionExample
+                  isLoad={isFetching}
+                  setMotionId={motionSeleted}
+                />
+              </>
+            )}
+          </figure>
           <figure>
             <span>{t("writeletter.sketchbookSelect")}</span>
             {isModalOpen.findsketchbook && (
