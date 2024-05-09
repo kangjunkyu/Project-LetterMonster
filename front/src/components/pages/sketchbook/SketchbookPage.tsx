@@ -151,6 +151,7 @@ function SketchbookPage() {
                 data?.data?.sketchbookCharacterMotionList?.map(
                   (item: any, i: number) => (
                     <DefaultButton
+                      key={i}
                       onClick={() => {
                         setNow(i);
                         handleToggleModal("letter", i);
