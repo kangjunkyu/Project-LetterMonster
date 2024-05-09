@@ -45,7 +45,7 @@
   "paint": {
     "title": "Painting",
     "create": "Create",
-    "upload": "Upload Painting",
+    "upload": "Select from Album",
     "nickname": "Please enter a nickname for the character",
     "pleaseRename": "Nicknames can only contain letters, numbers, and Korean characters.",
     "pleaseDont": "You cannot use a space as the first character.",

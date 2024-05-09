@@ -114,14 +114,14 @@ function LetterWritePage() {
             <>
               <figure>
                 <p>{t("writeletter.characterSelect")}</p>
-                {characterList?.data && (
+                {characterList && (
                   <CharacterList
                     characterList={characterList}
                     characterId={characterId}
                     setId={setCharacterId}
                   ></CharacterList>
                 )}
-                {!characterList?.data && !gif && (
+                {!characterList?.data && (
                   <div className={styles.characterList}>
                     <button
                       onClick={() => navigate(Page_Url.Sketch)}
@@ -132,17 +132,16 @@ function LetterWritePage() {
                   </div>
                 )}
               </figure>
-              <figure>
-                {characterId != 0 && (
-                  <>
-                    <p>{t("writeletter.motionSelect")}</p>
-                    <MotionExample
-                      isLoad={isFetching}
-                      setMotionId={motionSeleted}
-                    />
-                  </>
-                )}
-              </figure>
+              {characterId != 0 && (
+                <figure>
+                  <p>{t("writeletter.motionSelect")}</p>
+                  <MotionExample
+                    isLoad={isFetching}
+                    motionId={motionId}
+                    setMotionId={motionSeleted}
+                  />
+                </figure>
+              )}
             </>
           )}
           <figure>
@@ -168,19 +167,22 @@ function LetterWritePage() {
                       uuid: string;
                       name: string;
                       tag: number;
+                      userNickName: string;
                     }) => (
                       <DefaultButton
                         key={item.id}
                         onClick={() => {
                           setTarget(item.id);
                           setSearchKeyword("");
-                          setTo(`${item.name} - ${item.tag}`);
+                          setTo(
+                            `${item.name} - ${item.tag} - ${item.userNickName}`
+                          );
                           handleToggleModal("findsketchbook");
                         }}
                         custom={true}
                       >
                         <div>
-                          {item.name} - {item.tag}
+                          {item.name} - {item.tag} - {item.userNickName}
                         </div>
                       </DefaultButton>
                     )

@@ -20,3 +20,8 @@
 .boxComponent {
   @include box();
 }
+
+.selected {
+  border: 1px solid $actionColor;
+  border-radius: 5px;
+}
