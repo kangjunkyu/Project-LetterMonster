@@ -159,6 +159,18 @@ export const getSearchSketchbook = (sketchbookName: string) =>
     (res) => res.data
   );
 
+/** 스케치북 공개 여부 전환
+ * @requires sketchbookId 스케치북 아이디
+ */
+export const putSketchbookOpen = (sketchbookId: number) =>
+  API.put(
+    `/sketchbooks/changepublic`,
+    {},
+    {
+      params: { sketchbookId: sketchbookId },
+    }
+  ).then((res) => res.data);
+
 // 편지 관련 API
 
 /** 편지 작성
