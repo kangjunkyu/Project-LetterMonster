@@ -18,11 +18,16 @@ interface Props {
     tag: number;
     isWritePossible: boolean;
   };
+  index:number;
 }
-function SketchbookListItem({ item, url }: Props) {
+function SketchbookListItem({ item, url, index }: Props) {
   return (
     <li className={styles.itemContainer}>
-      <KakaoShareIcon link={item.shareLink} nickname={item.holder.nickname} />
+      <KakaoShareIcon
+        link={item.shareLink}
+        nickname={item.holder.nickname}
+        index={index};
+      />
       <CommonShareIcon link={item.shareLink} />
       <Link to={url} className={styles.sketchbookListItem}>
         {item.name}

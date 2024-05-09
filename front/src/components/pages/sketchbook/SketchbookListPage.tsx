@@ -72,6 +72,7 @@ function SketchbookListPage() {
         key={item.id}
         item={item}
         url={`${Page_Url.Sketchbook}${item.uuid}`}
+        index={item.id}
       />
     ));
   };
