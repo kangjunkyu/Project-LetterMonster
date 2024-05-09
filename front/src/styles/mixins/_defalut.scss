@@ -30,6 +30,14 @@
   border: 0.5px solid $gc600;
 }
 
+@mixin hoverItem() {
+  cursor: pointer;
+  transition: 0.3s all;
+  &:hover {
+    background-color: $actionColor;
+  }
+}
+
 // 폰트 사이즈
 
 @mixin title() {
