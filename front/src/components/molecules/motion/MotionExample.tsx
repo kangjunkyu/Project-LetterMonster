@@ -4,6 +4,7 @@ import DefaultButton from "../../atoms/button/DefaultButton";
 import CharacterListItem from "../../atoms/character/CharacterListItem";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
+import { useTranslation } from "react-i18next";
 
 interface Prop {
   isLoad: boolean;
@@ -12,6 +13,7 @@ interface Prop {
 }
 
 function MotionExample({ isLoad, setMotionId, motionId }: Prop) {
+  const { t } = useTranslation();
   const { data } = useGetMotionList();
   const [clickedMotionIndex, setClickedMotionIndex] = useState<number | null>(
     null
@@ -22,7 +24,7 @@ function MotionExample({ isLoad, setMotionId, motionId }: Prop) {
       setClickedMotionIndex(motionId);
       setMotionId(motionId);
     } else {
-      showAlert("이전 요청을 처리하는 중이에요.");
+      showAlert(t("motion.practice"));
     }
   };
 
