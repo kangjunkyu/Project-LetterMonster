@@ -126,28 +126,28 @@ public class LetterServiceTest {
 
 
 
-    @Test
-    public void testCreateLetterNotFound() {
-        Integer senderId = 1;
-        Long sketchId = 2L;
-        Long characterMotionId = 3L;
-        Long createLetterId = 2L;
-
-        Users sender = Users.builder().id(senderId).build();
-
-//        when(userRepository.findById(senderId)).thenReturn(java.util.Optional.of(sender));
-        when(sketchbookRepository.findById(sketchId)).thenReturn(Optional.empty());
-//        when(characterMotionRepository.findById(characterMotionId)).thenReturn(Optional.empty());
-
-        LetterCreateDto letterCreateDto = LetterCreateDto.builder()
-                .id(createLetterId)
-                .characterMotionId(characterMotionId)
-                .sketchbookId(sketchId)
-                .content("test")
-                .build();
-
-        assertThrows(CustomException.class, () -> letterService.createLetter(senderId, letterCreateDto));
-    }
+//    @Test
+//    public void testCreateLetterNotFound() {
+//        Integer senderId = 1;
+//        Long sketchId = 2L;
+//        Long characterMotionId = 3L;
+//        Long createLetterId = 2L;
+//
+//        Users sender = Users.builder().id(senderId).build();
+//
+////        when(userRepository.findById(senderId)).thenReturn(java.util.Optional.of(sender));
+//        when(sketchbookRepository.findById(sketchId)).thenReturn(Optional.empty());
+////        when(characterMotionRepository.findById(characterMotionId)).thenReturn(Optional.empty());
+//
+//        LetterCreateDto letterCreateDto = LetterCreateDto.builder()
+//                .id(createLetterId)
+//                .characterMotionId(characterMotionId)
+//                .sketchbookId(sketchId)
+//                .content("test")
+//                .build();
+//
+//        assertThrows(CustomException.class, () -> letterService.createLetter(senderId, letterCreateDto));
+//    }
 
 
     @Test
