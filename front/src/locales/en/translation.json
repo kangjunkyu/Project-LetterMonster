@@ -40,7 +40,11 @@
     "copy": "Copy Completed"
   },
   "sketchbook": {
-    "letter": "Leaving a letter"
+    "letter": "Leaving a letter",
+    "rename": "Rename Sketchbook",
+    "delete": "Delete Sketchbook",
+    "cancel": "Cancel",
+    "check": "Are you sure you want to delete the sketchbook?"
   },
   "paint": {
     "title": "Painting",
