@@ -3,6 +3,7 @@ import { Page_Url } from "./Page_Url";
 // 레이아웃
 import DefaultLayouts from "../styles/layouts/DefaultLayouts";
 import NoLNBLayout from "../styles/layouts/NoLNBLayout";
+import NoGNBLayout from "../styles/layouts/NoGNBLayout";
 
 // 페이지
 // import WelcomePage from "../components/pages/welcome/WelcomePage";
@@ -27,10 +28,12 @@ function Router() {
       <Route element={<NoLNBLayout />}>
         <Route path={Page_Url.Main} element={<MainPage />}></Route>
       </Route>
+      <Route element={<NoGNBLayout />}>
+        <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
+      </Route>
       <Route element={<DefaultLayouts />}>
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route path={Page_Url.Noti} element={<NotificationPage />}></Route>
-        <Route path={Page_Url.Sketch} element={<SketchPage />}></Route>
         <Route path={Page_Url.Motion} element={<MotionPage />}></Route>
         <Route
           path={Page_Url.MotionResult}
