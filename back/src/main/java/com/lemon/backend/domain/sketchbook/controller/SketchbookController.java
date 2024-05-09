@@ -111,8 +111,8 @@ public class SketchbookController {
     }
 
     @PutMapping("/changepublic")
-    public ResponseEntity<?> changePublicSketchbook(@RequestParam Long skechbookId){
-        Boolean changePublic = sketchbookService.changePublic(skechbookId);
+    public ResponseEntity<?> changePublicSketchbook(@RequestParam Long sketchbookId){
+        Boolean changePublic = sketchbookService.changePublic(sketchbookId);
         return getResponseEntity(SuccessCode.OK, changePublic);
     }
 }
