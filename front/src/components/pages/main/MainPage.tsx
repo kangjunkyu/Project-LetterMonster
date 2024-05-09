@@ -38,7 +38,7 @@ function MainPage() {
   const logout = useLogout();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
   const navigate = useNavigate();
-  
+
   return (
     <div className={styles.mainContainer}>
       <LanguageSwitcher />
@@ -94,14 +94,25 @@ function MainPage() {
                 <MyPageFriendList />
               </Modal>
             )}
-            <button
-              onClick={() => {
-                logout();
-                navigate(Page_Url.Main);
-              }}
-            >
-              로그아웃
-            </button>
+            {localStorage.getItem("refreshToken") ? (
+              <button
+                onClick={() => {
+                  logout();
+                  navigate(Page_Url.Main);
+                }}
+              >
+                로그아웃
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  logout();
+                  navigate(Page_Url.Login);
+                }}
+              >
+                로그인
+              </button>
+            )}
           </div>
         </>
       ) : (

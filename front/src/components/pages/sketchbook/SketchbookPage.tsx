@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 function SketchbookPage() {
   const { t } = useTranslation();
   const params = useParams() as { uuid: string };
-  const { data } = useSketchbook(params.uuid);
+  const { data, isLoading } = useSketchbook(params.uuid);
   const navigate = useNavigate();
   const [now, setNow] = useState(-1);
   const [letter, setLetter] = useState(0);
@@ -85,8 +85,8 @@ function SketchbookPage() {
               </div>
             )}
             <div className={styles.characterGrid}>
-              {data?.data?.sketchbookCharacterMotionList[0] &&
-                data?.data?.sketchbookCharacterMotionList.map(
+              {!isLoading &&
+                data?.data?.sketchbookCharacterMotionList?.map(
                   (item: any, i: number) => (
                     <DefaultButton
                       onClick={() => {

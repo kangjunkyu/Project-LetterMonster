@@ -5,7 +5,7 @@ function CharacterListItem({ item, characterId }: any) {
     <li
       className={`${styles.characterListItem} ${
         item.characterId === characterId ? styles.selected : ""
-      }`}
+      } ${item.motionId === characterId ? styles.selected : ""}`}
     >
       <img
         src={item.imageUrl}
