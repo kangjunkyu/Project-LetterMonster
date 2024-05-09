@@ -15,7 +15,7 @@ public interface SketchbookService {
 
     List<SketchbookGetSimpleDto> getFriendSketchList(Integer userId);
 
-    SketchbookGetDto getSketchSelect(String sketchId);
+    SketchbookGetDetailDto getSketchSelect(String sketchId);
 
     SketchbookGetDetailDto getSketchSelect2(String sketchId);
 

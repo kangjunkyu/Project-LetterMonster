@@ -40,7 +40,7 @@ public class SketchbookController {
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
     @GetMapping("/public/simple/{sketchbookUuid}")
     public ResponseEntity<?> getSketchSelect(@PathVariable(value = "sketchbookUuid") String sketchId){
-        SketchbookGetDto sketchSelect = sketchbookService.getSketchSelect(sketchId);
+        SketchbookGetDetailDto sketchSelect = sketchbookService.getSketchSelect(sketchId);
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }
 

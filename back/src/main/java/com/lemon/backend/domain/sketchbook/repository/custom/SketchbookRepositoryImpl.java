@@ -78,13 +78,36 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
 
+//    @Override
+//    public Optional<SketchbookGetDto> getSketchSelect(String sketchId) {
+//        if (sketchId == null) {
+//            throw new CustomException(ErrorCode.INVALID_ACCESS);
+//        }
+//        SketchbookGetDto sketchDto = query
+//                .select(constructor(SketchbookGetDto.class,
+//                        sketchbook.id,
+//                        sketchbook.isPublic,
+//                        sketchbook.shareLink,
+//                        sketchbook.name,
+//                        sketchbook.isWritePossible,
+//                        Projections.fields(UserGetDto.class,
+//                                sketchbook.users.nickname,
+//                                sketchbook.users.nicknameTag),
+//                        sketchbook.sketchbookUuid,
+//                        sketchbook.tag
+//                )).from(sketchbook)
+//                .where(sketchbook.sketchbookUuid.eq(sketchId))
+//                .fetchOne();
+//        return Optional.ofNullable(sketchDto);
+//    }
+
     @Override
-    public Optional<SketchbookGetDto> getSketchSelect(String sketchId) {
+    public Optional<SketchbookGetDetailDto> getSketchSelect(String sketchId) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
-        SketchbookGetDto sketchDto = query
-                .select(constructor(SketchbookGetDto.class,
+        SketchbookGetDetailDto sketchDto = query
+                .select(constructor(SketchbookGetDetailDto.class,
                         sketchbook.id,
                         sketchbook.isPublic,
                         sketchbook.shareLink,
@@ -98,6 +121,39 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 )).from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
+        if(sketchDto != null){
+            List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionGetListDtos = query
+                    .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
+                            sketchbookCharacterMotion.id,
+                            Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                    characterMotion.id,
+                                    characterMotion.motion.id,
+                                    characterMotion.url,
+                                    characters.nickname
+                            )))
+                    .from(sketchbookCharacterMotion)
+                    .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
+                    .leftJoin(characterMotion.characters, characters)
+                    .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
+                    .fetch();
+            for (SketchbookCharacterMotionGetListDto motionDto : sketchbookCharacterMotionGetListDtos) {
+                Long characterMotionId = motionDto.getCharacterMotion() != null ? motionDto.getCharacterMotion().getId() : null;
+                if (characterMotionId != null) {
+                    CharacterMotionToSketchbookDto characterMotions = query
+                            .select(Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                    characterMotion.id,
+                                    characterMotion.motion.id,
+                                    characterMotion.url,
+                                    characters.nickname
+                            ))
+                            .from(characterMotion)
+                            .where(characterMotion.id.eq(characterMotionId))
+                            .fetchOne();
+                    motionDto.setCharacterMotion(characterMotions);
+                }
+            }
+            sketchDto.setSketchbookCharacterMotionList(sketchbookCharacterMotionGetListDtos);
+        }
         return Optional.ofNullable(sketchDto);
     }
 
