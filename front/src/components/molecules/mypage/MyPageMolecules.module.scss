@@ -60,6 +60,8 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
+  justify-content: center;
+  text-align: center;
 
   &:hover {
     transform: translateY(-5px);
@@ -74,11 +76,14 @@
   }
 
   .userCharacterInfo {
+    height: 30px;
     padding: 5px;
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    text-align: center;
 
     &.justifyRight {
       justify-content: flex-end;
@@ -91,19 +96,19 @@
     .nickname {
       display: inline-block;
       margin-left: 3px;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
       width: 70px;
       font-size: 12px;
     }
 
     .mainCharacterLabel {
-      display: inline-block;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      display: flex;
       height: 22px;
       width: 35px;
       margin-right: 5px;
-      background-color: red;
+      background-color: $errorColor;
       color: white;
       padding: 2px 5px;
       border-radius: 5px;
