@@ -112,12 +112,12 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                         sketchbook.isPublic,
                         sketchbook.shareLink,
                         sketchbook.name,
-                        sketchbook.isWritePossible,
                         Projections.fields(UserGetDto.class,
                                 sketchbook.users.nickname,
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
-                        sketchbook.tag
+                        sketchbook.tag,
+                        sketchbook.isWritePossible
                 )).from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
