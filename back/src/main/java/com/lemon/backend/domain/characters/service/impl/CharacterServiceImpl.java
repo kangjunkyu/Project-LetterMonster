@@ -262,4 +262,5 @@ public class CharacterServiceImpl implements CharacterService {
         if(characterInfoDto.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
         return characterInfoDto;
     }
+
 }
