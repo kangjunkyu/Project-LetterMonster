@@ -49,7 +49,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     }
 
     @Override
-    public SketchbookGetDto getSketchSelect(String sketchId){
+    public SketchbookGetDetailDto getSketchSelect(String sketchId){
         return sketchbookRepository.getSketchSelect(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
     @Override
