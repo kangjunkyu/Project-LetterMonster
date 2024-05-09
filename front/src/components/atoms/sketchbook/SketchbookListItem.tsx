@@ -18,7 +18,7 @@ interface Props {
     tag: number;
     isWritePossible: boolean;
   };
-  index:number;
+  index: number;
 }
 function SketchbookListItem({ item, url, index }: Props) {
   return (
@@ -26,7 +26,7 @@ function SketchbookListItem({ item, url, index }: Props) {
       <KakaoShareIcon
         link={item.shareLink}
         nickname={item.holder.nickname}
-        index={index};
+        index={index}
       />
       <CommonShareIcon link={item.shareLink} />
       <Link to={url} className={styles.sketchbookListItem}>

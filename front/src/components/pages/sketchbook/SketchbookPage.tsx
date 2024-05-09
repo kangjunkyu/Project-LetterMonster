@@ -26,8 +26,8 @@ function SketchbookPage() {
   });
 
   const handleToggleModal = (modalName: ModalName, index: number) => {
-    if (!data?.data?.sketchbookCharacterMotionList[now]?.letterList) {
-      showAlert("비회원은 편지를 못봐요");
+    if (data?.data?.sketchbookCharacterMotionList[now]?.letterList === null) {
+      return showAlert("비회원은 편지를 못봐요");
     }
     if (now === -1 || index === now) {
       setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
