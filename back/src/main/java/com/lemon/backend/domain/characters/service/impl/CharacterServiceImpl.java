@@ -65,10 +65,10 @@ public class CharacterServiceImpl implements CharacterService {
             Characters characters = null;
 
             if(userId == null){
-                characters = Characters.builderWithoutUser().nickname(nickname).build();
+                characters = Characters.builder().nickname(nickname).build();
             }else{
                 Users users = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
-                characters = Characters.builderWithUser().nickname(nickname).users(users).build();
+                characters = Characters.builder().nickname(nickname).users(users).build();
             }
             characterRepository.save(characters);
             String fileName = characters.getId().toString() + ".png";
@@ -179,18 +179,16 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     /*
-    캐릭터를 선택하면, 미리 저장되어 있는 대표 모션 gif들과 각각의 모션id를 반환한다.
+    미리 저장되어 있는 대표 모션 gif들과 각각의 모션id를 반환한다.
      */
     @Override
     public List<RepresentMotionDto> showMotions() {
-        Optional<Characters> optionalCharacters = characterRepository.findById(1L);
-        if(optionalCharacters.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
 
-        List<CharacterMotion> characterMotionList = characterMotionRepository.findAllByCharacters(optionalCharacters.get());
-
+        List<Motion> motionList = motionRepository.findAll();
         List<RepresentMotionDto> representMotionDtoList = new ArrayList<>();
-        for(CharacterMotion cm : characterMotionList) {
-            RepresentMotionDto representMotionDto = RepresentMotionDto.builder().motionId(cm.getMotion().getId()).name(cm.getMotion().getName()).imageUrl(cm.getUrl()).build();
+
+        for(Motion m : motionList) {
+            RepresentMotionDto representMotionDto = RepresentMotionDto.builder().motionId(m.getId()).name(m.getName()).imageUrl(m.getGifUrl()).build();
             representMotionDtoList.add(representMotionDto);
         }
         return representMotionDtoList;
@@ -239,27 +237,5 @@ public class CharacterServiceImpl implements CharacterService {
         characters.deleteUrl();
         characters.deleteUser();
 
-    }
-
-
-    @Override
-    public Optional<List<CharacterMotionSketchbookProjection>> findCharacterMotionByUsers(Integer userId){
-        Optional<List<CharacterMotionSketchbookProjection>> list = characterMotionRepository.findDistinctCharacterMotionsByUserId(userId);
-        if(list.isEmpty()) throw new CustomException(ErrorCode.CHARACTERMOTION_NOT_FOUND);
-        return list;
-    }
-
-    @Override
-    public Optional<List<CharacterMotionProjection>> findCharacterMotionBySelf(Integer userId){
-        Optional<List<CharacterMotionProjection>> list = characterMotionRepository.findDistinctCharacterMotionsByUserIdOnlySelf(userId);
-        if(list.isEmpty()) throw new CustomException(ErrorCode.CHARACTERMOTION_NOT_FOUND);
-        return list;
-    }
-
-    @Override
-    public Optional<CharacterInfoDto> findCharacterByUser(Long characterId){
-        Optional<CharacterInfoDto> characterInfoDto = characterRepository.findAllByUserId(characterId);
-        if(characterInfoDto.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
-        return characterInfoDto;
     }
 }
