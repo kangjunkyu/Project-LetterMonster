@@ -49,7 +49,7 @@ export const postSketchCharacter = async (nickname: string, file: File) => {
  * @param characterId 캐릭터 아이디
  */
 export const cancelCharacter = (characterId: number) =>
-  API.delete(`/characters/cancel`, { params: { characterId: characterId } });
+  API.delete(`/characters/public/cancel`, { params: { characterId: characterId } });
 
 /** 캐릭터 리스트 조회 */
 export const getCharacterList = () => {
