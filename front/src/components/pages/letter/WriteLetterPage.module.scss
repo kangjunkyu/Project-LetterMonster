@@ -3,7 +3,7 @@
 $widthValue: 90%;
 $maxWidthValue: 1024px;
 
-.container {
+.writeContainer {
   @media screen and (min-width: 767px) {
     /* 데스크탑 */
   }
@@ -14,6 +14,11 @@ $maxWidthValue: 1024px;
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
+    nav {
+      button {
+        font-size: 16px;
+      }
+    }
   }
 }
 
