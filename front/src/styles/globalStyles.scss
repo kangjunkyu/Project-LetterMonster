@@ -30,6 +30,13 @@ table {
   line-height: 1.1;
 }
 
+input {
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    font-size: 16px;
+  }
+}
+
 a {
   text-decoration: none;
   color: inherit;
