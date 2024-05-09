@@ -7,6 +7,7 @@ import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
 import Letter from "../../atoms/letter/Letter";
 import { useTranslation } from "react-i18next";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ function SketchbookPage() {
   const navigate = useNavigate();
   const [now, setNow] = useState(-1);
   const [letter, setLetter] = useState(0);
+  const { showAlert } = useAlert();
 
   type ModalName = "sketchbookInfo" | "letter";
 
@@ -24,6 +26,9 @@ function SketchbookPage() {
   });
 
   const handleToggleModal = (modalName: ModalName, index: number) => {
+    if (!data?.data?.sketchbookCharacterMotionList[now]?.letterList) {
+      showAlert("비회원은 편지를 못봐요");
+    }
     if (now === -1 || index === now) {
       setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
     } else if (index !== now) {
@@ -61,29 +66,35 @@ function SketchbookPage() {
         </LNB>
         {data && (
           <figure className={styles.sketchbook}>
-            {isModalOpen?.letter && (
-              <div className={styles.letterBox}>
-                <Letter
-                  sender={
-                    data?.data?.sketchbookCharacterMotionList[now]
-                      ?.letterList?.[letter]?.sender?.nickname
-                  }
-                  content={
-                    data?.data?.sketchbookCharacterMotionList[now]?.letterList[
-                      letter
-                    ]?.content
-                  }
-                ></Letter>
-                <div className={styles.letterButtons}>
-                  <DefaultButton onClick={() => letterButton(-1)} custom={true}>
-                    {"<"}
-                  </DefaultButton>
-                  <DefaultButton onClick={() => letterButton(1)} custom={true}>
-                    {">"}
-                  </DefaultButton>
+            {isModalOpen?.letter &&
+              data?.data?.sketchbookCharacterMotionList[now]?.letterList && (
+                <div className={styles.letterBox}>
+                  <Letter
+                    sender={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.letterList?.[letter]?.sender?.nickname
+                    }
+                    content={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.letterList?.[letter]?.content
+                    }
+                  ></Letter>
+                  <div className={styles.letterButtons}>
+                    <DefaultButton
+                      onClick={() => letterButton(-1)}
+                      custom={true}
+                    >
+                      {"<"}
+                    </DefaultButton>
+                    <DefaultButton
+                      onClick={() => letterButton(1)}
+                      custom={true}
+                    >
+                      {">"}
+                    </DefaultButton>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             <div className={styles.characterGrid}>
               {!isLoading &&
                 data?.data?.sketchbookCharacterMotionList?.map(
