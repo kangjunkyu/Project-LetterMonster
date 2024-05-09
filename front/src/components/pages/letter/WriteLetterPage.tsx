@@ -25,7 +25,7 @@ function LetterWritePage() {
   const { t } = useTranslation();
   const sketchbookId = useParams() as { sketchbookId: string }; // 스케치북 아이디
   const {
-    gif,
+    // gif,
     characterId: chId,
     // nickname,
     motionId: mId,
