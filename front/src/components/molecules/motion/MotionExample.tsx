@@ -11,6 +11,7 @@ interface Motion {
 
 interface Prop {
   isLoad: boolean;
+  motionId: number;
   setMotionId: (motinoId: number) => void;
 }
 
@@ -28,7 +29,7 @@ async function loadMotions(): Promise<Motion[]> {
   return motions;
 }
 
-function MotionExample({ isLoad, setMotionId }: Prop) {
+function MotionExample({ isLoad, setMotionId, motionId }: Prop) {
   const [motions, setMotions] = useState<Motion[]>([]);
   const [clickedMotionIndex, setClickedMotionIndex] = useState<number | null>(
     null
@@ -57,11 +58,11 @@ function MotionExample({ isLoad, setMotionId }: Prop) {
           }}
           custom={true}
           key={index}
-          className={`${clickedMotionIndex === index ? "selected" : ""}`}
+          className={`${clickedMotionIndex === index ? styles.selected : ""}`}
         >
           <CharacterListItem
             item={{ imageUrl: motion.path, nickname: motion.name }}
-            characterId={index}
+            characterId={motionId}
           ></CharacterListItem>
         </DefaultButton>
       ))}

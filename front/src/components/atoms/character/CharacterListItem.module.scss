@@ -39,3 +39,7 @@
     overflow-x: hidden;
   }
 }
+
+.selected {
+  border: 1px solid $actionColor;
+}
