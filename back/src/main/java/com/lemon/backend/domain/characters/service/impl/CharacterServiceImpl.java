@@ -179,18 +179,16 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     /*
-    캐릭터를 선택하면, 미리 저장되어 있는 대표 모션 gif들과 각각의 모션id를 반환한다.
+    미리 저장되어 있는 대표 모션 gif들과 각각의 모션id를 반환한다.
      */
     @Override
     public List<RepresentMotionDto> showMotions() {
-        Optional<Characters> optionalCharacters = characterRepository.findById(1L);
-        if(optionalCharacters.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
 
-        List<CharacterMotion> characterMotionList = characterMotionRepository.findAllByCharacters(optionalCharacters.get());
-
+        List<Motion> motionList = motionRepository.findAll();
         List<RepresentMotionDto> representMotionDtoList = new ArrayList<>();
-        for(CharacterMotion cm : characterMotionList) {
-            RepresentMotionDto representMotionDto = RepresentMotionDto.builder().motionId(cm.getMotion().getId()).name(cm.getMotion().getName()).imageUrl(cm.getUrl()).build();
+
+        for(Motion m : motionList) {
+            RepresentMotionDto representMotionDto = RepresentMotionDto.builder().motionId(m.getId()).name(m.getName()).imageUrl(m.getGifUrl()).build();
             representMotionDtoList.add(representMotionDto);
         }
         return representMotionDtoList;
@@ -262,5 +260,4 @@ public class CharacterServiceImpl implements CharacterService {
         if(characterInfoDto.isEmpty()) throw new CustomException(ErrorCode.CHARACTER_NOT_FOUND);
         return characterInfoDto;
     }
-
 }
