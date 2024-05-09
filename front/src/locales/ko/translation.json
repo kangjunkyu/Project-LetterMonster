@@ -40,7 +40,11 @@
     "copy": "복사 완료"
   },
   "sketchbook": {
-    "letter": "편지남기기"
+    "letter": "편지남기기",
+    "rename": "스케치북 이름 수정",
+    "delete": "스케치북 삭제",
+    "cancel": "취소",
+    "check": "정말 스케치북을 지우실건가요?"
   },
   "paint": {
     "title": "그림 그리기",
