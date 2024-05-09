@@ -1,5 +1,3 @@
-// import { useNavigate } from "react-router-dom";
-// import { Page_Url } from "../../../router/Page_Url";
 import styles from "./MainPage.module.scss";
 import LanguageSwitcher from "../../molecules/language/LanguageSwitcher";
 import lemon from "../../../assets/characterSample/test_dab.gif";
@@ -10,7 +8,6 @@ import MyPageCharacter from "../../molecules/mypage/MyPageCharacter";
 import MyPageUserInfo from "../../molecules/mypage/MyPageUserInfo";
 import KakaoLogin from "../../atoms/auth/KakaoLoginButton";
 import LineLogin from "../../atoms/auth/LineLoginButton";
-// import MyPageFindFriend from "../../molecules/mypage/MyPageFindFriend";
 import MyPageFriendList from "../../molecules/mypage/MyPageFriendList";
 import { useNavigate } from "react-router-dom";
 import { Page_Url } from "../../../router/Page_Url";
@@ -25,7 +22,6 @@ type ModalName =
   | "friendList";
 
 function MainPage() {
-  // const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState({
     userInfo: false,
     langSelect: false,
@@ -72,17 +68,6 @@ function MainPage() {
                 <MyPageCharacter />
               </Modal>
             )}
-            {/* <button onClick={() => handleToggleModal("findFriend")}>
-              친구 찾기
-            </button>
-            {isModalOpen.findFriend && (
-              <Modal
-                isOpen={isModalOpen.findFriend}
-                onClose={() => handleToggleModal("findFriend")}
-              >
-                <MyPageFindFriend />
-              </Modal>
-            )} */}
             <button onClick={() => handleToggleModal("friendList")}>
               내 친구 목록
             </button>
@@ -124,10 +109,22 @@ function MainPage() {
         </>
       )}
       <div className={styles.socialMediaLinks}>
-        <a href="https://www.instagram.com/lettermonster_official/" target="_blank" rel="noopener noreferrer">
-          <img className={styles.snsInstagram} src={instagramLogo} alt="Instagram" />
+        <a
+          href="https://www.instagram.com/lettermonster_official/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            className={styles.snsInstagram}
+            src={instagramLogo}
+            alt="Instagram"
+          />
         </a>
-        <a href="https://twitter.com/LetterMonster_" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://twitter.com/LetterMonster_"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img className={styles.snsTwitter} src={twitterLogo} alt="Twitter" />
         </a>
       </div>

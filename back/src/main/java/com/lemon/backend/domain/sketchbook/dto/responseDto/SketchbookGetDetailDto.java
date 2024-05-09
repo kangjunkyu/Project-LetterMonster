@@ -25,6 +25,27 @@ public class SketchbookGetDetailDto {
     private Boolean isWritePossible;
     private List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionList;
 
+    public SketchbookGetDetailDto(Long id, Boolean isPublic, String shareLink, String name, UserGetDto holder, String uuid, String tag) {
+        this.id = id;
+        this.isPublic = isPublic;
+        this.shareLink = shareLink;
+        this.name = name;
+        this.holder = holder;
+        this.uuid = uuid;
+        this.tag = tag;
+    }
+    
+    public SketchbookGetDetailDto(Long id, Boolean isPublic, String shareLink, String name, UserGetDto holder, String uuid, String tag, List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionList) {
+        this.id = id;
+        this.isPublic = isPublic;
+        this.shareLink = shareLink;
+        this.name = name;
+        this.holder = holder;
+        this.uuid = uuid;
+        this.tag = tag;
+        this.sketchbookCharacterMotionList = sketchbookCharacterMotionList;
+    }
+
     public SketchbookGetDetailDto(Long id, Boolean isPublic, String shareLink, String name, UserGetDto holder, String uuid, String tag, Boolean isWritePossible) {
         this.id = id;
         this.isPublic = isPublic;

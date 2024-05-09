@@ -14,7 +14,7 @@ public interface SketchbookRepositoryCustom {
 
     Optional<List<SketchbookGetSimpleDto>> getFriendSketchList(Integer userId);
 
-    Optional<SketchbookGetDto> getSketchSelect(String sketchId);
+    Optional<SketchbookGetDetailDto> getSketchSelect(String sketchId);
 
     Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId);
 

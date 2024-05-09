@@ -9,6 +9,7 @@ export function useLogout() {
     postLogout().then(() => {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("fcm_token");
 
       navigate(Page_Url.Main);
     });

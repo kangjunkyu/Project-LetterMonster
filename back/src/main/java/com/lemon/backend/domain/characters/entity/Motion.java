@@ -23,4 +23,7 @@ public class Motion extends BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Column(name="gif_url")
+    private String gifUrl;
+
 }

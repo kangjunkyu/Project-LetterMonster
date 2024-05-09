@@ -46,7 +46,13 @@ function SketchbookListPage() {
 
   const createHandler = (name: string) => {
     {
-      if (name) {
+      if (name.startsWith(" ")) {
+        showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+      } else if (/[^a-zA-Z0-9ㄱ-힣\s]/.test(name) || name.includes("　")) {
+        showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
+      } else if (name.length > 10) {
+        showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
+      } else if (name) {
         createSketchbook.mutate(name);
         showAlert(`${name} ${t("sketchbookList.create")}`);
         handleToggleModal("sketchbookCreate");
@@ -72,6 +78,7 @@ function SketchbookListPage() {
         key={item.id}
         item={item}
         url={`${Page_Url.Sketchbook}${item.uuid}`}
+        index={Number(item.id)}
       />
     ));
   };

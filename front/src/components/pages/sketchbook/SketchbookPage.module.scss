@@ -1,9 +1,16 @@
 @import "../../../styles/mixins/defalut";
 
 .sketchbookContainer {
-  // @include flexCenterColumn();
   /* 데스크탑 */
   height: calc(100vh - 44px);
+  position: relative;
+
+  & > button {
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    z-index: 9999;
+  }
   @media screen and (min-width: 480px) {
     /* 타블렛 */
     & h1 {
@@ -19,13 +26,22 @@
   @media screen and (max-width: 479px) {
     /* 모바일 */
     height: calc(100vh - 44px - 64px);
+    & > button {
+      display: none;
+    }
   }
 }
 
 .buttonBox {
   display: flex;
+  flex-direction: column;
   gap: 1em;
+  width: 200px;
   @include wrapBox();
+
+  & > input {
+    padding: 1rem;
+  }
 }
 
 .sketchbook {

@@ -16,6 +16,7 @@ public class SketchbookCharacterMotionGetListDto {
     private Long id;
     private CharacterMotionToSketchbookDto characterMotion;
     private List<LetterToSketchbookDto> letterList;
+
     public SketchbookCharacterMotionGetListDto(Long id) {
         this.id = id;
     }
