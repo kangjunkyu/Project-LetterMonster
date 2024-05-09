@@ -2,12 +2,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./MotionPage.module.scss";
 import MotionList from "../../molecules/motion/MotionList";
 import MotionPreview from "../../molecules/motion/MotionPreview";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { Page_Url } from "../../../router/Page_Url";
 import Modal from "../../atoms/modal/Modal";
 import { useTranslation } from "react-i18next";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 function MotionPage() {
   const { t } = useTranslation();
@@ -16,19 +17,29 @@ function MotionPage() {
   const { characterId, nickname } = location.state || {};
   const [gif, setGif] = useState({ imageUrl: "" });
   const [motionId, setMotionId] = useState(0);
+  const [load, setLoad] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const handleToggleModal = () => setModalOpen((prev) => !prev);
+  const { showAlert } = useAlert();
 
-  const onHandleClick = useCallback(() => {
-    navigate(Page_Url.MotionResult, {
-      state: {
-        gif: gif.imageUrl,
-        characterId: characterId,
-        nickname: nickname,
-        motionId: motionId,
-      },
-    });
-  }, [gif, navigate]);
+  const switchLoad = () => {
+    setLoad(!load);
+  };
+
+  const onHandleClick = () => {
+    if (!load) {
+      navigate(Page_Url.MotionResult, {
+        state: {
+          gif: gif.imageUrl,
+          characterId: characterId,
+          nickname: nickname,
+          motionId: motionId,
+        },
+      });
+    } else {
+      showAlert(t("motion.practice"));
+    }
+  };
 
   return (
     <>
@@ -37,11 +48,7 @@ function MotionPage() {
           <h1>{t("motion.title")}</h1>
           <DefaultButton
             onClick={() => {
-              if (motionId == 0) {
-                setModalOpen(true);
-              } else {
-                onHandleClick();
-              }
+              onHandleClick();
             }}
             custom={true}
           >
@@ -54,11 +61,13 @@ function MotionPage() {
             characterNickname={nickname}
             characterId={characterId}
             motionId={motionId}
+            go={onHandleClick}
           />
           <MotionList
             setGif={setGif}
             setMotionId={setMotionId}
             characterId={characterId}
+            setLoad={switchLoad}
           />
         </div>
       </div>

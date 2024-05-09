@@ -12,6 +12,7 @@ interface MotionPreviewProps {
   characterId: number;
   gif: { imageUrl: string };
   motionId: number;
+  go: () => void;
 }
 
 function MotionPreview({
@@ -19,6 +20,7 @@ function MotionPreview({
   characterNickname,
   characterId,
   motionId,
+  go,
 }: MotionPreviewProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -49,18 +51,11 @@ function MotionPreview({
               if (motionId === 0) {
                 setModalOpen(true);
               } else {
-                navigate(Page_Url.WriteLetter, {
-                  state: {
-                    gif: gif,
-                    characterId: characterId,
-                    characterNickname: characterNickname,
-                    motionId: motionId,
-                  },
-                });
+                go();
               }
             }}
           >
-            {t("writeletter.title")}
+            {t("motion.create")}
           </DefaultButton>
           <DefaultButton
             onClick={() => {

@@ -7,6 +7,8 @@ import { useAlert } from "../../../hooks/notice/useAlert";
 import styles from "./MyPageMolecules.module.scss";
 import MyPageFindFriend from "./MyPageFindFriend";
 import Modal from "../../atoms/modal/Modal";
+import useFriendSketchbookList from "../../../hooks/sketchbook/useFriendSketchbookList";
+import MyPageFriendSketchbook from "./MyPageFriendSketchbook";
 
 interface MyFriendProps {
   id: number;
@@ -15,13 +17,17 @@ interface MyFriendProps {
   isFriend: boolean;
 }
 
-type ModalName = "findFriend";
+type ModalName = "findFriend" | "sketchbookList";
 
 function MyPageFriendList() {
   const [isModalOpen, setModalOpen] = useState({
     findFriend: false,
+    sketchbookList: false,
   });
-
+  const [userId, setUserId] = useState(-1);
+  const [userName, setUserName] = useState("");
+  const { data: friendSketchbookList, isLoading } =
+    useFriendSketchbookList(userId);
   const { showAlert } = useAlert();
   const deleteFriend = useDeleteFriend();
   const { data: myFriend } = useGetFriendGroupList();
@@ -44,8 +50,6 @@ function MyPageFriendList() {
     });
   };
 
-  // console.log(myFriend)
-
   return (
     <>
       <div className={styles.friendListContainer}>
@@ -63,10 +67,31 @@ function MyPageFriendList() {
             </Modal>
           )}
         </div>
+        {isModalOpen.sketchbookList && (
+          <Modal
+            isOpen={isModalOpen.sketchbookList}
+            onClose={() => handleToggleModal("sketchbookList")}
+          >
+            {!isLoading && friendSketchbookList && (
+              <MyPageFriendSketchbook
+                name={userName}
+                list={friendSketchbookList?.data}
+              />
+            )}
+          </Modal>
+        )}
         <div className={styles.friendListAllContent}>
           {myFriend && myFriend[0]?.friendList?.length > 0 ? (
             myFriend[0]?.friendList?.map((friend: MyFriendProps) => (
-              <div key={friend.id} className={styles.myFriendEachContent}>
+              <div
+                key={friend.id}
+                className={styles.myFriendEachContent}
+                onClick={() => {
+                  setUserId(friend.id);
+                  setUserName(friend.nickname);
+                  handleToggleModal("sketchbookList");
+                }}
+              >
                 <div>{friend.nickname}</div>
                 <div>{friend.nicknameTag}</div>
                 <button

@@ -121,6 +121,12 @@ export const postSketchbook = (name: string) =>
 export const getSketchbookList = () =>
   API.get(`/sketchbooks/list`).then((res) => res.data);
 
+/** 친구 스케치북 목록 조회 */
+export const getFriendSketchbookList = (userId: number) =>
+  API.get(`/sketchbooks/friend`, { params: { userId: userId } }).then(
+    (res) => res.data
+  );
+
 /** 스케치북 목록 전체 조회 (임시)*/
 export const getSketchbookListAll = () =>
   API.get(`/sketchbooks/public/all`).then((res) => res.data);
@@ -158,6 +164,18 @@ export const getSearchSketchbook = (sketchbookName: string) =>
   API.get(`/sketchbooks/public/search/${sketchbookName}`).then(
     (res) => res.data
   );
+
+/** 스케치북 공개 여부 전환
+ * @requires sketchbookId 스케치북 아이디
+ */
+export const putSketchbookOpen = (sketchbookId: number) =>
+  API.put(
+    `/sketchbooks/changepublic`,
+    {},
+    {
+      params: { sketchbookId: sketchbookId },
+    }
+  ).then((res) => res.data);
 
 // 편지 관련 API
 
