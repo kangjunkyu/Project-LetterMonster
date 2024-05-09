@@ -34,8 +34,14 @@
 
 .buttonBox {
   display: flex;
+  flex-direction: column;
   gap: 1em;
+  width: 200px;
   @include wrapBox();
+
+  & > input {
+    padding: 1rem;
+  }
 }
 
 .sketchbook {

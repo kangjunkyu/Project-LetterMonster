@@ -5,7 +5,7 @@ import useSketchbook, {
   usePutSketchbook,
 } from "../../../hooks/sketchbook/useSketchbook";
 import DefaultButton from "../../atoms/button/DefaultButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
 import Letter from "../../atoms/letter/Letter";
@@ -21,17 +21,23 @@ function SketchbookPage() {
   const navigate = useNavigate();
   const [now, setNow] = useState(-1);
   const [letter, setLetter] = useState(0);
+  const [name, setName] = useState(data?.data?.name);
   const { showAlert } = useAlert();
+  const mutateSketchbookName = usePutSketchbook();
+  const deleteSketchbook = useDeleteSketchbook();
 
-  type ModalName = "sketchbookInfo" | "letter";
+  useEffect(() => {
+    setName(data?.data?.name);
+  }, [isLoading]);
+
+  type ModalName = "sketchbookInfo" | "letter" | "deleteAlert" | "renameAlert";
 
   const [isModalOpen, setModalOpen] = useState({
     sketchbookInfo: false,
     letter: false,
+    deleteAlert: false,
+    renameAlert: false,
   });
-
-  const mutateSketchbookName = usePutSketchbook();
-  const deleteSketchbook = useDeleteSketchbook();
 
   const handleToggleModal = (modalName: ModalName, index: number) => {
     if (data?.data?.sketchbookCharacterMotionList[now]?.letterList === null) {
@@ -55,6 +61,33 @@ function SketchbookPage() {
       if (letter + value >= 0 && letter + value < len) {
         setLetter(letter + value);
       }
+    }
+  };
+
+  const handleUserNicknameChange = (nickname: string) => {
+    if (nickname.startsWith(" ")) {
+      showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+    } else if (
+      /[^a-zA-Z0-9ㄱ-힣\s]/.test(nickname) ||
+      nickname.includes("　")
+    ) {
+      showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
+    } else if (nickname.length > 10) {
+      showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
+    } else {
+      mutateSketchbookName.mutate({ sketchbookId: data?.data?.id, name: name });
+      handleToggleModal("sketchbookInfo", 0);
+      handleToggleModal("renameAlert", 0);
+    }
+  };
+
+  const inputEnter = (
+    e:
+      | React.KeyboardEvent<HTMLButtonElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      handleUserNicknameChange(name);
     }
   };
 
@@ -137,18 +170,69 @@ function SketchbookPage() {
             isOpen={isModalOpen.sketchbookInfo}
             onClose={() => handleToggleModal("sketchbookInfo", 0)}
           >
-            <DefaultButton
-              onClick={() =>
-                mutateSketchbookName.mutate(data?.data?.id, data?.data?.name)
-              }
-            >
-              수정
-            </DefaultButton>
-            <DefaultButton
-              onClick={() => deleteSketchbook.mutate(data?.data?.id)}
-            >
-              삭제
-            </DefaultButton>
+            <div className={styles.buttonBox}>
+              <DefaultButton
+                onClick={() => handleToggleModal("renameAlert", 0)}
+              >
+                {t("sketchbook.rename")}
+              </DefaultButton>
+              <DefaultButton
+                onClick={() => handleToggleModal("deleteAlert", 0)}
+              >
+                {t("sketchbook.delete")}
+              </DefaultButton>
+            </div>
+          </Modal>
+        )}
+        {isModalOpen.deleteAlert && (
+          <Modal
+            isOpen={isModalOpen.deleteAlert}
+            onClose={() => handleToggleModal("deleteAlert", 0)}
+          >
+            <div className={styles.buttonBox}>
+              {t("sketchbook.check")}
+              <DefaultButton
+                onClick={() => deleteSketchbook.mutate(data?.data?.id)}
+              >
+                {t("sketchbook.delete")}
+              </DefaultButton>
+              <DefaultButton
+                onClick={() => {
+                  handleToggleModal("sketchbookInfo", 0);
+                  handleToggleModal("deleteAlert", 0);
+                }}
+              >
+                {t("sketchbook.cancel")}
+              </DefaultButton>
+            </div>
+          </Modal>
+        )}
+        {isModalOpen.renameAlert && (
+          <Modal
+            isOpen={isModalOpen.renameAlert}
+            onClose={() => handleToggleModal("renameAlert", 0)}
+          >
+            <div className={styles.buttonBox}>
+              <input
+                placeholder={t("sketchbook.rename")}
+                defaultValue={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                  inputEnter(e)
+                }
+              />
+              <DefaultButton onClick={() => handleUserNicknameChange(name)}>
+                {t("sketchbook.rename")}
+              </DefaultButton>
+              <DefaultButton
+                onClick={() => {
+                  handleToggleModal("sketchbookInfo", 0);
+                  handleToggleModal("renameAlert", 0);
+                }}
+              >
+                {t("sketchbook.cancel")}
+              </DefaultButton>
+            </div>
           </Modal>
         )}
       </article>
