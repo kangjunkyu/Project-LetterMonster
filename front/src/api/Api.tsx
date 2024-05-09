@@ -121,6 +121,12 @@ export const postSketchbook = (name: string) =>
 export const getSketchbookList = () =>
   API.get(`/sketchbooks/list`).then((res) => res.data);
 
+/** 친구 스케치북 목록 조회 */
+export const getFriendSketchbookList = (userId: number) =>
+  API.get(`/sketchbooks/friend`, { params: { userId: userId } }).then(
+    (res) => res.data
+  );
+
 /** 스케치북 목록 전체 조회 (임시)*/
 export const getSketchbookListAll = () =>
   API.get(`/sketchbooks/public/all`).then((res) => res.data);
