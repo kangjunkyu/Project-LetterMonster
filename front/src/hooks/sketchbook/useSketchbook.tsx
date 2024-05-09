@@ -4,8 +4,10 @@ import {
   getSketchbookSelected,
   putSketchbookName,
   deleteSketchbook,
+  putSketchbookOpen,
 } from "../../api/Api";
 import { Page_Url } from "../../router/Page_Url";
+import { useAlert } from "../notice/useAlert";
 
 /** 스케치북 불러오기 */
 export default function useSketchbook(uuid: string) {
@@ -28,6 +30,21 @@ export function usePutSketchbook() {
     }) => putSketchbookName(sketchbookId, name),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sketchbook"] });
+    },
+  });
+}
+/** 스케치북 공개 여부 수정  */
+export function usePutSketchbookOpen() {
+  const { showAlert } = useAlert();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (sketchbookId: number) => putSketchbookOpen(sketchbookId),
+    onSuccess: () => {
+      showAlert("Success");
+      queryClient.invalidateQueries({ queryKey: ["sketchbook"] });
+    },
+    onError: () => {
+      showAlert("Error");
     },
   });
 }

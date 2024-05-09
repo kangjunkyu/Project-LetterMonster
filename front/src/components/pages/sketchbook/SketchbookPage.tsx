@@ -3,6 +3,7 @@ import styles from "./SketchbookPage.module.scss";
 import useSketchbook, {
   useDeleteSketchbook,
   usePutSketchbook,
+  usePutSketchbookOpen,
 } from "../../../hooks/sketchbook/useSketchbook";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import WriteButton from "../../atoms/button/WriteLetterButton";
 import Modal from "../../atoms/modal/Modal";
+import { useQueryClient } from "@tanstack/react-query";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -25,10 +27,18 @@ function SketchbookPage() {
   const { showAlert } = useAlert();
   const mutateSketchbookName = usePutSketchbook();
   const deleteSketchbook = useDeleteSketchbook();
+  const mutateSketchbookOpen = usePutSketchbookOpen();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setName(data?.data?.name);
-  }, [isLoading]);
+
+    // 클린업 함수
+    return () => {
+      setName("");
+      queryClient.invalidateQueries({ queryKey: ["sketchbook"] });
+    };
+  }, [data, setName]);
 
   type ModalName = "sketchbookInfo" | "letter" | "deleteAlert" | "renameAlert";
 
@@ -81,6 +91,11 @@ function SketchbookPage() {
     }
   };
 
+  const writeLetter = () =>
+    navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
+      state: { sketchbookName: data?.data?.name },
+    });
+
   const inputEnter = (
     e:
       | React.KeyboardEvent<HTMLButtonElement>
@@ -96,25 +111,15 @@ function SketchbookPage() {
       <article className={styles.sketchbookContainer}>
         <LNB>
           {data && (
-            <h1
-              onClick={() => handleToggleModal("sketchbookInfo", 0)}
-            >{`${data?.data?.name} ▼`}</h1>
+            <h1 onClick={() => handleToggleModal("sketchbookInfo", 0)}>{`${
+              data?.data?.name
+            } ▼ ${data?.data?.isPublic ? "공개중" : "비공개중"}`}</h1>
           )}
-          <DefaultButton
-            onClick={() => {
-              navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`);
-            }}
-            custom={true}
-          >
+          <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
         </LNB>
-        <WriteButton
-          id="writeButton"
-          onClick={() =>
-            navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`)
-          }
-        />
+        <WriteButton id="writeButton" onClick={() => writeLetter()} />
         {data && (
           <figure className={styles.sketchbook}>
             {isModalOpen?.letter &&
@@ -181,6 +186,14 @@ function SketchbookPage() {
                 onClick={() => handleToggleModal("deleteAlert", 0)}
               >
                 {t("sketchbook.delete")}
+              </DefaultButton>
+              <DefaultButton
+                onClick={() => {
+                  mutateSketchbookOpen.mutate(data?.data?.id);
+                  handleToggleModal("sketchbookInfo", 0);
+                }}
+              >
+                {data?.data?.isPublic ? "링크로만 공개" : "모두에게 공개"}
               </DefaultButton>
             </div>
           </Modal>
