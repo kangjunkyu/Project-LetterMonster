@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import animation
 from app.routers import custom_motion
+from app.routers import speech
 
 app = FastAPI()
 
@@ -21,6 +22,7 @@ app.add_middleware(
 
 app.include_router(router=animation.router, prefix="/ai/character", tags=["character"])  # characters
 app.include_router(router=custom_motion.router, prefix="/ai/motion", tags=["motion"])
+app.include_router(router=speech.router, prefix="/ai/letter", tags=["letter"])
 
 
 @app.get("/")
