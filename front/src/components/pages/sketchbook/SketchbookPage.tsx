@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import WriteButton from "../../atoms/button/WriteLetterButton";
 import Modal from "../../atoms/modal/Modal";
+import { useQueryClient } from "@tanstack/react-query";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -26,10 +27,18 @@ function SketchbookPage() {
   const { showAlert } = useAlert();
   const mutateSketchbookName = usePutSketchbook();
   const deleteSketchbook = useDeleteSketchbook();
+  const mutateSketchbookOpen = usePutSketchbookOpen();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setName(data?.data?.name);
-  }, [isLoading]);
+
+    // 클린업 함수
+    return () => {
+      setName("");
+      queryClient.invalidateQueries({ queryKey: ["sketchbook"] });
+    };
+  }, [data, setName]);
 
   type ModalName = "sketchbookInfo" | "letter" | "deleteAlert" | "renameAlert";
 
@@ -81,6 +90,11 @@ function SketchbookPage() {
       handleToggleModal("renameAlert", 0);
     }
   };
+
+  const writeLetter = () =>
+    navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
+      state: { sketchbookName: data?.data?.name },
+    });
 
   const inputEnter = (
     e:
