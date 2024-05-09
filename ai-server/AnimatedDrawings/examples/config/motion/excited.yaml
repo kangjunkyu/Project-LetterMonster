@@ -1,4 +1,4 @@
-filepath: AnimatedDrawings/examples/bvh/rokoko/jump_mixamo.bvh
+filepath: AnimatedDrawings/examples/bvh/rokoko/excited.bvh
 start_frame_idx: 0
 end_frame_idx: null
 groundplane_joint: LeftFoot
@@ -7,5 +7,5 @@ forward_perp_joint_vectors:
     - RightShoulder
   - - LeftUpLeg
     - RightUpLeg
-scale: 0.005
+scale: 0.05
 up: +y

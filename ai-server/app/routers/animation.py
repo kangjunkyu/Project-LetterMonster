@@ -84,7 +84,7 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
         motion_cfg_fn = os.path.abspath(f'AnimatedDrawings/examples/config/motion/{motion}.yaml')
 
         # retarget config 절대경로 불러오기
-        if motion in ["dab", "jumping", "wave_hello", "zombie", "hi", "stand"]:
+        if motion in ["jumping", "zombie", "hi", "stand", "dab_dance", "super"]:
             retarget_cfg_fn = os.path.abspath('AnimatedDrawings/examples/config/retarget/fair1_ppf.yaml')
 
         elif motion == "jumping_jacks":
