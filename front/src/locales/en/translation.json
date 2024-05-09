@@ -61,6 +61,7 @@
     "create": "Set Motion",
     "repaint": "Redraw",
     "motions": "Types of Character Motions",
-    "warn": "Please select a Motion!"
+    "warn": "Please select a Motion!",
+    "practice": "The character is still practicing the motion"
   }
 }
