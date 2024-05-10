@@ -66,5 +66,15 @@
   },
   "mypage": {
     "sketchbookList": "Sketchbook List"
+  },
+  "main": {
+    "title": "Letter Monster",
+    "introduce": "Send letters with my character!",
+    "proposal": ", HI!",
+    "userInfo": "My Information",
+    "characterList": "My Character List",
+    "friends": "My Friends List",
+    "developer": "Visit the Developer's Sketchbook",
+    "suggestion": "Suggestions and Bug Reporting"
   }
 }

@@ -66,5 +66,15 @@
   },
   "mypage": {
     "sketchbookList": "スケッチブックリスト"
+  },
+  "main": {
+    "title": "レターモンスター",
+    "introduce": "私のキャラクターで手紙を送る！",
+    "proposal": ", こんにちは！",
+    "userInfo": "情報管理",
+    "characterList": "私のキャラクターリスト",
+    "friends": "私の友達リスト",
+    "developer": "開発者のスケッチブックを訪れる",
+    "suggestion": "提案およびバグ報告"
   }
 }
