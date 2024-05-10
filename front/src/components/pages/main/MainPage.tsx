@@ -19,7 +19,7 @@ import Logout from "../../../assets/commonIcon/logout.svg?react";
 import Character from "../../../assets/commonIcon/character.svg?react";
 import Report from "../../../assets/commonIcon/report.svg?react";
 import Developer from "../../../assets/commonIcon/developer.svg?react";
-import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
+// import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
 import { useTranslation } from "react-i18next";
 import useSuggestion from "../../../hooks/common/useSuggestion";
 
@@ -41,7 +41,7 @@ function MainPage() {
   const logout = useLogout();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { data } = useGetUserNickname();
+  // const { data } = useGetUserNickname();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
   const goToSuggestion = useSuggestion();
   const handleToggleModal = (modalName: ModalName) =>
@@ -55,9 +55,9 @@ function MainPage() {
       <div className={styles.characterDiv}>
         <img className={styles.character} src={lemon} alt="lettermon" />
       </div>
-      {data?.nickname && localStorage.getItem("accessToken") && (
+      {/* {data?.nickname && localStorage.getItem("accessToken") && (
         <h2>{`${data.nickname}${t("main.proposal")}`}</h2>
-      )}
+      )} */}
       {isLoginCheck ? (
         <>
           <div className={styles.mainMenuContainer}>
