@@ -58,7 +58,7 @@ public class LetterController {
     }
 
     @PutMapping("/changepublic")
-    public ResponseEntity<?> changePublic(Authentication authentication, Long letterId){
+    public ResponseEntity<?> changePublic(Authentication authentication, @RequestParam(value = "letterId") Long letterId){
         Integer senderId = (Integer) authentication.getPrincipal();
         Boolean status = letterService.changePublicStatus(senderId, letterId);
         return getResponseEntity(SuccessCode.OK, status);
