@@ -35,6 +35,7 @@ public class LetterRepositoryImpl implements LetterRepositoryCustom{
                                 letter.receiver.nickname,
                                 letter.receiver.nicknameTag),
                         letter.content,
+                        letter.isPublic,
                         letter.createdAt)).from(letter)
                 .leftJoin(letter.sender)
                 .leftJoin(letter.receiver)

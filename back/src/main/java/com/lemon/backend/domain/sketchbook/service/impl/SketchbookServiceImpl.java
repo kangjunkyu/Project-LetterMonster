@@ -59,8 +59,8 @@ public class SketchbookServiceImpl implements SketchbookService {
     }
 
     @Override
-    public SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable) {
-        return sketchbookRepository.getSketchSelect3(userId, sketchId, pageable);
+    public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable) {
+        return sketchbookRepository.getSketchSelect3(sketchId, pageable);
     }
 
     private long getSameSketchbookLastNumber(String name) {

@@ -38,6 +38,9 @@ public class Letter extends BaseEntity {
     @Column(name= "content", length = 1000)
     private String content;
 
+    @Column(name = "is_public")
+    private boolean isPublic;
+
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "sketchbook_id", nullable = true)
 //    private Sketchbook sketchbook;
@@ -53,4 +56,7 @@ public class Letter extends BaseEntity {
 //    @OneToMany(mappedBy = "sketchbook", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Letter> letters = new ArrayList<>();
 
+    public void changePublic(){
+        this.isPublic = !this.isPublic;
+    }
 }

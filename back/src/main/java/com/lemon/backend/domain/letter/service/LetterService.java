@@ -21,4 +21,7 @@ public interface LetterService {
 
     @Transactional
     LetterCreateResponse createAnonymousLetter(LetterCreateDto letterDto);
+
+    @Transactional
+    Boolean changePublicStatus(Integer userId, Long letterId);
 }

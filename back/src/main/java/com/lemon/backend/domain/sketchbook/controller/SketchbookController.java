@@ -55,11 +55,9 @@ public class SketchbookController {
     @Operation(summary = "스케치북 캐릭터 모션 페이지네이션", description = "스케치북 ID에 따른 캐릭터 모션의 페이지네이션된 리스트를 조회")
     @GetMapping("/public/{sketchbookUuid}/pagination")
     public ResponseEntity<SketchbookDetailPageDto> getSketchSelect3(
-            Authentication authentication,
             @Parameter(description = "스케치북 ID", required = true) @PathVariable(value = "sketchbookUuid") String sketchId,
             @Parameter(description = "페이지 정보", required = true) Pageable pageable) {
-        Integer userId = (Integer) authentication.getPrincipal();
-        SketchbookDetailPageDto detailPageDto = sketchbookService.getSketchSelect3(userId, sketchId, pageable);
+        SketchbookDetailPageDto detailPageDto = sketchbookService.getSketchSelect3(sketchId, pageable);
         return ResponseEntity.ok(detailPageDto);
     }
 
