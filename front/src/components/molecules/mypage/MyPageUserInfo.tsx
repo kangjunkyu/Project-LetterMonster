@@ -18,10 +18,10 @@ function MyPageUserInfo() {
       if (newNickname.startsWith(" ")) {
         showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
       } else if (
-        /[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(newNickname) ||
+        // /[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(newNickname) ||
         newNickname.includes("　")
       ) {
-        showAlert("닉네임은 영문, 숫자, 한글만 가능합니다.");
+        showAlert("닉네임에 띄어쓰기는 불가능합니다.");
       } else if (newNickname.length > 10) {
         showAlert("닉네임은 10글자 이하만 가능합니다.");
       } else {
