@@ -21,8 +21,10 @@ import MyPage from "../components/pages/mypage/MyPages";
 import MotionResultPage from "../components/pages/motion/MotionResultPage";
 import NotificationPage from "../components/pages/notification/NotificationPage";
 import SketchResultPage from "../components/pages/sketch/SketchResultPage";
+import RouterChangeTracker from "../util/ga/RouterChangeTracker";
 
 function Router() {
+  RouterChangeTracker();
   return (
     <Routes>
       {/* <Route path={Page_Url.Welcome} element={<WelcomePage />}></Route> */}

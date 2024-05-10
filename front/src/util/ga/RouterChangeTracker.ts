@@ -19,7 +19,6 @@ const RouterChangeTracker = () => {
       ReactGA.send("pageview");
     }
   }, [initialized, location]);
-  return null;
 };
 
 export default RouterChangeTracker;
