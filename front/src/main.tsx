@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom"; // 라우터
 import Router from "./router/Router"; // 라우터
 import "./locales/i18n"; // 다국어 지원
 import { AlertProvider } from "./hooks/notice/useAlert";
-import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
 import GetToken from "./util/fcm/messaging_get_token";
 
 declare global {
