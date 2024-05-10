@@ -20,7 +20,6 @@ import Character from "../../../assets/commonIcon/character.svg?react";
 import Report from "../../../assets/commonIcon/report.svg?react";
 import Developer from "../../../assets/commonIcon/developer.svg?react";
 import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
-import LoadingSpinner from "../../atoms/loadingSpinner/LoadingSpinner";
 import { useTranslation } from "react-i18next";
 import useSuggestion from "../../../hooks/common/useSuggestion";
 
