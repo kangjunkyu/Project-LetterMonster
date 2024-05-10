@@ -42,13 +42,12 @@ function MainPage() {
   const logout = useLogout();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { data, isLoading } = useGetUserNickname();
+  const { data } = useGetUserNickname();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
   const goToSuggestion = useSuggestion();
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
 
-  if (isLoading) return <LoadingSpinner />;
   return (
     <div className={styles.mainContainer}>
       <LanguageSwitcher />
