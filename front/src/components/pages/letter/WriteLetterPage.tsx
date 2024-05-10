@@ -18,6 +18,8 @@ import useWriteLetter from "../../../hooks/letter/useWriteLetter";
 import useSearchSketchbook from "../../../hooks/sketchbook/useSearchSketchbook";
 import Modal from "../../atoms/modal/Modal";
 import SearchList from "../../molecules/search/SearchList";
+import { useGetSoloCharacter } from "../../../hooks/character/useCharacter";
+import { cancelCharacter } from "../../../api/Api";
 
 function LetterWritePage() {
   const location = useLocation();
@@ -43,7 +45,7 @@ function LetterWritePage() {
   const [mounted, setMounted] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const { data: searchResult } = useSearchSketchbook(searchKeyword);
-
+  const { data: staticCharacter } = useGetSoloCharacter(chId);
   const [isModalOpen, setModalOpen] = useState({
     findsketchbook: false,
   });
@@ -133,6 +135,38 @@ function LetterWritePage() {
                   </div>
                 )}
               </figure>
+              {characterId != 0 && (
+                <figure>
+                  <p>{t("writeletter.motionSelect")}</p>
+                  <MotionExample
+                    isLoad={isFetching}
+                    motionId={motionId}
+                    setMotionId={motionSeleted}
+                  />
+                </figure>
+              )}
+            </>
+          )}
+          {chId && (
+            <>
+              <div className={styles.imgbox}>
+                <img
+                  className={styles.img}
+                  src={staticCharacter?.data?.imageUrl}
+                  alt=""
+                />
+                <h5 className={styles.imgNickname}>
+                  {staticCharacter?.data?.nickname}
+                </h5>
+                <DefaultButton
+                  onClick={() => {
+                    cancelCharacter(chId);
+                    navigate(Page_Url.Sketch);
+                  }}
+                >
+                  다시그리기
+                </DefaultButton>
+              </div>
               {characterId != 0 && (
                 <figure>
                   <p>{t("writeletter.motionSelect")}</p>
