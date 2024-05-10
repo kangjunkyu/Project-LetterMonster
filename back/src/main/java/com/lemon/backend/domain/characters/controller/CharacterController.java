@@ -94,7 +94,7 @@ public class CharacterController {
         return getResponseEntity(SuccessCode.OK, list);
     }
 
-    @GetMapping("/{characterId}")
+    @GetMapping("/public/{characterId}")
     public ResponseEntity<?> showCharacter(@PathVariable Long characterId) {
         Optional<CharacterInfoDto> list = characterService.findCharacterByUser(characterId);
         return getResponseEntity(SuccessCode.OK, list);

@@ -20,6 +20,7 @@ import SketchbookPage from "../components/pages/sketchbook/SketchbookPage";
 import MyPage from "../components/pages/mypage/MyPages";
 import MotionResultPage from "../components/pages/motion/MotionResultPage";
 import NotificationPage from "../components/pages/notification/NotificationPage";
+import SketchResultPage from "../components/pages/sketch/SketchResultPage";
 
 function Router() {
   return (
@@ -35,6 +36,10 @@ function Router() {
         <Route path={Page_Url.Login} element={<LoginPage />}></Route>
         <Route path={Page_Url.Noti} element={<NotificationPage />}></Route>
         <Route path={Page_Url.Motion} element={<MotionPage />}></Route>
+        <Route
+          path={Page_Url.SketchResult}
+          element={<SketchResultPage />}
+        ></Route>
         <Route
           path={Page_Url.MotionResult}
           element={<MotionResultPage />}

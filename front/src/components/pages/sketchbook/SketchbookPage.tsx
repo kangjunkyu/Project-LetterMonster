@@ -111,9 +111,17 @@ function SketchbookPage() {
       <article className={styles.sketchbookContainer}>
         <LNB>
           {data && (
-            <h1 onClick={() => handleToggleModal("sketchbookInfo", 0)}>{`${
-              data?.data?.name
-            } ▼ ${data?.data?.isPublic ? "공개중" : "비공개중"}`}</h1>
+            <h1
+              onClick={() => {
+                if (
+                  localStorage.getItem("acceesToken") &&
+                  data?.data?.isWritePossible
+                )
+                  handleToggleModal("sketchbookInfo", 0);
+              }}
+            >{`${data?.data?.name} ▼ ${
+              data?.data?.isPublic ? "공개중" : "비공개중"
+            }`}</h1>
           )}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}

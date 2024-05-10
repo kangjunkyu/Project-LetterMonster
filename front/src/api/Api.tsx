@@ -60,6 +60,11 @@ export const getCharacterList = () => {
   }
 };
 
+/** 정적 캐릭터 조회 */
+export const getSoloCharacter = (characterId: number) => {
+  return API.get(`/characters/${characterId}`).then((res) => res.data);
+};
+
 /** 캐릭터 삭제
  * @param characterId 캐릭터 아이디
  */

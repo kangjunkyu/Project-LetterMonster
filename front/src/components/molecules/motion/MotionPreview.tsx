@@ -33,10 +33,10 @@ function MotionPreview({
   return (
     <>
       <div className={styles.motionPreviewContainer}>
+        <div className={styles.motionCharacterNickname}>
+          {characterNickname}
+        </div>
         <div className={styles.motionImage}>
-          <div className={styles.motionCharacterNickname}>
-            {characterNickname}
-          </div>
           {displayImage && (
             <img
               className={styles.motionImage}

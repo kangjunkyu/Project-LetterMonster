@@ -15,6 +15,10 @@ public enum ErrorCode {
 
     //스케치북
     SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "스케치북 정보를 찾을 수 없습니다."),
+    
+    //즐겨찾기
+    FAVORITE_SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "즐겨찾기 내 스케치북 정보를 찾을 수 없습니다."),
+    ALREADY_FAVORITE_SKECHBOOK(HttpStatus.NOT_FOUND, "이미 추가한 스케치북 입니다.."),
 
     //편지
     LETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "편지 정보를 찾을 수 없습니다."),

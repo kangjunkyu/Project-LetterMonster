@@ -157,4 +157,16 @@ public class LetterServiceImpl implements LetterService {
         Letter letter = letterRepository.findById(letterId).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
         letterRepository.delete(letter);
     }
+
+    @Transactional
+    @Override
+    public Boolean changePublicStatus(Integer userId, Long letterId){
+        Letter letter = letterRepository.findById(letterId).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
+        if(!letter.getReceiver().getId().equals(userId)){
+            new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+        letter.changePublic();
+        letterRepository.save(letter);
+        return letter.isPublic();
+    }
 }

@@ -56,6 +56,12 @@
     "pleaseTen": "Nicknames must be 10 characters or fewer.",
     "pleaseDraw": "Please draw the character"
   },
+  "paintResult":{
+    "title": "Character Birthday",
+    "birth": "Was Born",
+    "move": "Move Character",
+    "letter": "Write Letter"
+  },
   "motion": {
     "title": "Select Motion",
     "create": "Set Motion",
@@ -66,5 +72,15 @@
   },
   "mypage": {
     "sketchbookList": "Sketchbook List"
+  },
+  "main": {
+    "title": "Letter Monster",
+    "introduce": "Send letters with my character!",
+    "proposal": ", HI!",
+    "userInfo": "My Information",
+    "characterList": "My Character List",
+    "friends": "My Friends List",
+    "developer": "Visit the Developer's Sketchbook",
+    "suggestion": "Suggestions and Bug Reporting"
   }
 }

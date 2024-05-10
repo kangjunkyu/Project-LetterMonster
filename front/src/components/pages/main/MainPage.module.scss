@@ -4,7 +4,7 @@
 .mainContainer {
   @include flexCenter();
   flex-direction: column;
-  gap: 0.7em;
+  gap: 0.5rem;
   font-size: 100px;
   padding: 1rem;
   & section {
@@ -12,13 +12,7 @@
     padding: 10px;
   }
 
-  & h1 {
-    @include title();
-  }
-
-  & h2 {
-    @include subtitle();
-  }
+  @include setFontSize;
 }
 
 .character {
@@ -46,9 +40,49 @@
 }
 
 .mainMenuContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  gap: 1rem;
+  width: 100%;
+  @include flexCenter;
+  flex-wrap: wrap;
+  & > button {
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50%;
+    position: relative;
+    @include box;
+    @include hoverItem;
+    & > p {
+      @include body;
+    }
+    @media screen and (min-width: 768px) {
+      /* 데스크탑 */
+      flex-direction: column;
+    }
+    & > svg {
+      position: absolute;
+      left: 1rem;
+      @media screen and (min-width: 768px) {
+        /* 데스크탑 */
+        position: relative;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  flex-direction: row;
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    flex-direction: column;
+  }
 }
 
 .socialMediaLinks {
@@ -57,7 +91,6 @@
   align-items: center;
   justify-content: center;
   margin-left: 10px;
-
 
   a {
     display: flex;

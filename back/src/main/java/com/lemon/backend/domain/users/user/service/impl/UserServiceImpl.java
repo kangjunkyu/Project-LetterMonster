@@ -1,5 +1,8 @@
 package com.lemon.backend.domain.users.user.service.impl;
 
+import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
+import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
+import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
 import com.lemon.backend.domain.users.user.dto.response.ChangeNicknameResponse;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
@@ -18,11 +21,13 @@ import com.lemon.backend.global.redis.entity.RefreshToken;
 import com.lemon.backend.global.redis.repository.RefreshTokenRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +36,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final SketchbookRepository sketchbookRepository;
+
+    @Value("${base.url}")
+    private String baseUrl;
 
     @Override
     public String makeNickname() {
@@ -40,6 +49,11 @@ public class UserServiceImpl implements UserService {
         return randomAdjective.toString() + " " + randomNoun.toString();
     }
 
+    private long getSameSketchbookLastNumber(String name) {
+        Optional<String> highestTagOpt = sketchbookRepository.findHighestSketchbookTagByName(name);
+        long sameSketchbookLastNumber = highestTagOpt.map(tag -> Long.parseLong(tag) + 1).orElse(1L);
+        return sameSketchbookLastNumber;
+    }
 
     public Users createUser(OAuth2UserInfo userInfo, Social social) {
         String nickname = makeNickname();
@@ -52,8 +66,26 @@ public class UserServiceImpl implements UserService {
                 .provider(social)
                 .role(Role.ROLE_USER)
                 .build();
-
         userRepository.save(newUser);
+
+        String BasicSketchbookName = "기본 스케치북";
+
+        long sameSketchbookLastNumber = getSameSketchbookLastNumber(BasicSketchbookName);
+        String uuid = UUID.randomUUID().toString();
+        String sharaLink = baseUrl + "/sketchbook/" + uuid;
+        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(newUser.getId());
+
+        Sketchbook sketchbook = Sketchbook.builder()
+                .name(BasicSketchbookName)
+                .users(newUser)
+                .shareLink(sharaLink)
+                .sketchbookUuid(uuid)
+                .tag(String.valueOf(sameSketchbookLastNumber))
+                .isRepresent(isRepresent)
+                .build();
+
+        sketchbookRepository.save(sketchbook);
+
         return newUser;
     }
 

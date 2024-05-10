@@ -8,6 +8,9 @@ function LanguageSwitcher() {
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
     localStorage.setItem("lng", language);
+    if (localStorage.getItem("accessToken")) {
+      console.log("qkRNa");
+    }
   };
 
   return (
