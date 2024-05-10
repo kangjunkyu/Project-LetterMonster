@@ -77,7 +77,7 @@ function SketchbookPage() {
   const handleUserNicknameChange = (nickname: string) => {
     if (nickname.startsWith(" ")) {
       showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
-    } else if (/[^a-zA-Z0-9ㆍᆞᆢ\s]/.test(nickname) || nickname.includes("　")) {
+    } else if (nickname.includes("　")) {
       showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
     } else if (nickname.length > 10) {
       showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
