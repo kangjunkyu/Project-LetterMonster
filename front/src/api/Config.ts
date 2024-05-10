@@ -39,6 +39,7 @@ function setupResponseInterceptor(instance: any) {
       // 토큰 만료시
       if (status === 401) {
         if (!refreshToken) {
+          localStorage.removeItem("accessToken");
           window.location.href = Page_Url.Main;
           return;
         }

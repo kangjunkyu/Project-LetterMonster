@@ -20,7 +20,6 @@ import Character from "../../../assets/commonIcon/character.svg?react";
 import Report from "../../../assets/commonIcon/report.svg?react";
 import Developer from "../../../assets/commonIcon/developer.svg?react";
 import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
-import LoadingSpinner from "../../atoms/loadingSpinner/LoadingSpinner";
 import { useTranslation } from "react-i18next";
 import useSuggestion from "../../../hooks/common/useSuggestion";
 
@@ -42,13 +41,12 @@ function MainPage() {
   const logout = useLogout();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { data, isLoading } = useGetUserNickname();
+  const { data } = useGetUserNickname();
   const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
   const goToSuggestion = useSuggestion();
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
 
-  if (isLoading) return <LoadingSpinner />;
   return (
     <div className={styles.mainContainer}>
       <LanguageSwitcher />
