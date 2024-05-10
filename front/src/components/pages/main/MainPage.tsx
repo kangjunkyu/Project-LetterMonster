@@ -57,7 +57,9 @@ function MainPage() {
       <div className={styles.characterDiv}>
         <img className={styles.character} src={lemon} alt="lettermon" />
       </div>
-      {data && <h2>{`${data.nickname}${t("main.proposal")}`}</h2>}
+      {data?.nickname && localStorage.getItem("accessToken") && (
+        <h2>{`${data.nickname}${t("main.proposal")}`}</h2>
+      )}
       {isLoginCheck ? (
         <>
           <div className={styles.mainMenuContainer}>
