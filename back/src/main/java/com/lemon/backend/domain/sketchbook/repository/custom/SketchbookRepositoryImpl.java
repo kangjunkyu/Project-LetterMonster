@@ -359,7 +359,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                         sketchbook.users.nickname))
                 .from(sketchbook)
                 .leftJoin(sketchbook.users)
-                .where(sketchbook.name.contains(sketchbookName))
+                .where(sketchbook.name.contains(sketchbookName).and(sketchbook.isPublic.eq(true)))
                 .fetch();
         return Optional.ofNullable(list);
     }
