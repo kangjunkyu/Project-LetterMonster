@@ -81,8 +81,12 @@ public class FriendsServiceImpl implements FriendsService {
             }
 
             String title = "LEMON";
-            if (!notificationService.sendNotification(friendUser.getNotificationToken(), title, body)) {
-                throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+            try {
+                if (!notificationService.sendNotification(friendUser.getNotificationToken(), title, body)) {
+                    System.out.println("Notification failed to send, but letter was created.");
+                }
+            } catch (Exception e) {
+                System.out.println("Failed to send notification due to: " + e.getMessage());
             }
         }
         return friendsRepository.save(friend).getFriend().getNickname();

@@ -52,8 +52,9 @@ public class LetterController {
 
     @Operation(summary = "편지 삭제", description = "편지 삭제, letterId 필요")
     @DeleteMapping("/{letterId}")
-    public ResponseEntity<?> deleteLetter(@PathVariable Long letterId){
-        letterService.deleteLetter(letterId);
+    public ResponseEntity<?> deleteLetter(Authentication authentication, @PathVariable Long letterId){
+        Integer senderId = (Integer) authentication.getPrincipal();
+        letterService.deleteLetter(senderId, letterId);
         return getResponseEntity(SuccessCode.OK);
     }
 

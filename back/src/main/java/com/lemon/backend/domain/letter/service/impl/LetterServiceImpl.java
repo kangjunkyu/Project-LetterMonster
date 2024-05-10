@@ -79,6 +79,8 @@ public class LetterServiceImpl implements LetterService {
                 .sketchbookCharacterMotion(sketchbookCharacterMotion)
                 .build();
 
+        letterRepository.save(letter);
+
         if (receiver.getNotificationToken() != null && !receiver.getNotificationToken().equals("null")) {
 
             Notification notification = Notification.builder()
@@ -95,12 +97,17 @@ public class LetterServiceImpl implements LetterService {
             }
 
             String title = "LEMON";
-            if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
-                throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+
+            try {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                    System.out.println("Notification failed to send, but letter was created.");
+                }
+            } catch (Exception e) {
+                System.out.println("Failed to send notification due to: " + e.getMessage());
             }
         }
 
-        return letterRepository.save(letter).getId();
+        return letter.getId();
     }
 
     @Override
@@ -136,14 +143,19 @@ public class LetterServiceImpl implements LetterService {
 
         if (letter.getSender() == null) {
             body = "[ 비회원 ] 으로부터 편지가 도착했어요";
-            notificationRepository.save(notification);
-        }
+            notificationRepository.save(notification); // 알림 저장
 
-        String title = "LEMON";
-        if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
-            throw new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION);
+            String title = "LEMON";
+            try {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                    // 로그 기록 또는 알림 실패 처리
+                    System.out.println("Notification sending failed: User notification token might be missing or invalid.");
+                }
+            } catch (Exception e) {
+                // 예외 로깅
+                System.out.println("Error sending notification: " + e.getMessage());
+            }
         }
-
 
         LetterCreateResponse response = new LetterCreateResponse();
         response.setLetterId(letterRepository.save(letter).getId());
@@ -153,16 +165,23 @@ public class LetterServiceImpl implements LetterService {
 
     @Transactional
     @Override
-    public void deleteLetter(Long letterId) {
+    public void deleteLetter(Integer userId, Long letterId) {
+        Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+
         Letter letter = letterRepository.findById(letterId).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
-        letterRepository.delete(letter);
+
+        if (!letter.getReceiver().getId().equals(userId)) {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        } else {
+            letterRepository.delete(letter);
+        }
     }
 
     @Transactional
     @Override
-    public Boolean changePublicStatus(Integer userId, Long letterId){
+    public Boolean changePublicStatus(Integer userId, Long letterId) {
         Letter letter = letterRepository.findById(letterId).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
-        if(!letter.getReceiver().getId().equals(userId)){
+        if (!letter.getReceiver().getId().equals(userId)) {
             new CustomException(ErrorCode.INVALID_ACCESS);
         }
         letter.changePublic();
