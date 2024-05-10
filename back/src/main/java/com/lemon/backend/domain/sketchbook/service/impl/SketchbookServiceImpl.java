@@ -39,37 +39,38 @@ public class SketchbookServiceImpl implements SketchbookService {
     private String baseUrl;
 
     @Override
-    public List<SketchbookGetSimpleDto> getSketchList(Integer userId){
+    public List<SketchbookGetSimpleDto> getSketchList(Integer userId) {
         return sketchbookRepository.getSketchList(userId).orElse(Collections.emptyList());
     }
 
     @Override
-    public List<SketchbookGetSimpleDto> getFriendSketchList(Integer userId){
+    public List<SketchbookGetSimpleDto> getFriendSketchList(Integer userId) {
         return sketchbookRepository.getFriendSketchList(userId).orElse(Collections.emptyList());
     }
 
     @Override
-    public SketchbookGetDetailDto getSketchSelect(String sketchId){
+    public SketchbookGetDetailDto getSketchSelect(String sketchId) {
         return sketchbookRepository.getSketchSelect(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
+
     @Override
-    public SketchbookGetDetailDto getSketchSelect2(String sketchId){
-        return sketchbookRepository.getSketchSelect2(sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+    public SketchbookGetDetailDto getSketchSelect2(Integer userId, String sketchId) {
+        return sketchbookRepository.getSketchSelect2(userId, sketchId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
 
     @Override
-    public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable){
-        return sketchbookRepository.getSketchSelect3(sketchId, pageable);
+    public SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable) {
+        return sketchbookRepository.getSketchSelect3(userId, sketchId, pageable);
     }
 
-    private long getSameSketchbookLastNumber(String name){
+    private long getSameSketchbookLastNumber(String name) {
         Optional<String> highestTagOpt = sketchbookRepository.findHighestSketchbookTagByName(name);
-        long sameSketchbookLastNumber = highestTagOpt.map(tag -> Long.parseLong(tag)+1).orElse(1L);
+        long sameSketchbookLastNumber = highestTagOpt.map(tag -> Long.parseLong(tag) + 1).orElse(1L);
         return sameSketchbookLastNumber;
     }
 
     @Override
-    public Optional<List<SketchbookSearchGetDto>> searchSkechbook(String searchName){
+    public Optional<List<SketchbookSearchGetDto>> searchSkechbook(String searchName) {
         Optional<List<SketchbookSearchGetDto>> list = sketchbookRepository.searchList(searchName);
 
         return list;
@@ -77,13 +78,16 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Transactional
     @Override
-    public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto){
+    public Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto) {
         Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
-        if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if (badWordFilterUtil.checkBadWord(sketchDto.getName()))
+            throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(sketchDto.getName());
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbook/" + uuid;
         boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(userId);
+
+        System.out.println(user.getId());
 
         Sketchbook sketch = Sketchbook.builder()
                 .name(sketchDto.getName())
@@ -99,9 +103,12 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Transactional
     @Override
-    public boolean changePublic(Long sketchbookId){
+    public boolean changePublic(Integer userId, Long sketchbookId) {
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
 //        boolean changePublicStatus = !sketch.getIsPublic();
+        if(sketch.getUsers().getId().equals(userId)){
+            new CustomException(ErrorCode.INVALID_ACCESS);
+        }
         sketch.changePublic();
         sketchbookRepository.save(sketch);
         return sketch.getIsPublic();
@@ -109,9 +116,13 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Transactional
     @Override
-    public Long updateSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto){
+    public Long updateSketchbook(Integer userId, Long sketchbookId, SketchbookUpdateDto sketchDto) {
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
-        if(badWordFilterUtil.checkBadWord(sketchDto.getName())) throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if (badWordFilterUtil.checkBadWord(sketchDto.getName()))
+            throw new CustomException(ErrorCode.CANT_USING_BAD_WORD);
+        if(!sketch.getUsers().getId().equals(userId)){
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
         sketch.setName(sketchDto.getName());
         sketchbookRepository.save(sketch);
         return sketch.getId();
@@ -119,7 +130,7 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Transactional
     @Override
-    public Long ShareSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto){
+    public Long ShareSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto) {
         Sketchbook sketch = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
 
         sketch.setShareLink(sketchDto.getShareLink());
@@ -129,14 +140,19 @@ public class SketchbookServiceImpl implements SketchbookService {
 
     @Transactional
     @Override
-    public void deleteSketchbook(Long sketchbookId){
+    public void deleteSketchbook(Integer userId, Long sketchbookId) {
         Sketchbook sketchbook = sketchbookRepository.findById(sketchbookId)
                 .orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
-        sketchbookRepository.delete(sketchbook);
+
+        if (!sketchbook.getUsers().getId().equals(userId)) {
+            new CustomException(ErrorCode.INVALID_ACCESS);
+        } else {
+            sketchbookRepository.delete(sketchbook);
+        }
     }
 
     @Override
-    public List<SketchbookGetAllDto> getSketchAll(){
+    public List<SketchbookGetAllDto> getSketchAll() {
         return sketchbookRepository.getSketchAll().orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
     }
 
