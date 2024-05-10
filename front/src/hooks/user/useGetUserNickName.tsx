@@ -4,6 +4,9 @@ import { getUserNickname } from "../../api/Api";
 export function useGetUserNickname() {
   return useQuery({
     queryKey: ["usernickname"],
-    queryFn: () => getUserNickname(),
+    queryFn: () =>
+      localStorage.getItem("accessToken")
+        ? getUserNickname()
+        : Promise.resolve({}),
   });
 }
