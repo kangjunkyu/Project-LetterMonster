@@ -89,7 +89,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
       if (newNickname.startsWith(" ")) {
         setNicknameError(t("paint.pleaseDont"));
       } else if (
-        /[^a-zA-Z0-9ㄱ-힣\s]/.test(newNickname) ||
+        /[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(newNickname) ||
         newNickname.includes("　")
       ) {
         setNicknameError(t("paint.pleaseRename"));
