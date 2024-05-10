@@ -1,4 +1,6 @@
-.motionRealContainer{
+@import "../../../styles/mixins/defalut";
+
+.motionRealContainer {
   // display: flex;
   // flex-direction: column;
   // justify-content: center;
@@ -26,11 +28,6 @@
   }
 }
 
-// .motionImage{
-//   width: 300px;
-//   height: 300px;
-// }
-
 .motionResultImage {
   width: 100%;
   max-width: 300px;
@@ -46,18 +43,18 @@
 
 .motionResultContainer {
   width: 100%;
-  max-width: 400px;
-  padding: 1em;
-  background-color: white;
-  border-radius: 15px;
-  border: 3px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* 데스크탑 */
 
   @media screen and (max-width: 767px) {
-    width: 90%;
-    
+    /* 타블렛 */
   }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+  @include setFontSize;
 }
