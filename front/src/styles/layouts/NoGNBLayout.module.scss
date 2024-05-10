@@ -14,23 +14,23 @@ main {
       min-height: 100vh;
       & > * {
         min-height: 100vh;
-        padding-left: 54px;
+        padding-left: $GNBWidth;
       }
     }
 
     @media screen and (max-width: 767px) {
       /* 타블렛 */
       & > * {
-        min-height: calc(100vh - 64px);
-        margin-bottom: 64px;
+        min-height: calc(100vh - $GNBHeight);
+        margin-bottom: $GNBHeight;
       }
     }
 
     @media screen and (max-width: 479px) {
       /* 모바일 */
       & > * {
-        min-height: calc(100vh - 44px);
-        margin-top: 44px;
+        min-height: calc(100vh - $LNBHeight);
+        margin-top: $LNBHeight;
       }
     }
   }
