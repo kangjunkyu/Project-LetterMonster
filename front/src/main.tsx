@@ -28,7 +28,6 @@ const App = () => {
         <AlertProvider>
           <Router />
         </AlertProvider>
-        <RouterChangeTracker />
         <ReactQueryDevtools initialIsOpen={true} />
       </BrowserRouter>
     </QueryClientProvider>
