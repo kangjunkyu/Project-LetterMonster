@@ -9,7 +9,7 @@ function Letter({ sender, content }: Props) {
   return (
     <article className={styles.letter_container}>
       <div className={styles.content_box}>{content}</div>
-      <div className={styles.name_box}>From.{sender}</div>
+      <div className={styles.name_box}>From.{sender ? sender : "익명"}</div>
     </article>
   );
 }

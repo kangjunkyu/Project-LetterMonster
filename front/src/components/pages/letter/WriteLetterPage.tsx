@@ -66,6 +66,7 @@ function LetterWritePage() {
 
   const onClickHandler = () => {
     write({
+      characterId: characterId,
       content: content,
       target: target,
       motionId: motionId,
