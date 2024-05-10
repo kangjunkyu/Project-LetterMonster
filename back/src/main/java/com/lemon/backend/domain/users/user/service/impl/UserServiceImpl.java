@@ -68,13 +68,15 @@ public class UserServiceImpl implements UserService {
                 .build();
         userRepository.save(newUser);
 
-        long sameSketchbookLastNumber = getSameSketchbookLastNumber(nickname);
+        String BasicSketchbookName = "기본 스케치북";
+
+        long sameSketchbookLastNumber = getSameSketchbookLastNumber(BasicSketchbookName);
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbook/" + uuid;
         boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(newUser.getId());
 
         Sketchbook sketchbook = Sketchbook.builder()
-                .name(nickname)
+                .name(BasicSketchbookName)
                 .users(newUser)
                 .shareLink(sharaLink)
                 .sketchbookUuid(uuid)
