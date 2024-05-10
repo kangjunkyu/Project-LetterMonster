@@ -113,7 +113,10 @@ function SketchbookPage() {
           {data && (
             <h1
               onClick={() => {
-                if (localStorage.getItem("acceesToken"))
+                if (
+                  localStorage.getItem("acceesToken") &&
+                  data?.data?.isWritePossible
+                )
                   handleToggleModal("sketchbookInfo", 0);
               }}
             >{`${data?.data?.name} ▼ ${
