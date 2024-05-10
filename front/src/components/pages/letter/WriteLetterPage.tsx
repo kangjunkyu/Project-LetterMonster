@@ -93,9 +93,7 @@ function LetterWritePage() {
 
   useEffect(() => {
     if (sketchbookId && sketchbookId.sketchbookId && !target) {
-      console.log("지금 뭔데야");
       setTarget(Number(sketchbookId.sketchbookId));
-      console.log(target);
     }
   }, [sketchbookId, target]);
 
@@ -113,41 +111,42 @@ function LetterWritePage() {
       </LNB>
       <section className={styles.letterBox}>
         <article>
-          {!chId && (
-            <>
-              <figure>
-                <p>{t("writeletter.characterSelect")}</p>
-                {characterList && (
-                  <CharacterList
-                    characterList={characterList}
-                    characterId={characterId}
-                    setId={setCharacterId}
-                  ></CharacterList>
-                )}
-                {!characterList?.data && (
-                  <div className={styles.characterList}>
-                    <button
-                      onClick={() => navigate(Page_Url.Sketch)}
-                      className={styles.buttonItem}
-                    >
-                      {t("writeletter.characterDrawing")}
-                    </button>
-                  </div>
-                )}
-              </figure>
-              {characterId != 0 && (
+          {!chId ||
+            (localStorage.getItem("accessToken") && (
+              <>
                 <figure>
-                  <p>{t("writeletter.motionSelect")}</p>
-                  <MotionExample
-                    isLoad={isFetching}
-                    motionId={motionId}
-                    setMotionId={motionSeleted}
-                  />
+                  <p>{t("writeletter.characterSelect")}</p>
+                  {characterList && (
+                    <CharacterList
+                      characterList={characterList}
+                      characterId={characterId}
+                      setId={setCharacterId}
+                    ></CharacterList>
+                  )}
+                  {!characterList?.data && (
+                    <div className={styles.characterList}>
+                      <button
+                        onClick={() => navigate(Page_Url.Sketch)}
+                        className={styles.buttonItem}
+                      >
+                        {t("writeletter.characterDrawing")}
+                      </button>
+                    </div>
+                  )}
                 </figure>
-              )}
-            </>
-          )}
-          {chId && (
+                {characterId != 0 && (
+                  <figure>
+                    <p>{t("writeletter.motionSelect")}</p>
+                    <MotionExample
+                      isLoad={isFetching}
+                      motionId={motionId}
+                      setMotionId={motionSeleted}
+                    />
+                  </figure>
+                )}
+              </>
+            ))}
+          {chId && !localStorage.getItem("accessToken") && (
             <>
               <div className={styles.imgbox}>
                 <img
