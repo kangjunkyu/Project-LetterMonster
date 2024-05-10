@@ -3,21 +3,37 @@
 
 .header {
   z-index: 9999;
-  @media screen and (min-width: 768px) {
+  transition: 0.3s all;
+  @media screen and (min-width: 767px) {
     gap: 1em;
     top: 0;
     left: 0;
     bottom: 0;
     position: fixed;
-    @include flexCenterColumn();
+    width: $GNBWidth;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     gap: 3em;
     box-shadow: 0.1px 0.1px 0.3px black;
+    &:hover {
+      width: calc($GNBWidth * 3);
+      h5 {
+        opacity: 1;
+        transform: translateX(0%);
+        transition: 0.5s all;
+        position: relative;
+      }
+    }
   }
   box-shadow: 0.1px 0.1px 0.5px black;
   background-color: $gc900;
   & a {
     @include flexCenter();
     width: 100%;
+    @media screen and (max-width: 479px) {
+      transform: translateY(-10%);
+    }
   }
 
   @media screen and (max-width: 767px) {
@@ -28,14 +44,37 @@
     bottom: 0;
     left: 0;
     right: 0;
-
     height: $GNBHeight;
-    padding: 2em 0;
   }
 }
+
 .GNBbutton {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  gap: 0.5rem;
+  @include setFontSize;
+  @include hoverItem;
+  padding: 1rem;
+  @media screen and (min-width: 767px) {
+    & > h5 {
+      opacity: 0;
+      white-space: nowrap;
+      position: absolute;
+      transform: translateX(-100%);
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 태블릿 */
+    max-width: 100%;
+    flex-direction: column;
+    & > h5 {
+      display: flex;
+    }
+  }
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    & > h5 {
+      display: none;
+    }
+  }
 }
