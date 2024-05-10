@@ -24,9 +24,14 @@ $maxWidthValue: 1024px;
 
 .writeBox {
   /* 데스크탑 */
+  @include body;
   & button {
     width: 100%;
     background-color: $primary;
+  }
+
+  & textarea {
+    @include body;
   }
 
   @media screen and (max-width: 767px) {
