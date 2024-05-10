@@ -1,9 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   cancelCharacter,
   deleteCharacter,
   patchCharacterNickname,
   patchMainCharacter,
+  getSoloCharacter,
 } from "../../api/Api";
 
 /** 캐릭터 닉네임 설정 */
@@ -49,5 +50,13 @@ export function useDeleteCharacter() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["Character"] });
     },
+  });
+}
+
+/** 정적 캐릭터 조회 */
+export function useGetSoloCharacter(characterId: number) {
+  return useQuery({
+    queryKey: ["soloCharacter"],
+    queryFn: () => getSoloCharacter(characterId),
   });
 }
