@@ -11,6 +11,7 @@ interface Props {
   characterMotionId: number;
   setContent: (content: string) => void;
   isLoad: boolean;
+  characterId: number;
 }
 
 function useWriteLetter() {
@@ -23,6 +24,7 @@ function useWriteLetter() {
     characterMotionId,
     setContent,
     isLoad,
+    characterId,
   }: Props) => {
     if (
       content &&
@@ -43,6 +45,8 @@ function useWriteLetter() {
         .catch(() => {
           showAlert("편지 전송에 실패했습니다. 다시 시도해주세요");
         });
+    } else if (characterId === 0) {
+      showAlert("보낼 캐릭터를 선택해주세요");
     } else if (isLoad || characterMotionId === 0 || !characterMotionId) {
       showAlert("캐릭터가 아직 동작을 연습중이에요");
     } else if (!content) {

@@ -39,7 +39,7 @@ function setupResponseInterceptor(instance: any) {
       // 토큰 만료시
       if (status === 401) {
         if (!refreshToken) {
-          window.location.href = Page_Url.Login;
+          window.location.href = Page_Url.Main;
           return;
         }
 
@@ -72,10 +72,10 @@ function setupResponseInterceptor(instance: any) {
             ] = `Bearer ${response.data.data["accessToken"]}`;
             return axios(config);
           } else {
-            window.location.href = Page_Url.Login;
+            window.location.href = Page_Url.Main;
           }
         } catch (refreshError) {
-          window.location.href = Page_Url.Login;
+          window.location.href = Page_Url.Main;
         }
       }
 

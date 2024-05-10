@@ -1,3 +1,4 @@
+import formatMotionName from "../../../hooks/motion/useFormatMotionName";
 import styles from "./CharacterListItem.module.scss";
 
 function CharacterListItem({ item, characterId }: any) {
@@ -12,7 +13,7 @@ function CharacterListItem({ item, characterId }: any) {
         className={`${styles.characterImg}`}
         alt="캐릭터 사진"
       ></img>
-      <div>{item.nickname}</div>
+      <div>{formatMotionName(item.nickname)}</div>
     </li>
   );
 }

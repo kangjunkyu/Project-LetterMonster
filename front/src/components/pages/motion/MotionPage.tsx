@@ -4,7 +4,7 @@ import MotionList from "../../molecules/motion/MotionList";
 import MotionPreview from "../../molecules/motion/MotionPreview";
 import { useState } from "react";
 import LNB from "../../molecules/common/LNB";
-import DefaultButton from "../../atoms/button/DefaultButton";
+// import DefaultButton from "../../atoms/button/DefaultButton";
 import { Page_Url } from "../../../router/Page_Url";
 import Modal from "../../atoms/modal/Modal";
 import { useTranslation } from "react-i18next";
@@ -46,14 +46,7 @@ function MotionPage() {
       <div className={styles.motionRealContainer}>
         <LNB>
           <h1>{t("motion.title")}</h1>
-          <DefaultButton
-            onClick={() => {
-              onHandleClick();
-            }}
-            custom={true}
-          >
-            {t("motion.create")}
-          </DefaultButton>
+          <div></div>
         </LNB>
         <div className={styles.motionContainer}>
           <MotionPreview

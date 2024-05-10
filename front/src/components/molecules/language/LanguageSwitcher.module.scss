@@ -3,5 +3,9 @@
   gap: 0.1em;
   position: absolute;
   top: 0.1em;
-  transform: scale(0.6);
+  @media screen and (min-width: 768px) {
+    /* 데스크탑 */
+    position: relative;
+    transform: translateY(-30%);
+  }
 }

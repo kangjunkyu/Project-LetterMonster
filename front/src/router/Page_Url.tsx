@@ -16,6 +16,8 @@ export const Page_Url = {
 
   // 캐릭터 그림 그리기 페이지
   Sketch: "/sketch",
+  // 캐릭터 그림 그리기 결과 페이지
+  SketchResult: "/sketch/result",
   // 캐릭터 모션 선택 페이지
   Motion: "/motion",
   // 캐릭터 모션 결과 페이지
