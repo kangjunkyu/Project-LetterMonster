@@ -18,7 +18,7 @@ function MyPageUserInfo() {
       if (newNickname.startsWith(" ")) {
         showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
       } else if (
-        /[^a-zA-Z0-9ㄱ-힣\s]/.test(newNickname) ||
+        /[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(newNickname) ||
         newNickname.includes("　")
       ) {
         showAlert("닉네임은 영문, 숫자, 한글만 가능합니다.");

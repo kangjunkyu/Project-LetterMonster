@@ -9,7 +9,6 @@ import LNB from "../../molecules/common/LNB";
 import CharacterList from "../../molecules/character/CharacterList";
 import MotionExample from "../../molecules/motion/MotionExample";
 
-import { useSketchbookListAll } from "../../../hooks/sketchbook/useSketchbookList";
 import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import { Page_Url } from "../../../router/Page_Url";
@@ -36,7 +35,6 @@ function LetterWritePage() {
     sketchbookName ? sketchbookName : t("writeletter.sketchbookSelectSentence")
   );
   const [target, setTarget] = useState(0); // 편지보낼스케치북
-  const { data: sketchbookList, isLoading } = useSketchbookListAll();
   const { data: characterList } = useGetCharacterList();
   const [characterId, setCharacterId] = useState(chId | 0);
   const [motionId, setMotionId] = useState(mId | 0);
@@ -81,13 +79,10 @@ function LetterWritePage() {
   };
 
   useEffect(() => {
-    if (!isLoading) {
-      setTarget(sketchbookList?.data[0]?.id);
-    }
     if (sketchbookId.sketchbookId) {
       setTarget(Number(sketchbookId.sketchbookId));
     }
-  }, [isLoading]);
+  }, [sketchbookId.sketchbookId]);
 
   useEffect(() => {
     if (mounted && isError && motionId != 0)
@@ -96,7 +91,9 @@ function LetterWritePage() {
 
   useEffect(() => {
     if (sketchbookId && sketchbookId.sketchbookId && !target) {
+      console.log("지금 뭔데야");
       setTarget(Number(sketchbookId.sketchbookId));
+      console.log(target);
     }
   }, [sketchbookId, target]);
 

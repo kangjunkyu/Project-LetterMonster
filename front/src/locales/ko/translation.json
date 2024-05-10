@@ -72,5 +72,15 @@
   },
   "mypage": {
     "sketchbookList": "스케치북 리스트"
+  },
+  "main": {
+    "title": "레터몬스터",
+    "introduce": "내 캐릭터로 편지보내기!",
+    "proposal": "님 안녕하세요!",
+    "userInfo": "내 정보 관리",
+    "characterList": "내 캐릭터 목록",
+    "friends": "내 친구 목록",
+    "developer": "개발자 스케치북 놀러가기",
+    "suggestion": "건의 및 버그 신고"
   }
 }
