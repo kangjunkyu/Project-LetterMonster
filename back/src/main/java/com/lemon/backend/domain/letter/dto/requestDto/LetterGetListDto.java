@@ -17,6 +17,7 @@ public class LetterGetListDto {
     private UserGetDto sender;
     private UserGetDto receiver;
     private String content;
+    private Boolean isPublic;
     private LocalDateTime write_time;
 
     public LetterGetListDto(UserGetDto receiver) {

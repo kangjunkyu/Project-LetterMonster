@@ -227,6 +227,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                         letter.receiver.nickname,
                                         letter.receiver.nicknameTag),
                                 letter.content,
+                                letter.isPublic,
                                 letter.createdAt))
                         .from(letter)
                         .leftJoin(letter.sender)
@@ -257,7 +258,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
     @Override
-    public SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable) {
+    public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
@@ -272,7 +273,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible")))
+                        sketchbook.isWritePossible))
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
@@ -305,6 +306,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                     letter.receiver.nickname,
                                     letter.receiver.nicknameTag),
                             letter.content,
+                            letter.isPublic,
                             letter.createdAt))
                     .from(letter)
                     .leftJoin(letter.sender)

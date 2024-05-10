@@ -15,6 +15,7 @@ public class LetterToSketchbookDto {
     private UserGetDto sender;
     private UserGetDto receiver;
     private String content;
+    private Boolean isPublic;
     private LocalDateTime write_time;
 //    private Long charactersId;
 //    private CharacterToSketchbookDto character;

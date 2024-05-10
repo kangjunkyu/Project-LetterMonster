@@ -36,7 +36,7 @@ public interface SketchbookService {
     @Transactional
     void deleteSketchbook(Integer userId, Long sketchbookId);
 
-    SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable);
+    SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
 
     List<SketchbookGetAllDto> getSketchAll();
 
