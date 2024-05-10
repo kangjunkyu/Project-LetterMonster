@@ -56,6 +56,12 @@
     "pleaseTen": "ニックネームは10文字以下である必要があります。",
     "pleaseDraw": "キャラクターを描いてください"
   },
+  "paintResult":{
+    "title": "図完成",
+    "birth": "誕生",
+    "move": "移動に行く",
+    "letter": "手紙を書く"
+  },
   "motion": {
     "title": "モーション選択",
     "create": "決定",

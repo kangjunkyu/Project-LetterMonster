@@ -20,6 +20,7 @@ import { useAlert } from "../../../hooks/notice/useAlert";
 import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useTranslation } from "react-i18next";
+import { Page_Url } from "../../../router/Page_Url";
 
 interface PaintProps {}
 
@@ -38,8 +39,11 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   // 캐릭터 생성 뮤테이션
   const postSketchCharacterMutation = usePostSketchCharacter(
     (response, uri, nickname) => {
+      console.log(response);
+      console.log("위아래");
+      console.log(uri);
       if (response) {
-        navigate("/motion", {
+        navigate(Page_Url.SketchResult, {
           state: { characterId: response.data, image: uri, nickname },
         });
       }

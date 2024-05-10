@@ -56,6 +56,12 @@
     "pleaseTen": "닉네임은 10글자 이하만 가능합니다.",
     "pleaseDraw": "캐릭터를 그려주세요"
   },
+  "paintResult":{
+    "title": "그림 완성",
+    "birth": "탄생",
+    "move": "움직이기",
+    "letter": "편지쓰기"
+  },
   "motion": {
     "title": "동작 선택",
     "create": "결정",
