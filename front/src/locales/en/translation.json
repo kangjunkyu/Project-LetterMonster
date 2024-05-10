@@ -56,6 +56,12 @@
     "pleaseTen": "Nicknames must be 10 characters or fewer.",
     "pleaseDraw": "Please draw the character"
   },
+  "paintResult":{
+    "title": "Character Birthday",
+    "birth": "Was Born",
+    "move": "Move Character",
+    "letter": "Write Letter"
+  },
   "motion": {
     "title": "Select Motion",
     "create": "Set Motion",
