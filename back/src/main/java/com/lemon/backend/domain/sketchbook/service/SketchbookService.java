@@ -17,7 +17,7 @@ public interface SketchbookService {
 
     SketchbookGetDetailDto getSketchSelect(String sketchId);
 
-    SketchbookGetDetailDto getSketchSelect2(String sketchId);
+    SketchbookGetDetailDto getSketchSelect2(Integer userId, String sketchId);
 
     Optional<List<SketchbookSearchGetDto>> searchSkechbook(String searchName);
 
@@ -25,18 +25,18 @@ public interface SketchbookService {
     Long createSketchbook(Integer userId, SketchbookCreateDto sketchDto);
 
     @Transactional
-    boolean changePublic(Long sketchbookId);
+    boolean changePublic(Integer userId, Long sketchbookId);
 
     @Transactional
-    Long updateSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto);
+    Long updateSketchbook(Integer userId, Long sketchbookId, SketchbookUpdateDto sketchDto);
 
     @Transactional
     Long ShareSketchbook(Long sketchbookId, SketchbookUpdateDto sketchDto);
 
     @Transactional
-    void deleteSketchbook(Long sketchbookId);
+    void deleteSketchbook(Integer userId, Long sketchbookId);
 
-    SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
+    SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable);
 
     List<SketchbookGetAllDto> getSketchAll();
 

@@ -18,9 +18,9 @@ public interface SketchbookRepositoryCustom {
 
     Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId);
 
-    Optional<SketchbookGetDetailDto> getSketchSelect2(String sketchId);
+    Optional<SketchbookGetDetailDto> getSketchSelect2(Integer userId, String sketchId);
 
-    SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable);
+    SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable);
 
     Optional<String> findHighestSketchbookTagByName(String name);
 

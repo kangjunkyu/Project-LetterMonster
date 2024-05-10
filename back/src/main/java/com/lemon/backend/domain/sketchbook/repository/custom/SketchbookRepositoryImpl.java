@@ -36,6 +36,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
         if (userId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
+
         List<SketchbookGetSimpleDto> sketchDtos = query
                 .select(constructor(SketchbookGetSimpleDto.class,
                         sketchbook.id,
@@ -47,10 +48,13 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible
+                        sketchbook.users.id.eq(userId).as("isWritePossible")
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId))
                 .fetch();
+
+        System.out.println(userId);
+
         return Optional.ofNullable(sketchDtos.isEmpty() ? null : sketchDtos);
     }
 
@@ -70,7 +74,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible
+                        sketchbook.users.id.eq(userId).as("isWritePossible")
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId).and(sketchbook.isPublic.eq(true)))
                 .fetch();
@@ -174,7 +178,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
     @Override
-    public Optional<SketchbookGetDetailDto> getSketchSelect2(String sketchId) {
+    public Optional<SketchbookGetDetailDto> getSketchSelect2(Integer userId, String sketchId) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
@@ -190,7 +194,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible)
+                        sketchbook.users.id.eq(userId).as("isWritePossible"))
                 )
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
@@ -253,7 +257,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
     }
 
     @Override
-    public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable) {
+    public SketchbookDetailPageDto getSketchSelect3(Integer userId, String sketchId, Pageable pageable) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
@@ -268,7 +272,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible))
+                        sketchbook.users.id.eq(userId).as("isWritePossible")))
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();

@@ -46,17 +46,20 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
     @GetMapping("/detail/{sketchbookUuid}")
-    public ResponseEntity<?> getSketchSelect2(@PathVariable(value = "sketchbookUuid") String sketchId){
-        SketchbookGetDetailDto sketchSelect = sketchbookService.getSketchSelect2(sketchId);
+    public ResponseEntity<?> getSketchSelect2(Authentication authentication, @PathVariable(value = "sketchbookUuid") String sketchId){
+        Integer userId = (Integer) authentication.getPrincipal();
+        SketchbookGetDetailDto sketchSelect = sketchbookService.getSketchSelect2(userId, sketchId);
         return getResponseEntity(SuccessCode.OK, sketchSelect);
     }
 
     @Operation(summary = "스케치북 캐릭터 모션 페이지네이션", description = "스케치북 ID에 따른 캐릭터 모션의 페이지네이션된 리스트를 조회")
     @GetMapping("/public/{sketchbookUuid}/pagination")
     public ResponseEntity<SketchbookDetailPageDto> getSketchSelect3(
+            Authentication authentication,
             @Parameter(description = "스케치북 ID", required = true) @PathVariable(value = "sketchbookUuid") String sketchId,
             @Parameter(description = "페이지 정보", required = true) Pageable pageable) {
-        SketchbookDetailPageDto detailPageDto = sketchbookService.getSketchSelect3(sketchId, pageable);
+        Integer userId = (Integer) authentication.getPrincipal();
+        SketchbookDetailPageDto detailPageDto = sketchbookService.getSketchSelect3(userId, sketchId, pageable);
         return ResponseEntity.ok(detailPageDto);
     }
 
@@ -77,15 +80,17 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 수정", description = "스케치북 수정 / sketchbookId 필요")
     @PutMapping("/{sketchbookId}")
-    public ResponseEntity<?> updateSketch(@PathVariable(value = "sketchbookId")Long sketchbookId, @Valid @RequestBody SketchbookUpdateDto sketchDto){
-        Long updateSketchId = sketchbookService.updateSketchbook(sketchbookId, sketchDto);
+    public ResponseEntity<?> updateSketch(Authentication authentication, @PathVariable(value = "sketchbookId")Long sketchbookId, @Valid @RequestBody SketchbookUpdateDto sketchDto){
+        Integer userId = (Integer) authentication.getPrincipal();
+        Long updateSketchId = sketchbookService.updateSketchbook(userId, sketchbookId, sketchDto);
         return getResponseEntity(SuccessCode.OK, updateSketchId);
     }
 
     @Operation(summary = "스케치북 삭제", description = "스케치북 삭제 / sketchbookId 필요")
     @DeleteMapping("/{sketchbookId}")
-    public ResponseEntity<?> deleteSketchBook(@PathVariable(value = "sketchbookId")Long sketchbookId){
-        sketchbookService.deleteSketchbook(sketchbookId);
+    public ResponseEntity<?> deleteSketchBook(Authentication authentication, @PathVariable(value = "sketchbookId")Long sketchbookId){
+        Integer userId = (Integer) authentication.getPrincipal();
+        sketchbookService.deleteSketchbook(userId, sketchbookId);
         return getResponseEntity(SuccessCode.OK);
     }
 
@@ -111,8 +116,9 @@ public class SketchbookController {
     }
 
     @PutMapping("/changepublic")
-    public ResponseEntity<?> changePublicSketchbook(@RequestParam Long sketchbookId){
-        Boolean changePublic = sketchbookService.changePublic(sketchbookId);
+    public ResponseEntity<?> changePublicSketchbook(Authentication authentication, @RequestParam Long sketchbookId){
+        Integer userId = (Integer) authentication.getPrincipal();
+        Boolean changePublic = sketchbookService.changePublic(userId, sketchbookId);
         return getResponseEntity(SuccessCode.OK, changePublic);
     }
 }
