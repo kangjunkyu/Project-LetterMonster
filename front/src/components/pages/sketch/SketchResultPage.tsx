@@ -18,7 +18,6 @@ function SketchResultPage() {
   };
 
   const handleResultToLetter = () => {
-    console.log(characterId);
     navigate(Page_Url.WriteLetter, {
       state: { characterId: characterId, motionId: 0 },
     });

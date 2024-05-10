@@ -57,6 +57,8 @@ export function useDeleteCharacter() {
 export function useGetSoloCharacter(characterId: number) {
   return useQuery({
     queryKey: ["soloCharacter"],
-    queryFn: () => getSoloCharacter(characterId),
+    queryFn: () => {
+      return getSoloCharacter(characterId);
+    },
   });
 }
