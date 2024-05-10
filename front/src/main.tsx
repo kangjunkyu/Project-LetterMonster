@@ -4,8 +4,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액�
 import { BrowserRouter } from "react-router-dom"; // 라우터
 import Router from "./router/Router"; // 라우터
 import "./locales/i18n"; // 다국어 지원
-import { useScript } from "./hooks/share/useShareToKakao";
-import { useEffect } from "react";
 import { AlertProvider } from "./hooks/notice/useAlert";
 import RouterChangeTracker from "./util/ga/RouterChangeTracker"; // Ga - 트래커
 import GetToken from "./util/fcm/messaging_get_token";
@@ -20,12 +18,10 @@ const queryClient = new QueryClient();
 
 const App = () => {
   GetToken();
-  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
-  useEffect(() => {
-    if (status === "ready" && window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
-    }
-  }, [status]);
+  const { Kakao } = window;
+  Kakao.cleanup();
+  Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

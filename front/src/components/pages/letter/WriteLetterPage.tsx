@@ -29,9 +29,12 @@ function LetterWritePage() {
     characterId: chId,
     // nickname,
     motionId: mId,
+    sketchbookName,
   } = location.state || {};
   const [content, setContent] = useState(""); // 편지내용
-  const [to, setTo] = useState(t("writeletter.sketchbookSelectSentence"));
+  const [to, setTo] = useState(
+    sketchbookName ? sketchbookName : t("writeletter.sketchbookSelectSentence")
+  );
   const [target, setTarget] = useState(0); // 편지보낼스케치북
   const { data: sketchbookList, isLoading } = useSketchbookListAll();
   const { data: characterList } = useGetCharacterList();
@@ -195,12 +198,13 @@ function LetterWritePage() {
                 </SearchList>
               </Modal>
             )}
-            <div
-              className={`${styles.sendList} ${styles.boxComponent} ${styles.cursor}`}
+            <button
+              className={`${styles.sendList} ${styles.boxComponent}`}
               onClick={() => handleToggleModal("findsketchbook")}
+              disabled={sketchbookName ? true : false}
             >
               {to}
-            </div>
+            </button>
           </figure>
         </article>
         <article>

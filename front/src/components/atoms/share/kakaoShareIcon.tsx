@@ -13,7 +13,7 @@ function KakaoShareIcon({ link, nickname, index }: Props) {
   const buttonId = `kakaotalk-sharing-btn-${index}`;
   const handleKakaoButton = () => {
     Kakao.Share.createCustomButton({
-      container: `${buttonId}`,
+      container: `#${buttonId}`,
       templateId: 107259,
       templateArgs: {
         link: link,

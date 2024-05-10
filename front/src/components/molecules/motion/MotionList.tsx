@@ -1,104 +1,125 @@
 import { useEffect, useState } from "react";
 import styles from "./MotionList.module.scss";
 import formatMotionName from "../../../hooks/motion/useFormatMotionName";
-import { useGetMotionSelect } from "../../../hooks/motion/useGetMotionSelect";
 import { useTranslation } from "react-i18next";
-
-interface Motion {
-  name: string;
-  path: string;
-}
+import { useGetMotionList } from "../../../hooks/motion/useGetMotionList";
+import useGetSelectedMotion from "../../../hooks/motion/useGetSelectedMotion";
+import LoadingSpinner from "../../atoms/loadingSpinner/LoadingSpinner";
+import { useAlert } from "../../../hooks/notice/useAlert";
 
 interface Prop {
   characterId: number;
   setGif: (gif: { imageUrl: string }) => void;
   setMotionId: (motinoId: number) => void;
   setCharacterMotionId?: (characterMotionId: number) => void;
+  setLoad: () => void;
 }
 
-async function loadMotions(): Promise<Motion[]> {
-  const motionModules = import.meta.glob("../../../assets/motion/*.gif", {
-    eager: true,
-  });
-  const motions: Motion[] = await Promise.all(
-    Object.entries(motionModules).map(async ([path, resolver]) => {
-      const name = path.split("/").pop()?.replace(".gif", "") ?? "Unknown";
-      const module = resolver as { default: string };
-      return { name, path: module.default };
-    })
-  );
-  return motions;
-}
-
-function MotionList({ characterId, setGif, setMotionId }: Prop) {
+function MotionList({ characterId, setGif, setMotionId, setLoad }: Prop) {
   const { t } = useTranslation();
-  const [motions, setMotions] = useState<Motion[]>([]);
-  const [clickedMotionIndex, setClickedMotionIndex] = useState<number | null>(
-    null
-  );
-  const getMotionSelect = useGetMotionSelect();
+  const { data: motionList, isLoading } = useGetMotionList();
+  const [localMotionId, setLocalMotionId] = useState(0);
+  const [clickedMotionIndex, setClickedMotionIndex] = useState(0);
+  const { showAlert } = useAlert();
 
-  const handleMotionClick = async (index: number) => {
-    const motionId = index + 1;
-    setClickedMotionIndex(index);
-    setGif({ imageUrl: "" });
-    const data = await getMotionSelect(characterId, motionId);
-    if (data) {
-      setMotionId(motionId);
-      setGif(data);
+  const {
+    data: seletedMotion,
+    isLoading: isLoad,
+    isFetching,
+    isRefetching,
+  } = useGetSelectedMotion(characterId, localMotionId);
+
+  const handleMotionClick = async (motionId: number) => {
+    if (!isRefetching && !isLoad) {
+      setLocalMotionId(motionId);
+      setClickedMotionIndex(motionId);
+      setGif({ imageUrl: "" });
     } else {
-      console.log("No motion data available");
+      showAlert("캐릭터가 아직 연습중이에요");
     }
   };
 
   // 모션 샘플 관련
   useEffect(() => {
-    loadMotions().then(setMotions);
-  }, []);
+    if (!isLoad && !isRefetching && seletedMotion) {
+      setMotionId(localMotionId);
+      setGif({ imageUrl: seletedMotion?.imageUrl });
+      setLoad();
+    } else if (isRefetching || isFetching) {
+      setLoad();
+    }
+  }, [isLoad, isRefetching, isFetching]);
 
   return (
     <>
       <div className={styles.motionListContainer}>
         <div>{t("motion.motions")}</div>
+        {isFetching && <LoadingSpinner />}
         <div className={styles.motionSampleList}>
-          {motions.map((motion, index) => (
-            <div
-              className={`${styles.motionSampleEach} ${
-                clickedMotionIndex === index ? styles.selected : ""
-              }`}
-              key={index}
-              onClick={() => {
-                handleMotionClick(index);
-              }}
-            >
-              <img
-                className={styles.motionSampleImage}
-                src={motion.path}
-                alt={`${motion.name} animation`}
-              />
-              <div>{formatMotionName(motion.name)}</div>
-            </div>
-          ))}
+          {!isLoading &&
+            motionList?.data &&
+            motionList?.data.map(
+              (
+                motion: {
+                  name: string;
+                  motionId: number;
+                  imageUrl: string;
+                },
+                index: number
+              ) => (
+                <div
+                  className={`${styles.motionSampleEach} ${
+                    clickedMotionIndex === motion.motionId
+                      ? styles.selected
+                      : ""
+                  }`}
+                  key={index}
+                  onClick={() => {
+                    handleMotionClick(motion.motionId);
+                  }}
+                >
+                  <img
+                    className={styles.motionSampleImage}
+                    src={motion.imageUrl}
+                    alt={`${motion.name} animation`}
+                  />
+                  <div>{formatMotionName(motion.name)}</div>
+                </div>
+              )
+            )}
         </div>
         <div className={styles.motionSampleListHorizontal}>
-          {motions.map((motion, index) => (
-            <div
-              className={`${styles.motionSampleEachHorizontal} ${
-                clickedMotionIndex === index ? styles.selected : ""
-              }`}
-              key={index}
-              onClick={() => {
-                handleMotionClick(index);
-              }}
-            >
-              <img
-                className={styles.motionSampleImage}
-                src={motion.path}
-                alt={`${motion.name} animation`}
-              />
-              <div>{formatMotionName(motion.name)}</div>
-            </div>
-          ))}
+          {!isLoading &&
+            motionList?.data &&
+            motionList?.data.map(
+              (
+                motion: {
+                  name: string;
+                  motionId: number;
+                  imageUrl: string;
+                },
+                index: number
+              ) => (
+                <div
+                  className={`${styles.motionSampleEachHorizontal} ${
+                    clickedMotionIndex === motion.motionId
+                      ? styles.selected
+                      : ""
+                  }`}
+                  key={index}
+                  onClick={() => {
+                    handleMotionClick(motion.motionId);
+                  }}
+                >
+                  <img
+                    className={styles.motionSampleImage}
+                    src={motion?.imageUrl}
+                    alt={`${motion.name} animation`}
+                  />
+                  <div>{formatMotionName(motion.name)}</div>
+                </div>
+              )
+            )}
         </div>
       </div>
     </>

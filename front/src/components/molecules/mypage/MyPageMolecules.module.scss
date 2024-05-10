@@ -187,7 +187,6 @@
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
-
 }
 
 // 내 친구 목록
@@ -211,6 +210,8 @@
   align-items: center;
   text-align: center;
   margin: 3px 0;
+  padding: 1rem;
+  @include hoverItem;
 }
 
 .friendListUpper {
@@ -234,13 +235,48 @@
   border-radius: 5px;
 }
 
-.myFriendListNull{
+.myFriendListNull {
   text-align: center;
   font-size: 14px;
   font-weight: bold;
   margin: 15px 0;
 }
 
-.socialMediaLinks{
+.socialMediaLinks {
   width: 300px;
+}
+
+// 내 친구 스케치북 리스트
+
+.friendSketchbooksList {
+  @include wrapBox();
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  min-width: 15rem;
+  max-height: 500px;
+  overflow-y: scroll;
+
+  span {
+    @include subtitle;
+  }
+  p {
+    @include body2;
+  }
+}
+
+.friendSketchbooksListItem {
+  padding: 1rem;
+  background-color: $white;
+  display: flex;
+  gap: 1em;
+  width: 100%;
+  @include body;
+  @include hoverItem;
+}
+
+.noFriendSketchbook {
+  padding: 3rem;
 }
