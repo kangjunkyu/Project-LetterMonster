@@ -17,7 +17,7 @@ public interface LetterService {
     Long createLetter(Integer senderId, LetterCreateDto letterDto);
 
     @Transactional
-    void deleteLetter(Long letterId);
+    void deleteLetter(Integer userId, Long letterId);
 
     @Transactional
     LetterCreateResponse createAnonymousLetter(LetterCreateDto letterDto);
