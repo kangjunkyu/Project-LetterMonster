@@ -45,7 +45,7 @@ function LetterWritePage() {
   const [mounted, setMounted] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const { data: searchResult } = useSearchSketchbook(searchKeyword);
-  const { data: staticCharacter } = useGetSoloCharacter(chId);
+  const { data: staticCharacter } = useGetSoloCharacter(characterId);
   const [isModalOpen, setModalOpen] = useState({
     findsketchbook: false,
   });
@@ -111,41 +111,50 @@ function LetterWritePage() {
       </LNB>
       <section className={styles.letterBox}>
         <article>
-          {!chId ||
-            (localStorage.getItem("accessToken") && (
-              <>
-                <figure>
-                  <p>{t("writeletter.characterSelect")}</p>
-                  {characterList && (
-                    <CharacterList
-                      characterList={characterList}
-                      characterId={characterId}
-                      setId={setCharacterId}
-                    ></CharacterList>
-                  )}
-                  {!characterList?.data && (
-                    <div className={styles.characterList}>
-                      <button
-                        onClick={() => navigate(Page_Url.Sketch)}
-                        className={styles.buttonItem}
-                      >
-                        {t("writeletter.characterDrawing")}
-                      </button>
-                    </div>
-                  )}
-                </figure>
-                {characterId != 0 && (
-                  <figure>
-                    <p>{t("writeletter.motionSelect")}</p>
-                    <MotionExample
-                      isLoad={isFetching}
-                      motionId={motionId}
-                      setMotionId={motionSeleted}
-                    />
-                  </figure>
+          {localStorage.getItem("accessToken") && (
+            <>
+              <figure>
+                <p>{t("writeletter.characterSelect")}</p>
+                {characterList && (
+                  <CharacterList
+                    characterList={characterList}
+                    characterId={characterId}
+                    setId={setCharacterId}
+                  ></CharacterList>
                 )}
-              </>
-            ))}
+                {!characterList?.data && (
+                  <div className={styles.characterList}>
+                    <button
+                      onClick={() => navigate(Page_Url.Sketch)}
+                      className={styles.buttonItem}
+                    >
+                      {t("writeletter.characterDrawing")}
+                    </button>
+                  </div>
+                )}
+              </figure>
+              {characterId != 0 && (
+                <figure>
+                  <p>{t("writeletter.motionSelect")}</p>
+                  <MotionExample
+                    isLoad={isFetching}
+                    motionId={motionId}
+                    setMotionId={motionSeleted}
+                  />
+                </figure>
+              )}
+            </>
+          )}
+          {!localStorage.getItem("accessToken") && (
+            <div className={styles.characterList}>
+              <button
+                onClick={() => navigate(Page_Url.Sketch)}
+                className={styles.buttonItem}
+              >
+                {t("writeletter.characterDrawing")}
+              </button>
+            </div>
+          )}
           {chId && !localStorage.getItem("accessToken") && (
             <>
               <div className={styles.imgbox}>
