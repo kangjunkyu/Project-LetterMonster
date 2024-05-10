@@ -87,3 +87,25 @@
     font-size: 12px;
   }
 }
+
+@mixin setFontSize {
+  & > h1 {
+    @include title;
+  }
+
+  & > h2 {
+    @include subtitle;
+  }
+
+  & > h3 {
+    @include body;
+  }
+
+  & > h4 {
+    @include body2;
+  }
+
+  & > h5 {
+    @include caption;
+  }
+}
