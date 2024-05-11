@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Page_Url } from "../router/Page_Url";
+import { useDeleteLog } from "../hooks/auth/useLogout";
 
 export function createCustomAxios(baseURL: any, contentType: any) {
   const instance = axios.create({
@@ -19,6 +20,7 @@ export function createCustomAxios(baseURL: any, contentType: any) {
 
 // 응답 인터셉터 처리
 function setupResponseInterceptor(instance: any) {
+  const logout = useDeleteLog();
   instance.interceptors.response.use(
     (response: any) => {
       return response;
@@ -72,9 +74,11 @@ function setupResponseInterceptor(instance: any) {
             ] = `Bearer ${response.data.data["accessToken"]}`;
             return axios(config);
           } else {
+            logout();
             window.location.href = Page_Url.Main;
           }
         } catch (refreshError) {
+          logout();
           window.location.href = Page_Url.Main;
         }
       }
