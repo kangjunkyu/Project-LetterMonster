@@ -44,6 +44,8 @@
   width: 100%;
   @include flexCenter;
   flex-wrap: wrap;
+  flex-direction: row;
+
   & > button {
     width: 100%;
     max-width: 400px;
@@ -73,7 +75,6 @@
       }
     }
   }
-  flex-direction: row;
   @media screen and (max-width: 767px) {
     /* 타블렛 */
     flex-direction: column;
@@ -81,30 +82,14 @@
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    flex-direction: column;
   }
 }
 
 .socialMediaLinks {
-  gap: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-
+  gap: 1rem;
+  @include flexCenter;
+  margin: 0.5rem 0;
   a {
-    display: flex;
-    width: 30px;
-    height: 30px;
-    justify-content: center;
-    align-items: center;
+    @include flexCenter;
   }
-}
-.snsInstagram {
-  width: 30px;
-  height: 30px;
-}
-.snsTwitter {
-  width: 60px;
-  height: 60px;
 }
