@@ -19,6 +19,7 @@ import Logout from "../../../assets/commonIcon/logout.svg?react";
 import Character from "../../../assets/commonIcon/character.svg?react";
 import Report from "../../../assets/commonIcon/report.svg?react";
 import Developer from "../../../assets/commonIcon/developer.svg?react";
+import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 // import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
 import { useTranslation } from "react-i18next";
 import useSuggestion from "../../../hooks/common/useSuggestion";
@@ -38,11 +39,14 @@ function MainPage() {
     characterList: false,
     friendList: false,
   });
+  const checkToken = useCheckTokenExpiration();
   const logout = useLogout();
   const navigate = useNavigate();
   const { t } = useTranslation();
   // const { data } = useGetUserNickname();
-  const isLoginCheck = localStorage.getItem("accessToken") ? true : false;
+  const isLoginCheck = checkToken(localStorage.getItem("accessToken"))
+    ? true
+    : false;
   const goToSuggestion = useSuggestion();
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));

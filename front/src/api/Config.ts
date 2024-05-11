@@ -37,13 +37,12 @@ function setupResponseInterceptor(instance: any) {
       const refreshToken = localStorage.getItem("refreshToken");
 
       // 토큰 만료시
-      if (status === 401) {
+      if (status === 401 || 404) {
         if (!refreshToken) {
           localStorage.removeItem("accessToken");
           window.location.href = Page_Url.Main;
           return;
         }
-
         try {
           const baseURL = import.meta.env.VITE_BASE_URL;
           const response = await axios
