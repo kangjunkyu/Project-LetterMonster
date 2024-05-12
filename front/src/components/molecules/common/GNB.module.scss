@@ -4,7 +4,7 @@
 .header {
   z-index: 9999;
   transition: 0.3s all;
-  @media screen and (min-width: 767px) {
+  @media screen and (min-width: 768px) {
     gap: 1em;
     top: 0;
     left: 0;
@@ -54,7 +54,7 @@
   @include setFontSize;
   @include hoverItem;
   padding: 1rem;
-  @media screen and (min-width: 767px) {
+  @media screen and (min-width: 768px) {
     & > h5 {
       opacity: 0;
       white-space: nowrap;

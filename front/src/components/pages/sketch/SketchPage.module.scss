@@ -1,31 +1,35 @@
 .sketchContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
 }
 
-.sketchResultImagePreview{
+.sketchResultImagePreview {
   width: 300px;
   height: 300px;
   border-radius: 15px;
   border: 3px solid black;
 }
 
-.sketchResultContainer{
+.sketchResultContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 30px;
   font-size: 20px;
-
 }
 
-.sketchResultButton{
+.sketchResultButton {
   display: flex;
   gap: 50px;
-  button{
+  button {
     font-size: 18px;
   }
 }
