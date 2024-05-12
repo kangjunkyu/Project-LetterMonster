@@ -3,6 +3,7 @@ package com.lemon.backend.domain.FavoriteSketchbook.controller;
 import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteSketchbookGetDto;
 import com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook;
 import com.lemon.backend.domain.FavoriteSketchbook.service.FavoriteSketchbookService;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetFromFavoriteDto;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.lemon.backend.global.response.SuccessCode;
@@ -25,12 +26,34 @@ public class FavoriteSketchbookController {
 
     private final FavoriteSketchbookService favoriteSketchbookService;
 
-    @GetMapping
+    @GetMapping("/notuse")
     public ResponseEntity<?> findAll(Authentication authentication) {
         if (authentication.getPrincipal() instanceof Integer) {
             Integer loginId = (Integer) authentication.getPrincipal();
             Optional<List<FavoriteSketchbookGetDto>> list = favoriteSketchbookService.getFavoriteSketchbooksByUser(loginId);
             return getResponseEntity(SuccessCode.OK, list);
+        } else {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAll2(Authentication authentication) {
+        if (authentication.getPrincipal() instanceof Integer) {
+            Integer loginId = (Integer) authentication.getPrincipal();
+            List<SketchbookGetFromFavoriteDto> list = favoriteSketchbookService.getFromFavoriteDtos(loginId);
+            return getResponseEntity(SuccessCode.OK, list);
+        } else {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<?> checkFavorite(Authentication authentication, @RequestParam Long sketchbookId) {
+        if (authentication.getPrincipal() instanceof Integer) {
+            Integer loginId = (Integer) authentication.getPrincipal();
+            boolean isFavorite = favoriteSketchbookService.checkFavorite(loginId, sketchbookId);
+            return getResponseEntity(SuccessCode.OK, isFavorite);
         } else {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }

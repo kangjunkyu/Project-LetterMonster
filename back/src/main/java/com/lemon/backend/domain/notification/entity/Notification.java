@@ -24,19 +24,46 @@ public class Notification extends BaseEntity {
     @Column(name = "notification_id", nullable = false)
     private Long id;
 
+    public Notification(Long id) {
+        this.id = id;
+    }
+
+    public Notification(Long id, int type, String sketchbookName, String sketchbookTag, String sketchbookUuid, String friendName, String friendTag, Boolean isCheck) {
+        this.id = id;
+        this.type = type;
+        this.sketchbookName = sketchbookName;
+        this.sketchbookTag = sketchbookTag;
+        this.sketchbookUuid = sketchbookUuid;
+        this.friendName = friendName;
+        this.friendTag = friendTag;
+        this.isCheck = isCheck;
+    }
+
     @Column(name = "type", nullable = false)
     private int type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receiver_id")
-    private Users receiver;
+    @Column(name = "sketchbook_name")
+    private String sketchbookName;
+
+    @Column(name = "sketchbook_tag")
+    private String sketchbookTag;
+
+    @Column(name = "sketchbook_uuid")
+    private String sketchbookUuid;
 
     @Column(name = "friend_name")
     private String friendName;
 
+    @Column(name = "friend_tag")
+    private String friendTag;
+
     @Column(name = "is_check")
     @Builder.Default
     private Boolean isCheck = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
+    private Users receiver;
 
     public void markAsChecked() {
         this.isCheck = true;

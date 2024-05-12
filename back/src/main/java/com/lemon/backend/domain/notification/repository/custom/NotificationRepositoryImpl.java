@@ -21,7 +21,13 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         return Optional.ofNullable(query.select(Projections.constructor(NotificationGetDto.class,
                         notification.id,
                         notification.type,
-                        notification.friendName
+                        notification.sketchbookName,
+                        notification.sketchbookTag,
+                        notification.sketchbookUuid,
+                        notification.friendName,
+                        notification.friendTag,
+                        notification.isCheck,
+                        notification.createdAt
                 ))
                         .from(notification)
                 .where(notification.receiver.id.eq(userId)
@@ -34,7 +40,13 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         return Optional.ofNullable(query.select(Projections.constructor(NotificationGetDto.class,
                         notification.id,
                         notification.type,
-                        notification.friendName
+                        notification.sketchbookName,
+                        notification.sketchbookTag,
+                        notification.sketchbookUuid,
+                        notification.friendName,
+                        notification.friendTag,
+                        notification.isCheck,
+                        notification.createdAt
                         ))
                         .from(notification)
                 .where(notification.receiver.id.eq(userId))
@@ -46,8 +58,13 @@ public class NotificationRepositoryImpl implements NotificationRepositoryCustom 
         return Optional.ofNullable(query.select(Projections.constructor(Notification.class,
                 notification.id,
                 notification.type,
-                notification.receiver,
+                notification.sketchbookName,
+                notification.sketchbookTag,
+                notification.sketchbookUuid,
                 notification.friendName,
-                notification.isCheck)).from(notification).where(notification.receiver.id.eq(userId)).fetch());
+                notification.friendTag,
+                notification.isCheck,
+                notification.receiver
+        )).from(notification).where(notification.receiver.id.eq(userId)).fetch());
     }
 }
