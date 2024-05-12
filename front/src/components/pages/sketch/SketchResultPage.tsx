@@ -24,32 +24,30 @@ function SketchResultPage() {
   };
 
   return (
-    <>
-      <div className={styles.sketchResultContainer}>
-        <LNB>
-          <h1>{t("paintResult.title")}</h1>
-          <div></div>
-        </LNB>
-        <div>
-          <img
-            className={styles.sketchResultImagePreview}
-            src={image}
-            alt="imageFromSketch"
-          />
-        </div>
-        <div>
-          {nickname} {t("paintResult.birth")} !!
-        </div>
-        <div className={styles.sketchResultButton}>
-          <DefaultButton onClick={handleResultToMotion}>
-            {t("paintResult.move")}
-          </DefaultButton>
-          <DefaultButton onClick={handleResultToLetter}>
-            {t("paintResult.letter")}
-          </DefaultButton>
-        </div>
+    <div className={styles.sketchResultContainer}>
+      <LNB>
+        <h1>{t("paintResult.title")}</h1>
+        <div></div>
+      </LNB>
+      <div>
+        <img
+          className={styles.sketchResultImagePreview}
+          src={image}
+          alt="imageFromSketch"
+        />
       </div>
-    </>
+      <div>
+        {nickname} {t("paintResult.birth")} !!
+      </div>
+      <div className={styles.sketchResultButton}>
+        <DefaultButton onClick={handleResultToMotion}>
+          {t("paintResult.move")}
+        </DefaultButton>
+        <DefaultButton onClick={handleResultToLetter}>
+          {t("paintResult.letter")}
+        </DefaultButton>
+      </div>
+    </div>
   );
 }
 

@@ -10,7 +10,7 @@ main {
 
   & .layoutSection {
     /* 데스크탑 */
-    @media screen AND (min-width: 767px) {
+    @media screen AND (min-width: 768px) {
       min-height: 100vh;
       & > * {
         min-height: 100vh;
