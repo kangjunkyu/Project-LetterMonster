@@ -71,4 +71,9 @@ public class FavoriteSketchbookServiceImpl implements FavoriteSketchbookService 
         return favoriteSketchbookRepository.findByUserId2(userId);
     }
 
+    @Override
+    public boolean checkFavorite(Integer userId, Long sketchbookId) {
+        return favoriteSketchbookRepository.checkFavoriteSketchbook(userId, sketchbookId);
+    }
+
 }

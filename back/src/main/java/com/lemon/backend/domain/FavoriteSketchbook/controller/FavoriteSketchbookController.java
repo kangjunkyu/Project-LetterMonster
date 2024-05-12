@@ -48,6 +48,17 @@ public class FavoriteSketchbookController {
         }
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<?> checkFavorite(Authentication authentication, @RequestParam Long sketchbookId) {
+        if (authentication.getPrincipal() instanceof Integer) {
+            Integer loginId = (Integer) authentication.getPrincipal();
+            boolean isFavorite = favoriteSketchbookService.checkFavorite(loginId, sketchbookId);
+            return getResponseEntity(SuccessCode.OK, isFavorite);
+        } else {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> addFavorite(Authentication authentication, @RequestParam(value = "sketchbookId") Long sketchbookId) {
         if (authentication.getPrincipal() instanceof Integer) {

@@ -10,4 +10,6 @@ public interface FavoriteSketchbookRepositoryCustom {
     Optional<List<FavoriteSketchbookGetDto>> findByUserId(Integer userId);
 
     List<SketchbookGetFromFavoriteDto> findByUserId2(Integer userId);
+
+    Boolean checkFavoriteSketchbook(Integer userId, Long sketchbookId);
 }

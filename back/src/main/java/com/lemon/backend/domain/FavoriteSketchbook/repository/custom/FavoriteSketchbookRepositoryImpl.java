@@ -1,6 +1,7 @@
 package com.lemon.backend.domain.FavoriteSketchbook.repository.custom;
 
 import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteSketchbookGetDto;
+import com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook;
 import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetFromFavoriteDto;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
 import com.lemon.backend.global.exception.CustomException;
@@ -80,6 +81,15 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public Boolean checkFavoriteSketchbook(Integer userId, Long sketchbookId){
+        FavoriteSketchbook found = query
+                .select(favoriteSketchbook)
+                .from(favoriteSketchbook)
+                .where(favoriteSketchbook.user.id.eq(userId).and(favoriteSketchbook.sketchbook.id.eq(sketchbookId)))
+                .fetchFirst();
+        return found != null;
+    }
 
 }
 //List<LetterGetListDto> letterDtos = query

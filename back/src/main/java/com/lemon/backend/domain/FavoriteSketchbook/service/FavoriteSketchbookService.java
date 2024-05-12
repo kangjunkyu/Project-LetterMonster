@@ -15,4 +15,6 @@ public interface FavoriteSketchbookService {
     Optional<List<FavoriteSketchbookGetDto>> getFavoriteSketchbooksByUser(Integer userId);
 
     List<SketchbookGetFromFavoriteDto> getFromFavoriteDtos(Integer userId);
+
+    boolean checkFavorite(Integer userId, Long sketchbookId);
 }
