@@ -69,7 +69,7 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
 
         # 이미지 압축
         # image_compressed = await img_compress(image_path, f'temp_image/compressed_{s3_img_url}')
-        #
+        
         # if image_compressed:
         #     print("이미지 압축 성공")
         #     image_path = f'temp_image/compressed_{s3_img_url}'
