@@ -67,6 +67,8 @@ public class LetterServiceImpl implements LetterService {
                     return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
                 });
 
+        Sketchbook sketchbook = sketchbookRepository.findById(sketchbookCharacterMotion.getSketchbook().getId()).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+
         Users sender = userRepository.findById(senderId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
         Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
 
@@ -87,6 +89,10 @@ public class LetterServiceImpl implements LetterService {
                     .receiver(receiver)
                     .type(1)
                     .friendName(sender.getNickname())
+                    .friendTag(sender.getNicknameTag())
+                    .sketchbookName(sketchbook.getName())
+                    .sketchbookTag(sketchbook.getTag())
+                    .sketchbookUuid(sketchbook.getSketchbookUuid())
                     .build();
 
             String body = null;
