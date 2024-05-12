@@ -71,6 +71,7 @@ public class FriendsServiceImpl implements FriendsService {
                     .receiver(user)
                     .type(2)
                     .friendName(friend.getFriend().getNickname())
+                    .friendTag(friend.getFriend().getNicknameTag())
                     .build();
 
             String body = null;
