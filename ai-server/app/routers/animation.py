@@ -60,10 +60,10 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
         Path(IMG_DIR).mkdir(exist_ok=True)
 
         # s3에서 이미지 다운로드
-        # is_downloaded = await get_img_s3(s3_img_url)
-        #
-        # if not is_downloaded:
-        #     return JSONResponse(content={"error": "Fast API 에러 : s3 이미지 다운로드 실패"}, status_code=500)
+        is_downloaded = await get_img_s3(s3_img_url)
+
+        if not is_downloaded:
+            return JSONResponse(content={"error": "Fast API 에러 : s3 이미지 다운로드 실패"}, status_code=500)
 
         image_path = f"temp_image/{s3_img_url}"
 
@@ -107,19 +107,19 @@ async def create_gif(character_id: str, motion: str, s3_img_url: str):
             return JSONResponse(content={"error": "Fast API 에러 : s3 gif 업로드 실패"}, status_code=500)
 
         # S3에 gif 업로드
-        # is_saved = await save_gif_s3(gif_path, character_id, motion)
-        #
-        # if not is_saved:
-        #     return JSONResponse(content={"error": "Fast API 에러 : s3 gif 업로드 실패"}, status_code=500)
+        is_saved = await save_gif_s3(gif_path, character_id, motion)
+
+        if not is_saved:
+            return JSONResponse(content={"error": "Fast API 에러 : s3 gif 업로드 실패"}, status_code=500)
 
         s3_path = f'{os.getenv("S3_PATH")}/{character_id}_{motion}.gif'
 
         return s3_path
 
     finally:
-        print("")
-        # shutil.rmtree(IMG_DIR)
-        # shutil.rmtree(GIF_DIR)
+        # print("")
+        shutil.rmtree(IMG_DIR)
+        shutil.rmtree(GIF_DIR)
 
 
 # S3에서 img 불러오기
@@ -171,7 +171,7 @@ async def img_compress(original_path, compressed_path, quality=0.5):
 
 
 # gif 압축
-async def gif_compress(original_path, compressed_path, quality=0.5):
+async def gif_compress(original_path, compressed_path, quality=0.7):
     try:
         with Image.open(original_path) as origin:
             # 프레임 목록 추출
