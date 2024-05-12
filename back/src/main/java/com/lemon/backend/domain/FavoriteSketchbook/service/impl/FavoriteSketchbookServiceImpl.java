@@ -4,6 +4,7 @@ import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteSketchbookGetDto;
 import com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook;
 import com.lemon.backend.domain.FavoriteSketchbook.repository.FavoriteSketchbookRepository;
 import com.lemon.backend.domain.FavoriteSketchbook.service.FavoriteSketchbookService;
+import com.lemon.backend.domain.sketchbook.dto.responseDto.SketchbookGetFromFavoriteDto;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.users.user.entity.Users;
@@ -63,6 +64,11 @@ public class FavoriteSketchbookServiceImpl implements FavoriteSketchbookService 
     @Override
     public Optional<List<FavoriteSketchbookGetDto>> getFavoriteSketchbooksByUser(Integer userId) {
         return favoriteSketchbookRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<SketchbookGetFromFavoriteDto> getFromFavoriteDtos(Integer userId){
+        return favoriteSketchbookRepository.findByUserId2(userId);
     }
 
 }
