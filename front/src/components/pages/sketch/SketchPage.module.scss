@@ -36,7 +36,7 @@
     @include body;
   }
 
-  & :nth-child(2) {
+  & > :nth-child(1) {
     background-color: $primary;
     color: $white;
   }

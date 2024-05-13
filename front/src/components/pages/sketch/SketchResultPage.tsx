@@ -9,18 +9,35 @@ function SketchResultPage() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { characterId, nickname, image } = location.state || {};
+  const {
+    characterId,
+    nickname,
+    image,
+    sketchbookId,
+    sketchbookName,
+    fromUuid,
+  } = location.state || {};
 
-  const handleResultToMotion = () => {
-    navigate(Page_Url.Motion, {
-      state: { characterId, nickname, image },
-    });
-  };
+  // const handleResultToMotion = () => {
+  //   navigate(Page_Url.Motion, {
+  //     state: { characterId, nickname, image },
+  //   });
+  // };
 
   const handleResultToLetter = () => {
-    navigate(Page_Url.WriteLetter, {
-      state: { characterId: characterId, motionId: 0 },
-    });
+    navigate(
+      sketchbookId
+        ? `${Page_Url.WriteLetterToSketchbook}${sketchbookId}`
+        : Page_Url.WriteLetter,
+      {
+        state: {
+          characterId: characterId,
+          motionId: 0,
+          sketchbookName: sketchbookName,
+          fromUuid: fromUuid,
+        },
+      }
+    );
   };
 
   return (
@@ -40,9 +57,9 @@ function SketchResultPage() {
         {nickname} {t("paintResult.birth")} !!
       </div>
       <div className={styles.sketchResultButton}>
-        <DefaultButton onClick={handleResultToMotion}>
+        {/* <DefaultButton onClick={handleResultToMotion}>
           {t("paintResult.move")}
-        </DefaultButton>
+        </DefaultButton> */}
         <DefaultButton onClick={handleResultToLetter}>
           {t("paintResult.letter")}
         </DefaultButton>

@@ -35,9 +35,10 @@ function MyPageFriendSketchbook({ name, list }: Props) {
       <p>{t("mypage.sketchbookList")}</p>
       {list?.length ? (
         list?.map(
-          (item: IItem) =>
+          (item: IItem, i: number) =>
             item?.isPublic && (
               <figure
+                key={i}
                 className={styles.friendSketchbooksListItem}
                 onClick={() => {
                   navigate(`${Page_Url.Sketchbook}${item.uuid}`);

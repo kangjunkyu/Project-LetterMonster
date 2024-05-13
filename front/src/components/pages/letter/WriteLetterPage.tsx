@@ -31,6 +31,7 @@ function LetterWritePage() {
     // nickname,
     motionId: mId,
     sketchbookName,
+    fromUuid,
   } = location.state || {};
   const [content, setContent] = useState(""); // 편지내용
   const [to, setTo] = useState(
@@ -111,6 +112,9 @@ function LetterWritePage() {
         setUuid(item?.uuid);
       }
     });
+    if (fromUuid) {
+      setUuid(fromUuid);
+    }
   }, [target]);
 
   return (
