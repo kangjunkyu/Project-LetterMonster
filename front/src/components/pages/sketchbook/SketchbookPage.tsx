@@ -15,6 +15,14 @@ import { useAlert } from "../../../hooks/notice/useAlert";
 import WriteButton from "../../atoms/button/WriteLetterButton";
 import Modal from "../../atoms/modal/Modal";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  useFavoriteDelete,
+  useFavoriteSketchbookCheck,
+  useFavoriteSketchbookOn,
+} from "../../../hooks/sketchbook/useFavorite";
+import Star from "../../../assets/commonIcon/star.svg?react";
+import FilledStar from "../../../assets/commonIcon/filledStar.svg?react";
+import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -29,6 +37,9 @@ function SketchbookPage() {
   const deleteSketchbook = useDeleteSketchbook();
   const mutateSketchbookOpen = usePutSketchbookOpen();
   const queryClient = useQueryClient();
+  const mutateSketchbookFavorite = useFavoriteSketchbookOn();
+  const mutateDeleteFavorite = useFavoriteDelete();
+  const { data: Favorite } = useFavoriteSketchbookCheck(data?.data?.id);
 
   useEffect(() => {
     setName(data?.data?.name);
@@ -103,6 +114,8 @@ function SketchbookPage() {
     }
   };
 
+  const checkToken = useCheckTokenExpiration();
+
   return (
     <>
       <article className={styles.sketchbookContainer}>
@@ -118,11 +131,30 @@ function SketchbookPage() {
               }}
             >{`${data?.data?.name} ▼ ${
               data?.data?.isPublic ? "공개중" : "비공개중"
-            }`}</h1>
+            } `}</h1>
           )}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
+          {Favorite?.data ? (
+            <button
+              onClick={() => {
+                mutateSketchbookFavorite.mutate(data?.data?.id);
+              }}
+            >
+              <FilledStar width={30} height={30} />
+            </button>
+          ) : (
+            checkToken(localStorage.getItem("accessToken")) && (
+              <button
+                onClick={() => {
+                  mutateSketchbookFavorite.mutate(data?.data?.id);
+                }}
+              >
+                <Star width={30} height={30} />
+              </button>
+            )
+          )}
         </LNB>
         <WriteButton id="writeButton" onClick={() => writeLetter()} />
         {data && (
@@ -156,6 +188,7 @@ function SketchbookPage() {
                   </div>
                 </div>
               )}
+
             <div className={styles.characterGrid}>
               {!isLoading &&
                 data?.data?.sketchbookCharacterMotionList?.map(

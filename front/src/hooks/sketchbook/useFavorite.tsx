@@ -3,6 +3,7 @@ import {
   deleteFavoriteSketchbook,
   getFavoriteSketchbook,
   postFavoriteSketchbook,
+  getFavoriteSketchbookCheck,
 } from "../../api/Api";
 import useCheckTokenExpiration from "../auth/useCheckTokenExpiration";
 
@@ -20,12 +21,26 @@ export default function useFavoriteSketchbook() {
   });
 }
 
+export function useFavoriteSketchbookCheck(sketchbookId: number) {
+  const checkToken = useCheckTokenExpiration();
+  return useQuery({
+    queryKey: ["favoriteBoolean", sketchbookId],
+    queryFn: () => {
+      if (checkToken(localStorage.getItem("accessToken")) && sketchbookId)
+        return getFavoriteSketchbookCheck(sketchbookId);
+      else {
+        return Promise.resolve({});
+      }
+    },
+  });
+}
+
 export function useFavoriteSketchbookOn() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (sketchbookId: number) => postFavoriteSketchbook(sketchbookId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["favorite"] });
+      queryClient.invalidateQueries({ queryKey: ["favoriteBoolean"] });
     },
     mutationKey: ["postfavorite"],
   });
@@ -37,7 +52,7 @@ export function useFavoriteDelete() {
     mutationFn: (sketchbookId: number) =>
       deleteFavoriteSketchbook(sketchbookId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["favorite"] });
+      queryClient.invalidateQueries({ queryKey: ["favoriteBoolean"] });
     },
     mutationKey: ["deletefavorite"],
   });
