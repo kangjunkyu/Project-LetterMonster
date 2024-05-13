@@ -9,7 +9,14 @@ function SketchResultPage() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const { characterId, nickname, image } = location.state || {};
+  const {
+    characterId,
+    nickname,
+    image,
+    sketchbookId,
+    sketchbookName,
+    fromUuid,
+  } = location.state || {};
 
   const handleResultToMotion = () => {
     navigate(Page_Url.Motion, {
@@ -18,9 +25,19 @@ function SketchResultPage() {
   };
 
   const handleResultToLetter = () => {
-    navigate(Page_Url.WriteLetter, {
-      state: { characterId: characterId, motionId: 0 },
-    });
+    navigate(
+      sketchbookId
+        ? `${Page_Url.WriteLetterToSketchbook}${sketchbookId}`
+        : Page_Url.WriteLetter,
+      {
+        state: {
+          characterId: characterId,
+          motionId: 0,
+          sketchbookName: sketchbookName,
+          fromUuid: fromUuid,
+        },
+      }
+    );
   };
 
   return (

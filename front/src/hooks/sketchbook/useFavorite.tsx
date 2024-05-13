@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  deleteFavoriteSketchbook,
   getFavoriteSketchbook,
   postFavoriteSketchbook,
   getFavoriteSketchbookCheck,
@@ -43,17 +42,5 @@ export function useFavoriteSketchbookOn() {
       queryClient.invalidateQueries({ queryKey: ["favoriteBoolean"] });
     },
     mutationKey: ["postfavorite"],
-  });
-}
-
-export function useFavoriteDelete() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (sketchbookId: number) =>
-      deleteFavoriteSketchbook(sketchbookId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["favoriteBoolean"] });
-    },
-    mutationKey: ["deletefavorite"],
   });
 }

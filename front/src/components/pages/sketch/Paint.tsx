@@ -14,7 +14,7 @@ import { DrawAction, PAINT_OPTIONS } from "./PaintConstants";
 import { SketchPicker } from "react-color";
 import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 import styles from "./Paint.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchCharacter";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import LNB from "../../molecules/common/LNB";
@@ -28,6 +28,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { showAlert } = useAlert();
+  const location = useLocation();
 
   const [color, setColor] = useState("#000");
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
@@ -35,14 +36,23 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const [showPopover, setShowPopover] = useState(false);
   const [size, setSize] = useState(500);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
   const { image, setImage, onImportImageSelect } = useImportImageSelect(size);
+
+  const { sketchbookId, sketchbookName, fromUuid } = location.state || {};
+
   // 캐릭터 생성 뮤테이션
   const postSketchCharacterMutation = usePostSketchCharacter(
     (response, uri, nickname) => {
       if (response) {
         navigate(Page_Url.SketchResult, {
-          state: { characterId: response.data, image: uri, nickname },
+          state: {
+            characterId: response.data,
+            image: uri,
+            nickname,
+            sketchbookId: sketchbookId,
+            sketchbookName: sketchbookName,
+            fromUuid,
+          },
         });
       }
     }

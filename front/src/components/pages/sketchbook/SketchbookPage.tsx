@@ -16,7 +16,6 @@ import WriteButton from "../../atoms/button/WriteLetterButton";
 import Modal from "../../atoms/modal/Modal";
 import { useQueryClient } from "@tanstack/react-query";
 import {
-  useFavoriteDelete,
   useFavoriteSketchbookCheck,
   useFavoriteSketchbookOn,
 } from "../../../hooks/sketchbook/useFavorite";
@@ -38,7 +37,6 @@ function SketchbookPage() {
   const mutateSketchbookOpen = usePutSketchbookOpen();
   const queryClient = useQueryClient();
   const mutateSketchbookFavorite = useFavoriteSketchbookOn();
-  const mutateDeleteFavorite = useFavoriteDelete();
   const { data: Favorite } = useFavoriteSketchbookCheck(data?.data?.id);
 
   useEffect(() => {
@@ -99,10 +97,21 @@ function SketchbookPage() {
     }
   };
 
-  const writeLetter = () =>
-    navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
-      state: { sketchbookName: data?.data?.name },
-    });
+  const writeLetter = () => {
+    localStorage.getItem("accessToken")
+      ? navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
+          state: {
+            sketchbookName: data?.data?.name,
+          },
+        })
+      : navigate(Page_Url.Sketch, {
+          state: {
+            sketchbookId: data?.data?.id,
+            sketchbookName: data?.data?.name,
+            fromUuid: data?.data?.uuid,
+          },
+        });
+  };
 
   const inputEnter = (
     e:
