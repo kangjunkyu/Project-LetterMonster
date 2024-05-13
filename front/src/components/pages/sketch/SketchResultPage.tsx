@@ -57,9 +57,9 @@ function SketchResultPage() {
         {nickname} {t("paintResult.birth")} !!
       </div>
       <div className={styles.sketchResultButton}>
-        <DefaultButton onClick={handleResultToMotion}>
+        {/* <DefaultButton onClick={handleResultToMotion}>
           {t("paintResult.move")}
-        </DefaultButton>
+        </DefaultButton> */}
         <DefaultButton onClick={handleResultToLetter}>
           {t("paintResult.letter")}
         </DefaultButton>
