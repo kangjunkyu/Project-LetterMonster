@@ -22,6 +22,8 @@ import {
 import Star from "../../../assets/commonIcon/star.svg?react";
 import FilledStar from "../../../assets/commonIcon/filledStar.svg?react";
 import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
+import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
+import CommonShareIcon from "../../atoms/share/commonShareIcon";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -242,6 +244,14 @@ function SketchbookPage() {
               >
                 {data?.data?.isPublic ? "링크로만 공개" : "모두에게 공개"}
               </DefaultButton>
+              <div className={styles.linkBox}>
+                <CommonShareIcon link={data?.data?.shareLink} />
+                <KakaoShareIcon
+                  link={data?.data?.shareLink}
+                  nickname={data?.data?.holder.nickname}
+                  index={0}
+                />
+              </div>
             </div>
           </Modal>
         )}

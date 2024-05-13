@@ -32,6 +32,11 @@
   }
 }
 
+.linkBox {
+  @include flexCenter;
+  gap: 1rem;
+}
+
 .buttonBox {
   display: flex;
   flex-direction: column;
