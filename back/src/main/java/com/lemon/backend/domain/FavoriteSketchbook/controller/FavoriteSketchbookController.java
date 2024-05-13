@@ -1,5 +1,6 @@
 package com.lemon.backend.domain.FavoriteSketchbook.controller;
 
+import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteRequestDto;
 import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteSketchbookGetDto;
 import com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook;
 import com.lemon.backend.domain.FavoriteSketchbook.service.FavoriteSketchbookService;
@@ -59,17 +60,17 @@ public class FavoriteSketchbookController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> addFavorite(Authentication authentication, @RequestParam(value = "sketchbookId") Long sketchbookId) {
-        if (authentication.getPrincipal() instanceof Integer) {
-            Integer loginId = (Integer) authentication.getPrincipal();
-
-            String favorite = favoriteSketchbookService.addFavoriteSketchbook(loginId, sketchbookId);
-            return getResponseEntity(SuccessCode.OK, favorite);
-        } else {
-            throw new CustomException(ErrorCode.INVALID_ACCESS);
-        }
-    }
+//    @PostMapping
+//    public ResponseEntity<?> addFavorite(Authentication authentication, @RequestParam(value = "sketchbookId") Long sketchbookId) {
+//        if (authentication.getPrincipal() instanceof Integer) {
+//            Integer loginId = (Integer) authentication.getPrincipal();
+//
+//            String favorite = favoriteSketchbookService.addFavoriteSketchbook(loginId, sketchbookId);
+//            return getResponseEntity(SuccessCode.OK, favorite);
+//        } else {
+//            throw new CustomException(ErrorCode.INVALID_ACCESS);
+//        }
+//    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteFavorite(Authentication authentication, @RequestParam(value = "sketchbookId") Long sketchbookId) {
@@ -78,6 +79,29 @@ public class FavoriteSketchbookController {
             favoriteSketchbookService.deleteFavotieSketchbook(loginId, sketchbookId);
             return getResponseEntity(SuccessCode.OK);
         } else {
+            throw new CustomException(ErrorCode.INVALID_ACCESS);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> handleFavoriteSketchbook(Authentication authentication, @RequestBody FavoriteRequestDto favoriteRequestDto) {
+        if (authentication.getPrincipal() instanceof Integer) {
+            Integer loginId = (Integer) authentication.getPrincipal();
+            try {
+                if (favoriteRequestDto.getAction().equals("add")) {
+                    String sketchbookName = favoriteSketchbookService.addFavoriteSketchbook(loginId, favoriteRequestDto.getSketchbookId());
+                    return getResponseEntity(SuccessCode.OK, sketchbookName);
+                } else if (favoriteRequestDto.getAction().equals("delete")) {
+                    favoriteSketchbookService.deleteFavotieSketchbook(loginId, favoriteRequestDto.getSketchbookId());
+                    return getResponseEntity(SuccessCode.OK);
+                } else {
+                    throw new CustomException(ErrorCode.INVALID_ACCESS);
+
+                }
+            } catch (CustomException e) {
+                throw new CustomException(ErrorCode.INVALID_ACCESS);
+            }
+        } else{
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
     }

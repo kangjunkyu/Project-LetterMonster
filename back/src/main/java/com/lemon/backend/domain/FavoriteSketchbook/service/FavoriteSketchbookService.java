@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface FavoriteSketchbookService {
     String addFavoriteSketchbook(Integer userId, Long sketchbookId);
 
-    void deleteFavotieSketchbook(Integer userId, Long favoriteId);
+    void deleteFavotieSketchbook(Integer userId, Long sketchbookId);
 
     Optional<List<FavoriteSketchbookGetDto>> getFavoriteSketchbooksByUser(Integer userId);
 

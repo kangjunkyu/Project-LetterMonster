@@ -51,8 +51,12 @@ public class FavoriteSketchbookServiceImpl implements FavoriteSketchbookService 
 
     @Override
     @Transactional
-    public void deleteFavotieSketchbook(Integer userId, Long favoriteId){
-        FavoriteSketchbook favoriteSketchbook = favoriteSketchbookRepository.findById(favoriteId).orElseThrow(() -> new CustomException(ErrorCode.FAVORITE_SKETCHBOOK_NOT_FOUND));
+    public void deleteFavotieSketchbook(Integer userId, Long sketchbookId){
+        FavoriteSketchbook favoriteSketchbook = favoriteSketchbookRepository.findFavoriteSketchbook(sketchbookId);
+
+        if(favoriteSketchbook == null){
+            throw new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND);
+        }
 
         if (!favoriteSketchbook.getUser().getId().equals(userId)) {
             throw new CustomException(ErrorCode.INVALID_ACCESS); // 사용자가 소유하지 않은 즐겨찾기를 삭제하려 할 때

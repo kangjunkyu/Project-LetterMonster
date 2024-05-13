@@ -82,7 +82,22 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
     }
 
     @Override
-    public Boolean checkFavoriteSketchbook(Integer userId, Long sketchbookId){
+    public FavoriteSketchbook findFavoriteSketchbook(Long sketchbookId) {
+        FavoriteSketchbook FindFavoriteSketchbook = query
+                .select(favoriteSketchbook)
+                .from(favoriteSketchbook)
+                .where(favoriteSketchbook.sketchbook.id.eq(sketchbookId))
+                .fetchOne();
+
+        if (FindFavoriteSketchbook == null) {
+            throw new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND);
+        } else {
+            return FindFavoriteSketchbook;
+        }
+    }
+
+    @Override
+    public Boolean checkFavoriteSketchbook(Integer userId, Long sketchbookId) {
         FavoriteSketchbook found = query
                 .select(favoriteSketchbook)
                 .from(favoriteSketchbook)
