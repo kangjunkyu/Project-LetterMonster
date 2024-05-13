@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import CommonShareIcon from "../share/commonShareIcon";
 import styles from "./SketchbookListItem.module.scss";
-import KakaoShareIcon from "../share/kakaoShareIcon";
 import Lock from "../../../assets/commonIcon/lock.svg?react";
 import LockOpen from "../../../assets/commonIcon/lockOpen.svg?react";
 import Next from "../../../assets/commonIcon/next.svg?react";
@@ -23,7 +21,7 @@ interface Props {
   };
   index: number;
 }
-function SketchbookListItem({ item, url, index }: Props) {
+function SketchbookListItem({ item, url }: Props) {
   return (
     <li className={styles.itemContainer}>
       {/* <KakaoShareIcon
