@@ -14,6 +14,10 @@ import Modal from "../../atoms/modal/Modal";
 import AddButton from "../../atoms/button/AddButton";
 import { useTranslation } from "react-i18next";
 import useFavoriteSketchbook from "../../../hooks/sketchbook/useFavorite";
+import useSearchSketchbook from "../../../hooks/sketchbook/useSearchSketchbook";
+import useFriendSketchbookList from "../../../hooks/sketchbook/useFriendSketchbookList";
+import { useGetFriendGroupList } from "../../../hooks/friendGroup/useFriend";
+import MyPageFriendSketchbook from "../../molecules/mypage/MyPageFriendSketchbook";
 
 interface IItem {
   id: string;
@@ -37,16 +41,21 @@ function SketchbookListPage() {
   const { data: favorite, isLoading: favoriteLodaing } =
     useFavoriteSketchbook();
   const [data2, setData2] = useState("");
+  const [toggle, setToggle] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const createSketchbook = useCreateSketchbook();
   const { showAlert } = useAlert();
-
+  const [userId, setUserId] = useState(-1);
+  const [userName, setUserName] = useState("");
   const [isModalOpen, setModalOpen] = useState({
     sketchbookCreate: false,
   });
-
+  const { data: searchResult, isLoading: searchResultLoding } =
+    useSearchSketchbook(searchKeyword);
+  const { data: myFriend } = useGetFriendGroupList();
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
-
+  const { data: friendSketchbookList } = useFriendSketchbookList(userId);
   const createHandler = (name: string) => {
     {
       if (name.startsWith(" ")) {
@@ -124,21 +133,87 @@ function SketchbookListPage() {
             </DefaultButton>
           </div>
         </Modal>
+        <div className={styles.buttonBox}>
+          <button
+            className={toggle ? styles.select : ""}
+            onClick={() => setToggle(true)}
+          >
+            스케치북 탐색
+          </button>
+          <button
+            className={!toggle ? styles.select : ""}
+            onClick={() => setToggle(false)}
+          >
+            내 스케치북
+          </button>
+        </div>
         <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
-        <SketchbookList title="즐겨찾는 스케치북 목록">
-          {!favoriteLodaing && favorite?.data && favorite?.data?.length > 0 ? (
-            renderListItems(favorite.data)
-          ) : (
-            <div>비었어요.</div>
-          )}
-        </SketchbookList>
-        <SketchbookList title="내 스케치북 목록">
-          {!isLoading && data?.data && data?.data?.length > 0 ? (
-            renderListItems(data.data)
-          ) : (
-            <div>비었어요.</div>
-          )}
-        </SketchbookList>
+        {toggle ? (
+          <>
+            <input
+              type="text"
+              className={`${styles.searchBox} `}
+              placeholder={t("writeletter.sketchbookSearch")}
+              value={searchKeyword}
+              onChange={(e) => {
+                setSearchKeyword(e.target.value);
+              }}
+            />
+            {searchResult?.data && (
+              <SketchbookList title="검색결과">
+                {!searchResultLoding &&
+                searchResult?.data &&
+                searchResult?.data?.length > 0
+                  ? renderListItems(searchResult.data)
+                  : ""}
+              </SketchbookList>
+            )}
+            {myFriend && (
+              <nav className={styles.friendNav}>
+                {myFriend[0]?.friendList?.map(
+                  (item: {
+                    id: number;
+                    nickname: string;
+                    nicknameTag: number;
+                  }) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setUserName(item.nickname);
+                        setUserId(item?.id);
+                      }}
+                    >
+                      {item?.nickname}
+                    </button>
+                  )
+                )}
+              </nav>
+            )}
+            <MyPageFriendSketchbook
+              name={userName}
+              list={friendSketchbookList?.data}
+            />
+          </>
+        ) : (
+          <>
+            <SketchbookList title="즐겨찾는 스케치북 목록">
+              {!favoriteLodaing &&
+              favorite?.data &&
+              favorite?.data?.length > 0 ? (
+                renderListItems(favorite.data)
+              ) : (
+                <div>비었어요.</div>
+              )}
+            </SketchbookList>
+            <SketchbookList title="내 스케치북 목록">
+              {!isLoading && data?.data && data?.data?.length > 0 ? (
+                renderListItems(data.data)
+              ) : (
+                <div>비었어요.</div>
+              )}
+            </SketchbookList>
+          </>
+        )}
       </article>
     </article>
   );
