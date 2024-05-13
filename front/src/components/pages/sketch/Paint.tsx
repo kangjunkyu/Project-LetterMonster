@@ -34,6 +34,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const [scribbles, setScribbles] = useState<Scribble[]>([]);
   const [showPopover, setShowPopover] = useState(false);
   const [size, setSize] = useState(500);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const { image, setImage, onImportImageSelect } = useImportImageSelect(size);
   // 캐릭터 생성 뮤테이션
@@ -53,6 +54,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
       const maxSize = 500;
       const newSize = Math.min(maxSize, screenWidth * 0.9);
       setSize(newSize);
+      setWindowWidth(screenWidth);
     };
 
     window.addEventListener("resize", updateSize);
@@ -246,12 +248,14 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   }, [onStageMouseUp]);
   return (
     <div className={styles.paintContainer}>
-      <LNB>
-        <h1>{t("paint.title")}</h1>
-        <DefaultButton onClick={() => onExportClick()} custom={true}>
-          {t("paint.create")}
-        </DefaultButton>
-      </LNB>
+      {windowWidth <= 480 && (
+        <LNB>
+          <h1>{t("paint.title")}</h1>
+          <DefaultButton onClick={() => onExportClick()} custom={true}>
+            {t("paint.create")}
+          </DefaultButton>
+        </LNB>
+      )}
       <div className={styles.characterNicknameContainer}>
         <div>
           <input

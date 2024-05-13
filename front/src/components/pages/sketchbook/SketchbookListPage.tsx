@@ -13,6 +13,7 @@ import { useAlert } from "../../../hooks/notice/useAlert";
 import Modal from "../../atoms/modal/Modal";
 import AddButton from "../../atoms/button/AddButton";
 import { useTranslation } from "react-i18next";
+import useFavoriteSketchbook from "../../../hooks/sketchbook/useFavorite";
 
 interface IItem {
   id: string;
@@ -33,6 +34,8 @@ type ModalName = "sketchbookCreate";
 function SketchbookListPage() {
   const { t } = useTranslation();
   const { data, isLoading } = useSketchbookList();
+  const { data: favorite, isLoading: favoriteLodaing } =
+    useFavoriteSketchbook();
   const [data2, setData2] = useState("");
   const createSketchbook = useCreateSketchbook();
   const { showAlert } = useAlert();
@@ -122,7 +125,14 @@ function SketchbookListPage() {
           </div>
         </Modal>
         <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
-        <SketchbookList>
+        <SketchbookList title="즐겨찾는 스케치북 목록">
+          {!favoriteLodaing && favorite?.data && favorite?.data?.length > 0 ? (
+            renderListItems(favorite.data)
+          ) : (
+            <div>비었어요.</div>
+          )}
+        </SketchbookList>
+        <SketchbookList title="내 스케치북 목록">
           {!isLoading && data?.data && data?.data?.length > 0 ? (
             renderListItems(data.data)
           ) : (

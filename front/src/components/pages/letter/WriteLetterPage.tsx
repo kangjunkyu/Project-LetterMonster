@@ -43,7 +43,10 @@ function LetterWritePage() {
   const { showAlert } = useAlert();
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [uuid, setUuid] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState(
+    sketchbookName ? sketchbookName : ""
+  );
   const { data: searchResult } = useSearchSketchbook(searchKeyword);
   const { data: staticCharacter } = useGetSoloCharacter(characterId);
   const [isModalOpen, setModalOpen] = useState({
@@ -73,6 +76,7 @@ function LetterWritePage() {
       characterMotionId: selectedMotion?.characterMotionId,
       setContent: setContent,
       isLoad: isLoad,
+      uuid: uuid,
     });
   };
 
@@ -100,6 +104,14 @@ function LetterWritePage() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    searchResult?.data?.map((item: any) => {
+      if (item?.id === target) {
+        setUuid(item?.uuid);
+      }
+    });
+  }, [target]);
 
   return (
     <div className={styles.writeContainer}>
@@ -216,7 +228,6 @@ function LetterWritePage() {
                         key={item.id}
                         onClick={() => {
                           setTarget(item.id);
-                          setSearchKeyword("");
                           setTo(
                             `${item.name} - ${item.tag} - ${item.userNickName}`
                           );
