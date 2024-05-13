@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class LetterController {
 
     @Operation
     @GetMapping("/recent")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getRecentLetter(Authentication authentication){
         Integer senderId = (Integer) authentication.getPrincipal();
         List<LetterGetRecentListDto> letterList = letterService.getLetterThree(senderId);
@@ -44,6 +46,7 @@ public class LetterController {
 
     @Operation(summary = "편지 생성", description = "편지 생성, sketchbookId, characterId 필요")
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createLetter(Authentication authentication, @Valid @RequestBody LetterCreateDto letterDto){
         Integer senderId = (Integer) authentication.getPrincipal();
         Long createLetterId = letterService.createLetter(senderId, letterDto);
@@ -52,6 +55,7 @@ public class LetterController {
 
     @Operation(summary = "편지 삭제", description = "편지 삭제, letterId 필요")
     @DeleteMapping("/{letterId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteLetter(Authentication authentication, @PathVariable Long letterId){
         Integer senderId = (Integer) authentication.getPrincipal();
         letterService.deleteLetter(senderId, letterId);
@@ -59,6 +63,7 @@ public class LetterController {
     }
 
     @PutMapping("/changepublic")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> changePublic(Authentication authentication, @RequestParam(value = "letterId") Long letterId){
         Integer senderId = (Integer) authentication.getPrincipal();
         Boolean status = letterService.changePublicStatus(senderId, letterId);

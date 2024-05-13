@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 목록 조회", description = "스케치북 목록 조회 / userId 필요")
     @GetMapping("/list")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getSketchList(Authentication authentication){
         Integer userId = (Integer) authentication.getPrincipal();
         List<SketchbookGetSimpleDto> sketchList = sketchbookService.getSketchList(userId);
@@ -46,6 +48,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 선택 조회", description = "스케치북 선택 조회 / sketchbookId 필요")
     @GetMapping("/detail/{sketchbookUuid}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getSketchSelect2(Authentication authentication, @PathVariable(value = "sketchbookUuid") String sketchId){
         Integer userId = (Integer) authentication.getPrincipal();
         SketchbookGetDetailDto sketchSelect = sketchbookService.getSketchSelect2(userId, sketchId);
@@ -70,6 +73,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 생성", description = "스케치북 생성 / userId 필요")
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createSketch(Authentication authentication, @Valid @RequestBody SketchbookCreateDto sketchDto){
         Integer userId = (Integer) authentication.getPrincipal();
         Long createSketchId = sketchbookService.createSketchbook(userId,sketchDto);
@@ -78,6 +82,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 수정", description = "스케치북 수정 / sketchbookId 필요")
     @PutMapping("/{sketchbookId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateSketch(Authentication authentication, @PathVariable(value = "sketchbookId")Long sketchbookId, @Valid @RequestBody SketchbookUpdateDto sketchDto){
         Integer userId = (Integer) authentication.getPrincipal();
         Long updateSketchId = sketchbookService.updateSketchbook(userId, sketchbookId, sketchDto);
@@ -86,6 +91,7 @@ public class SketchbookController {
 
     @Operation(summary = "스케치북 삭제", description = "스케치북 삭제 / sketchbookId 필요")
     @DeleteMapping("/{sketchbookId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteSketchBook(Authentication authentication, @PathVariable(value = "sketchbookId")Long sketchbookId){
         Integer userId = (Integer) authentication.getPrincipal();
         sketchbookService.deleteSketchbook(userId, sketchbookId);
@@ -101,6 +107,7 @@ public class SketchbookController {
 
     @Operation(summary = "대표 스케치북 수정", description = "대표 스케치북 수정 / sketchbookId 필요")
     @PutMapping("/representative/{changeRepresentSketchbookId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> updateSketch(Authentication authentication, @PathVariable(value = "changeRepresentSketchbookId")Long sketchbookId){
         Integer userId = (Integer) authentication.getPrincipal();
         sketchbookService.changeRepresent(userId, sketchbookId);
@@ -114,6 +121,7 @@ public class SketchbookController {
     }
 
     @PutMapping("/changepublic")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> changePublicSketchbook(Authentication authentication, @RequestParam Long sketchbookId){
         Integer userId = (Integer) authentication.getPrincipal();
         Boolean changePublic = sketchbookService.changePublic(userId, sketchbookId);

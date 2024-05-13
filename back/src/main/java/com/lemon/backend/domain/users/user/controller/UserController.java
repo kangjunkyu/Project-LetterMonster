@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -38,6 +39,7 @@ public class UserController {
 
     @Operation(summary = "로그아웃", description = "Header의 액세스 토큰을 이용하여 로그아웃을 합니다.")
     @PostMapping("/logout")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> recreateToken(Authentication authentication){
         Integer userId = (Integer) authentication.getPrincipal();
         userService.logout(userId);
@@ -46,6 +48,7 @@ public class UserController {
 
     @Operation(summary = "닉네임 변경", description = "Header의 액세스 토큰을 이용하여 닉네임 변경을 합니다.")
     @PostMapping("/nickname")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> changeNickname(Authentication authentication, @Validated @RequestBody ChangeNicknameRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) throw new CustomException(ErrorCode.INVALID_USER_NICKNAME);
 
@@ -54,7 +57,8 @@ public class UserController {
     }
 
     @Operation(summary = "회원탈퇴", description = "회원 탈퇴를 진행합니다.")
-    @DeleteMapping()
+    @DeleteMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> withdrawUser(Authentication authentication){
         Integer userId = (Integer) authentication.getPrincipal();
         userService.withdrawUser(userId);
@@ -63,6 +67,7 @@ public class UserController {
 
     @Operation(summary = "유저 정보 조회", description = "로그인된 유저 정보를 조회합니다.")
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getUserInfo(Authentication authentication) {
         Integer userId = (Integer) authentication.getPrincipal();
         return ResponseEntity.ok(userService.getUserInfo(userId));
@@ -75,8 +80,10 @@ public class UserController {
         return getResponseEntity(SuccessCode.OK, users);
     }
 
+
     @Operation(summary = "회원 전용 유저 닉네임 검색", description = "회원이 유저를 닉네임으로 검색합니다.")
     @GetMapping("/search/{nickname}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> searchNickname(Authentication authentication, @PathVariable("nickname") String nickname){
         Integer userId = (Integer) authentication.getPrincipal();
         List<UserSearchAndFriendResponse> users = userService.userSearchUserByNickname(userId, nickname);

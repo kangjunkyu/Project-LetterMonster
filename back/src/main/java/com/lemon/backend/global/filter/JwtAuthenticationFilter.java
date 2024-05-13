@@ -74,12 +74,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                     List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
                     Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                } else {
-                    log.info("Token validation failed");
                 }
-            } else {
-                throw new CustomException(ErrorCode.UNAUTHORIZED_FUNCTION_ACCESS);
             }
             chain.doFilter(request, response);
         } catch (CustomException e) {
