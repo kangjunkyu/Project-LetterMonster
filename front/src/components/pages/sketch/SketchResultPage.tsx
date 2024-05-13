@@ -18,11 +18,11 @@ function SketchResultPage() {
     fromUuid,
   } = location.state || {};
 
-  const handleResultToMotion = () => {
-    navigate(Page_Url.Motion, {
-      state: { characterId, nickname, image },
-    });
-  };
+  // const handleResultToMotion = () => {
+  //   navigate(Page_Url.Motion, {
+  //     state: { characterId, nickname, image },
+  //   });
+  // };
 
   const handleResultToLetter = () => {
     navigate(

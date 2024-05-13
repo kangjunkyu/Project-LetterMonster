@@ -4,7 +4,7 @@ import SketchbookListItem from "../../atoms/sketchbook/SketchbookListItem";
 import useSketchbookList, {
   useCreateSketchbook,
 } from "../../../hooks/sketchbook/useSketchbookList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { Page_Url } from "../../../router/Page_Url";
 import LNB from "../../molecules/common/LNB";
@@ -16,7 +16,6 @@ import { useTranslation } from "react-i18next";
 import useFavoriteSketchbook from "../../../hooks/sketchbook/useFavorite";
 import useSearchSketchbook from "../../../hooks/sketchbook/useSearchSketchbook";
 import useFriendSketchbookList from "../../../hooks/sketchbook/useFriendSketchbookList";
-import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 import { useGetFriendGroupList } from "../../../hooks/friendGroup/useFriend";
 import MyPageFriendSketchbook from "../../molecules/mypage/MyPageFriendSketchbook";
 
@@ -97,7 +96,6 @@ function SketchbookListPage() {
       />
     ));
   };
-  const checkToken = useCheckTokenExpiration();
 
   return (
     <article className={styles.centerContainer}>
