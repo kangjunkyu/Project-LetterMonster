@@ -13,5 +13,6 @@ public class SketchbookSearchGetDto {
     private String name;
     private String tag;
     private String userNickName;
+    private Boolean isPublic;
 
 }
