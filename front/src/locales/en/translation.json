@@ -37,7 +37,12 @@
     "name": "Sketchbook Name",
     "create": "sketchbook has been created",
     "namePlease": "Please name your sketchbook",
-    "copy": "Copy Completed"
+    "copy": "Copy Completed",
+    "empty": "Empty",
+    "favoriteList": "Favorite Sketchbook List",
+    "searchResult": "Search Results",
+    "Explore": "Explore Sketchbooks",
+    "My": "My Sketchbook"
   },
   "sketchbook": {
     "letter": "Leaving a letter",
@@ -56,7 +61,7 @@
     "pleaseTen": "Nicknames must be 10 characters or fewer.",
     "pleaseDraw": "Please draw the character"
   },
-  "paintResult":{
+  "paintResult": {
     "title": "Character Birthday",
     "birth": "Was Born",
     "move": "Move Character",
