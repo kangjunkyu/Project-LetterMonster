@@ -10,6 +10,7 @@ import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,7 @@ public class FriendsController {
     private final FriendsService friendsService;
 
     @PostMapping("/{friendId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> addFriend(Authentication authentication, @PathVariable(value = "friendId") Integer friendId) {
         Integer loginId = (Integer) authentication.getPrincipal();
 
@@ -36,6 +38,7 @@ public class FriendsController {
     }
 
     @DeleteMapping("/{friendId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteFriend(Authentication authentication, @PathVariable Integer friendId) {
         if (authentication.getPrincipal() instanceof Integer) {
             Integer loginId = (Integer) authentication.getPrincipal();

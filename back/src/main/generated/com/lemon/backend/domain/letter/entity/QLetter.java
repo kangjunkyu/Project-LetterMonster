@@ -34,6 +34,8 @@ public class QLetter extends EntityPathBase<Letter> {
     //inherited
     public final BooleanPath isDeleted = _super.isDeleted;
 
+    public final BooleanPath isPublic = createBoolean("isPublic");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 

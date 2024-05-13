@@ -6,6 +6,7 @@ import com.lemon.backend.domain.characters.service.CharacterService;
 import com.lemon.backend.global.response.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,9 @@ import static com.lemon.backend.global.response.CommonResponseEntity.getResponse
 public class CharacterController {
     private final CharacterService characterService;
     private final AmazonS3Client amazonS3Client;
+
     @PostMapping("/create")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> makeCharacter(Authentication authentication, @RequestParam("file")MultipartFile file, @RequestParam("nickname")String nickname) {
         Integer userId = (Integer) authentication.getPrincipal();
         Long characterId = characterService.createCharacter(file, userId, nickname);
@@ -48,6 +51,7 @@ public class CharacterController {
     }
 
     @GetMapping("/list")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> showCharacters(Authentication authentication) {
         Integer userId = (Integer) authentication.getPrincipal();
         List<CharactersGetDto> charactersGetDtoList = characterService.showCharacters(userId);
@@ -55,6 +59,7 @@ public class CharacterController {
     }
 
     @PatchMapping("/my/maincharacter")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> changeMainCharacter(Authentication authentication, @RequestParam(name="characterId") Long characterId) {
         Integer userId = (Integer) authentication.getPrincipal();
         characterService.changeMainCharacter(characterId, userId);

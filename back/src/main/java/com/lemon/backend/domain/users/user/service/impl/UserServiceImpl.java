@@ -1,6 +1,5 @@
 package com.lemon.backend.domain.users.user.service.impl;
 
-import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
@@ -157,7 +156,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserGetDto getUserInfo(Integer userId) {
-        Users user = userRepository.findById(userId).get();
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         return UserGetDto.builder().nickname(user.getNickname()).nicknameTag(user.getNicknameTag())
                 .isLanguageSet(user.getIsLanguage()).build();
     }

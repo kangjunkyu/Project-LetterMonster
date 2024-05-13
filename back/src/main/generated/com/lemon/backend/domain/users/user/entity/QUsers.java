@@ -27,6 +27,8 @@ public class QUsers extends EntityPathBase<Users> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final ListPath<com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook, com.lemon.backend.domain.FavoriteSketchbook.entity.QFavoriteSketchbook> favoriteSketchbooks = this.<com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook, com.lemon.backend.domain.FavoriteSketchbook.entity.QFavoriteSketchbook>createList("favoriteSketchbooks", com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook.class, com.lemon.backend.domain.FavoriteSketchbook.entity.QFavoriteSketchbook.class, PathInits.DIRECT2);
+
     public final ListPath<com.lemon.backend.domain.friend.entity.Friends, com.lemon.backend.domain.friend.entity.QFriends> friendList = this.<com.lemon.backend.domain.friend.entity.Friends, com.lemon.backend.domain.friend.entity.QFriends>createList("friendList", com.lemon.backend.domain.friend.entity.Friends.class, com.lemon.backend.domain.friend.entity.QFriends.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);

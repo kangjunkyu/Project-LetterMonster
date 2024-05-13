@@ -1,6 +1,5 @@
 package com.lemon.backend.domain.FavoriteSketchbook.controller;
 
-import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteRequestDto;
 import com.lemon.backend.domain.FavoriteSketchbook.dto.FavoriteSketchbookGetDto;
 import com.lemon.backend.domain.FavoriteSketchbook.entity.FavoriteSketchbook;
 import com.lemon.backend.domain.FavoriteSketchbook.service.FavoriteSketchbookService;
@@ -11,6 +10,7 @@ import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +28,7 @@ public class FavoriteSketchbookController {
     private final FavoriteSketchbookService favoriteSketchbookService;
 
     @GetMapping("/notuse")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> findAll(Authentication authentication) {
         if (authentication.getPrincipal() instanceof Integer) {
             Integer loginId = (Integer) authentication.getPrincipal();
@@ -61,6 +62,7 @@ public class FavoriteSketchbookController {
     }
 
 //    @PostMapping
+//    @PreAuthorize("isAuthenticated()")
 //    public ResponseEntity<?> addFavorite(Authentication authentication, @RequestParam(value = "sketchbookId") Long sketchbookId) {
 //        if (authentication.getPrincipal() instanceof Integer) {
 //            Integer loginId = (Integer) authentication.getPrincipal();
@@ -73,6 +75,7 @@ public class FavoriteSketchbookController {
 //    }
 
     @DeleteMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteFavorite(Authentication authentication, @RequestParam(value = "sketchbookId") Long sketchbookId) {
         if (authentication.getPrincipal() instanceof Integer) {
             Integer loginId = (Integer) authentication.getPrincipal();
@@ -84,6 +87,7 @@ public class FavoriteSketchbookController {
     }
 
 //    @PostMapping
+//    @PreAuthorize("isAuthenticated()")
 //    public ResponseEntity<?> handleFavoriteSketchbook(Authentication authentication, @RequestBody FavoriteRequestDto favoriteRequestDto) {
 //        if (authentication.getPrincipal() instanceof Integer) {
 //            Integer loginId = (Integer) authentication.getPrincipal();
@@ -107,6 +111,7 @@ public class FavoriteSketchbookController {
 //    }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> toggleFavoriteSketchbook(Authentication authentication, @RequestParam Long sketchbookId) {
         if (authentication.getPrincipal() instanceof Integer) {
             Integer loginId = (Integer) authentication.getPrincipal();
