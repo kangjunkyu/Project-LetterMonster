@@ -41,3 +41,38 @@
     padding: 1em;
   }
 }
+
+.searchBox {
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.buttonBox {
+  width: 100%;
+  display: flex;
+  & > button {
+    width: 100%;
+    padding: 1rem;
+    transition: 0.3s all;
+    @include commonShadow;
+    border-radius: 0 0 5px 5px;
+  }
+}
+
+.select {
+  background-color: $actionColor;
+  color: $white;
+}
+
+.friendNav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  & > button {
+    padding: 1rem;
+    border-radius: 1rem;
+    @include commonShadow;
+  }
+}
