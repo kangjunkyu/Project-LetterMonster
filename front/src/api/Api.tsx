@@ -1,4 +1,5 @@
 import API, { ImgAPI } from "./Config";
+import useCheckTokenExpiration from "../hooks/auth/useCheckTokenExpiration";
 
 //Authorization & User 관련 API
 
@@ -140,12 +141,14 @@ export const getSketchbookListAll = () =>
  * @requires sketchbookId 스케치북 아이디
  * @summary 로그인 유저는 상세, 아니면 간단
  */
-export const getSketchbookSelected = (uuid: string) =>
-  API.get(
-    localStorage.getItem("accessToken")
+export const getSketchbookSelected = (uuid: string) => {
+  const checkToken = useCheckTokenExpiration();
+  return API.get(
+    checkToken(localStorage.getItem("accessToken"))
       ? `/sketchbooks/detail/${uuid}`
       : `/sketchbooks/public/simple/${uuid}`
   ).then((res) => res.data);
+};
 
 /** 스케치북 수정
  * @requires sketchbookId 스케치북 아이디
@@ -181,6 +184,23 @@ export const putSketchbookOpen = (sketchbookId: number) =>
       params: { sketchbookId: sketchbookId },
     }
   ).then((res) => res.data);
+
+/** 즐겨찾기한 스케치북 목록 조회 */
+export const getFavoriteSketchbook = () =>
+  API.get(`/favorite`).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
+
+/** 즐겨찾기 스케치북 등록 */
+export const postFavoriteSketchbook = (sketchbookId: number) =>
+  API.post(`/favorite`, { sketchbookId: sketchbookId }).then((res) => res.data);
+
+/** 즐겨찾기한 스케치북 삭제
+ * @requires sketchbookId 스케치북 아이디
+ */
+export const deleteFavoriteSketchbook = (sketchbookId: number) =>
+  API.delete(`/sketchbooks/${sketchbookId}`).then((res) => res.data);
 
 // 편지 관련 API
 

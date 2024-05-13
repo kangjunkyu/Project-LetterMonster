@@ -1,0 +1,8 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
+
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

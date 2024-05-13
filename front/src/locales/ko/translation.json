@@ -48,7 +48,7 @@
   },
   "paint": {
     "title": "그림 그리기",
-    "create": "만나기",
+    "create": "완성",
     "upload": "앨범에서 선택",
     "nickname": "캐릭터 별명을 입력해주세요",
     "pleaseRename": "닉네임은 영문, 숫자, 한글만 가능합니다.",

@@ -1,0 +1,11 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
+
+.notificationItem {
+  @include box;
+  width: 100%;
+  white-space: pre-wrap;
+  &:hover {
+    background-color: $gc800;
+  }
+}

@@ -1,3 +1,5 @@
+@import "../../../styles/mixins/defalut";
+
 @media screen and (min-width: 479px) {
   .characterNicknameContainer .etcButton {
     display: none;
@@ -26,24 +28,18 @@
 
 .paintContainer {
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
   gap: 0.5em;
-  justify-content: center;
-  align-items: center;
-  // font-size: 14px;
-  // margin: 20px 0;
+  @include flexCenterColumn;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
-    // font-size: 12px;
-    // margin-bottom: 80px;
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    nav{
-      button{
+    nav {
+      button {
         font-size: 16px;
       }
     }
@@ -62,7 +58,6 @@
     gap: 1em;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 70px;
   }
 }
 
