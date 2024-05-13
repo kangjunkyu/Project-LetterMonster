@@ -188,19 +188,22 @@ export const putSketchbookOpen = (sketchbookId: number) =>
 /** 즐겨찾기한 스케치북 목록 조회 */
 export const getFavoriteSketchbook = () =>
   API.get(`/favorite`).then((res) => {
-    console.log(res.data);
     return res.data;
   });
 
-/** 즐겨찾기 스케치북 등록 */
-export const postFavoriteSketchbook = (sketchbookId: number) =>
-  API.post(`/favorite`, { sketchbookId: sketchbookId }).then((res) => res.data);
+/** 즐겨찾기한 스케치북 조회 */
+export const getFavoriteSketchbookCheck = (sketchbookId: number) =>
+  API.get(`/favorite/check`, { params: { sketchbookId: sketchbookId } }).then(
+    (res) => {
+      return res.data;
+    }
+  );
 
-/** 즐겨찾기한 스케치북 삭제
- * @requires sketchbookId 스케치북 아이디
- */
-export const deleteFavoriteSketchbook = (sketchbookId: number) =>
-  API.delete(`/sketchbooks/${sketchbookId}`).then((res) => res.data);
+/** 즐겨찾기 스케치북 등록 및 삭제 */
+export const postFavoriteSketchbook = (sketchbookId: number) =>
+  API.post(`/favorite`, {}, { params: { sketchbookId: sketchbookId } }).then(
+    (res) => res.data
+  );
 
 // 편지 관련 API
 
