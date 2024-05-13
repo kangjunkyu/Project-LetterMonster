@@ -18,6 +18,8 @@ import useSearchSketchbook from "../../../hooks/sketchbook/useSearchSketchbook";
 import useFriendSketchbookList from "../../../hooks/sketchbook/useFriendSketchbookList";
 import { useGetFriendGroupList } from "../../../hooks/friendGroup/useFriend";
 import MyPageFriendSketchbook from "../../molecules/mypage/MyPageFriendSketchbook";
+import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
+import LoginPage from "../login/LoginPage";
 
 interface IItem {
   id: string;
@@ -56,6 +58,7 @@ function SketchbookListPage() {
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
   const { data: friendSketchbookList } = useFriendSketchbookList(userId);
+  const checkToken = useCheckTokenExpiration();
   const createHandler = (name: string) => {
     {
       if (name.startsWith(" ")) {
@@ -101,9 +104,13 @@ function SketchbookListPage() {
     <article className={styles.centerContainer}>
       <LNB>
         <h1>{t("sketchbookList.title")}</h1>
-        <LNBButton onClick={() => handleToggleModal("sketchbookCreate")}>
-          {t("sketchbookList.generate")}
-        </LNBButton>
+        {checkToken(localStorage.getItem("accessToken")) ? (
+          <LNBButton onClick={() => handleToggleModal("sketchbookCreate")}>
+            {t("sketchbookList.generate")}
+          </LNBButton>
+        ) : (
+          <div></div>
+        )}
       </LNB>
       <article className={styles.sketchbookListContainer}>
         <Modal
@@ -138,13 +145,13 @@ function SketchbookListPage() {
             className={toggle ? styles.select : ""}
             onClick={() => setToggle(true)}
           >
-            스케치북 탐색
+            {t("sketchbookList.Explore")}
           </button>
           <button
             className={!toggle ? styles.select : ""}
             onClick={() => setToggle(false)}
           >
-            내 스케치북
+            {t("sketchbookList.My")}
           </button>
         </div>
         <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
@@ -160,7 +167,7 @@ function SketchbookListPage() {
               }}
             />
             {searchResult?.data && (
-              <SketchbookList title="검색결과">
+              <SketchbookList title={t("writeletter.searchResult")}>
                 {!searchResultLoding &&
                 searchResult?.data &&
                 searchResult?.data?.length > 0
@@ -168,7 +175,7 @@ function SketchbookListPage() {
                   : ""}
               </SketchbookList>
             )}
-            {myFriend && (
+            {myFriend?.[0] && (
               <nav className={styles.friendNav}>
                 {myFriend[0]?.friendList?.map(
                   (item: {
@@ -194,24 +201,29 @@ function SketchbookListPage() {
               list={friendSketchbookList?.data}
             />
           </>
-        ) : (
+        ) : checkToken(localStorage.getItem("accessToken")) ? (
           <>
-            <SketchbookList title="즐겨찾는 스케치북 목록">
+            <SketchbookList title={t("sketchbookList.favoriteList")}>
               {!favoriteLodaing &&
               favorite?.data &&
               favorite?.data?.length > 0 ? (
                 renderListItems(favorite.data)
               ) : (
-                <div>비었어요.</div>
+                <div>{t("sketchbookList.empty")}</div>
               )}
             </SketchbookList>
-            <SketchbookList title="내 스케치북 목록">
+            <SketchbookList title={t("sketchbookList.My")}>
               {!isLoading && data?.data && data?.data?.length > 0 ? (
                 renderListItems(data.data)
               ) : (
-                <div>비었어요.</div>
+                <div>{t("sketchbookList.empty")}</div>
               )}
             </SketchbookList>
+          </>
+        ) : (
+          <>
+            <h1>{t("sketchbookList.")}</h1>
+            <LoginPage />
           </>
         )}
       </article>
