@@ -66,6 +66,28 @@ public class FavoriteSketchbookServiceImpl implements FavoriteSketchbookService 
     }
 
     @Override
+    @Transactional
+    public String toggleFavoriteSketchbook(Integer userId, Long sketchbookId) {
+        Users user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+        Sketchbook sketchbook = sketchbookRepository.findById(sketchbookId).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+
+        FavoriteSketchbook favoriteSketchbook = favoriteSketchbookRepository.findByUserAndSketchbook(user, sketchbook).orElse(null);
+
+        if (favoriteSketchbook != null) {
+            favoriteSketchbookRepository.delete(favoriteSketchbook);
+            return "Removed '" + sketchbook.getName() + "' from your favorites.";
+        } else {
+            FavoriteSketchbook newFavorite = FavoriteSketchbook.builder()
+                    .user(user)
+                    .sketchbook(sketchbook)
+                    .build();
+            favoriteSketchbookRepository.save(newFavorite);
+            return "Added '" + sketchbook.getName() + "' to your favorites.";
+        }
+    }
+
+
+    @Override
     public Optional<List<FavoriteSketchbookGetDto>> getFavoriteSketchbooksByUser(Integer userId) {
         return favoriteSketchbookRepository.findByUserId(userId);
     }
