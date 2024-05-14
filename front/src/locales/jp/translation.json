@@ -37,7 +37,12 @@
     "name": "スケッチブックの名前",
     "create": "スケッチブックが作成されました",
     "namePlease": "スケッチブックの名前を決めてください",
-    "copy": "コピー完了"
+    "copy": "コピー完了",
+    "empty": "何もない",
+    "favoriteList": "お気に入りのスケッチブックリスト",
+    "searchResult": "検索結果",
+    "Explore": "スケッチブックを探索",
+    "My": "私のスケッチブック"
   },
   "sketchbook": {
     "letter": "手紙を残す",
@@ -56,7 +61,7 @@
     "pleaseTen": "ニックネームは10文字以下である必要があります。",
     "pleaseDraw": "キャラクターを描いてください"
   },
-  "paintResult":{
+  "paintResult": {
     "title": "図完成",
     "birth": "誕生",
     "move": "移動に行く",

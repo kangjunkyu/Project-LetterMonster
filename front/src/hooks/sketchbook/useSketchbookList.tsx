@@ -4,12 +4,18 @@ import {
   postSketchbook,
   getSketchbookListAll,
 } from "../../api/Api";
+import useCheckTokenExpiration from "../auth/useCheckTokenExpiration";
 
 /** 스케치북 리스트 불러오기 */
 export default function useSketchbookList() {
+  const checkToken = useCheckTokenExpiration();
   return useQuery({
     queryKey: ["sketchbooklist"],
-    queryFn: () => getSketchbookList(),
+    queryFn: () => {
+      return checkToken(localStorage.getItem("accessToken"))
+        ? getSketchbookList()
+        : Promise.resolve({});
+    },
   });
 }
 
