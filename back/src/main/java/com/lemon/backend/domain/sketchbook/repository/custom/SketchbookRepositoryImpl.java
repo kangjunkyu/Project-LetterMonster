@@ -10,6 +10,7 @@ import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ import static com.lemon.backend.domain.letter.entity.QLetter.letter;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbook.sketchbook;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion.sketchbookCharacterMotion;
 import static com.querydsl.core.types.Projections.constructor;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 @RequiredArgsConstructor
 public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
@@ -355,6 +357,27 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .where(sketchbook.name.contains(sketchbookName).and(sketchbook.isPublic.eq(true)))
                 .fetch();
         return Optional.ofNullable(list);
+    }
+
+    @Override
+    public SketchbookGetRandomDto randomSketchbook(){
+        return query
+                .select(Projections.constructor(SketchbookGetRandomDto.class,
+                        sketchbook.id,
+                        sketchbook.shareLink,
+                        sketchbook.name,
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag))).from(sketchbook)
+                .where(sketchbook.isPublic.eq(true).and(sketchbook.isWritePossible.eq(false))
+                                .and(select(letter.count())
+                                        .from(letter)
+                                        .where(letter.sketchbookCharacterMotion.sketchbook.eq(sketchbook))
+                                        .goe(4L)))
+                .orderBy(Expressions.numberTemplate(Double.class, "function('RAND')").asc())
+                .fetchFirst();
     }
 
     @Override
