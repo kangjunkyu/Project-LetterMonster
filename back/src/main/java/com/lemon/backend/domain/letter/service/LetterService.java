@@ -3,6 +3,7 @@ package com.lemon.backend.domain.letter.service;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterCreateDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterReplyResponse;
 import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateResponse;
 import jakarta.transaction.Transactional;
 
@@ -18,6 +19,8 @@ public interface LetterService {
 
     @Transactional
     void deleteLetter(Integer userId, Long letterId);
+
+    Long replyLetter(Integer userId, LetterReplyResponse letterDto);
 
     @Transactional
     LetterCreateResponse createAnonymousLetter(LetterCreateDto letterDto);
