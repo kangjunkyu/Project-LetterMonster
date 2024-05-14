@@ -40,6 +40,8 @@ public interface SketchbookService {
 
     List<SketchbookGetAllDto> getSketchAll();
 
+    SketchbookGetRandomDto getRandomSketchbook();
+
     @Transactional
     void changeRepresent(Integer userId, Long newRepresentId);
 }
