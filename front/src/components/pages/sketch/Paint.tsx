@@ -9,10 +9,9 @@ import {
   Transformer,
 } from "react-konva";
 import { v4 as uuidv4 } from "uuid";
-import { Scribble } from "./PaintTypes";
+import { Scribble } from "./PaintTypes"; // Ensure Scribble is imported from PaintTypes
 import { DrawAction, PAINT_OPTIONS } from "./PaintConstants";
 import { SketchPicker } from "react-color";
-import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 import styles from "./Paint.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchCharacter";
@@ -21,6 +20,7 @@ import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useTranslation } from "react-i18next";
 import { Page_Url } from "../../../router/Page_Url";
+// import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 
 interface PaintProps {}
 
@@ -33,12 +33,28 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const [color, setColor] = useState("#000");
   const [drawAction, setDrawAction] = useState<DrawAction>(DrawAction.Scribble);
   const [scribbles, setScribbles] = useState<Scribble[]>([]);
+  const [history, setHistory] = useState<Scribble[][]>([]);
+  const [redoHistory, setRedoHistory] = useState<Scribble[][]>([]);
   const [showPopover, setShowPopover] = useState(false);
   const [size, setSize] = useState(500);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const { image, setImage, onImportImageSelect } = useImportImageSelect(size);
+  const [image, setImage] = useState<HTMLImageElement | undefined>();
+  //   const { onImportImageSelect } = useImportImageSelect(size, setImage);
+  const [strokeWidth, setStrokeWidth] = useState(15); //펜굵기
 
   const { sketchbookId, sketchbookName, fromUuid } = location.state || {};
+
+  useEffect(() => {
+    setHistory([[]]);
+  }, []);
+
+  //펜굵기
+  const handleStrokeWidthChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setStrokeWidth(parseInt(event.target.value));
+    },
+    []
+  );
 
   // 캐릭터 생성 뮤테이션
   const postSketchCharacterMutation = usePostSketchCharacter(
@@ -101,10 +117,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
       const newNickname = event.target.value;
       if (newNickname.startsWith(" ")) {
         setNicknameError(t("paint.pleaseDont"));
-      } else if (
-        // /[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(newNickname) ||
-        newNickname.includes("　")
-      ) {
+      } else if (newNickname.includes("　")) {
         setNicknameError(t("paint.pleaseRename"));
       } else if (newNickname.length > 10) {
         setNicknameError(t("paint.pleaseTen"));
@@ -127,7 +140,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
     if (characterNickname.trim() === "") {
       showAlert(t("paint.nickname"));
       return;
-    } else if (scribbles.length === 0) {
+    } else if (scribbles.length === 0 && !image) {
       showAlert(t("paint.pleaseDraw"));
       return;
     }
@@ -148,21 +161,30 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         // usePostSketchCharacter 훅을 통해 데이터 전송
         return postSketchCharacterMutation.mutate({ nickname, file, uri });
       });
-
-    // navigate("/motion", { state: { image: uri, nickname: characterNickname } });
-  }, [navigate, characterNickname, postSketchCharacterMutation]);
+  }, [
+    navigate,
+    characterNickname,
+    postSketchCharacterMutation,
+    scribbles,
+    image,
+  ]);
 
   // 그림판 초기화
   const onClear = useCallback(() => {
     setScribbles([]);
     setImage(undefined);
+    setHistory([[]]);
+    setRedoHistory([]);
   }, []);
 
   // 마우스 움직임 파트
   const isDrawing = useRef(false);
   const onStageMouseUp = useCallback(() => {
+    if (!isDrawing.current) return;
     isDrawing.current = false;
-  }, []);
+    setHistory((prevHistory) => [...prevHistory, [...scribbles]]);
+    setRedoHistory([]);
+  }, [scribbles]);
 
   const currentShapeRef = useRef<string>();
 
@@ -190,26 +212,36 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
 
       switch (drawAction) {
         case DrawAction.Scribble:
+          setScribbles((prevScribbles) => [
+            ...prevScribbles,
+            {
+              id,
+              points: [x, y],
+              color,
+              strokeWidth,
+            },
+          ]);
+          break;
         case DrawAction.Erase:
           setScribbles((prevScribbles) => [
             ...prevScribbles,
             {
               id,
               points: [x, y],
-              color: drawAction === DrawAction.Erase ? "white" : color,
+              color: "white",
+              strokeWidth,
             },
           ]);
           break;
       }
     },
-    [drawAction, color]
+    [drawAction, color, strokeWidth]
   );
 
   const onStageMouseMove = useCallback(
     (event: KonvaEventObject<MouseEvent | TouchEvent>) => {
       if (drawAction === DrawAction.Select || !isDrawing.current) return;
 
-      // const stage = stageRef?.current;
       const id = currentShapeRef.current;
       const pos = getPointerPosition(event);
       const x = pos?.x || 0;
@@ -256,6 +288,28 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const onTouchEnd = useCallback(() => {
     onStageMouseUp();
   }, [onStageMouseUp]);
+
+  const undo = useCallback(() => {
+    if (history.length <= 1) return;
+
+    const previous = history[history.length - 2];
+    const current = history[history.length - 1];
+
+    setRedoHistory((prevRedoHistory) => [...prevRedoHistory, current]);
+    setHistory(history.slice(0, -1));
+    setScribbles(previous || []);
+  }, [history]);
+
+  const redo = useCallback(() => {
+    if (redoHistory.length === 0) return;
+
+    const next = redoHistory[redoHistory.length - 1];
+
+    setHistory((prevHistory) => [...prevHistory, next]);
+    setRedoHistory(redoHistory.slice(0, -1));
+    setScribbles(next);
+  }, [redoHistory]);
+
   return (
     <div className={styles.paintContainer}>
       {windowWidth <= 480 && (
@@ -285,6 +339,9 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         </div>
         <button className={styles.etcButton} onClick={onImportImageClick}>
           {t("paint.upload")}
+        </button>
+        <button className={styles.etcButton} onClick={onExportClick}>
+          {t("paint.create")}
         </button>
       </div>
 
@@ -320,7 +377,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
                 lineCap="round"
                 lineJoin="round"
                 stroke={scribble?.color}
-                strokeWidth={14}
+                strokeWidth={scribble.strokeWidth}
                 points={scribble.points}
                 onClick={onShapeClick}
                 draggable={isDraggable}
@@ -331,8 +388,20 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
         </Stage>
       </div>
 
-      <div className={`${styles.paintBottom}`}>
-        <div className={styles.paintTool}>
+      {/* <div className={`${styles.paintBottom}`}> */}
+      <div className={styles.paintTool}>
+        <div className={styles.paintButtonUpper}>
+          <div id={styles.markerContainer}>
+            <input
+              id={styles.marker}
+              type="range"
+              onChange={handleStrokeWidthChange}
+              value={strokeWidth}
+              max="30"
+              min="5"
+            />
+            <div id={styles.shape}></div>
+          </div>
           {PAINT_OPTIONS.map(({ id, label, icon }) => (
             <div
               key={id}
@@ -377,7 +446,9 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
               }}
             ></div>
           </div>
+        </div>
 
+        <div className={styles.paintButtonUnder}>
           <button
             className={styles.etcButton}
             aria-label={"Clear"}
@@ -385,23 +456,21 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
           >
             <span className="material-icons">delete_forever</span>
           </button>
-        </div>
-
-        <div className={styles.paintImportExport}>
-          <input
-            type="file"
-            ref={fileRef}
-            onChange={
-              onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
-            }
-            style={{ display: "none" }}
-            accept="image/*"
-          />
-          <button className={styles.etcButton} onClick={onImportImageClick}>
-            {t("paint.upload")}
+          <button
+            className={styles.etcButton}
+            aria-label={"Undo"}
+            onClick={undo}
+            disabled={history.length <= 1}
+          >
+            <span className="material-icons">undo</span>
           </button>
-          <button className={styles.etcButton} onClick={onExportClick}>
-            {t("paint.create")}
+          <button
+            className={styles.etcButton}
+            aria-label={"Redo"}
+            onClick={redo}
+            disabled={redoHistory.length === 0}
+          >
+            <span className="material-icons">redo</span>
           </button>
         </div>
       </div>
