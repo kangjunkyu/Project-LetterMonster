@@ -54,7 +54,10 @@ public enum ErrorCode {
     NOT_FOUND_NOTIFICATION(HttpStatus.NOT_FOUND, "알림 정보를 찾을 수 없습니다."),
 
     //친구
-    CAN_NOT_ADD_FRIEND(HttpStatus.BAD_REQUEST, "이미 등록된 친구입니다.");
+    CAN_NOT_ADD_FRIEND(HttpStatus.BAD_REQUEST, "이미 등록된 친구입니다."),
+
+    //트래픽
+    TOO_MANY_REQUEST(HttpStatus.TOO_MANY_REQUESTS, "요청 횟수를 초과했습니다.");
 
     private final HttpStatus status;
     private final String message;
