@@ -1,4 +1,4 @@
-package com.lemon.backend.domain.letter.dto.requestDto;
+package com.lemon.backend.domain.letter.dto.responseDto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
