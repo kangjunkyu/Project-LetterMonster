@@ -9,7 +9,7 @@ import {
   Transformer,
 } from "react-konva";
 import { v4 as uuidv4 } from "uuid";
-import { Scribble } from "./PaintTypes"; // Ensure Scribble is imported from PaintTypes
+import { Scribble } from "./PaintTypes";
 import { DrawAction, PAINT_OPTIONS } from "./PaintConstants";
 import { SketchPicker } from "react-color";
 import styles from "./Paint.module.scss";
@@ -20,7 +20,7 @@ import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useTranslation } from "react-i18next";
 import { Page_Url } from "../../../router/Page_Url";
-// import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
+import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 
 interface PaintProps {}
 
@@ -38,8 +38,8 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const [showPopover, setShowPopover] = useState(false);
   const [size, setSize] = useState(500);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [image, setImage] = useState<HTMLImageElement | undefined>();
-  //   const { onImportImageSelect } = useImportImageSelect(size, setImage);
+  // const [image, setImage] = useState<HTMLImageElement | undefined>();
+  const { image, setImage, onImportImageSelect } = useImportImageSelect(size);
   const [strokeWidth, setStrokeWidth] = useState(15); //펜굵기
 
   const { sketchbookId, sketchbookName, fromUuid } = location.state || {};
@@ -337,6 +337,15 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
             )}
           </div>
         </div>
+        <input
+          type="file"
+          ref={fileRef}
+          onChange={
+            onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
+          }
+          style={{ display: "none" }}
+          accept="image/*"
+        />
         <button className={styles.etcButton} onClick={onImportImageClick}>
           {t("paint.upload")}
         </button>

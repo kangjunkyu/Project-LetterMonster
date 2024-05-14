@@ -1,9 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 function useImportImageSelect(
-  SIZE: number,
-  setImage: React.Dispatch<React.SetStateAction<HTMLImageElement | undefined>>
+  SIZE: number
+  // setImage: React.Dispatch<React.SetStateAction<HTMLImageElement | undefined>>
 ) {
+  const [image, setImage] = useState<HTMLImageElement | undefined>();
   const onImportImageSelect: React.ChangeEventHandler<HTMLInputElement> =
     useCallback(
       (e) => {
@@ -20,7 +21,7 @@ function useImportImageSelect(
       [SIZE, setImage]
     );
 
-  return { onImportImageSelect };
+  return { image, setImage, onImportImageSelect };
 }
 
 export default useImportImageSelect;
