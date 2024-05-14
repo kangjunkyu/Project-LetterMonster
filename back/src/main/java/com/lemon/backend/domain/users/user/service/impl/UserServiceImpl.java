@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(BasicSketchbookName);
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbook/" + uuid;
-        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(newUser.getId());
+//        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(newUser.getId());
 
         Sketchbook sketchbook = Sketchbook.builder()
                 .name(BasicSketchbookName)
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
                 .shareLink(sharaLink)
                 .sketchbookUuid(uuid)
                 .tag(String.valueOf(sameSketchbookLastNumber))
-                .isRepresent(isRepresent)
+                .isRepresent(true)
                 .build();
 
         sketchbookRepository.save(sketchbook);

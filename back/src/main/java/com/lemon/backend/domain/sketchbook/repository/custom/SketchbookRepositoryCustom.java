@@ -28,6 +28,8 @@ public interface SketchbookRepositoryCustom {
 
     Optional<List<SketchbookSearchGetDto>> searchList(String sketchbookName);
 
+    SketchbookGetRandomDto randomSketchbook();
+
     Optional<Sketchbook> findRepresentSkechbook(Integer userId);
 
     boolean existsRepresentSketchbook(Integer userId);

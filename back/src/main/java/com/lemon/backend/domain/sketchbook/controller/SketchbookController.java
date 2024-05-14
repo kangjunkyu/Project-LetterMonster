@@ -127,4 +127,10 @@ public class SketchbookController {
         Boolean changePublic = sketchbookService.changePublic(userId, sketchbookId);
         return getResponseEntity(SuccessCode.OK, changePublic);
     }
+
+    @GetMapping("/ramdom")
+    public ResponseEntity<?> getRandomSketchbook(){
+        SketchbookGetRandomDto sketchbookGetRandomDto = sketchbookService.getRandomSketchbook();
+        return getResponseEntity(SuccessCode.OK, sketchbookGetRandomDto);
+    }
 }

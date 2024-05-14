@@ -157,6 +157,17 @@ public class SketchbookServiceImpl implements SketchbookService {
     }
 
     @Override
+    public SketchbookGetRandomDto getRandomSketchbook() {
+        SketchbookGetRandomDto randomDto =  sketchbookRepository.randomSketchbook();
+
+        if(randomDto == null){
+            throw new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND);
+        }else {
+            return randomDto;
+        }
+    }
+
+    @Override
     @Transactional
     public void changeRepresent(Integer userId, Long newRepresentId) {
         Optional<Sketchbook> currentRepresent = sketchbookRepository.findRepresentSkechbook(userId);

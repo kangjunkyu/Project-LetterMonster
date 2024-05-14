@@ -3,6 +3,7 @@ package com.lemon.backend.domain.letter.controller;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterCreateDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterReplyResponse;
 import com.lemon.backend.domain.letter.service.LetterService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,15 @@ public class LetterController {
     public ResponseEntity<?> createLetter(Authentication authentication, @Valid @RequestBody LetterCreateDto letterDto){
         Integer senderId = (Integer) authentication.getPrincipal();
         Long createLetterId = letterService.createLetter(senderId, letterDto);
+        return getResponseEntity(SuccessCode.CREATED, createLetterId);
+    }
+
+    @Operation(summary = "답장 생성", description = "답장 생성, 상대 userId, characterId 필요")
+    @PostMapping("/reply")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> replyLetter(Authentication authentication, @Valid @RequestBody LetterReplyResponse letterDto){
+        Integer senderId = (Integer) authentication.getPrincipal();
+        Long createLetterId = letterService.replyLetter(senderId, letterDto);
         return getResponseEntity(SuccessCode.CREATED, createLetterId);
     }
 
