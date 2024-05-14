@@ -7,8 +7,10 @@ export type Shape = {
 
 export type Scribble = Shape & {
   points: number[];
+  strokeWidth: number;
 };
 
 export type Erase = {
   points: number[];
+  strokeWidth: number;
 };

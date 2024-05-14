@@ -37,7 +37,12 @@
     "name": "스케치북 이름",
     "create": "스케치북이 생겼어요",
     "namePlease": "스케치북 이름을 정해주세요",
-    "copy": "복사 완료"
+    "copy": "복사 완료",
+    "empty": "비었어요.",
+    "favoriteList": "즐겨찾는 스케치북 목록",
+    "searchResult": "검색 결과",
+    "Explore": "스케치북 탐색",
+    "My": "내 스케치북"
   },
   "sketchbook": {
     "letter": "편지남기기",
@@ -50,13 +55,13 @@
     "title": "그림 그리기",
     "create": "완성",
     "upload": "앨범에서 선택",
-    "nickname": "캐릭터 별명을 입력해주세요",
+    "nickname": "캐릭터 별명 입력",
     "pleaseRename": "닉네임은 영문, 숫자, 한글만 가능합니다.",
     "pleaseDont": "첫 글자로 띄어쓰기를 사용할 수 없습니다.",
     "pleaseTen": "닉네임은 10글자 이하만 가능합니다.",
     "pleaseDraw": "캐릭터를 그려주세요"
   },
-  "paintResult":{
+  "paintResult": {
     "title": "그림 완성",
     "birth": "탄생",
     "move": "움직이기",
