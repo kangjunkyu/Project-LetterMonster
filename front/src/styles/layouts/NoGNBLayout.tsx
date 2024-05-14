@@ -20,7 +20,7 @@ function NoGNBLayout() {
 
   return (
     <main>
-      {windowWidth >= 479 && <GNB />}
+      {windowWidth >= 480 && <GNB />}
       <section className={styles.layoutSection}>
         <Outlet />
       </section>
