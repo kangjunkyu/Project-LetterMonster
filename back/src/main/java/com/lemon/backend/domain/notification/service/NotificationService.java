@@ -12,7 +12,7 @@ public interface NotificationService {
 
     Optional<List<NotificationGetDto>> getNotCheckNotifications(Integer userId);
 
-    boolean sendNotification(String token, String title, String body);
+    boolean sendNotification(String token, String title, String body, String type);
 
     void checkAllNotification(Integer userId);
 }

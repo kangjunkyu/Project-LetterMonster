@@ -83,7 +83,7 @@ public class FriendsServiceImpl implements FriendsService {
 
             String title = "LEMON";
             try {
-                if (!notificationService.sendNotification(friendUser.getNotificationToken(), title, body)) {
+                if (!notificationService.sendNotification(friendUser.getNotificationToken(), title, body, "friend")) {
                     System.out.println("Notification failed to send, but letter was created.");
                 }
             } catch (Exception e) {

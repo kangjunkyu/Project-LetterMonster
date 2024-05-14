@@ -105,7 +105,7 @@ public class LetterServiceImpl implements LetterService {
             String title = "LEMON";
 
             try {
-                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body, sketchbook.getSketchbookUuid())) {
                     System.out.println("Notification failed to send, but letter was created.");
                 }
             } catch (Exception e) {
@@ -129,6 +129,8 @@ public class LetterServiceImpl implements LetterService {
                     return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
                 });
 
+        Sketchbook sketchbook = sketchbookRepository.findById(sketchbookCharacterMotion.getSketchbook().getId()).orElseThrow(()-> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+        
         Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
 
         BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
@@ -143,6 +145,10 @@ public class LetterServiceImpl implements LetterService {
                 .receiver(receiver)
                 .type(1)
                 .friendName("비회원")
+                .friendTag("비회원")
+                .sketchbookName(sketchbook.getName())
+                .sketchbookTag(sketchbook.getTag())
+                .sketchbookUuid(sketchbook.getSketchbookUuid())
                 .build();
 
         String body = null;
@@ -153,7 +159,7 @@ public class LetterServiceImpl implements LetterService {
 
             String title = "LEMON";
             try {
-                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body, sketchbook.getSketchbookUuid())) {
                     // 로그 기록 또는 알림 실패 처리
                     System.out.println("Notification sending failed: User notification token might be missing or invalid.");
                 }
