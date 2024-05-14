@@ -6,6 +6,7 @@ import com.lemon.backend.domain.notification.repository.NotificationRepository;
 import com.lemon.backend.domain.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final FirebaseMessaging firebaseMessaging;
 
+    @Value("${base.url}")
+    private String baseUrl;
+
     @Override
     public Optional<List<NotificationGetDto>> getAllNotifications(Integer userId) {
         return notificationRepository.getAllNotification(userId); // Optional을 직접 반환
@@ -33,22 +37,34 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Transactional
     @Override
-    public boolean sendNotification(String token, String title, String body) {
+    public boolean sendNotification(String token, String title, String body, String type) {
         if (token == null || token.isEmpty() || title == null || title.isEmpty() || body == null || body.isEmpty()) {
             return false;
         }
 
-        String url = "https://letter-monster.s3.ap-northeast-2.amazonaws.com/notify-logo.png";
+        String imageUrl = "https://letter-monster.s3.ap-northeast-2.amazonaws.com/notify-logo.png";
+
+        String clickUrl = "test";
+
+        if(type.equals("friend")){
+            clickUrl = baseUrl;
+        }else{
+            clickUrl = baseUrl + "/sketchbook/" + type;
+        }
 
         Notification notification = Notification.builder()
                 .setTitle(title)
                 .setBody(body)
-                .setImage(url)
+                .setImage(imageUrl)
                 .build();
 
         Message message = Message.builder()
                 .setToken(token)
                 .setNotification(notification)
+                .setWebpushConfig(WebpushConfig.builder()
+                        .setNotification(new WebpushNotification(title, body, imageUrl))
+                        .setFcmOptions(WebpushFcmOptions.withLink(clickUrl))
+                        .build())
                 .build();
 
 //        Message message = Message.builder()
