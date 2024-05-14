@@ -50,7 +50,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible")
+                        sketchbook.users.id.eq(userId).as("isWritePossible"),
+                        sketchbook.isRepresent
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId))
                 .fetch();
@@ -76,7 +77,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible")
+                        sketchbook.users.id.eq(userId).as("isWritePossible"),
+                        sketchbook.isRepresent
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId).and(sketchbook.isPublic.eq(true)))
                 .fetch();
@@ -125,7 +127,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible))
+                        sketchbook.isWritePossible,
+                        sketchbook.isRepresent))
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
@@ -203,7 +206,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible"))
+                        sketchbook.users.id.eq(userId).as("isWritePossible"),
+                        sketchbook.isRepresent)
                 )
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
@@ -266,7 +270,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible))
+                        sketchbook.isWritePossible,
+                        sketchbook.isRepresent))
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
