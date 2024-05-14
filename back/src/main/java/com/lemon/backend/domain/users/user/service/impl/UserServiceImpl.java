@@ -115,10 +115,11 @@ public class UserServiceImpl implements UserService {
         //헤더에 들어온 리프레시 토큰을 블랙리스트에 추가
         jwtTokenProvider.addTokenIntoBlackList(refreshToken);
 
-        TokenResponse tokenResponse = jwtTokenProvider.createToken(userId, Role.ROLE_USER.name());
-        saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
+        String accessToken = jwtTokenProvider.createAccessToken(userId, Role.ROLE_USER.name());
+        String newRefreshToken = jwtTokenProvider.createRefreshToken();
+        saveRefreshTokenIntoRedis(userId, newRefreshToken);
 
-        return tokenResponse;
+        return TokenResponse.builder().accessToken(accessToken).refreshToken(newRefreshToken).build();
     }
 
     @Override

@@ -100,6 +100,9 @@ dependencies {
     // aop
     implementation 'org.springframework:spring-aop:6.1.6'
 
+    // Bucket4J
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.5.0'
+
 
 }
 

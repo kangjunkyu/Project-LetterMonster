@@ -24,6 +24,7 @@ public class JwtTokenProvider {
     private static final String BEARER_TYPE = "Bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+
     private final TokenBlacklistService tokenBlacklistService;
     @Value("${spring.security.jwt.secret-key}")
     private String secretKey;
@@ -35,10 +36,9 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenResponse createToken(Integer userId, String role) {
+    public String createAccessToken(Integer userId, String role) {
         long now = (new Date()).getTime();
         Date accessTokenExpiredAt = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-        Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
 
         String id = userId.toString();
         Map<String, Object> claims = new HashMap<>();
@@ -52,17 +52,20 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
+        return accessToken;
+    }
+
+    public String createRefreshToken() {
+        long now = (new Date()).getTime();
+        Date refreshTokenExpiredAt = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
+
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setClaims(claims)
                 .setExpiration(refreshTokenExpiredAt)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        return TokenResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .grantType(BEARER_TYPE).build();
+        return refreshToken;
     }
 
     public Integer getSubject(String token) {
