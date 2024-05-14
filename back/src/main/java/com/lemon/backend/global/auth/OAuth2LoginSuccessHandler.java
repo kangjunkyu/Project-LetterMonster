@@ -48,12 +48,14 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         if (cookieRedirectUrl.isPresent()) {
             Integer userId = Integer.valueOf(userPrincipal.getName());
-            TokenResponse tokenResponse = jwtTokenProvider.createToken(userId, Role.ROLE_USER.name());
-            userService.saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
+
+            String accessToken = jwtTokenProvider.createAccessToken(userId, Role.ROLE_USER.name());
+            String refreshToken = jwtTokenProvider.createRefreshToken();
+            userService.saveRefreshTokenIntoRedis(userId, refreshToken);
 
             String redirectUrl = UriComponentsBuilder.fromUriString(cookieRedirectUrl.get())
-                    .queryParam("accessToken", tokenResponse.getAccessToken())
-                    .queryParam("refreshToken", tokenResponse.getRefreshToken())
+                    .queryParam("accessToken", accessToken)
+                    .queryParam("refreshToken", refreshToken)
                     .build().toUriString();
 
             if (fireBaseToken.isPresent() && !fireBaseToken.get().isEmpty()) {
