@@ -10,7 +10,9 @@ main {
 
   & .layoutSection {
     /* 데스크탑 */
-    // min-height: 100vh;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+
     @media screen AND (min-width: 768px) {
       min-height: 100vh;
       & > * {

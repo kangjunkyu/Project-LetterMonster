@@ -10,6 +10,9 @@ main {
 
   & .layoutSection {
     /* 데스크탑 */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+
     @media screen AND (min-width: 768px) {
       min-height: 100vh;
       & > * {
@@ -28,8 +31,12 @@ main {
 
     @media screen and (max-width: 479px) {
       /* 모바일 */
+
       & > * {
-        min-height: calc(100vh - $LNBHeight - $GNBHeight);
+        min-height: calc(
+          100vh - $LNBHeight - $GNBHeight - env(safe-area-inset-top) -
+            env(safe-area-inset-bottom)
+        );
         margin-top: $LNBHeight;
       }
     }

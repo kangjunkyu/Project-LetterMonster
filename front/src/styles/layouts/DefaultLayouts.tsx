@@ -6,9 +6,9 @@ function DefaultLayouts() {
   return (
     <main>
       <GNB />
-      <section className={styles.layoutSection}>
+      <article className={styles.layoutSection}>
         <Outlet />
-      </section>
+      </article>
     </main>
   );
 }
