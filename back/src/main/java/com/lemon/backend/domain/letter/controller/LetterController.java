@@ -3,7 +3,7 @@ package com.lemon.backend.domain.letter.controller;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterCreateDto;
-import com.lemon.backend.domain.letter.dto.requestDto.LetterReplyResponse;
+import com.lemon.backend.domain.letter.dto.responseDto.LetterReplyResponse;
 import com.lemon.backend.domain.letter.service.LetterService;
 import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.Operation;
