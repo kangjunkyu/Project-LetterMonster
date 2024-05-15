@@ -8,6 +8,7 @@ import com.lemon.backend.global.response.SuccessCode;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class GroupsController {
 
 
     @GetMapping("/all")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAllGroup(Authentication authentication) {
         Integer loginId = (Integer) authentication.getPrincipal();
 
@@ -37,6 +39,7 @@ public class GroupsController {
     }
 
     @DeleteMapping("/{groupId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> deleteGroup(Authentication authentication, @PathVariable Long groupId) {
         Integer loginId = (Integer) authentication.getPrincipal();
         groupsService.deleteGroup(loginId, groupId);
@@ -44,6 +47,7 @@ public class GroupsController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createGroup(Authentication authentication, @RequestParam(value = "groupName") String groupName) {
         Integer loginId = (Integer) authentication.getPrincipal();
 

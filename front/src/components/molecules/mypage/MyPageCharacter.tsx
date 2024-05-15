@@ -68,34 +68,36 @@ function MyPageCharacter() {
             //   handleCardClick(character.characterId);
             // }}
           >
-            <div className={styles.userCharacterListUpper}>
-              <button
-                onClick={() => handleMainCharacterClick(character.characterId)}
-              >
-                대표 지정
-              </button>
-              <button
-                onClick={() => deleteCharacter.mutate(character.characterId)}
-              >
-                삭제
-              </button>
+            <div
+                className={`${styles.userCharacterInfo} ${
+                    character.mainCharacter
+                        ? styles.justifyBetween
+                        : styles.justifyRight
+                }`}
+            >
+              {character.mainCharacter && (
+                  <span className={styles.mainCharacterLabel}>대표</span>
+              )}
+              <span className={styles.nickname}>{character.nickname}</span>
             </div>
             <img
               src={character.imageUrl}
               alt={character.nickname}
               className={styles.userCharacterImage}
             />
-            <div
-              className={`${styles.userCharacterInfo} ${
-                character.mainCharacter
-                  ? styles.justifyBetween
-                  : styles.justifyRight
-              }`}
-            >
-              {character.mainCharacter && (
-                <span className={styles.mainCharacterLabel}>대표</span>
-              )}
-              <span className={styles.nickname}>{character.nickname}</span>
+            <div className={styles.userCharacterListUpper}>
+              <button
+                  className={styles.representButton}
+                  onClick={() => handleMainCharacterClick(character.characterId)}
+              >
+                대표 지정
+              </button>
+              <button
+                  className={styles.deleteButton}
+                  onClick={() => deleteCharacter.mutate(character.characterId)}
+              >
+                삭제
+              </button>
             </div>
           </div>
         ))}

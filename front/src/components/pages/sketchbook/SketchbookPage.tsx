@@ -15,6 +15,15 @@ import { useAlert } from "../../../hooks/notice/useAlert";
 import WriteButton from "../../atoms/button/WriteLetterButton";
 import Modal from "../../atoms/modal/Modal";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  useFavoriteSketchbookCheck,
+  useFavoriteSketchbookOn,
+} from "../../../hooks/sketchbook/useFavorite";
+import Star from "../../../assets/commonIcon/star.svg?react";
+import FilledStar from "../../../assets/commonIcon/filledStar.svg?react";
+import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
+import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
+import CommonShareIcon from "../../atoms/share/commonShareIcon";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -29,6 +38,8 @@ function SketchbookPage() {
   const deleteSketchbook = useDeleteSketchbook();
   const mutateSketchbookOpen = usePutSketchbookOpen();
   const queryClient = useQueryClient();
+  const mutateSketchbookFavorite = useFavoriteSketchbookOn();
+  const { data: Favorite } = useFavoriteSketchbookCheck(data?.data?.id);
 
   useEffect(() => {
     setName(data?.data?.name);
@@ -77,7 +88,7 @@ function SketchbookPage() {
   const handleUserNicknameChange = (nickname: string) => {
     if (nickname.startsWith(" ")) {
       showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
-    } else if (/[^a-zA-Z0-9ㆍᆞᆢ\s]/.test(nickname) || nickname.includes("　")) {
+    } else if (nickname.includes("　")) {
       showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
     } else if (nickname.length > 10) {
       showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
@@ -88,10 +99,21 @@ function SketchbookPage() {
     }
   };
 
-  const writeLetter = () =>
-    navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
-      state: { sketchbookName: data?.data?.name },
-    });
+  const writeLetter = () => {
+    localStorage.getItem("accessToken")
+      ? navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
+          state: {
+            sketchbookName: data?.data?.name,
+          },
+        })
+      : navigate(Page_Url.Sketch, {
+          state: {
+            sketchbookId: data?.data?.id,
+            sketchbookName: data?.data?.name,
+            fromUuid: data?.data?.uuid,
+          },
+        });
+  };
 
   const inputEnter = (
     e:
@@ -102,6 +124,8 @@ function SketchbookPage() {
       handleUserNicknameChange(name);
     }
   };
+
+  const checkToken = useCheckTokenExpiration();
 
   return (
     <>
@@ -118,11 +142,30 @@ function SketchbookPage() {
               }}
             >{`${data?.data?.name} ▼ ${
               data?.data?.isPublic ? "공개중" : "비공개중"
-            }`}</h1>
+            } `}</h1>
           )}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
+          {Favorite?.data ? (
+            <button
+              onClick={() => {
+                mutateSketchbookFavorite.mutate(data?.data?.id);
+              }}
+            >
+              <FilledStar width={30} height={30} />
+            </button>
+          ) : (
+            checkToken(localStorage.getItem("accessToken")) && (
+              <button
+                onClick={() => {
+                  mutateSketchbookFavorite.mutate(data?.data?.id);
+                }}
+              >
+                <Star width={30} height={30} />
+              </button>
+            )
+          )}
         </LNB>
         <WriteButton id="writeButton" onClick={() => writeLetter()} />
         {data && (
@@ -156,6 +199,7 @@ function SketchbookPage() {
                   </div>
                 </div>
               )}
+
             <div className={styles.characterGrid}>
               {!isLoading &&
                 data?.data?.sketchbookCharacterMotionList?.map(
@@ -200,6 +244,14 @@ function SketchbookPage() {
               >
                 {data?.data?.isPublic ? "링크로만 공개" : "모두에게 공개"}
               </DefaultButton>
+              <div className={styles.linkBox}>
+                <CommonShareIcon link={data?.data?.shareLink} />
+                <KakaoShareIcon
+                  link={data?.data?.shareLink}
+                  nickname={data?.data?.holder.nickname}
+                  index={0}
+                />
+              </div>
             </div>
           </Modal>
         )}

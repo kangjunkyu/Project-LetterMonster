@@ -97,6 +97,12 @@ dependencies {
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
     implementation 'com.google.firebase:firebase-admin:7.3.0'
 
+    // aop
+    implementation 'org.springframework:spring-aop:6.1.6'
+
+    // Bucket4J
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.5.0'
+
 
 }
 

@@ -12,6 +12,7 @@ interface Props {
   setContent: (content: string) => void;
   isLoad: boolean;
   characterId: number;
+  uuid: string;
 }
 
 function useWriteLetter() {
@@ -25,6 +26,7 @@ function useWriteLetter() {
     setContent,
     isLoad,
     characterId,
+    uuid,
   }: Props) => {
     if (
       content &&
@@ -39,7 +41,7 @@ function useWriteLetter() {
           if (res.statusCode === 201) {
             setContent("");
             showAlert("편지를 보냈어요!");
-            navigate(Page_Url.SketchbookList);
+            navigate(`${Page_Url.Sketchbook}${uuid}`);
           }
         })
         .catch(() => {

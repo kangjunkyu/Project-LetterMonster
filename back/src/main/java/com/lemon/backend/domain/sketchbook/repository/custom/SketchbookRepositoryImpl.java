@@ -10,6 +10,7 @@ import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ import static com.lemon.backend.domain.letter.entity.QLetter.letter;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbook.sketchbook;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion.sketchbookCharacterMotion;
 import static com.querydsl.core.types.Projections.constructor;
+import static com.querydsl.jpa.JPAExpressions.select;
 
 @RequiredArgsConstructor
 public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
@@ -48,7 +50,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible")
+                        sketchbook.users.id.eq(userId).as("isWritePossible"),
+                        sketchbook.isRepresent
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId))
                 .fetch();
@@ -74,7 +77,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible")
+                        sketchbook.users.id.eq(userId).as("isWritePossible"),
+                        sketchbook.isRepresent
                 )).from(sketchbook)
                 .where(sketchbook.users.id.eq(userId).and(sketchbook.isPublic.eq(true)))
                 .fetch();
@@ -110,8 +114,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
+
+        // Sketchbook 상세 정보 조회
         SketchbookGetDetailDto sketchDto = query
-                .select(constructor(SketchbookGetDetailDto.class,
+                .select(Projections.constructor(SketchbookGetDetailDto.class,
                         sketchbook.id,
                         sketchbook.isPublic,
                         sketchbook.shareLink,
@@ -121,45 +127,50 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible
-                )).from(sketchbook)
+                        sketchbook.isWritePossible,
+                        sketchbook.isRepresent))
+                .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
-        if(sketchDto != null){
+
+        if (sketchDto != null) {
+            // SketchbookCharacterMotion과 관련된 데이터를 조인하여 한 번에 가져오기
             List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionGetListDtos = query
                     .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
-                            sketchbookCharacterMotion.id,
-                            Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                    characterMotion.id,
-                                    characterMotion.motion.id,
-                                    characterMotion.url,
-                                    characters.nickname
-                            )))
+                                    sketchbookCharacterMotion.id,
+                                    Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                            characterMotion.id,
+                                            characterMotion.motion.id,
+                                            characterMotion.url,
+                                            characters.nickname),
+                                    Projections.list(
+                                            Projections.constructor(LetterToSketchbookDto.class,
+                                                    letter.id,
+                                                    Projections.fields(UserGetDto.class,
+                                                            letter.sender.nickname,
+                                                            letter.sender.nicknameTag),
+                                                    Projections.fields(UserGetDto.class,
+                                                            letter.receiver.nickname,
+                                                            letter.receiver.nicknameTag),
+                                                    letter.content,
+                                                    letter.isPublic,
+                                                    letter.createdAt)
+                                    )
+                            )
+                    )
                     .from(sketchbookCharacterMotion)
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
+                    .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
                     .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
-            for (SketchbookCharacterMotionGetListDto motionDto : sketchbookCharacterMotionGetListDtos) {
-                Long characterMotionId = motionDto.getCharacterMotion() != null ? motionDto.getCharacterMotion().getId() : null;
-                if (characterMotionId != null) {
-                    CharacterMotionToSketchbookDto characterMotions = query
-                            .select(Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                    characterMotion.id,
-                                    characterMotion.motion.id,
-                                    characterMotion.url,
-                                    characters.nickname
-                            ))
-                            .from(characterMotion)
-                            .where(characterMotion.id.eq(characterMotionId))
-                            .fetchOne();
-                    motionDto.setCharacterMotion(characterMotions);
-                }
-            }
+
             sketchDto.setSketchbookCharacterMotionList(sketchbookCharacterMotionGetListDtos);
         }
+
         return Optional.ofNullable(sketchDto);
     }
+
 
     @Override
     public Optional<SketchbookCharacterMotion> findByCharacterMotionAndSketchbook(Long sketchbookId, Long characterMotionId) {
@@ -183,6 +194,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
 
+        // Sketchbook 상세 정보 조회
         SketchbookGetDetailDto sketchDto = query
                 .select(Projections.constructor(SketchbookGetDetailDto.class,
                         sketchbook.id,
@@ -194,74 +206,59 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.users.id.eq(userId).as("isWritePossible"))
+                        sketchbook.users.id.eq(userId).as("isWritePossible"),
+                        sketchbook.isRepresent)
                 )
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
 
         if (sketchDto != null) {
+            // SketchbookCharacterMotion과 관련된 Letter를 조인하여 한 번에 가져오기
             List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotions = query
                     .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
-                            sketchbookCharacterMotion.id,
-                            Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                    characterMotion.id,
-                                    characterMotion.motion.id,
-                                    characterMotion.url,
-                                    characters.nickname
-                            )))
+                                    sketchbookCharacterMotion.id,
+                                    Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                            characterMotion.id,
+                                            characterMotion.motion.id,
+                                            characterMotion.url,
+                                            characters.nickname),
+                                    Projections.list(
+                                            Projections.constructor(LetterToSketchbookDto.class,
+                                                    letter.id,
+                                                    Projections.fields(UserGetDto.class,
+                                                            letter.sender.nickname,
+                                                            letter.sender.nicknameTag),
+                                                    Projections.fields(UserGetDto.class,
+                                                            letter.receiver.nickname,
+                                                            letter.receiver.nicknameTag),
+                                                    letter.content,
+                                                    letter.isPublic,
+                                                    letter.createdAt)
+                                    )
+                            )
+                    )
                     .from(sketchbookCharacterMotion)
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
+                    .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
                     .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
 
-            for (SketchbookCharacterMotionGetListDto motionDto : sketchbookCharacterMotions) {
-                List<LetterToSketchbookDto> letters = query
-                        .select(constructor(LetterToSketchbookDto.class,
-                                letter.id,
-                                Projections.fields(UserGetDto.class,
-                                        letter.sender.nickname,
-                                        letter.sender.nicknameTag),
-                                Projections.fields(UserGetDto.class,
-                                        letter.receiver.nickname,
-                                        letter.receiver.nicknameTag),
-                                letter.content,
-                                letter.isPublic,
-                                letter.createdAt))
-                        .from(letter)
-                        .leftJoin(letter.sender)
-                        .leftJoin(letter.receiver)
-                        .where(letter.sketchbookCharacterMotion.id.eq(motionDto.getId()))
-                        .fetch();
-                motionDto.setLetterList(letters);
-
-                Long characterMotionId = motionDto.getCharacterMotion() != null ? motionDto.getCharacterMotion().getId() : null;
-                if (characterMotionId != null) {
-                    CharacterMotionToSketchbookDto characterMotions = query
-                            .select(Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                    characterMotion.id,
-                                    characterMotion.motion.id,
-                                    characterMotion.url,
-                                    characters.nickname
-                            ))
-                            .from(characterMotion)
-                            .where(characterMotion.id.eq(characterMotionId))
-                            .fetchOne();
-                    motionDto.setCharacterMotion(characterMotions);
-                }
-            }
             sketchDto.setSketchbookCharacterMotionList(sketchbookCharacterMotions);
         }
 
         return Optional.ofNullable(sketchDto);
     }
 
+
     @Override
     public SketchbookDetailPageDto getSketchSelect3(String sketchId, Pageable pageable) {
         if (sketchId == null) {
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
+
+        // Sketchbook 상세 정보 조회
         SketchbookGetDetailDto sketchDto = query
                 .select(Projections.constructor(SketchbookGetDetailDto.class,
                         sketchbook.id,
@@ -273,21 +270,43 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                                 sketchbook.users.nicknameTag),
                         sketchbook.sketchbookUuid,
                         sketchbook.tag,
-                        sketchbook.isWritePossible))
+                        sketchbook.isWritePossible,
+                        sketchbook.isRepresent))
                 .from(sketchbook)
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
+
+        if(sketchDto == null) {
+            throw new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND);
+        }
+        // SketchbookCharacterMotion과 관련된 Letter를 조인하여 한 번에 가져오기
         QueryResults<SketchbookCharacterMotionGetListDto> results = query
                 .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
-                        sketchbookCharacterMotion.id,
-                        Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                characterMotion.id,
-                                characterMotion.motion.id,
-                                characterMotion.url,
-                                characters.nickname)))
+                                sketchbookCharacterMotion.id,
+                                Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                        characterMotion.id,
+                                        characterMotion.motion.id,
+                                        characterMotion.url,
+                                        characters.nickname),
+                                Projections.list(
+                                        Projections.constructor(LetterToSketchbookDto.class,
+                                                letter.id,
+                                                Projections.fields(UserGetDto.class,
+                                                        letter.sender.nickname,
+                                                        letter.sender.nicknameTag),
+                                                Projections.fields(UserGetDto.class,
+                                                        letter.receiver.nickname,
+                                                        letter.receiver.nicknameTag),
+                                                letter.content,
+                                                letter.isPublic,
+                                                letter.createdAt)
+                                )
+                        )
+                )
                 .from(sketchbookCharacterMotion)
                 .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                 .leftJoin(characterMotion.characters, characters)
+                .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
                 .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -295,31 +314,11 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
 
         List<SketchbookCharacterMotionGetListDto> motions = results.getResults();
         long total = results.getTotal();
-        motions.forEach(motion -> {
-            List<LetterToSketchbookDto> letters = query
-                    .select(Projections.constructor(LetterToSketchbookDto.class,
-                            letter.id,
-                            Projections.fields(UserGetDto.class,
-                                    letter.sender.nickname,
-                                    letter.sender.nicknameTag),
-                            Projections.fields(UserGetDto.class,
-                                    letter.receiver.nickname,
-                                    letter.receiver.nicknameTag),
-                            letter.content,
-                            letter.isPublic,
-                            letter.createdAt))
-                    .from(letter)
-                    .leftJoin(letter.sender)
-                    .leftJoin(letter.receiver)
-                    .where(letter.sketchbookCharacterMotion.id.eq(motion.getId()))
-                    .fetch();
-
-            motion.setLetterList(letters);  // Assuming a setter method is available to set letters
-        });
 
         Page<SketchbookCharacterMotionGetListDto> page = new PageImpl<>(motions, pageable, total);
         return new SketchbookDetailPageDto(sketchDto, page);
     }
+
 
 
     @Override
@@ -356,12 +355,34 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                         sketchbook.sketchbookUuid,
                         sketchbook.name,
                         sketchbook.tag,
-                        sketchbook.users.nickname))
+                        sketchbook.users.nickname,
+                        sketchbook.isPublic))
                 .from(sketchbook)
                 .leftJoin(sketchbook.users)
                 .where(sketchbook.name.contains(sketchbookName).and(sketchbook.isPublic.eq(true)))
                 .fetch();
         return Optional.ofNullable(list);
+    }
+
+    @Override
+    public SketchbookGetRandomDto randomSketchbook(){
+        return query
+                .select(Projections.constructor(SketchbookGetRandomDto.class,
+                        sketchbook.id,
+                        sketchbook.shareLink,
+                        sketchbook.name,
+                        sketchbook.sketchbookUuid,
+                        sketchbook.tag,
+                        Projections.fields(UserGetDto.class,
+                                sketchbook.users.nickname,
+                                sketchbook.users.nicknameTag))).from(sketchbook)
+                .where(sketchbook.isPublic.eq(true).and(sketchbook.isWritePossible.eq(false))
+                                .and(select(letter.count())
+                                        .from(letter)
+                                        .where(letter.sketchbookCharacterMotion.sketchbook.eq(sketchbook))
+                                        .goe(4L)))
+                .orderBy(Expressions.numberTemplate(Double.class, "function('RAND')").asc())
+                .fetchFirst();
     }
 
     @Override

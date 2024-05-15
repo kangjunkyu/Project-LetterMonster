@@ -2,25 +2,28 @@
 
 .itemContainer {
   position: relative;
-  list-style: none;
   width: 100%;
-  height: 150px;
-  & :first-child {
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-  }
-  & :nth-child(2) {
-    position: absolute;
-    top: 0.5em;
-    right: 2.5em;
-  }
+  // @include box();
+  @include commonShadow;
+  // & :first-child {
+  //   position: absolute;
+  //   top: 0.5em;
+  //   right: 0.5em;
+  // }
+  // & :nth-child(2) {
+  //   position: absolute;
+  //   top: 0.5em;
+  //   right: 2.5em;
+  // }
 }
 
 .sketchbookListItem {
-  @include box();
-  @include flexCenter();
+  width: 100%;
   height: 100%;
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
   /* 데스크탑 */
 
   @media screen and (max-width: 767px) {
@@ -30,4 +33,20 @@
   @media screen and (max-width: 479px) {
     /* 모바일 */
   }
+}
+
+.badge {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5px;
+  @include flexCenter;
+  @include commonShadow;
+}
+
+.open {
+  background-color: rgba(0, 255, 0, 0.418);
+}
+
+.close {
+  background-color: rgba(255, 153, 0, 0.418);
 }

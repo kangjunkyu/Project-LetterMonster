@@ -10,27 +10,29 @@ main {
 
   & .layoutSection {
     /* 데스크탑 */
-    @media screen AND (min-width: 767px) {
-      min-height: 100vh;
+    padding-top: 1rem;
+    @media screen AND (min-width: 768px) {
+      min-height: calc(100vh - 1rem);
       & > * {
-        min-height: 100vh;
-        padding-left: 54px;
+        min-height: calc(100vh - 1rem);
+        padding-left: $GNBWidth;
       }
     }
 
     @media screen and (max-width: 767px) {
       /* 타블렛 */
       & > * {
-        min-height: calc(100vh - 64px);
-        margin-bottom: 64px;
+        min-height: calc((100vh - 1rem) - $GNBHeight);
+        margin-bottom: $GNBHeight;
       }
     }
 
     @media screen and (max-width: 479px) {
       /* 모바일 */
       & > * {
-        min-height: calc(100vh - 44px);
-        margin-top: 44px;
+        min-height: calc(100vh - $LNBHeight - 1rem);
+        margin-top: $LNBHeight;
+        margin-bottom: 0px;
       }
     }
   }

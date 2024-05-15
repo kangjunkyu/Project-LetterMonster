@@ -1,5 +1,7 @@
 import os
 import requests
+import shutil
+import json
 
 from fastapi import APIRouter, File, Form, UploadFile
 from fastapi.responses import JSONResponse
@@ -51,11 +53,15 @@ async def text_to_speech(request: TTSRequest):
 
 
 @router.post("/stt")
-async def speech_to_text(
-        audio: UploadFile = File(...),
-        leeter_id: str = Form(...)
-):
+async def speech_to_text(audio: UploadFile = File(...),
+                         lang: str = Form(...)):
     try:
+        with open(audio.filename, "wb") as buffer:
+            shutil.copyfileobj(audio.file, buffer)
+
+        with open(audio.filename, "rb") as f:
+            audio_data = f.read()
+
         headers = {
             "Content-Type": "application/octet-stream",
             "X-NCP-APIGW-API-KEY-ID": os.getenv("CLOVA_CLIENT_ID"),
@@ -63,21 +69,26 @@ async def speech_to_text(
         }
 
         params = {
-            "lang": "Kor"
+            "lang": lang
         }
 
         response = requests.post(
-            url="https://naveropenapi.apigw-pub.fin-ntruss.com/recog/v1/stt",
+            url="https://naveropenapi.apigw.ntruss.com/recog/v1/stt",
             headers=headers,
             params=params,
-            data=audio
+            data=audio_data
         )
 
-        text = response.text
+        json_result = response.text
+        string_data = json.loads(json_result)
+        text = string_data["text"]
 
-        print(text)
+        print(text) # 확인
 
         return JSONResponse(content={"text": text}, status_code=200)
 
     except Exception as e:
         return JSONResponse(content={}, status_code=500)
+
+    finally:
+        os.remove(audio.filename)

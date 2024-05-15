@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,9 +20,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+
 @Slf4j
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -43,7 +46,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // 인증되지 않은 사용자도 접근 가능
                         .requestMatchers("/**","/error", "/actuator/health").permitAll()
-                        .requestMatchers("/public/**", "/user/public/**", "/sketchbooks/public/**", "/characters/public/**", "/letter/public/**").permitAll()
+                        .requestMatchers("/user/public/**", "/sketchbooks/public/**", "/characters/public/**", "/letter/public/**").permitAll()
 
                         // 로그인 한 사용자
                         .requestMatchers("/user/**", "/sketchbooks/**", "/letter/**", "/characters/**", "/ai/**", "/notification/**").authenticated()
@@ -97,4 +100,5 @@ public class SecurityConfig {
         idTokenDecoderFactory.setJwsAlgorithmResolver(clientRegistration -> MacAlgorithm.HS256);
         return idTokenDecoderFactory;
     }
+
 }

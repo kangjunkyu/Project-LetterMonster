@@ -17,4 +17,5 @@ public class SketchbookGetSimpleDto {
     private String uuid;
     private String tag;
     private Boolean isWritePossible;
+    private Boolean isRepresent;
 }
