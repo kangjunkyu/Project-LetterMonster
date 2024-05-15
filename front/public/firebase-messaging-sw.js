@@ -1,7 +1,7 @@
 // 푸시 알림 관련 기능을 지원하는지 확인
 if ("serviceWorker" in navigator && "PushManager" in window) {
   // Service Worker 등록
-  navigator.serviceWorker
+  navigator?.serviceWorker
     .register("/sw.js")
     .then(function (registration) {
       // 푸시 이벤트 리스너 추가
