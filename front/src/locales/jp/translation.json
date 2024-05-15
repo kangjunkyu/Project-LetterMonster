@@ -7,6 +7,24 @@
     "back": "戻る",
     "goToMain": "最初に戻る"
   },
+  "notification": {
+    "nameblank": "最初の文字としてスペースを使用することはできません",
+    "name10": "スケッチブックの名前は10文字以下にしてください",
+    "noregist": "ゲストは手紙を見ることができません",
+    "copy": "コピー完了",
+    "retry": "もう一度お試しください",
+    "letterSuccess": "手紙を送りました！",
+    "letterFail": "手紙の送信に失敗しました",
+    "selectCharacter": "キャラクターを選んでください",
+    "motionLoading": "キャラクターが動作を練習中です",
+    "noContent": "送信する内容を確認してください",
+    "where": "送信するスケッチブックを確認してください",
+    "selectMotion": "キャラクターの動作を選んでください",
+    "error": "不明なエラーが発生しました",
+    "deleteFriend": "友達を削除しました！",
+    "weareFriend": "友達を追加しました！",
+    "nicknameChange": "ニックネームの変更に成功しました"
+  },
   "nav": {
     "sketchbook": "スケッチブック",
     "logout": "ログアウト",
@@ -31,19 +49,28 @@
     "send": "送る"
   },
   "sketchbookList": {
-    "title": "私のスケッチブックリスト",
+    "title": "スケッチブックリスト",
     "generate": "作成する",
     "generateModal": "私のスケッチブックを作成する",
     "name": "スケッチブックの名前",
     "create": "スケッチブックが作成されました",
     "namePlease": "スケッチブックの名前を決めてください",
-    "copy": "コピー完了"
+    "copy": "コピー完了",
+    "empty": "何もない",
+    "favoriteList": "お気に入りのスケッチブックリスト",
+    "searchResult": "検索結果",
+    "Explore": "スケッチブックを探索",
+    "My": "私のスケッチブック"
   },
   "sketchbook": {
     "letter": "手紙を残す",
     "rename": "スケッチブックの名前を変更",
     "delete": "スケッチブックを削除",
     "cancel": "キャンセル",
+    "changePrivate": "リンクでのみ公開",
+    "changePublic": "全員に公開",
+    "public": "公開",
+    "private": "非公開",
     "check": "本当にスケッチブックを削除しますか？"
   },
   "paint": {
@@ -56,7 +83,7 @@
     "pleaseTen": "ニックネームは10文字以下である必要があります。",
     "pleaseDraw": "キャラクターを描いてください"
   },
-  "paintResult":{
+  "paintResult": {
     "title": "図完成",
     "birth": "誕生",
     "move": "移動に行く",
@@ -71,7 +98,23 @@
     "practice": "キャラクターはまだ動作を練習中です。"
   },
   "mypage": {
-    "sketchbookList": "スケッチブックリスト"
+    "sketchbookList": "スケッチブックリスト",
+    "friendList": "私の友達リスト",
+    "characterList": "私のキャラクターリスト",
+    "characterDelete": "削除",
+    "characterRep": "代表",
+    "characterSetRep": "代表に設定",
+    "nickname": "ニックネーム",
+    "nicknameTag": "タグ",
+    "insertNickname": "新しいニックネームを入力してください",
+    "nicknameChange": "ニックネームを変更",
+    "nicknameChangeSuccess": "ニックネームが変更されました",
+    "nicknameNobadwords": "ニックネームに不適切な言葉は使えません",
+    "withdrawal": "会員退会",
+    "nofriend": "登録された友達がいません",
+    "findfriend": "友達を探す",
+    "friendSearch": "ニックネームを入力してください",
+    "wearefriend": "追加"
   },
   "main": {
     "title": "レターモンスター",
