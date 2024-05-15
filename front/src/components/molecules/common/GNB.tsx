@@ -1,40 +1,46 @@
-import { Link } from "react-router-dom";
 import styles from "./GNB.module.scss";
-import { useTranslation } from "react-i18next";
-
 import { Page_Url } from "../../../router/Page_Url";
+import GNBLink from "./GNBLink";
 
 // 아이콘
 import sketchbook from "../../../assets/GNBIcon/sketchbook.svg";
 import draw from "../../../assets/GNBIcon/draw.svg";
 import letter from "../../../assets/GNBIcon/letter.svg";
-// import more from "../../../assets/GNBIcon/more.svg";
 import home from "../../../assets/GNBIcon/home.svg";
 
 function GNB() {
-  const { t } = useTranslation();
+  const links = [
+    {
+      to: Page_Url.Main,
+      iconSrc: home,
+      altText: "집으로",
+      translationKey: "nav.home",
+    },
+    {
+      to: Page_Url.Sketch,
+      iconSrc: draw,
+      altText: "그리기",
+      translationKey: "nav.drawing",
+    },
+    {
+      to: Page_Url.SketchbookList,
+      iconSrc: sketchbook,
+      altText: "스케치북",
+      translationKey: "nav.sketchbook",
+    },
+    {
+      to: Page_Url.WriteLetter,
+      iconSrc: letter,
+      altText: "편지 쓰기",
+      translationKey: "nav.letter",
+    },
+  ];
+
   return (
     <header className={styles.header}>
-      <Link className={styles.GNBbutton} to={Page_Url.Main}>
-        <img src={home} alt="집으로" />
-        {t("nav.home")}
-      </Link>
-      <Link className={styles.GNBbutton} to={Page_Url.Sketch}>
-        <img src={draw} alt="그리기" />
-        {t("nav.drawing")}
-      </Link>
-      <Link className={styles.GNBbutton} to={Page_Url.SketchbookList}>
-        <img src={sketchbook} alt="스케치북" />
-        {t("nav.sketchbook")}
-      </Link>
-      <Link className={styles.GNBbutton} to={Page_Url.WriteLetter}>
-        <img src={letter} alt="편지 쓰기" />
-        {t("nav.letter")}
-      </Link>
-      {/* <Link className={styles.GNBbutton} to={Page_Url.MyPage}>
-        <img src={more} alt="메인" />
-        {t("nav.more")}
-      </Link> */}
+      {links.map((link) => (
+        <GNBLink key={link.to} {...link} />
+      ))}
     </header>
   );
 }

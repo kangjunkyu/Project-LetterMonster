@@ -6,6 +6,7 @@ import com.lemon.backend.domain.characters.repository.CharacterRepository;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterGetRecentListDto;
 import com.lemon.backend.domain.letter.dto.requestDto.LetterCreateDto;
+import com.lemon.backend.domain.letter.dto.requestDto.LetterReplyResponse;
 import com.lemon.backend.domain.letter.dto.responseDto.LetterCreateResponse;
 import com.lemon.backend.domain.letter.entity.Letter;
 import com.lemon.backend.domain.letter.repository.LetterRepository;
@@ -67,6 +68,8 @@ public class LetterServiceImpl implements LetterService {
                     return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
                 });
 
+        Sketchbook sketchbook = sketchbookRepository.findById(sketchbookCharacterMotion.getSketchbook().getId()).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+
         Users sender = userRepository.findById(senderId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
         Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
 
@@ -87,6 +90,10 @@ public class LetterServiceImpl implements LetterService {
                     .receiver(receiver)
                     .type(1)
                     .friendName(sender.getNickname())
+                    .friendTag(sender.getNicknameTag())
+                    .sketchbookName(sketchbook.getName())
+                    .sketchbookTag(sketchbook.getTag())
+                    .sketchbookUuid(sketchbook.getSketchbookUuid())
                     .build();
 
             String body = null;
@@ -99,7 +106,7 @@ public class LetterServiceImpl implements LetterService {
             String title = "LEMON";
 
             try {
-                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body, sketchbook.getSketchbookUuid())) {
                     System.out.println("Notification failed to send, but letter was created.");
                 }
             } catch (Exception e) {
@@ -108,6 +115,71 @@ public class LetterServiceImpl implements LetterService {
         }
 
         return letter.getId();
+    }
+
+    @Override
+    public Long replyLetter(Integer userId, LetterReplyResponse letterDto){
+
+        Sketchbook findsketchbook = sketchbookRepository.findRepresentSkechbook(letterDto.getUserId()).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+
+        System.out.println(findsketchbook);
+        SketchbookCharacterMotion sketchbookCharacterMotion = sketchbookRepository.findByCharacterMotionAndSketchbook(findsketchbook.getId(), letterDto.getCharacterMotionId())
+                .orElseGet(() -> {
+                    Sketchbook sketchbook = sketchbookRepository.findById(findsketchbook.getId()).orElseThrow(() -> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+                    CharacterMotion characterMotion = characterMotionRepository.findById(letterDto.getCharacterMotionId()).orElseThrow(() -> new CustomException(ErrorCode.LETTER_NOT_FOUND));
+                    SketchbookCharacterMotion newSketchbookCharacterMotion = SketchbookCharacterMotion.builder()
+                            .sketchbook(sketchbook)
+                            .characterMotion(characterMotion)
+                            .build();
+                    return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
+                });
+
+        Users sender = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+        Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
+
+        BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
+        String content = badWordFilterUtil.change(letterDto.getContent());
+        Letter letter = Letter.builder()
+                .sender(sender)
+                .receiver(receiver)
+                .content(content)
+                .sketchbookCharacterMotion(sketchbookCharacterMotion)
+                .build();
+
+        letterRepository.save(letter);
+
+        if (receiver.getNotificationToken() != null && !receiver.getNotificationToken().equals("null")) {
+
+            Notification notification = Notification.builder()
+                    .receiver(receiver)
+                    .type(1)
+                    .friendName(sender.getNickname())
+                    .friendTag(sender.getNicknameTag())
+                    .sketchbookName(findsketchbook.getName())
+                    .sketchbookTag(findsketchbook.getTag())
+                    .sketchbookUuid(findsketchbook.getSketchbookUuid())
+                    .build();
+
+            String body = null;
+
+            if (letter.getSender() != null) {
+                body = "[ " + letter.getSender().getNickname() + " ] 님에게 답장이 도착했어요";
+                notificationRepository.save(notification);
+            }
+
+            String title = "LEMON";
+
+            try {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body, findsketchbook.getSketchbookUuid())) {
+                    System.out.println("Notification failed to send, but letter was created.");
+                }
+            } catch (Exception e) {
+                System.out.println("Failed to send notification due to: " + e.getMessage());
+            }
+        }
+
+        return letter.getId();
+
     }
 
     @Override
@@ -123,6 +195,8 @@ public class LetterServiceImpl implements LetterService {
                     return sketchCharacterMotionRepository.save(newSketchbookCharacterMotion);
                 });
 
+        Sketchbook sketchbook = sketchbookRepository.findById(sketchbookCharacterMotion.getSketchbook().getId()).orElseThrow(()-> new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND));
+        
         Users receiver = userRepository.findById(sketchbookCharacterMotion.getSketchbook().getUsers().getId()).orElseThrow(() -> new CustomException(ErrorCode.USERS_NOT_FOUND));
 
         BadWordFilterUtil badWordFilterUtil = new BadWordFilterUtil("☆");
@@ -137,6 +211,10 @@ public class LetterServiceImpl implements LetterService {
                 .receiver(receiver)
                 .type(1)
                 .friendName("비회원")
+                .friendTag("비회원")
+                .sketchbookName(sketchbook.getName())
+                .sketchbookTag(sketchbook.getTag())
+                .sketchbookUuid(sketchbook.getSketchbookUuid())
                 .build();
 
         String body = null;
@@ -147,7 +225,7 @@ public class LetterServiceImpl implements LetterService {
 
             String title = "LEMON";
             try {
-                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body)) {
+                if (!notificationService.sendNotification(receiver.getNotificationToken(), title, body, sketchbook.getSketchbookUuid())) {
                     // 로그 기록 또는 알림 실패 처리
                     System.out.println("Notification sending failed: User notification token might be missing or invalid.");
                 }

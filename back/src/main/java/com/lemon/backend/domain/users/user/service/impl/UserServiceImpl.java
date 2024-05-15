@@ -1,6 +1,5 @@
 package com.lemon.backend.domain.users.user.service.impl;
 
-import com.lemon.backend.domain.sketchbook.dto.requestDto.SketchbookCreateDto;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.repository.SketchbookRepository;
 import com.lemon.backend.domain.users.user.dto.request.ChangeNicknameRequest;
@@ -73,7 +72,7 @@ public class UserServiceImpl implements UserService {
         long sameSketchbookLastNumber = getSameSketchbookLastNumber(BasicSketchbookName);
         String uuid = UUID.randomUUID().toString();
         String sharaLink = baseUrl + "/sketchbook/" + uuid;
-        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(newUser.getId());
+//        boolean isRepresent = !sketchbookRepository.existsRepresentSketchbook(newUser.getId());
 
         Sketchbook sketchbook = Sketchbook.builder()
                 .name(BasicSketchbookName)
@@ -81,7 +80,7 @@ public class UserServiceImpl implements UserService {
                 .shareLink(sharaLink)
                 .sketchbookUuid(uuid)
                 .tag(String.valueOf(sameSketchbookLastNumber))
-                .isRepresent(isRepresent)
+                .isRepresent(true)
                 .build();
 
         sketchbookRepository.save(sketchbook);
@@ -116,10 +115,11 @@ public class UserServiceImpl implements UserService {
         //헤더에 들어온 리프레시 토큰을 블랙리스트에 추가
         jwtTokenProvider.addTokenIntoBlackList(refreshToken);
 
-        TokenResponse tokenResponse = jwtTokenProvider.createToken(userId, Role.ROLE_USER.name());
-        saveRefreshTokenIntoRedis(userId, tokenResponse.getRefreshToken());
+        String accessToken = jwtTokenProvider.createAccessToken(userId, Role.ROLE_USER.name());
+        String newRefreshToken = jwtTokenProvider.createRefreshToken();
+        saveRefreshTokenIntoRedis(userId, newRefreshToken);
 
-        return tokenResponse;
+        return TokenResponse.builder().accessToken(accessToken).refreshToken(newRefreshToken).build();
     }
 
     @Override
@@ -157,7 +157,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserGetDto getUserInfo(Integer userId) {
-        Users user = userRepository.findById(userId).get();
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
         return UserGetDto.builder().nickname(user.getNickname()).nicknameTag(user.getNicknameTag())
                 .isLanguageSet(user.getIsLanguage()).build();
     }

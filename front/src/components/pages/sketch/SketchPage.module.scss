@@ -1,31 +1,54 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/variables";
 .sketchContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
 }
 
-.sketchResultImagePreview{
+.sketchResultImagePreview {
   width: 300px;
   height: 300px;
-  border-radius: 15px;
-  border: 3px solid black;
+  border-radius: 5px;
+  border: 1px solid $gc700;
 }
 
-.sketchResultContainer{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.sketchResultContainer {
+  @include flexCenterColumn;
   gap: 30px;
   font-size: 20px;
-
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    justify-content: flex-end;
+  }
 }
 
-.sketchResultButton{
+.sketchResultButton {
   display: flex;
-  gap: 50px;
-  button{
-    font-size: 18px;
+  gap: 1rem;
+  button {
+    @include body;
+  }
+
+  & > :nth-child(1) {
+    background-color: $primary;
+    color: $white;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
   }
 }

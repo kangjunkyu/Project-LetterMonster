@@ -24,6 +24,8 @@ public class QMotion extends EntityPathBase<Motion> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
+    public final StringPath gifUrl = createString("gifUrl");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited

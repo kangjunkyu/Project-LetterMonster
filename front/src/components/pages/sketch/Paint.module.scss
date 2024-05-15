@@ -1,17 +1,12 @@
-@media screen and (min-width: 479px) {
-  .characterNicknameContainer .etcButton {
+@import "../../../styles/mixins/defalut";
+
+@media screen and (max-width: 479px) {
+  .characterNicknameContainer .etcButton:nth-child(3) {
     display: none;
   }
 }
 
 @media screen and (max-width: 479px) {
-  .paintImportExport .etcButton:nth-child(3) {
-    display: none;
-  }
-  .paintImportExport .etcButton:nth-child(2) {
-    display: none;
-  }
-
   .characterNicknameContainer {
     flex-direction: column;
     align-items: center;
@@ -26,24 +21,18 @@
 
 .paintContainer {
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
   gap: 0.5em;
-  justify-content: center;
-  align-items: center;
-  // font-size: 14px;
-  // margin: 20px 0;
+  @include flexCenterColumn;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
-    // font-size: 12px;
-    // margin-bottom: 80px;
   }
 
   @media screen and (max-width: 479px) {
     /* 모바일 */
-    nav{
-      button{
+    nav {
+      button {
         font-size: 16px;
       }
     }
@@ -62,18 +51,34 @@
     gap: 1em;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 70px;
   }
+}
+
+.paintTool {
+  display: flex;
+
+  @media screen and (max-width: 479px) {
+    flex-direction: column;
+  }
+}
+
+.paintButtonUpper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2px;
+  background-color: $gc700;
+  border-radius: 10px;
 }
 
 .paintTool,
 .paintImportExport {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   align-items: center;
 
   @media screen and (max-width: 767px) {
-    // width: 100%;
     justify-content: center;
   }
 }
@@ -92,7 +97,7 @@
 }
 
 .toolSelected {
-  background-color: green;
+  background-color: rgb(9, 121, 241);
   color: white;
   border-radius: 10px;
 }
@@ -104,7 +109,7 @@
 
 .characterNicknameContainer {
   display: flex;
-  flex-direction: column;
+  gap: 15px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -139,7 +144,7 @@
   @media screen and (max-width: 479px) {
     /* 타블렛 */
     right: 10%;
-    bottom: 260px;
+    bottom: 150px;
   }
 }
 
@@ -148,11 +153,41 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // width: 300px;
 }
 
 .popoverClose {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  border-radius: 5px;
+  padding: 3px 5px 3px 0;
+}
+
+.paintButtonUnder {
+  display: flex;
+  gap: 1rem;
+}
+
+#markerContainer {
+  max-width: 150px;
+  padding: 10px 5px;
+  border-radius: 10px;
+  float: right;
+  input {
+    width: 100px;
+    margin-top: 3px;
+  }
+}
+
+#shape {
+  width: 0;
+  height: 0;
+  border-left: 100px solid transparent;
+  border-right: 0px solid transparent;
+  border-bottom: 15px solid #999;
+  margin: 5px auto;
+  @media screen and (max-width: 479px) {
+    display: none;
+  }
 }

@@ -11,6 +11,12 @@ export function useLogout() {
       localStorage.removeItem("fcm_token");
       navigate(Page_Url.Main);
     });
+    useDeleteLog();
+  };
+}
+
+export function useDeleteLog() {
+  return () => {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("fcm_token");

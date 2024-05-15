@@ -58,7 +58,8 @@ export function useGetSoloCharacter(characterId: number) {
   return useQuery({
     queryKey: ["soloCharacter"],
     queryFn: () => {
-      return getSoloCharacter(characterId);
+      if (characterId) return getSoloCharacter(characterId);
+      else if (!characterId) return Promise.resolve({});
     },
   });
 }

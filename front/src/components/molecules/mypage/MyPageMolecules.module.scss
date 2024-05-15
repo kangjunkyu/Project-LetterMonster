@@ -83,7 +83,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    text-align: right;
 
     &.justifyRight {
       justify-content: flex-end;
@@ -108,7 +108,7 @@
       height: 22px;
       width: 35px;
       margin-right: 5px;
-      background-color: $errorColor;
+      background-color: $primary;
       color: white;
       padding: 2px 5px;
       border-radius: 5px;
@@ -121,6 +121,34 @@
   gap: 1em;
   padding: 10px;
   font-size: 12px;
+}
+
+.representButton {
+  background-color: $gc600; // 대표 지정 버튼의 배경색
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken($gc600, 10%);
+  }
+}
+
+.deleteButton {
+  background-color: $errorColor;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken($errorColor, 10%);
+  }
 }
 
 // MyPageCharacter에서 캐릭터가 0개일때
