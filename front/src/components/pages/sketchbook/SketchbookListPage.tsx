@@ -62,13 +62,13 @@ function SketchbookListPage() {
   const createHandler = (name: string) => {
     {
       if (name.startsWith(" ")) {
-        showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+        showAlert(`${t("notification.nameblank")}`);
       }
       // else if (/[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(name) || name.includes("　")) {
       //   showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
       // }
       else if (name.length > 10) {
-        showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
+        showAlert(`${t("notification.name10")}`);
       } else if (name) {
         createSketchbook.mutate(name);
         showAlert(`${name} ${t("sketchbookList.create")}`);
@@ -167,7 +167,7 @@ function SketchbookListPage() {
               }}
             />
             {searchResult?.data && (
-              <SketchbookList title={t("writeletter.searchResult")}>
+              <SketchbookList title={t("sketchbookList.searchResult")}>
                 {!searchResultLoding &&
                 searchResult?.data &&
                 searchResult?.data?.length > 0
@@ -222,7 +222,7 @@ function SketchbookListPage() {
           </>
         ) : (
           <>
-            <h1>{t("sketchbookList.")}</h1>
+            <h1>{t("nav.login")}</h1>
             <LoginPage />
           </>
         )}

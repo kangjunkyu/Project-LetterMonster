@@ -62,7 +62,7 @@ function SketchbookPage() {
 
   const handleToggleModal = (modalName: ModalName, index: number) => {
     if (data?.data?.sketchbookCharacterMotionList[now]?.letterList === null) {
-      return showAlert("비회원은 편지를 못봐요");
+      return showAlert(`${t("notification.noregist")}`);
     }
     if (now === -1 || index === now) {
       setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
@@ -86,12 +86,10 @@ function SketchbookPage() {
   };
 
   const handleUserNicknameChange = (nickname: string) => {
-    if (nickname.startsWith(" ")) {
-      showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
-    } else if (nickname.includes("　")) {
-      showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
+    if (nickname.startsWith(" ") || nickname.includes("　")) {
+      showAlert(`${t("paint.pleaseDont")}`);
     } else if (nickname.length > 10) {
-      showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
+      showAlert(`${t("paint.pleaseTen")}`);
     } else {
       mutateSketchbookName.mutate({ sketchbookId: data?.data?.id, name: name });
       handleToggleModal("sketchbookInfo", 0);
@@ -141,7 +139,9 @@ function SketchbookPage() {
                   handleToggleModal("sketchbookInfo", 0);
               }}
             >{`${data?.data?.name} ▼ ${
-              data?.data?.isPublic ? "공개중" : "비공개중"
+              data?.data?.isPublic
+                ? `${t("sketchbook.public")}`
+                : `${t("sketchbook.private")}`
             } `}</h1>
           )}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
@@ -242,7 +242,9 @@ function SketchbookPage() {
                   handleToggleModal("sketchbookInfo", 0);
                 }}
               >
-                {data?.data?.isPublic ? "링크로만 공개" : "모두에게 공개"}
+                {data?.data?.isPublic
+                  ? `${t("sketchbook.changePrivate")}`
+                  : `${t("sketchbook.changePublic")}`}
               </DefaultButton>
               <div className={styles.linkBox}>
                 <CommonShareIcon link={data?.data?.shareLink} />

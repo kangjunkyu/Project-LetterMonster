@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { postLetter } from "../../api/Api";
 import { useAlert } from "../notice/useAlert";
 import { Page_Url } from "../../router/Page_Url";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   content: string;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 function useWriteLetter() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { showAlert } = useAlert();
   return ({
@@ -40,25 +42,25 @@ function useWriteLetter() {
         .then((res) => {
           if (res.statusCode === 201) {
             setContent("");
-            showAlert("편지를 보냈어요!");
+            showAlert(`${t("notification.letterSuccess")}`);
             navigate(`${Page_Url.Sketchbook}${uuid}`);
           }
         })
         .catch(() => {
-          showAlert("편지 전송에 실패했습니다. 다시 시도해주세요");
+          showAlert(`${t("notification.letterFail")}`);
         });
     } else if (characterId === 0) {
-      showAlert("보낼 캐릭터를 선택해주세요");
+      showAlert(`${t("notification.selectCharacter")}`);
     } else if (isLoad || characterMotionId === 0 || !characterMotionId) {
-      showAlert("캐릭터가 아직 동작을 연습중이에요");
+      showAlert(`${t("notification.motionLoading")}`);
     } else if (!content) {
-      showAlert("보낼 내용이 없어요");
+      showAlert(`${t("notification.noContent")}`);
     } else if (!target) {
-      showAlert("보낼 스케치북을 확인해주세요");
+      showAlert(`${t("notification.where")}`);
     } else if (!motionId) {
-      showAlert("캐릭터의 동작을 선택해주세요");
+      showAlert(`${t("notification.selectMotion")}`);
     } else {
-      showAlert("보낼 편지를 확인해주세요");
+      showAlert(`${t("notification.error")}`);
     }
   };
 }
