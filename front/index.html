@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/ico" href="/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <link rel="stylesheet" href="./src/styles/globalStyles.scss" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -129,18 +132,40 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw.js")
-          .then((registration) => {
-            console.log("Service worker registration succeeded:", registration);
-          })
-          .catch((err) => {
-            console.log("Service worker registration failed:", error);
-          });
-      } else {
-        console.log("Service workers are not supported.");
-      }
+      document.addEventListener("DOMContentLoaded", function () {
+        // iOS를 감지하는 함수
+        function isIOS() {
+          return (
+            [
+              "iPad Simulator",
+              "iPhone Simulator",
+              "iPod Simulator",
+              "iPad",
+              "iPhone",
+              "iPod",
+            ].includes(navigator.platform) ||
+            // iPad on iOS 13 이상의 경우
+            (navigator?.userAgent?.includes("Mac") && "ontouchend" in document)
+          );
+        }
+
+        // Service Worker를 지원하며, iOS가 아닌 경우에만 등록 실행
+        if ("serviceWorker" in navigator && !isIOS()) {
+          navigator?.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log(
+                "Service worker registration succeeded:",
+                registration
+              );
+            })
+            .catch(function (error) {
+              console.log("Service worker registration failed:", error);
+            });
+        } else {
+          console.log("Service workers are not supported or disabled in iOS.");
+        }
+      });
     </script>
   </body>
 </html>
