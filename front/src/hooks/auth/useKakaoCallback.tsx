@@ -17,7 +17,7 @@ function useKakaoCallback() {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
 
-      navigate(Page_Url.Main, {replace: true});
+      navigate(Page_Url.Main, { replace: true });
     }
   }, [location]);
 

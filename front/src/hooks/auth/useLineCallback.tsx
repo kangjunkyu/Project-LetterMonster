@@ -14,11 +14,9 @@ function useLineCallback() {
     if (accessToken && refreshToken) {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      navigate(Page_Url.Main);
-    } else {
-      navigate(Page_Url.Login);
+      navigate(Page_Url.Main, { replace: true });
     }
-  });
+  }, [location]);
 }
 
 export default useLineCallback;

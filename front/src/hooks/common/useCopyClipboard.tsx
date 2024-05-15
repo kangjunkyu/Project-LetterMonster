@@ -3,7 +3,7 @@ import { useAlert } from "../notice/useAlert";
 function useCopyClipboard() {
   const { showAlert } = useAlert();
   return (textToCopy: string) =>
-    navigator.clipboard
+    navigator?.clipboard
       ?.writeText(textToCopy)
       .then(() => {
         // 복사가 성공적으로 이루어졌을 때의 로직

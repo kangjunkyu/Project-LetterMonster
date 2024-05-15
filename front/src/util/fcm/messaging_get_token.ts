@@ -1,5 +1,6 @@
 import { getMessaging, getToken } from "firebase/messaging";
 import { Firebase } from "./firebase";
+import { FirebaseMessaging } from "@capacitor-firebase/messaging";
 
 function GetToken() {
   const firebaseMessaging = getMessaging(Firebase);
@@ -20,6 +21,11 @@ function GetToken() {
       console.log("An error occurred while retrieving token. ", err);
       // ...
     });
+}
+
+export async function GetTokenIOS() {
+  const { token } = await FirebaseMessaging.getToken();
+  localStorage.setItem("fcm_token", token);
 }
 
 export default GetToken;
