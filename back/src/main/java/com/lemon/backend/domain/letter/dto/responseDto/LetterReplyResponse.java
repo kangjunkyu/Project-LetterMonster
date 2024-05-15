@@ -17,6 +17,5 @@ public class LetterReplyResponse {
     private String content;
     private Long characterMotionId;
     private Integer userId;
-//    private Long sketchbookcharactermotionId;
 
 }
