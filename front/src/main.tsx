@@ -1,11 +1,14 @@
+import { useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"; // 리액트 쿼리
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액트 쿼리 데브툴
-import { BrowserRouter } from "react-router-dom"; // 라우터
-import Router from "./router/Router"; // 라우터
-import "./locales/i18n"; // 다국어 지원
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { BrowserRouter } from "react-router-dom";
+import Router from "./router/Router";
+import "./locales/i18n";
 import { AlertProvider } from "./hooks/notice/useAlert";
-import GetToken from "./util/fcm/messaging_get_token";
+import { GetTokenIOS } from "./util/fcm/messaging_get_token";
+import { App as CapacitorApp } from "@capacitor/app";
+import styles from "./main.module.scss";
 
 declare global {
   interface Window {
@@ -16,15 +19,52 @@ declare global {
 const queryClient = new QueryClient();
 
 const App = () => {
-  GetToken();
-  const { Kakao } = window;
-  Kakao.cleanup();
-  Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+  useEffect(() => {
+    const initializeFCM = async () => {
+      try {
+        await GetTokenIOS();
+      } catch (error) {
+        console.error("Failed to get FCM token:", error);
+      }
+    };
+
+    const initializeKakao = () => {
+      const { Kakao } = window;
+      if (Kakao) {
+        Kakao.cleanup();
+        Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+      }
+    };
+
+    const handleAppUrlOpen = (data: any) => {
+      const url = new URL(data.url);
+      const accessToken = url.searchParams.get("accessToken");
+      const refreshToken = url.searchParams.get("refreshToken");
+
+      if (accessToken && refreshToken) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        window.location.reload();
+      }
+    };
+
+    initializeFCM();
+    initializeKakao();
+
+    // URL 스키마 처리 리스너 추가
+    CapacitorApp.addListener("appUrlOpen", handleAppUrlOpen);
+
+    // useEffect 클린업 함수에서 리스너 제거
+    return () => {
+      CapacitorApp.removeAllListeners();
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AlertProvider>
+          <div className={styles.safearea}></div>
           <Router />
         </AlertProvider>
         <ReactQueryDevtools initialIsOpen={true} />

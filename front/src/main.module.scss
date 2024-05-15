@@ -1,0 +1,11 @@
+@import "./styles/globalStyles.scss";
+
+.safearea {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top);
+  background-color: $gc900; /* 원하는 배경색으로 변경 */
+  z-index: 9999;
+}
