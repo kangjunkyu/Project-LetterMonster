@@ -20,6 +20,7 @@ import Modal from "../../atoms/modal/Modal";
 import SearchList from "../../molecules/search/SearchList";
 import { useGetSoloCharacter } from "../../../hooks/character/useCharacter";
 import { cancelCharacter } from "../../../api/Api";
+import LNBButton from "../../atoms/button/LNBButton";
 
 function LetterWritePage() {
   const location = useLocation();
@@ -121,9 +122,9 @@ function LetterWritePage() {
     <div className={styles.writeContainer}>
       <LNB>
         <h1>{t("writeletter.title")}</h1>
-        <DefaultButton onClick={() => onClickHandler()} custom={true}>
+        <LNBButton onClick={() => onClickHandler()}>
           {t("writeletter.send")}
-        </DefaultButton>
+        </LNBButton>
       </LNB>
       <section className={styles.letterBox}>
         <article>

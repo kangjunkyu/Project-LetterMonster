@@ -21,6 +21,7 @@ import LNB from "../../molecules/common/LNB";
 import DefaultButton from "../../atoms/button/DefaultButton";
 import { useTranslation } from "react-i18next";
 import { Page_Url } from "../../../router/Page_Url";
+import LNBButton from "../../atoms/button/LNBButton";
 
 interface PaintProps {}
 
@@ -256,14 +257,15 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   const onTouchEnd = useCallback(() => {
     onStageMouseUp();
   }, [onStageMouseUp]);
+
   return (
     <div className={styles.paintContainer}>
       {windowWidth <= 480 && (
         <LNB>
           <h1>{t("paint.title")}</h1>
-          <DefaultButton onClick={() => onExportClick()} custom={true}>
+          <LNBButton onClick={() => onExportClick()}>
             {t("paint.create")}
-          </DefaultButton>
+          </LNBButton>
         </LNB>
       )}
       <div className={styles.characterNicknameContainer}>
