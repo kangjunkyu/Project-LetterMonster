@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-import { postLetter } from "../../api/Api";
+import { postLetter, deleteLetter } from "../../api/Api";
 import { useAlert } from "../notice/useAlert";
 import { Page_Url } from "../../router/Page_Url";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   content: string;
@@ -63,6 +64,21 @@ function useWriteLetter() {
       showAlert(`${t("notification.error")}`);
     }
   };
+}
+
+export function useDeleteLetter() {
+  const { showAlert } = useAlert();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (letterId: number) => deleteLetter(letterId),
+    onSuccess: () => {
+      showAlert("Success");
+      queryClient.invalidateQueries({ queryKey: ["sketchbook"] });
+    },
+    onError: () => {
+      showAlert("Error");
+    },
+  });
 }
 
 export default useWriteLetter;
