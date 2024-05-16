@@ -182,7 +182,12 @@ function SketchbookPage() {
                       data?.data?.sketchbookCharacterMotionList[now]
                         ?.letterList?.[letter]?.content
                     }
-                  ></Letter>
+                    item={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.letterList?.[letter]
+                    }
+                    onClick={() => handleToggleModal("letter", now)}
+                  />
                   <div className={styles.letterButtons}>
                     <DefaultButton
                       onClick={() => letterButton(-1)}
