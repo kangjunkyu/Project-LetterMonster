@@ -35,20 +35,20 @@ function MyPageUserInfo() {
 
   const postNicknameMutation = () => {
     if (nickname.length < 2) {
-      showAlert("닉네임은 두 글자 이상이어야 합니다.");
+      showAlert(t("mypage.nicknameTwo"));
     } else {
-    changeNickname.mutate(nickname, {
-      onSuccess: () => {
-        showAlert(t("mypage.nicknameChangeSuccess"));
-      },
-      onError: (err: any) => {
-        if (err.response.data.status == 400) {
-          showAlert(t("mypage.nicknameNobadwords"));
-        } else {
-          showAlert(t("notification.retry"));
-        }
-      },
-    });
+      changeNickname.mutate(nickname, {
+        onSuccess: () => {
+          showAlert(t("mypage.nicknameChangeSuccess"));
+        },
+        onError: (err: any) => {
+          if (err.response.data.status == 400) {
+            showAlert(t("mypage.nicknameNobadwords"));
+          } else {
+            showAlert(t("notification.retry"));
+          }
+        },
+      });
     }
   };
 
