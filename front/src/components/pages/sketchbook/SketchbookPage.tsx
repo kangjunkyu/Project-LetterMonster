@@ -104,6 +104,7 @@ function SketchbookPage() {
       ? navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
           state: {
             sketchbookName: data?.data?.name,
+            fromUuid: data?.data?.uuid,
           },
         })
       : navigate(Page_Url.Sketch, {
