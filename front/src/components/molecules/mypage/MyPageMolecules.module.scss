@@ -2,6 +2,18 @@
 @import "../../../styles/mixins/defalut";
 
 // MyPageUserInfo
+.userNicknameChangeCheck{
+  background-color: $successColor;
+  color: white;
+  padding: 4px;
+  border-radius: 5px;
+}
+.userLeaveCheck{
+  background-color: $errorColor; 
+  color: white;
+  padding: 4px;
+  border-radius: 5px;
+}
 .userInfoContainer {
   display: flex;
   flex-direction: column;
@@ -142,6 +154,12 @@
 }
 
 // 친구 찾기
+.friendFindButton {
+  background-color: $successColor;
+  color: white;
+  padding: 4px;
+  border-radius: 5px;
+}
 .findFriendContainer {
   display: flex;
   flex-direction: column;

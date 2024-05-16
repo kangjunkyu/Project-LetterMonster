@@ -55,7 +55,7 @@ function MyPageFriendList() {
       <div className={styles.friendListContainer}>
         <div className={styles.friendListUpper}>
           <div>내 친구 목록</div>
-          <button onClick={() => handleToggleModal("findFriend")}>
+          <button className={styles.friendFindButton} onClick={() => handleToggleModal("findFriend")}>
             친구 찾기
           </button>
           {isModalOpen.findFriend && (
