@@ -20,6 +20,7 @@ import { useGetFriendGroupList } from "../../../hooks/friendGroup/useFriend";
 import MyPageFriendSketchbook from "../../molecules/mypage/MyPageFriendSketchbook";
 import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 import LoginPage from "../login/LoginPage";
+import { useRandomSketchbook } from "../../../hooks/sketchbook/useSketchbook";
 
 interface IItem {
   id: string;
@@ -58,6 +59,7 @@ function SketchbookListPage() {
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
   const { data: friendSketchbookList } = useFriendSketchbookList(userId);
+  const { data: random } = useRandomSketchbook();
   const checkToken = useCheckTokenExpiration();
   const createHandler = (name: string) => {
     {
@@ -157,6 +159,17 @@ function SketchbookListPage() {
         <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
         {toggle ? (
           <>
+            {random && (
+              <>
+                <h4>{t("sketchbookList.recommend")}</h4>
+                <SketchbookListItem
+                  item={random?.data}
+                  url={random?.data.shareLink}
+                  index={Number(random.data.id)}
+                  publicMode={true}
+                />
+              </>
+            )}
             <input
               type="text"
               className={`${styles.searchBox} `}
