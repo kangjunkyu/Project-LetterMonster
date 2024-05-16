@@ -151,25 +151,6 @@ function SketchbookPage() {
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
-          {Favorite?.data ? (
-            <button
-              onClick={() => {
-                mutateSketchbookFavorite.mutate(data?.data?.id);
-              }}
-            >
-              <FilledStar width={30} height={30} />
-            </button>
-          ) : (
-            checkToken(localStorage.getItem("accessToken")) && (
-              <button
-                onClick={() => {
-                  mutateSketchbookFavorite.mutate(data?.data?.id);
-                }}
-              >
-                <Star width={30} height={30} />
-              </button>
-            )
-          )}
         </LNB>
         <WriteButton id="writeButton" onClick={() => writeLetter()} />
         {data && (
@@ -262,6 +243,25 @@ function SketchbookPage() {
                   : `${t("sketchbook.changePublic")}`}
               </DefaultButton>
               <div className={styles.linkBox}>
+                {Favorite?.data ? (
+                  <button
+                    onClick={() => {
+                      mutateSketchbookFavorite.mutate(data?.data?.id);
+                    }}
+                  >
+                    <FilledStar width={30} height={30} />
+                  </button>
+                ) : (
+                  checkToken(localStorage.getItem("accessToken")) && (
+                    <button
+                      onClick={() => {
+                        mutateSketchbookFavorite.mutate(data?.data?.id);
+                      }}
+                    >
+                      <Star width={30} height={30} />
+                    </button>
+                  )
+                )}
                 <CommonShareIcon link={data?.data?.shareLink} />
                 <KakaoShareIcon
                   link={data?.data?.shareLink}
