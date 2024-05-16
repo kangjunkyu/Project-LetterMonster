@@ -178,6 +178,10 @@ function SketchbookPage() {
                           ?.letterList?.[letter]?.id
                       )
                     }
+                    character={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.characterMotion?.imageUrl
+                    }
                   />
                   <div className={styles.letterButtons}>
                     <DefaultButton

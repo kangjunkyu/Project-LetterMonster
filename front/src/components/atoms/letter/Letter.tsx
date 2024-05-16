@@ -8,9 +8,17 @@ interface Props {
   onClick?: () => void;
   onDelete: () => void;
   item: any;
+  character: string;
 }
 
-function Letter({ sender, content, item, onClick, onDelete }: Props) {
+function Letter({
+  sender,
+  content,
+  item,
+  onClick,
+  onDelete,
+  character,
+}: Props) {
   const { t } = useTranslation();
   return (
     <article className={styles.letter_container} onClick={onClick}>
@@ -22,6 +30,8 @@ function Letter({ sender, content, item, onClick, onDelete }: Props) {
       <button className={styles.deleteButton} onClick={onDelete}>
         {t("mypage.characterDelete")}
       </button>
+      <div className={styles.background} />
+      <img className={styles.character} src={character} alt="character" />
     </article>
   );
 }
