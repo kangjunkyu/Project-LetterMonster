@@ -32,18 +32,28 @@ function MyPageUserInfo() {
   );
 
   const postNicknameMutation = () => {
-    changeNickname.mutate(nickname, {
-      onSuccess: () => {
-        showAlert("닉네임 변경에 성공했어요!");
-      },
-      onError: (err: any) => {
-        if (err.response.data.status == 400) {
-          showAlert("욕설이 포함된 닉네임은 사용할 수 없어요.");
-        } else {
-          showAlert("다시 시도해주세요.");
-        }
-      },
-    });
+    if (nickname.length < 2) {
+      showAlert("닉네임은 두 글자 이상이어야 합니다.");
+    } else {
+      changeNickname.mutate(nickname, {
+        onSuccess: () => {
+          showAlert("닉네임 변경에 성공했어요!");
+        },
+        onError: (err: any) => {
+          if (err.response.data.status == 400) {
+            showAlert("욕설이 포함된 닉네임은 사용할 수 없어요.");
+          } else {
+            showAlert("다시 시도해주세요.");
+          }
+        },
+      });
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      postNicknameMutation();
+    }
   };
 
   return (
@@ -64,10 +74,18 @@ function MyPageUserInfo() {
           className={styles.userNicknameInput}
           type="text"
           onChange={handleUserNicknameChange}
+          onKeyDown={handleKeyDown}
           placeholder="새로운 닉네임을 입력하세요"
         />
-        <button onClick={() => postNicknameMutation()}>닉네임변경</button>
-        <button onClick={() => deleteUser()}>회원탈퇴</button>
+        <button
+          className={styles.userNicknameChangeCheck}
+          onClick={() => postNicknameMutation()}
+        >
+          닉네임 변경
+        </button>
+        <button className={styles.userLeaveCheck} onClick={() => deleteUser()}>
+          회원탈퇴
+        </button>
       </div>
     </>
   );
