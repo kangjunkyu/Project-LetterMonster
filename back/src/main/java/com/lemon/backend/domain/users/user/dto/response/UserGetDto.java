@@ -19,6 +19,13 @@ public class UserGetDto {
         this.nicknameTag = nicknameTag;
     }
 
+    public UserGetDto(Integer id, String nickname, String nicknameTag) {
+        this.id = id;
+        this.nickname = nickname;
+        this.nicknameTag = nicknameTag;
+    }
+
+
     public UserGetDto(Boolean isLanguageSet, String nickname, String nicknameTag) {
         this.isLanguageSet = isLanguageSet;
         this.nickname = nickname;
@@ -26,9 +33,4 @@ public class UserGetDto {
     }
 
 
-    public UserGetDto(Integer id, String nickname, String nicknameTag) {
-        this.id = id;
-        this.nickname = nickname;
-        this.nicknameTag = nicknameTag;
-    }
 }
