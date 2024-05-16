@@ -6,6 +6,7 @@ import com.lemon.backend.domain.sketchbook.dto.responseDto.*;
 import com.lemon.backend.domain.sketchbook.entity.Sketchbook;
 import com.lemon.backend.domain.sketchbook.entity.SketchbookCharacterMotion;
 import com.lemon.backend.domain.users.user.dto.response.UserGetDto;
+import com.lemon.backend.domain.users.user.entity.QUsers;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.QueryResults;
@@ -25,6 +26,7 @@ import static com.lemon.backend.domain.characters.entity.QCharacters.characters;
 import static com.lemon.backend.domain.letter.entity.QLetter.letter;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbook.sketchbook;
 import static com.lemon.backend.domain.sketchbook.entity.QSketchbookCharacterMotion.sketchbookCharacterMotion;
+import static com.lemon.backend.domain.users.user.entity.QUsers.users;
 import static com.querydsl.core.types.Projections.constructor;
 import static com.querydsl.jpa.JPAExpressions.select;
 
@@ -137,31 +139,32 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
             // SketchbookCharacterMotion과 관련된 데이터를 조인하여 한 번에 가져오기
             List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionGetListDtos = query
                     .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
-                                    sketchbookCharacterMotion.id,
-                                    Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                            characterMotion.id,
-                                            characterMotion.motion.id,
-                                            characterMotion.url,
-                                            characters.nickname),
-                                    Projections.list(
-                                            Projections.constructor(LetterToSketchbookDto.class,
-                                                    letter.id,
-                                                    Projections.fields(UserGetDto.class,
-                                                            letter.sender.nickname,
-                                                            letter.sender.nicknameTag),
-                                                    Projections.fields(UserGetDto.class,
-                                                            letter.receiver.nickname,
-                                                            letter.receiver.nicknameTag),
-                                                    letter.content,
-                                                    letter.isPublic,
-                                                    letter.createdAt)
-                                    )
+                            sketchbookCharacterMotion.id,
+                            Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                    characterMotion.id,
+                                    characterMotion.motion.id,
+                                    characterMotion.url,
+                                    characters.nickname),
+                            Projections.list(
+                                    Projections.constructor(LetterToSketchbookDto.class,
+                                            letter.id,
+                                            Projections.fields(UserGetDto.class,
+                                                    letter.sender.nickname,
+                                                    letter.sender.nicknameTag),
+                                            Projections.fields(UserGetDto.class,
+                                                    letter.receiver.nickname,
+                                                    letter.receiver.nicknameTag),
+                                            letter.content,
+                                            letter.isPublic,
+                                            letter.createdAt)
                             )
-                    )
+                    ))
                     .from(sketchbookCharacterMotion)
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
                     .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
+                    .leftJoin(letter.sender) // 별칭을 명확하게 지정
+                    .leftJoin(letter.receiver) // 별칭을 명확하게 지정
                     .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
 
@@ -170,6 +173,7 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
 
         return Optional.ofNullable(sketchDto);
     }
+
 
 
     @Override
@@ -242,6 +246,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
                     .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
+                    .leftJoin(letter.sender)
+                    .leftJoin(letter.receiver)
                     .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
 
@@ -276,9 +282,10 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .where(sketchbook.sketchbookUuid.eq(sketchId))
                 .fetchOne();
 
-        if(sketchDto == null) {
+        if (sketchDto == null) {
             throw new CustomException(ErrorCode.SKETCHBOOK_NOT_FOUND);
         }
+
         // SketchbookCharacterMotion과 관련된 Letter를 조인하여 한 번에 가져오기
         QueryResults<SketchbookCharacterMotionGetListDto> results = query
                 .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
@@ -307,6 +314,8 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                 .leftJoin(characterMotion.characters, characters)
                 .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
+                .leftJoin(letter.sender)
+                .leftJoin(letter.receiver)
                 .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
