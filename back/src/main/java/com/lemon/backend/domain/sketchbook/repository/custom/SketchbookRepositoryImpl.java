@@ -58,8 +58,6 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .where(sketchbook.users.id.eq(userId))
                 .fetch();
 
-        System.out.println(userId);
-
         return Optional.ofNullable(sketchDtos.isEmpty() ? null : sketchDtos);
     }
 
