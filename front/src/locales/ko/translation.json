@@ -7,6 +7,14 @@
     "back": "뒤로가기",
     "goToMain": "처음으로 돌아가기"
   },
+  "date": {
+    "minute": "분 전",
+    "hour": "시간 전",
+    "day": "일 전",
+    "year": "년",
+    "month": "월",
+    "days": "일"
+  },
   "notification": {
     "nameblank": "첫 글자로 띄어쓰기를 사용할 수 없습니다",
     "name10": "스케치북 이름은 10글자 이하만 가능합니다",

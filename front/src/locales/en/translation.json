@@ -7,6 +7,14 @@
     "back": "Go Back",
     "goToMain": "Go To Main"
   },
+  "date": {
+    "minute": " minutes ago",
+    "hour": " hours ago",
+    "day": " days ago",
+    "year": " - ",
+    "month": " - ",
+    "days": ""
+  },
   "notification": {
     "nameblank": "The first character cannot be a space",
     "name10": "The sketchbook name must be 10 characters or less",
