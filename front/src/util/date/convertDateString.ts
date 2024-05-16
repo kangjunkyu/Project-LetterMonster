@@ -8,7 +8,9 @@ export default function convertDateString(dateString: string) {
   const diffMinutes = Math.floor(diffTime / (1000 * 60)); // 분 단위 차이
   const diffHours = Math.floor(diffTime / (1000 * 60 * 60)); // 시간 단위 차이
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // 일 단위 차이
-
+  if (dateString === null) {
+    return "No date";
+  }
   if (diffMinutes < 60) {
     return `${diffMinutes}${t("date.minute")}`;
   } else if (diffHours < 24) {
