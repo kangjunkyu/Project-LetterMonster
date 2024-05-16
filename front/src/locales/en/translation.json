@@ -56,7 +56,7 @@
     "pleaseTen": "Nicknames must be 10 characters or fewer.",
     "pleaseDraw": "Please draw the character"
   },
-  "paintResult":{
+  "paintResult": {
     "title": "Character Birthday",
     "birth": "Was Born",
     "move": "Move Character",
@@ -82,5 +82,24 @@
     "friends": "My Friends List",
     "developer": "Visit the Developer's Sketchbook",
     "suggestion": "Suggestions and Bug Reporting"
+  },
+  "myUserInfo": {
+    "leaveButton": "Leave Service",
+    "leaveService": "Leave",
+    "leaveCheck": "Are you sure you want to leave?",
+    "changeNickname": "Change Nickname",
+    "inputNickname": "Enter a new nickname",
+    "nickname": "Nickname",
+    "nicknameTag": "Nickname Tag"
+  },
+  "friendList": {
+    "check": "Are you sure you want to delete?",
+    "deleteFriend": "Delete Friend",
+    "noFriend": "No friends are currently registered.",
+    "delete": "Delete",
+    "findFriend": "Find Friend",
+    "myFriendList": "My Friend List",
+    "completeDeleteFriend": "Friend has been deleted!",
+    "reDelete": "Please try deleting again."
   }
 }
