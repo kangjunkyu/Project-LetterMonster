@@ -24,7 +24,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.lemon</string>
+			<string>com.lettermonster</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>app-1-390967873425-ios-c4f99b21865d8be3af5430</string>

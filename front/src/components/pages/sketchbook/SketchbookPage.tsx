@@ -22,7 +22,7 @@ import {
 import Star from "../../../assets/commonIcon/star.svg?react";
 import FilledStar from "../../../assets/commonIcon/filledStar.svg?react";
 import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
-import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
+// import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
 import CommonShareIcon from "../../atoms/share/commonShareIcon";
 
 function SketchbookPage() {
@@ -248,11 +248,11 @@ function SketchbookPage() {
               </DefaultButton>
               <div className={styles.linkBox}>
                 <CommonShareIcon link={data?.data?.shareLink} />
-                <KakaoShareIcon
+                {/* <KakaoShareIcon
                   link={data?.data?.shareLink}
                   nickname={data?.data?.holder.nickname}
                   index={0}
-                />
+                /> */}
               </div>
             </div>
           </Modal>

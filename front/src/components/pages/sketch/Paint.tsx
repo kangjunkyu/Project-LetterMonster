@@ -18,7 +18,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { usePostSketchCharacter } from "../../../hooks/sketch/usePostSketchCharacter";
 import { useAlert } from "../../../hooks/notice/useAlert";
 import LNB from "../../molecules/common/LNB";
-import DefaultButton from "../../atoms/button/DefaultButton";
 import { useTranslation } from "react-i18next";
 import { Page_Url } from "../../../router/Page_Url";
 import LNBButton from "../../atoms/button/LNBButton";
