@@ -1,4 +1,5 @@
 // import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   useDeleteCharacter,
   useSelectMainCharacter,
@@ -16,6 +17,7 @@ interface Character {
 }
 
 function MyPageCharacter() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: characterList, isLoading, error } = useGetCharacterList();
   const selectMainCharacter = useSelectMainCharacter();
@@ -40,14 +42,16 @@ function MyPageCharacter() {
   if (characterList?.length === 0) {
     return (
       <div className={styles.userNoCharacterListContainer}>
-        <div className={styles.titleNoCharacter}>캐릭터 목록</div>
+        <div className={styles.titleNoCharacter}>
+          {t("sketchbookList.empty")}
+        </div>
         <div>
-          <div>현재 캐릭터가 없어요!</div>
+          <div>{t("")}</div>
           <button
             className={styles.userNoCharacterButton}
             onClick={goToCreateCharacter}
           >
-            캐릭터 그리기
+            {t("writeletter.characterDrawing")}
           </button>
         </div>
       </div>
@@ -57,7 +61,7 @@ function MyPageCharacter() {
   return (
     <div className={styles.userCharacterListContainer}>
       <div className={styles.title}>
-        <div>캐릭터 목록</div>
+        <div>{t("main.characterList")}</div>
       </div>
       <div className={styles.userCharacterList}>
         {characterList.map((character: Character) => (
@@ -90,14 +94,33 @@ function MyPageCharacter() {
                   className={styles.representButton}
                   onClick={() => handleMainCharacterClick(character.characterId)}
               >
-                대표 지정
+                {t("mypage.characterSetRep")}
               </button>
               <button
                   className={styles.deleteButton}
                   onClick={() => deleteCharacter.mutate(character.characterId)}
               >
-                삭제
+                {t("mypage.characterDelete")}
               </button>
+            </div>
+            <img
+              src={character.imageUrl}
+              alt={character.nickname}
+              className={styles.userCharacterImage}
+            />
+            <div
+              className={`${styles.userCharacterInfo} ${
+                character.mainCharacter
+                  ? styles.justifyBetween
+                  : styles.justifyRight
+              }`}
+            >
+              {character.mainCharacter && (
+                <span className={styles.mainCharacterLabel}>
+                  {t("mypage.characterRep")}
+                </span>
+              )}
+              <span className={styles.nickname}>{character.nickname}</span>
             </div>
           </div>
         ))}

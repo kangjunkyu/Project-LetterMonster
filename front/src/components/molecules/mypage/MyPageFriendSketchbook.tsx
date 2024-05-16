@@ -51,7 +51,7 @@ function MyPageFriendSketchbook({ name, list }: Props) {
         )
       ) : (
         <div className={styles.noFriendSketchbook}>
-          친구의 스케치북이 없어요
+          {t("sketchbookList.empty")}
         </div>
       )}
     </article>

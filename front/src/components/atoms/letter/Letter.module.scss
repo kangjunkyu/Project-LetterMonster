@@ -68,3 +68,28 @@
     overflow-y: scroll;
   }
 }
+
+.writeTime {
+  position: absolute;
+  top: 3.5rem;
+  right: 3rem;
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    top: 3rem;
+    right: 2rem;
+  }
+}
+
+.deleteButton {
+  position: absolute;
+  top: -1rem;
+  right: 2rem;
+  @include box;
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    top: -1rem;
+    right: 2rem;
+    @include box;
+  }
+}
