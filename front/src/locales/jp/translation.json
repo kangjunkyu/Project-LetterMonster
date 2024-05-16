@@ -134,5 +134,24 @@
     "friends": "私の友達リスト",
     "developer": "開発者のスケッチブックを訪れる",
     "suggestion": "提案およびバグ報告"
+  },
+  "myUserInfo": {
+    "leaveButton": "退会",
+    "leaveService": "退会する",
+    "leaveCheck": "本当に退会しますか？",
+    "changeNickname": "ニックネーム変更",
+    "inputNickname": "新しいニックネームを入力してください",
+    "nickname": "ニックネーム",
+    "nicknameTag": "ニックネームタグ"
+  },
+  "friendList": {
+    "check": "本当に削除しますか？",
+    "deleteFriend": "友達を削除",
+    "noFriend": "現在登録されている友達がいません。",
+    "delete": "削除",
+    "findFriend": "友達を探す",
+    "myFriendList": "友達リスト",
+    "completeDeleteFriend": "友達が削除されました！",
+    "reDelete": "もう一度削除してください。"
   }
 }

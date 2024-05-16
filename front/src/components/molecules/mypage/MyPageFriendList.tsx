@@ -9,6 +9,7 @@ import MyPageFindFriend from "./MyPageFindFriend";
 import Modal from "../../atoms/modal/Modal";
 import useFriendSketchbookList from "../../../hooks/sketchbook/useFriendSketchbookList";
 import MyPageFriendSketchbook from "./MyPageFriendSketchbook";
+import DefaultButton from "../../atoms/button/DefaultButton";
 import { useTranslation } from "react-i18next";
 
 interface MyFriendProps {
@@ -18,24 +19,32 @@ interface MyFriendProps {
   isFriend: boolean;
 }
 
-type ModalName = "findFriend" | "sketchbookList";
+type ModalName = "findFriend" | "sketchbookList" | "deleteAlert";
 
 function MyPageFriendList() {
   const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState({
     findFriend: false,
     sketchbookList: false,
+    deleteAlert: false,
   });
   const [userId, setUserId] = useState(-1);
   const [userName, setUserName] = useState("");
+  const [friendToDelete, setFriendToDelete] = useState<MyFriendProps | null>(
+    null
+  );
   const { data: friendSketchbookList, isLoading } =
     useFriendSketchbookList(userId);
   const { showAlert } = useAlert();
   const deleteFriend = useDeleteFriend();
   const { data: myFriend } = useGetFriendGroupList();
 
-  const handleToggleModal = (modalName: ModalName) =>
+  const handleToggleModal = (modalName: ModalName, friend?: MyFriendProps) => {
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+    if (modalName === "deleteAlert" && friend) {
+      setFriendToDelete(friend);
+    }
+  };
 
   const deleteFriendMutation = (friendId: number) => {
     deleteFriend.mutate(friendId, {
@@ -57,7 +66,10 @@ function MyPageFriendList() {
       <div className={styles.friendListContainer}>
         <div className={styles.friendListUpper}>
           <div>{t("mypage.friendList")}</div>
-          <button onClick={() => handleToggleModal("findFriend")}>
+          <button
+            className={styles.friendFindButton}
+            onClick={() => handleToggleModal("findFriend")}
+          >
             {t("mypage.findfriend")}
           </button>
           {isModalOpen.findFriend && (
@@ -98,9 +110,10 @@ function MyPageFriendList() {
                 <div>{friend.nicknameTag}</div>
                 <button
                   className={styles.deleteFriendButton}
-                  onClick={() => {
-                    deleteFriendMutation(friend.id);
-                  }}
+                  // onClick={() => {
+                  //   deleteFriendMutation(friend.id);
+                  // }}
+                  onClick={() => handleToggleModal("deleteAlert", friend)}
                 >
                   {t("mypage.characterDelete")}
                 </button>
@@ -113,6 +126,28 @@ function MyPageFriendList() {
           )}
         </div>
       </div>
+      {isModalOpen.deleteAlert && friendToDelete && (
+        <Modal
+          isOpen={isModalOpen.deleteAlert}
+          onClose={() => handleToggleModal("deleteAlert")}
+        >
+          <div className={styles.buttonBox}>
+            {t("friendList.check")}
+            <DefaultButton
+              onClick={() => deleteFriendMutation(friendToDelete.id)}
+            >
+              {t("friendList.deleteFriend")}
+            </DefaultButton>
+            <DefaultButton
+              onClick={() => {
+                handleToggleModal("deleteAlert");
+              }}
+            >
+              {t("sketchbook.cancel")}
+            </DefaultButton>
+          </div>
+        </Modal>
+      )}
     </>
   );
 }

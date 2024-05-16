@@ -4,6 +4,8 @@ import styles from "./MyPageMolecules.module.scss";
 import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
 import { useDeleteUser } from "../../../hooks/user/useDeleteUser";
 import { useAlert } from "../../../hooks/notice/useAlert";
+import DefaultButton from "../../atoms/button/DefaultButton";
+import Modal from "../../atoms/modal/Modal";
 import { useTranslation } from "react-i18next";
 
 function MyPageUserInfo() {
@@ -58,6 +60,20 @@ function MyPageUserInfo() {
     }
   };
 
+  type ModalName = "leaveServiceAlert" | "deleteAlert";
+
+  const [isModalOpen, setModalOpen] = useState({
+    leaveServiceAlert: false,
+    deleteAlert: false,
+  });
+
+  const handleToggleModal = (modalName: ModalName) => {
+    setModalOpen((prevState) => ({
+      ...prevState,
+      [modalName]: !prevState[modalName],
+    }));
+  };
+
   return (
     <>
       <div className={styles.userInfoContainer}>
@@ -79,11 +95,39 @@ function MyPageUserInfo() {
           onKeyDown={handleKeyDown}
           placeholder={`${t("mypage.nickname")}`}
         />
-        <button onClick={() => postNicknameMutation()}>
+        <button
+          className={styles.userNicknameChangeCheck}
+          onClick={() => postNicknameMutation()}
+        >
           {t("mypage.nicknameChange")}
         </button>
-        <button onClick={() => deleteUser()}>{t("mypage.withdrawal")}</button>
+        <button
+          className={styles.userLeaveCheck}
+          onClick={() => handleToggleModal("deleteAlert")}
+        >
+          {t("myUserInfo.leaveButton")}
+        </button>
       </div>
+      {isModalOpen.deleteAlert && (
+        <Modal
+          isOpen={isModalOpen.deleteAlert}
+          onClose={() => handleToggleModal("deleteAlert")}
+        >
+          <div className={styles.buttonBox}>
+            {t("myUserInfo.leaveCheck")}
+            <DefaultButton onClick={() => deleteUser()}>
+              {t("myUserInfo.leaveService")}
+            </DefaultButton>
+            <DefaultButton
+              onClick={() => {
+                handleToggleModal("deleteAlert");
+              }}
+            >
+              {t("sketchbook.cancel")}
+            </DefaultButton>
+          </div>
+        </Modal>
+      )}
     </>
   );
 }

@@ -133,5 +133,24 @@
     "friends": "내 친구 목록",
     "developer": "개발자 스케치북 놀러가기",
     "suggestion": "건의 및 버그 신고"
+  },
+  "myUserInfo":{
+    "leaveButton": "회원탈퇴",
+    "leaveService": "탈퇴하기",
+    "leaveCheck": "정말 탈퇴하시겠습니까?",
+    "changeNickname": "닉네임 변경",
+    "inputNickname": "새로운 닉네임을 입력하세요",
+    "nickname": "닉네임",
+    "nicknameTag": "닉네임 태그"
+  },
+  "friendList":{
+    "check": "정말 친구를 삭제하시겠습니까?",
+    "deleteFriend": "친구 삭제하기",
+    "noFriend":"현재 등록된 친구가 없습니다.",
+    "delete": "삭제",
+    "findFriend":"친구 찾기",
+    "myFriendList": "내 친구 목록",
+    "completeDeleteFriend": "친구를 삭제했어요!",
+    "reDelete": "다시 삭제해주세요."
   }
 }
