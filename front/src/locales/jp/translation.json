@@ -31,7 +31,8 @@
     "error": "不明なエラーが発生しました",
     "deleteFriend": "友達を削除しました！",
     "weareFriend": "友達を追加しました！",
-    "nicknameChange": "ニックネームの変更に成功しました"
+    "nicknameChange": "ニックネームの変更に成功しました",
+    "nicknameTwo": "ニックネームは2文字以上でなければなりません"
   },
   "nav": {
     "sketchbook": "スケッチブック",

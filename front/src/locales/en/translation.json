@@ -31,7 +31,8 @@
     "error": "An unknown error has occurred",
     "deleteFriend": "Friend has been deleted!",
     "weareFriend": "Friend has been added!",
-    "nicknameChange": "Nickname change was successful"
+    "nicknameChange": "Nickname change was successful",
+    "nicknameTwo": "The nickname must be at least two characters long"
   },
   "nav": {
     "sketchbook": "Sketchbook",
