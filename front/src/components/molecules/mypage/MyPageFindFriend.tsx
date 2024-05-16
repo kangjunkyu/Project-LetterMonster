@@ -80,7 +80,7 @@ function MyPageFindFriend() {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
-          <button onClick={() => useSearchUserNickname}>검색</button>
+          <button className={styles.searchUserButton} onClick={() => useSearchUserNickname}>검색</button>
         </div>
         <div className={styles.findFriendDivider}></div>
         <div className={styles.findFriendColumn}>

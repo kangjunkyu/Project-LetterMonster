@@ -168,6 +168,13 @@
   gap: 0.7em;
 }
 
+.searchUserButton{
+  background-color: $successColor;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 .findFriendInput {
   display: flex;
   justify-content: space-between;
