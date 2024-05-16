@@ -172,6 +172,7 @@ function SketchbookPage() {
                         ?.letterList?.[letter]
                     }
                     onClick={() => handleToggleModal("letter", now)}
+                    isWritePossible={data?.data?.isWritePossible}
                     onDelete={() =>
                       deleteButton.mutate(
                         data?.data?.sketchbookCharacterMotionList[now]

@@ -9,6 +9,7 @@ interface Props {
   onDelete: () => void;
   item: any;
   character: string;
+  isWritePossible: boolean;
 }
 
 function Letter({
@@ -18,6 +19,7 @@ function Letter({
   onClick,
   onDelete,
   character,
+  isWritePossible,
 }: Props) {
   const { t } = useTranslation();
   return (
@@ -27,9 +29,11 @@ function Letter({
         {convertDateString(item.write_time)}
       </div>
       <div className={styles.name_box}>From.{sender ? sender : "익명"}</div>
-      <button className={styles.deleteButton} onClick={onDelete}>
-        {t("mypage.characterDelete")}
-      </button>
+      {isWritePossible && (
+        <button className={styles.deleteButton} onClick={onDelete}>
+          {t("mypage.characterDelete")}
+        </button>
+      )}
       <div className={styles.background} />
       <img className={styles.character} src={character} alt="character" />
     </article>
