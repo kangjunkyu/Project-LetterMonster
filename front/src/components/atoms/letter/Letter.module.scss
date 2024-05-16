@@ -80,3 +80,16 @@
     right: 2rem;
   }
 }
+
+.deleteButton {
+  position: absolute;
+  top: -1rem;
+  right: 2rem;
+  @include box;
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    top: -1rem;
+    right: 2rem;
+    @include box;
+  }
+}

@@ -24,6 +24,7 @@ import FilledStar from "../../../assets/commonIcon/filledStar.svg?react";
 import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
 import CommonShareIcon from "../../atoms/share/commonShareIcon";
+import { useDeleteLetter } from "../../../hooks/letter/useWriteLetter";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -84,6 +85,8 @@ function SketchbookPage() {
       }
     }
   };
+
+  const deleteButton = useDeleteLetter();
 
   const handleUserNicknameChange = (nickname: string) => {
     if (nickname.startsWith(" ") || nickname.includes("　")) {
@@ -187,6 +190,12 @@ function SketchbookPage() {
                         ?.letterList?.[letter]
                     }
                     onClick={() => handleToggleModal("letter", now)}
+                    onDelete={() =>
+                      deleteButton.mutate(
+                        data?.data?.sketchbookCharacterMotionList[now]
+                          ?.letterList?.[letter]?.id
+                      )
+                    }
                   />
                   <div className={styles.letterButtons}>
                     <DefaultButton
