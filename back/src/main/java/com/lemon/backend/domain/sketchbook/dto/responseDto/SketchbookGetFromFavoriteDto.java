@@ -17,6 +17,7 @@ public class SketchbookGetFromFavoriteDto {
 //    private Boolean isWritePossible;
     private String uuid;
     private String tag;
+    private Boolean isPublic;
     private UserGetDto holder;
 //    private Boolean isRepresent;
 

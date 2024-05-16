@@ -30,7 +30,7 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
         }
         List<Tuple> results = query
                 .select(favoriteSketchbook.id,
-                        sketchbook.id, sketchbook.name, sketchbook.sketchbookUuid, sketchbook.tag,
+                        sketchbook.id, sketchbook.name, sketchbook.sketchbookUuid, sketchbook.tag, sketchbook.isPublic,
                         sketchbook.users.nickname, sketchbook.users.nicknameTag)
                 .from(favoriteSketchbook)
                 .leftJoin(favoriteSketchbook.sketchbook, sketchbook)
@@ -45,6 +45,7 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
                     tuple.get(sketchbook.name),
                     tuple.get(sketchbook.sketchbookUuid),
                     tuple.get(sketchbook.tag),
+                    tuple.get(sketchbook.isPublic),
                     userDto);
 
             return new FavoriteSketchbookGetDto(
@@ -62,7 +63,7 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
             throw new CustomException(ErrorCode.INVALID_ACCESS);
         }
         List<Tuple> results = query
-                .select(sketchbook.id, sketchbook.name, sketchbook.sketchbookUuid, sketchbook.tag,
+                .select(sketchbook.id, sketchbook.name, sketchbook.sketchbookUuid, sketchbook.tag, sketchbook.isPublic,
                         sketchbook.users.nickname, sketchbook.users.nicknameTag)
                 .from(favoriteSketchbook)
                 .leftJoin(favoriteSketchbook.sketchbook, sketchbook)
@@ -77,6 +78,7 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
                     tuple.get(sketchbook.name),
                     tuple.get(sketchbook.sketchbookUuid),
                     tuple.get(sketchbook.tag),
+                    tuple.get(sketchbook.isPublic),
                     userDto);
         }).collect(Collectors.toList());
     }
@@ -107,19 +109,3 @@ public class FavoriteSketchbookRepositoryImpl implements FavoriteSketchbookRepos
     }
 
 }
-//List<LetterGetListDto> letterDtos = query
-//        .select(constructor(LetterGetListDto.class,
-//                letter.id,
-//                Projections.fields(UserGetDto.class,
-//                        letter.sender.nickname,
-//                        letter.sender.nicknameTag),
-//                Projections.fields(UserGetDto.class,
-//                        letter.receiver.nickname,
-//                        letter.receiver.nicknameTag),
-//                letter.content,
-//                letter.isPublic,
-//                letter.createdAt)).from(letter)
-//        .leftJoin(letter.sender)
-//        .leftJoin(letter.receiver)
-//        .where(letter.sketchbookCharacterMotion.sketchbook.id.eq(sketchbookId)).fetch();
-//        return Optional.ofNullable(letterDtos.isEmpty() ? null : letterDtos);
