@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .authorizeHttpRequests(auth -> auth
                         // 인증되지 않은 사용자도 접근 가능
-                        .requestMatchers("/**","/error", "/actuator/health").permitAll()
+                        .requestMatchers("/**","/error", "/actuator/health", "/api/actuator/prometheus").permitAll()
                         .requestMatchers("/user/public/**", "/sketchbooks/public/**", "/characters/public/**", "/letter/public/**").permitAll()
 
                         // 로그인 한 사용자

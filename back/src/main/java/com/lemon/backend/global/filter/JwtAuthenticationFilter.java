@@ -47,6 +47,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         whiteList.add("/api/sketchbooks/public");
         whiteList.add("/api/characters/public");
         whiteList.add("/api/letter/public");
+        whiteList.add("/api/actuator/prometheus");
     }
 
     @Override
