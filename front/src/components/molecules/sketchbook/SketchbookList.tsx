@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import styles from "./SketchbookList.module.scss";
 import ExpandLess from "../../../assets/commonIcon/expandLess.svg?react";
 import ExpandMore from "../../../assets/commonIcon/expandMore.svg?react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   children: ReactNode;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 function SketchbookList({ children, title }: Props) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   return (
     <article className={styles.sketchbookListContainer}>
@@ -28,12 +30,12 @@ function SketchbookList({ children, title }: Props) {
       >
         {open ? (
           <h5>
-            접기
+            {t("button.close")}
             <ExpandLess width={20} height={20} />
           </h5>
         ) : (
           <h5>
-            펼치기
+            {t("button.open")}
             <ExpandMore width={20} height={20} />
           </h5>
         )}
