@@ -4,6 +4,7 @@ if (
   !(
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document) ||
+    (window.webkit && window.webkit.messageHandlers) ||
     /KAKAOTALK|NAVER|FB_IAB|Instagram|Line|WebView/i.test(
       navigator.userAgent || window.opera
     )
@@ -26,4 +27,6 @@ if (
     event.notification.close();
     event.waitUntil(clients.openWindow(event.notification.data));
   });
+} else {
+  console.log("Service Worker 등록을 생략합니다.");
 }
