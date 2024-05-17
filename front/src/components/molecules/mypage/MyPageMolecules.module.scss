@@ -2,14 +2,21 @@
 @import "../../../styles/mixins/defalut";
 
 // MyPageUserInfo
-.userNicknameChangeCheck{
+.buttonBox {
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  @include wrapBox();
+}
+.userNicknameChangeCheck {
   background-color: $successColor;
   color: white;
   padding: 4px;
   border-radius: 5px;
 }
-.userLeaveCheck{
-  background-color: $errorColor; 
+.userLeaveCheck {
+  background-color: $errorColor;
   color: white;
   padding: 4px;
   border-radius: 5px;
@@ -196,7 +203,7 @@
   gap: 0.7em;
 }
 
-.searchUserButton{
+.searchUserButton {
   background-color: $successColor;
   color: white;
   padding: 5px;

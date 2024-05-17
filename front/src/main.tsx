@@ -15,11 +15,30 @@ declare global {
 
 const queryClient = new QueryClient();
 
+function isIOS() {
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  );
+}
+
 const App = () => {
-  GetToken();
   const { Kakao } = window;
   Kakao.cleanup();
   Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+  if ("serviceWorker" in navigator && "PushManager" in window && !isIOS()) {
+    navigator.serviceWorker
+      .register("/firebase-messaging-sw.js")
+      .then(function (registration) {
+        console.log("Service Worker 등록 성공:", registration);
+      })
+      .catch(function (error) {
+        console.error("Service Worker 등록 실패:", error);
+      });
+  } else {
+    console.log("이 환경은 Service Worker 또는 푸시 알림을 지원하지 않습니다.");
+  }
+  GetToken();
 
   return (
     <QueryClientProvider client={queryClient}>

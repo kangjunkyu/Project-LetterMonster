@@ -20,6 +20,7 @@ import { useGetFriendGroupList } from "../../../hooks/friendGroup/useFriend";
 import MyPageFriendSketchbook from "../../molecules/mypage/MyPageFriendSketchbook";
 import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 import LoginPage from "../login/LoginPage";
+import { useRandomSketchbook } from "../../../hooks/sketchbook/useSketchbook";
 
 interface IItem {
   id: string;
@@ -58,17 +59,18 @@ function SketchbookListPage() {
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
   const { data: friendSketchbookList } = useFriendSketchbookList(userId);
+  const { data: random } = useRandomSketchbook();
   const checkToken = useCheckTokenExpiration();
   const createHandler = (name: string) => {
     {
       if (name.startsWith(" ")) {
-        showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+        showAlert(`${t("notification.nameblank")}`);
       }
       // else if (/[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(name) || name.includes("　")) {
       //   showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
       // }
       else if (name.length > 10) {
-        showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
+        showAlert(`${t("notification.name10")}`);
       } else if (name) {
         createSketchbook.mutate(name);
         showAlert(`${name} ${t("sketchbookList.create")}`);
@@ -157,6 +159,17 @@ function SketchbookListPage() {
         <AddButton onClick={() => handleToggleModal("sketchbookCreate")} />
         {toggle ? (
           <>
+            {random && (
+              <>
+                <h4>{t("sketchbookList.recommend")}</h4>
+                <SketchbookListItem
+                  item={random?.data}
+                  url={random?.data.shareLink}
+                  index={Number(random.data.id)}
+                  publicMode={true}
+                />
+              </>
+            )}
             <input
               type="text"
               className={`${styles.searchBox} `}
@@ -167,7 +180,7 @@ function SketchbookListPage() {
               }}
             />
             {searchResult?.data && (
-              <SketchbookList title={t("writeletter.searchResult")}>
+              <SketchbookList title={t("sketchbookList.searchResult")}>
                 {!searchResultLoding &&
                 searchResult?.data &&
                 searchResult?.data?.length > 0
@@ -222,7 +235,7 @@ function SketchbookListPage() {
           </>
         ) : (
           <>
-            <h1>{t("sketchbookList.")}</h1>
+            <h1>{t("nav.login")}</h1>
             <LoginPage />
           </>
         )}
