@@ -43,7 +43,9 @@ function MainPage() {
     characterList: false,
     friendList: false,
   });
-
+  const Login = () => {
+    window.location.href = `https://lettermon.com`;
+  };
   const handleToggleModal = (modalName: ModalName) =>
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
 
@@ -134,6 +136,8 @@ function MainPage() {
         <div className={styles.mainLoginButton}>
           <KakaoLogin />
           <LineLogin />
+
+          <button onClick={Login}>임시</button>
         </div>
       )}
       <nav className={styles.socialMediaLinks}>

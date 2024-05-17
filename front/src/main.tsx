@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"; // 리액트 쿼리
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // 리액트 쿼리 데브툴
-import { BrowserRouter } from "react-router-dom"; // 라우터
-import Router from "./router/Router"; // 라우터
-import "./locales/i18n"; // 다국어 지원
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { BrowserRouter } from "react-router-dom";
+import Router from "./router/Router";
+import "./locales/i18n";
 import { AlertProvider } from "./hooks/notice/useAlert";
 import GetToken from "./util/fcm/messaging_get_token";
 
@@ -22,10 +22,15 @@ function isIOS() {
   );
 }
 
+function isWKWebView() {
+  const isIOSDevice = isIOS();
+  const wkwebview = !!(window?.webkit && window?.webkit.messageHandlers);
+  return isIOSDevice && wkwebview;
+}
+
 function isInAppBrowser() {
-  const userAgent =
-    navigator.userAgent || navigator.vendor || (window as any).opera;
-  return /KAKAOTALK|NAVER|FB_IAB|Instagram|Line/i.test(userAgent);
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  return /KAKAOTALK|NAVER|FB_IAB|Instagram|Line|WebView/i.test(userAgent);
 }
 
 const App = () => {
@@ -33,11 +38,20 @@ const App = () => {
   Kakao.cleanup();
   Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
 
+  const ios = isIOS();
+  const wkwebview = isWKWebView();
+  const inAppBrowser = isInAppBrowser();
+
+  console.log("isIOS:", ios);
+  console.log("isWKWebView:", wkwebview);
+  console.log("isInAppBrowser:", inAppBrowser);
+
   if (
     "serviceWorker" in navigator &&
     "PushManager" in window &&
-    !isIOS() &&
-    !isInAppBrowser()
+    !ios &&
+    !wkwebview &&
+    !inAppBrowser
   ) {
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
