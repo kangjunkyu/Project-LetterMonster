@@ -10,6 +10,10 @@ import GetToken from "./util/fcm/messaging_get_token";
 declare global {
   interface Window {
     Kakao: any;
+    webkit?: {
+      messageHandlers: any;
+    };
+    opera: any;
   }
 }
 
@@ -24,12 +28,12 @@ function isIOS() {
 
 function isWKWebView() {
   const isIOSDevice = isIOS();
-  const wkwebview = !!(window?.webkit && window?.webkit.messageHandlers);
+  const wkwebview = !!(window.webkit && window.webkit.messageHandlers);
   return isIOSDevice && wkwebview;
 }
 
 function isInAppBrowser() {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const userAgent = navigator.userAgent || window.opera;
   return /KAKAOTALK|NAVER|FB_IAB|Instagram|Line|WebView/i.test(userAgent);
 }
 
