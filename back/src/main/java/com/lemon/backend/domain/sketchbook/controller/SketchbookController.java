@@ -128,7 +128,7 @@ public class SketchbookController {
         return getResponseEntity(SuccessCode.OK, changePublic);
     }
 
-    @GetMapping("/random")
+    @GetMapping("/public/random")
     public ResponseEntity<?> getRandomSketchbook(){
         SketchbookGetRandomDto sketchbookGetRandomDto = sketchbookService.getRandomSketchbook();
         return getResponseEntity(SuccessCode.OK, sketchbookGetRandomDto);
