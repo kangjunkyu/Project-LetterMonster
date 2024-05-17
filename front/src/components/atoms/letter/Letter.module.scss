@@ -85,27 +85,15 @@
   position: absolute;
   top: -1rem;
   right: 2rem;
-  @include box;
+  left: 2rem;
+  display: flex;
+  justify-content: space-between;
+  & > button {
+    @include box;
+  }
   @media screen and (max-width: 479px) {
     /* 모바일 */
     top: -1rem;
     right: 2rem;
-    @include box;
   }
-}
-
-.character {
-  position: absolute;
-  background-color: $gc900;
-  border-radius: 5px;
-  transform: translateY(100%);
-}
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh; /* 화면 높이 전체를 채우도록 설정 */
-  background-color: $gc900;
-  z-index: -1; /* 뒤에 위치하도록 설정 */
 }
