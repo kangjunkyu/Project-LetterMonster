@@ -69,7 +69,8 @@
     "favoriteList": "お気に入りのスケッチブックリスト",
     "searchResult": "検索結果",
     "Explore": "スケッチブックを探索",
-    "My": "私のスケッチブック"
+    "My": "私のスケッチブック",
+    "recommend": "おすすめのスケッチブック"
   },
   "sketchbook": {
     "letter": "手紙を残す",

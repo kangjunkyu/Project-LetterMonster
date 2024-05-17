@@ -69,7 +69,8 @@
     "favoriteList": "Favorite Sketchbook List",
     "searchResult": "Search Results",
     "Explore": "Explore Sketchbooks",
-    "My": "My Sketchbook"
+    "My": "My Sketchbook",
+    "recommend": "Recommended Sketchbook"
   },
   "sketchbook": {
     "letter": "Leaving a letter",

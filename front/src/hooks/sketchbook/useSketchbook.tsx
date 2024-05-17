@@ -5,6 +5,7 @@ import {
   putSketchbookName,
   deleteSketchbook,
   putSketchbookOpen,
+  getRandomSketchbook,
 } from "../../api/Api";
 import { Page_Url } from "../../router/Page_Url";
 import { useAlert } from "../notice/useAlert";
@@ -14,6 +15,14 @@ export default function useSketchbook(uuid: string) {
   return useQuery({
     queryKey: ["sketchbook"],
     queryFn: () => getSketchbookSelected(uuid),
+  });
+}
+
+/** 랜덤 스케치북 불러오기 */
+export function useRandomSketchbook() {
+  return useQuery({
+    queryKey: ["sketchbookrandom"],
+    queryFn: () => getRandomSketchbook(),
   });
 }
 

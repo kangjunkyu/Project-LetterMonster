@@ -8,9 +8,19 @@ interface Props {
   onClick?: () => void;
   onDelete: () => void;
   item: any;
+  character: string;
+  isWritePossible: boolean;
 }
 
-function Letter({ sender, content, item, onClick, onDelete }: Props) {
+function Letter({
+  sender,
+  content,
+  item,
+  onClick,
+  onDelete,
+  character,
+  isWritePossible,
+}: Props) {
   const { t } = useTranslation();
   return (
     <article className={styles.letter_container} onClick={onClick}>
@@ -19,9 +29,13 @@ function Letter({ sender, content, item, onClick, onDelete }: Props) {
         {convertDateString(item.write_time)}
       </div>
       <div className={styles.name_box}>From.{sender ? sender : "익명"}</div>
-      <button className={styles.deleteButton} onClick={onDelete}>
-        {t("mypage.characterDelete")}
-      </button>
+      {isWritePossible && (
+        <button className={styles.deleteButton} onClick={onDelete}>
+          {t("mypage.characterDelete")}
+        </button>
+      )}
+      <div className={styles.background} />
+      <img className={styles.character} src={character} alt="character" />
     </article>
   );
 }

@@ -68,7 +68,8 @@
     "favoriteList": "즐겨찾는 스케치북 목록",
     "searchResult": "검색 결과",
     "Explore": "스케치북 탐색",
-    "My": "내 스케치북"
+    "My": "내 스케치북",
+    "recommend": "추천 스케치북"
   },
   "sketchbook": {
     "letter": "편지남기기",
