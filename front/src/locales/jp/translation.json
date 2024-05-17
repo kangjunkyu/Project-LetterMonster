@@ -81,10 +81,12 @@
     "changePublic": "全員に公開",
     "public": "公開",
     "private": "非公開",
+    "reply": "返事",
     "check": "本当にスケッチブックを削除しますか？"
   },
   "paint": {
     "title": "絵を描く",
+    "repaint": "新しく描く",
     "create": "完成",
     "upload": "絵をアップロードする",
     "nickname": "ニックネームを入力してください",

@@ -229,6 +229,22 @@ export const postLetter = (
     characterMotionId: characterMotionId,
   }).then((res) => res.data);
 
+/** 편지 답장 작성
+ * @requires content 편지 내용
+ * @requires userId 유저 아이디
+ * @requires characterMotionId 캐릭터 모션 ID
+ */
+export const postReplyLetter = (
+  content: string,
+  userId: number,
+  characterMotionId: number
+) =>
+  API.post(`/letter/reply`, {
+    content: content,
+    userId: userId,
+    characterMotionId: characterMotionId,
+  }).then((res) => res.data);
+
 /** 편지 목록 조회
  * @requires sketchbookId - 스케치북 ID
  */

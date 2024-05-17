@@ -100,6 +100,15 @@ function SketchbookPage() {
     }
   };
 
+  const replyLetter = (sender: { id: number; nickname: string }) => {
+    navigate(`${Page_Url.WriteLetterToSketchbook}`, {
+      state: {
+        replyId: sender.id,
+        replyNickname: sender.nickname,
+      },
+    });
+  };
+
   const writeLetter = () => {
     localStorage.getItem("accessToken")
       ? navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
@@ -153,6 +162,12 @@ function SketchbookPage() {
           </DefaultButton>
         </LNB>
         <WriteButton id="writeButton" onClick={() => writeLetter()} />
+        {isModalOpen?.letter && (
+          <div
+            className={styles.back}
+            onClick={() => handleToggleModal("letter", now)}
+          />
+        )}
         {data && (
           <figure className={styles.sketchbook}>
             {isModalOpen?.letter &&
@@ -179,9 +194,11 @@ function SketchbookPage() {
                           ?.letterList?.[letter]?.id
                       )
                     }
-                    character={
-                      data?.data?.sketchbookCharacterMotionList[now]
-                        ?.characterMotion?.imageUrl
+                    onReply={() =>
+                      replyLetter(
+                        data?.data?.sketchbookCharacterMotionList[now]
+                          ?.letterList?.[letter]?.sender
+                      )
                     }
                   />
                   <div className={styles.letterButtons}>
@@ -198,6 +215,14 @@ function SketchbookPage() {
                       {">"}
                     </DefaultButton>
                   </div>
+                  <img
+                    src={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.characterMotion?.imageUrl
+                    }
+                    alt="character"
+                    onClick={() => handleToggleModal("letter", now)}
+                  />
                 </div>
               )}
 
