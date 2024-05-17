@@ -185,6 +185,12 @@ export const putSketchbookOpen = (sketchbookId: number) =>
     }
   ).then((res) => res.data);
 
+/** 랜덤 스케치북 조회 */
+export const getRandomSketchbook = () =>
+  API.get(`/sketchbooks/random`).then((res) => {
+    return res.data;
+  });
+
 /** 즐겨찾기한 스케치북 목록 조회 */
 export const getFavoriteSketchbook = () =>
   API.get(`/favorite`).then((res) => {

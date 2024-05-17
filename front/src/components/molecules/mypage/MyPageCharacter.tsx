@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   useDeleteCharacter,
   useSelectMainCharacter,
@@ -7,6 +7,9 @@ import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import { Page_Url } from "../../../router/Page_Url";
 import styles from "./MyPageMolecules.module.scss";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../atoms/modal/Modal";
+import DefaultButton from "../../atoms/button/DefaultButton";
+import { useState } from "react";
 
 interface Character {
   characterId: number;
@@ -16,18 +19,16 @@ interface Character {
 }
 
 function MyPageCharacter() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: characterList, isLoading, error } = useGetCharacterList();
   const selectMainCharacter = useSelectMainCharacter();
   const deleteCharacter = useDeleteCharacter();
-  // const [mainCharacterId, setMainCharacterId] = useState<number>();
-
-  // const handleCardClick = (characterId: number) => {
-  //   selectMainCharacter.mutate(characterId);
-  // };
+  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(
+    null
+  );
 
   const handleMainCharacterClick = (characterId: number) => {
-    // setMainCharacterId(characterId);
     selectMainCharacter.mutate(characterId);
   };
 
@@ -35,19 +36,37 @@ function MyPageCharacter() {
     navigate(Page_Url.Sketch);
   };
 
+  type ModalName = "deleteAlert";
+
+  const [isModalOpen, setModalOpen] = useState({
+    deleteAlert: false,
+  });
+
+  const handleToggleModal = (modalName: ModalName, characterId?: number) => {
+    setModalOpen((prevState) => ({
+      ...prevState,
+      [modalName]: !prevState[modalName],
+    }));
+    if (modalName === "deleteAlert" && characterId !== undefined) {
+      setSelectedCharacterId(characterId);
+    }
+  };
+
   if (isLoading) return <div>Loading characters...</div>;
   if (error) return <div>Error loading characters!</div>;
   if (characterList?.length === 0) {
     return (
       <div className={styles.userNoCharacterListContainer}>
-        <div className={styles.titleNoCharacter}>캐릭터 목록</div>
+        <div className={styles.titleNoCharacter}>
+          {t("sketchbookList.empty")}
+        </div>
         <div>
-          <div>현재 캐릭터가 없어요!</div>
+          <div>{t("")}</div>
           <button
             className={styles.userNoCharacterButton}
             onClick={goToCreateCharacter}
           >
-            캐릭터 그리기
+            {t("writeletter.characterDrawing")}
           </button>
         </div>
       </div>
@@ -55,54 +74,79 @@ function MyPageCharacter() {
   }
 
   return (
-    <div className={styles.userCharacterListContainer}>
-      <div className={styles.title}>
-        <div>캐릭터 목록</div>
-      </div>
-      <div className={styles.userCharacterList}>
-        {characterList.map((character: Character) => (
-          <div
-            key={character.characterId}
-            className={styles.userCharacterCard}
-            // onClick={() => {
-            //   handleCardClick(character.characterId);
-            // }}
-          >
+    <>
+      <div className={styles.userCharacterListContainer}>
+        <div className={styles.title}>
+          <div>{t("main.characterList")}</div>
+        </div>
+        <div className={styles.userCharacterList}>
+          {characterList.map((character: Character) => (
             <div
-                className={`${styles.userCharacterInfo} ${
-                    character.mainCharacter
-                        ? styles.justifyBetween
-                        : styles.justifyRight
-                }`}
+              key={character.characterId}
+              className={styles.userCharacterCard}
             >
-              {character.mainCharacter && (
+              <div
+                className={`${styles.userCharacterInfo} ${
+                  character.mainCharacter
+                    ? styles.justifyBetween
+                    : styles.justifyRight
+                }`}
+              >
+                {character.mainCharacter && (
                   <span className={styles.mainCharacterLabel}>대표</span>
-              )}
-              <span className={styles.nickname}>{character.nickname}</span>
-            </div>
-            <img
-              src={character.imageUrl}
-              alt={character.nickname}
-              className={styles.userCharacterImage}
-            />
-            <div className={styles.userCharacterListUpper}>
-              <button
+                )}
+                <span className={styles.nickname}>{character.nickname}</span>
+              </div>
+              <img
+                src={character.imageUrl}
+                alt={character.nickname}
+                className={styles.userCharacterImage}
+              />
+              <div className={styles.userCharacterListUpper}>
+                <button
                   className={styles.representButton}
-                  onClick={() => handleMainCharacterClick(character.characterId)}
-              >
-                대표 지정
-              </button>
-              <button
+                  onClick={() =>
+                    handleMainCharacterClick(character.characterId)
+                  }
+                >
+                  {t("mypage.characterSetRep")}
+                </button>
+                <button
                   className={styles.deleteButton}
-                  onClick={() => deleteCharacter.mutate(character.characterId)}
-              >
-                삭제
-              </button>
+                  onClick={() =>
+                    handleToggleModal("deleteAlert", character.characterId)
+                  }
+                >
+                  {t("mypage.characterDelete")}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+      {isModalOpen.deleteAlert && selectedCharacterId !== null && (
+        <Modal
+          isOpen={isModalOpen.deleteAlert}
+          onClose={() => handleToggleModal("deleteAlert")}
+        >
+          <div className={styles.buttonBox}>
+            {t("characterList.check")}
+            <DefaultButton
+              onClick={() => deleteCharacter.mutate(selectedCharacterId)}
+            >
+              {t("characterList.deleteCharacter")}
+            </DefaultButton>
+            <DefaultButton
+              onClick={() => {
+                handleToggleModal("deleteAlert");
+              }}
+            >
+              {t("sketchbook.cancel")}
+            </DefaultButton>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 
