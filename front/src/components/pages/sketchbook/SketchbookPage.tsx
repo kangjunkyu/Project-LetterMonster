@@ -100,6 +100,15 @@ function SketchbookPage() {
     }
   };
 
+  const replyLetter = (sender: { id: number; nickname: string }) => {
+    navigate(`${Page_Url.WriteLetterToSketchbook}`, {
+      state: {
+        replyId: sender.id,
+        replyNickname: sender.nickname,
+      },
+    });
+  };
+
   const writeLetter = () => {
     localStorage.getItem("accessToken")
       ? navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
@@ -183,6 +192,12 @@ function SketchbookPage() {
                       deleteButton.mutate(
                         data?.data?.sketchbookCharacterMotionList[now]
                           ?.letterList?.[letter]?.id
+                      )
+                    }
+                    onReply={() =>
+                      replyLetter(
+                        data?.data?.sketchbookCharacterMotionList[now]
+                          ?.letterList?.[letter]?.sender
                       )
                     }
                   />

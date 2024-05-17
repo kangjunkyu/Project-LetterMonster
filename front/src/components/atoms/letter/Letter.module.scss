@@ -85,11 +85,15 @@
   position: absolute;
   top: -1rem;
   right: 2rem;
-  @include box;
+  left: 2rem;
+  display: flex;
+  justify-content: space-between;
+  & > button {
+    @include box;
+  }
   @media screen and (max-width: 479px) {
     /* 모바일 */
     top: -1rem;
     right: 2rem;
-    @include box;
   }
 }

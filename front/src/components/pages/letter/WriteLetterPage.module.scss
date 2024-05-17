@@ -22,6 +22,11 @@ $maxWidthValue: 1024px;
   }
 }
 
+.replyBox {
+  @include box;
+  text-align: center;
+}
+
 .imgbox {
   @include flexCenterColumn;
   @include setFontSize;

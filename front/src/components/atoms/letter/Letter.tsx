@@ -7,6 +7,7 @@ interface Props {
   content: string;
   onClick?: () => void;
   onDelete: () => void;
+  onReply: () => void;
   item: any;
   isWritePossible: boolean;
 }
@@ -17,6 +18,7 @@ function Letter({
   item,
   onClick,
   onDelete,
+  onReply,
   isWritePossible,
 }: Props) {
   const { t } = useTranslation();
@@ -28,9 +30,10 @@ function Letter({
       </div>
       <div className={styles.name_box}>From.{sender ? sender : "익명"}</div>
       {isWritePossible && (
-        <button className={styles.deleteButton} onClick={onDelete}>
-          {t("mypage.characterDelete")}
-        </button>
+        <div className={styles.deleteButton}>
+          <button onClick={onDelete}>{t("mypage.characterDelete")}</button>
+          {sender && <button onClick={onReply}>{t("sketchbook.reply")}</button>}
+        </div>
       )}
     </article>
   );

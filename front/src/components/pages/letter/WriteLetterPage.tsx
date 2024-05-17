@@ -32,6 +32,8 @@ function LetterWritePage() {
     motionId: mId,
     sketchbookName,
     fromUuid,
+    replyId,
+    replyNickname,
   } = location.state || {};
   const [content, setContent] = useState(""); // 편지내용
   const [to, setTo] = useState(
@@ -70,6 +72,7 @@ function LetterWritePage() {
 
   const onClickHandler = () => {
     write({
+      userId: replyId,
       characterId: characterId,
       content: content,
       target: target,
@@ -171,6 +174,7 @@ function LetterWritePage() {
               </button>
             </div>
           )}
+          {replyId && <div className={styles.replyBox}>To.{replyNickname}</div>}
           {chId && !localStorage.getItem("accessToken") && (
             <>
               <div className={styles.imgbox}>
@@ -203,64 +207,66 @@ function LetterWritePage() {
               )}
             </>
           )}
-          <figure>
-            <span>{t("writeletter.sketchbookSelect")}</span>
-            {isModalOpen.findsketchbook && (
-              <Modal
-                isOpen={isModalOpen.findsketchbook}
-                onClose={() => handleToggleModal("findsketchbook")}
+          {!replyId && (
+            <figure>
+              <span>{t("writeletter.sketchbookSelect")}</span>
+              {isModalOpen.findsketchbook && (
+                <Modal
+                  isOpen={isModalOpen.findsketchbook}
+                  onClose={() => handleToggleModal("findsketchbook")}
+                >
+                  <input
+                    type="text"
+                    className={`${styles.sendList} ${styles.boxComponent}`}
+                    placeholder={t("writeletter.sketchbookSearch")}
+                    value={searchKeyword}
+                    onChange={(e) => {
+                      setSearchKeyword(e.target.value);
+                    }}
+                  />
+                  <SearchList>
+                    {searchResult?.data?.map(
+                      (item: {
+                        id: number;
+                        uuid: string;
+                        name: string;
+                        tag: number;
+                        userNickName: string;
+                      }) => (
+                        <DefaultButton
+                          key={item.id}
+                          onClick={() => {
+                            setTarget(item.id);
+                            setTo(
+                              `${item.name} - ${item.tag} - ${item.userNickName}`
+                            );
+                            handleToggleModal("findsketchbook");
+                          }}
+                          custom={true}
+                        >
+                          <div>
+                            {item.name} - {item.tag} - {item.userNickName}
+                          </div>
+                        </DefaultButton>
+                      )
+                    )}
+                    <DefaultButton
+                      onClick={() => handleToggleModal("findsketchbook")}
+                    >
+                      {t("close")}
+                    </DefaultButton>
+                  </SearchList>
+                </Modal>
+              )}
+              <button
+                className={`${styles.sendList} ${styles.boxComponent}`}
+                onClick={() => handleToggleModal("findsketchbook")}
+                disabled={sketchbookName ? true : false}
               >
-                <input
-                  type="text"
-                  className={`${styles.sendList} ${styles.boxComponent}`}
-                  placeholder={t("writeletter.sketchbookSearch")}
-                  value={searchKeyword}
-                  onChange={(e) => {
-                    setSearchKeyword(e.target.value);
-                  }}
-                />
-                <SearchList>
-                  {searchResult?.data?.map(
-                    (item: {
-                      id: number;
-                      uuid: string;
-                      name: string;
-                      tag: number;
-                      userNickName: string;
-                    }) => (
-                      <DefaultButton
-                        key={item.id}
-                        onClick={() => {
-                          setTarget(item.id);
-                          setTo(
-                            `${item.name} - ${item.tag} - ${item.userNickName}`
-                          );
-                          handleToggleModal("findsketchbook");
-                        }}
-                        custom={true}
-                      >
-                        <div>
-                          {item.name} - {item.tag} - {item.userNickName}
-                        </div>
-                      </DefaultButton>
-                    )
-                  )}
-                  <DefaultButton
-                    onClick={() => handleToggleModal("findsketchbook")}
-                  >
-                    {t("close")}
-                  </DefaultButton>
-                </SearchList>
-              </Modal>
-            )}
-            <button
-              className={`${styles.sendList} ${styles.boxComponent}`}
-              onClick={() => handleToggleModal("findsketchbook")}
-              disabled={sketchbookName ? true : false}
-            >
-              {to}
-            </button>
-          </figure>
+                {to}
+              </button>
+            </figure>
+          )}
         </article>
         <article>
           {isFetching && <LoadingSpinner />}
