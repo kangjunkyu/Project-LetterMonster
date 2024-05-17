@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import Router from "./router/Router";
 import "./locales/i18n";
 import { AlertProvider } from "./hooks/notice/useAlert";
-// import GetToken from "./util/fcm/messaging_get_token";
+import GetToken from "./util/fcm/messaging_get_token";
 
 declare global {
   interface Window {
@@ -46,10 +46,6 @@ const App = () => {
   const wkwebview = isWKWebView();
   const inAppBrowser = isInAppBrowser();
 
-  console.log("isIOS:", ios);
-  console.log("isWKWebView:", wkwebview);
-  console.log("isInAppBrowser:", inAppBrowser);
-
   if (
     "serviceWorker" in navigator &&
     "PushManager" in window &&
@@ -61,6 +57,7 @@ const App = () => {
       .register("/firebase-messaging-sw.js")
       .then(function (registration) {
         console.log("Service Worker 등록 성공:", registration);
+        GetToken();
       })
       .catch(function (error) {
         console.error("Service Worker 등록 실패:", error);
@@ -68,8 +65,6 @@ const App = () => {
   } else {
     console.log("이 환경은 Service Worker 또는 푸시 알림을 지원하지 않습니다.");
   }
-
-  // GetToken();
 
   return (
     <QueryClientProvider client={queryClient}>

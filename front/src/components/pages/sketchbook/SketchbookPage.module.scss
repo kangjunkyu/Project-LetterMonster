@@ -137,7 +137,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 9997;
-
+  @include flexCenterColumn;
   @media screen and (max-width: 767px) {
     /* 타블렛 */
     position: absolute;
@@ -155,14 +155,20 @@
 
   & > .letterButtons {
     position: absolute;
-    top: 40%;
+    top: 25%;
     display: flex;
     width: 100%;
     justify-content: space-between;
     & > * {
+      @include flexCenter;
       padding: 0.5em;
-      background-color: $gc700;
-      border-radius: 50px;
+      background-color: #fafafad4;
+      border-radius: 5px;
+      @include commonShadow;
+
+      &:first-child > * {
+        transform: translateX(25%);
+      }
     }
   }
 }
