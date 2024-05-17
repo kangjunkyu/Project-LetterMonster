@@ -136,6 +136,7 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 9997;
 
   @media screen and (max-width: 767px) {
     /* 타블렛 */
@@ -164,6 +165,14 @@
       border-radius: 50px;
     }
   }
+}
+
+.back {
+  position: absolute;
+  z-index: 1;
+  width: 100vw;
+  height: 90vh;
+  background-color: #fafafad4;
 }
 
 .characterGrid {

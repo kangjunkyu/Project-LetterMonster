@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 
-import { postLetter, deleteLetter } from "../../api/Api";
+import { postLetter, deleteLetter, postReplyLetter } from "../../api/Api";
 import { useAlert } from "../notice/useAlert";
 import { Page_Url } from "../../router/Page_Url";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Props {
+  userId: number;
   content: string;
   target: number;
   motionId: number;
@@ -22,6 +23,7 @@ function useWriteLetter() {
   const navigate = useNavigate();
   const { showAlert } = useAlert();
   return ({
+    userId,
     content,
     target,
     motionId,
@@ -32,6 +34,7 @@ function useWriteLetter() {
     uuid,
   }: Props) => {
     if (
+      !userId &&
       content &&
       target &&
       motionId &&
@@ -45,6 +48,24 @@ function useWriteLetter() {
             setContent("");
             showAlert(`${t("notification.letterSuccess")}`);
             navigate(`${Page_Url.Sketchbook}${uuid}`);
+          }
+        })
+        .catch(() => {
+          showAlert(`${t("notification.letterFail")}`);
+        });
+    } else if (
+      userId &&
+      content &&
+      motionId &&
+      characterMotionId != 0 &&
+      characterMotionId
+    ) {
+      postReplyLetter(content, userId, characterMotionId)
+        .then((res) => {
+          if (res.statusCode === 201) {
+            setContent("");
+            showAlert(`${t("notification.letterSuccess")}`);
+            navigate(-1);
           }
         })
         .catch(() => {
