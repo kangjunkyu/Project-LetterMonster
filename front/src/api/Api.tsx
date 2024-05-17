@@ -187,7 +187,7 @@ export const putSketchbookOpen = (sketchbookId: number) =>
 
 /** 랜덤 스케치북 조회 */
 export const getRandomSketchbook = () =>
-  API.get(`/sketchbooks/random`).then((res) => {
+  API.get(`/sketchbooks/public/random`).then((res) => {
     return res.data;
   });
 

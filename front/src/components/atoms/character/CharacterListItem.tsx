@@ -13,7 +13,7 @@ function CharacterListItem({ item, characterId }: any) {
         className={`${styles.characterImg}`}
         alt="캐릭터 사진"
       ></img>
-      <div>{formatMotionName(item.nickname)}</div>
+      <div>{formatMotionName(item?.nickname)}</div>
     </li>
   );
 }
