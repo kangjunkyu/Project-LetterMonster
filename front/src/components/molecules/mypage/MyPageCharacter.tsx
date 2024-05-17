@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   useDeleteCharacter,
@@ -8,6 +7,9 @@ import { useGetCharacterList } from "../../../hooks/character/useCharacterList";
 import { Page_Url } from "../../../router/Page_Url";
 import styles from "./MyPageMolecules.module.scss";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../atoms/modal/Modal";
+import DefaultButton from "../../atoms/button/DefaultButton";
+import { useState } from "react";
 
 interface Character {
   characterId: number;
@@ -22,19 +24,32 @@ function MyPageCharacter() {
   const { data: characterList, isLoading, error } = useGetCharacterList();
   const selectMainCharacter = useSelectMainCharacter();
   const deleteCharacter = useDeleteCharacter();
-  // const [mainCharacterId, setMainCharacterId] = useState<number>();
-
-  // const handleCardClick = (characterId: number) => {
-  //   selectMainCharacter.mutate(characterId);
-  // };
+  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(
+    null
+  );
 
   const handleMainCharacterClick = (characterId: number) => {
-    // setMainCharacterId(characterId);
     selectMainCharacter.mutate(characterId);
   };
 
   const goToCreateCharacter = () => {
     navigate(Page_Url.Sketch);
+  };
+
+  type ModalName = "deleteAlert";
+
+  const [isModalOpen, setModalOpen] = useState({
+    deleteAlert: false,
+  });
+
+  const handleToggleModal = (modalName: ModalName, characterId?: number) => {
+    setModalOpen((prevState) => ({
+      ...prevState,
+      [modalName]: !prevState[modalName],
+    }));
+    if (modalName === "deleteAlert" && characterId !== undefined) {
+      setSelectedCharacterId(characterId);
+    }
   };
 
   if (isLoading) return <div>Loading characters...</div>;
@@ -59,73 +74,79 @@ function MyPageCharacter() {
   }
 
   return (
-    <div className={styles.userCharacterListContainer}>
-      <div className={styles.title}>
-        <div>{t("main.characterList")}</div>
-      </div>
-      <div className={styles.userCharacterList}>
-        {characterList.map((character: Character) => (
-          <div
-            key={character.characterId}
-            className={styles.userCharacterCard}
-            // onClick={() => {
-            //   handleCardClick(character.characterId);
-            // }}
-          >
+    <>
+      <div className={styles.userCharacterListContainer}>
+        <div className={styles.title}>
+          <div>{t("main.characterList")}</div>
+        </div>
+        <div className={styles.userCharacterList}>
+          {characterList.map((character: Character) => (
             <div
+              key={character.characterId}
+              className={styles.userCharacterCard}
+            >
+              <div
                 className={`${styles.userCharacterInfo} ${
-                    character.mainCharacter
-                        ? styles.justifyBetween
-                        : styles.justifyRight
+                  character.mainCharacter
+                    ? styles.justifyBetween
+                    : styles.justifyRight
                 }`}
-            >
-              {character.mainCharacter && (
+              >
+                {character.mainCharacter && (
                   <span className={styles.mainCharacterLabel}>대표</span>
-              )}
-              <span className={styles.nickname}>{character.nickname}</span>
-            </div>
-            <img
-              src={character.imageUrl}
-              alt={character.nickname}
-              className={styles.userCharacterImage}
-            />
-            <div className={styles.userCharacterListUpper}>
-              <button
+                )}
+                <span className={styles.nickname}>{character.nickname}</span>
+              </div>
+              <img
+                src={character.imageUrl}
+                alt={character.nickname}
+                className={styles.userCharacterImage}
+              />
+              <div className={styles.userCharacterListUpper}>
+                <button
                   className={styles.representButton}
-                  onClick={() => handleMainCharacterClick(character.characterId)}
-              >
-                {t("mypage.characterSetRep")}
-              </button>
-              <button
+                  onClick={() =>
+                    handleMainCharacterClick(character.characterId)
+                  }
+                >
+                  {t("mypage.characterSetRep")}
+                </button>
+                <button
                   className={styles.deleteButton}
-                  onClick={() => deleteCharacter.mutate(character.characterId)}
-              >
-                {t("mypage.characterDelete")}
-              </button>
+                  onClick={() =>
+                    handleToggleModal("deleteAlert", character.characterId)
+                  }
+                >
+                  {t("mypage.characterDelete")}
+                </button>
+              </div>
             </div>
-            <img
-              src={character.imageUrl}
-              alt={character.nickname}
-              className={styles.userCharacterImage}
-            />
-            <div
-              className={`${styles.userCharacterInfo} ${
-                character.mainCharacter
-                  ? styles.justifyBetween
-                  : styles.justifyRight
-              }`}
-            >
-              {character.mainCharacter && (
-                <span className={styles.mainCharacterLabel}>
-                  {t("mypage.characterRep")}
-                </span>
-              )}
-              <span className={styles.nickname}>{character.nickname}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+      {isModalOpen.deleteAlert && selectedCharacterId !== null && (
+        <Modal
+          isOpen={isModalOpen.deleteAlert}
+          onClose={() => handleToggleModal("deleteAlert")}
+        >
+          <div className={styles.buttonBox}>
+            {t("characterList.check")}
+            <DefaultButton
+              onClick={() => deleteCharacter.mutate(selectedCharacterId)}
+            >
+              {t("characterList.deleteCharacter")}
+            </DefaultButton>
+            <DefaultButton
+              onClick={() => {
+                handleToggleModal("deleteAlert");
+              }}
+            >
+              {t("sketchbook.cancel")}
+            </DefaultButton>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 
