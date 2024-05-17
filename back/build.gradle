@@ -103,6 +103,9 @@ dependencies {
     // Bucket4J
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.5.0'
 
+    // Prometheus
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
 
 }
 
