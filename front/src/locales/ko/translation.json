@@ -80,10 +80,12 @@
     "changePublic": "모두에게 공개",
     "public": "공개",
     "private": "비공개",
+    "reply": "답장",
     "check": "정말 스케치북을 지우실건가요?"
   },
   "paint": {
     "title": "그림 그리기",
+    "repaint": "다시 그리기",
     "create": "완성",
     "upload": "앨범에서 선택",
     "nickname": "캐릭터 별명 입력",

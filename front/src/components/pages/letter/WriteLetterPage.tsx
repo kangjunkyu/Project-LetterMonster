@@ -192,7 +192,7 @@ function LetterWritePage() {
                     navigate(Page_Url.Sketch);
                   }}
                 >
-                  다시그리기
+                  {t("paint.repaint")}
                 </DefaultButton>
               </div>
               {characterId != 0 && (
