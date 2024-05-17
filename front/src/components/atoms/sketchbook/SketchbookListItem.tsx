@@ -16,6 +16,7 @@ interface Props {
       nickname: string;
       nicknameTag: number;
     };
+    userNickName: string;
     uuid: string;
     tag: number;
     isWritePossible: boolean;
@@ -41,7 +42,8 @@ function SketchbookListItem({ item, url, publicMode }: Props) {
           {publicMode && <Thumb width={20} height={20} />}
         </div>
         <h5>
-          {item?.name} - {item?.holder?.nickname}
+          {item?.name} -{" "}
+          {item?.holder ? item?.holder?.nickname : item?.userNickName}
         </h5>
         <Next width={10} height={10} />
       </Link>
