@@ -152,5 +152,9 @@
     "myFriendList": "내 친구 목록",
     "completeDeleteFriend": "친구를 삭제했어요!",
     "reDelete": "다시 삭제해주세요."
+  },
+  "characterList":{
+    "check":"정말 캐릭터를 삭제하시겠습니까?",
+    "deleteCharacter": "캐릭터 삭제하기"
   }
 }
