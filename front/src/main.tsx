@@ -22,11 +22,23 @@ function isIOS() {
   );
 }
 
+function isInAppBrowser() {
+  const userAgent =
+    navigator.userAgent || navigator.vendor || (window as any).opera;
+  return /KAKAOTALK|NAVER|FB_IAB|Instagram|Line/i.test(userAgent);
+}
+
 const App = () => {
   const { Kakao } = window;
   Kakao.cleanup();
   Kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
-  if ("serviceWorker" in navigator && "PushManager" in window && !isIOS()) {
+
+  if (
+    "serviceWorker" in navigator &&
+    "PushManager" in window &&
+    !isIOS() &&
+    !isInAppBrowser()
+  ) {
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
       .then(function (registration) {
@@ -38,6 +50,7 @@ const App = () => {
   } else {
     console.log("이 환경은 Service Worker 또는 푸시 알림을 지원하지 않습니다.");
   }
+
   GetToken();
 
   return (
