@@ -25,6 +25,8 @@ import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration
 import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
 import CommonShareIcon from "../../atoms/share/commonShareIcon";
 import { useDeleteLetter } from "../../../hooks/letter/useWriteLetter";
+import Prev from "../../../assets/commonIcon/back.svg?react";
+import Next from "../../../assets/commonIcon/next.svg?react";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -33,6 +35,7 @@ function SketchbookPage() {
   const navigate = useNavigate();
   const [now, setNow] = useState(-1);
   const [letter, setLetter] = useState(0);
+  const [max, setMax] = useState(1);
   const [name, setName] = useState(data?.data?.name);
   const { showAlert } = useAlert();
   const mutateSketchbookName = usePutSketchbook();
@@ -85,6 +88,12 @@ function SketchbookPage() {
       }
     }
   };
+
+  useEffect(() => {
+    setMax(
+      data?.data?.sketchbookCharacterMotionList[now]?.letterList?.length - 1
+    );
+  }, [data?.data?.sketchbookCharacterMotionList[now]?.letterList?.length]);
 
   const deleteButton = useDeleteLetter();
 
@@ -157,6 +166,24 @@ function SketchbookPage() {
                 : `${t("sketchbook.private")}`
             } `}</h1>
           )}
+          {checkToken(localStorage.getItem("accessToken")) &&
+            (Favorite?.data ? (
+              <button
+                onClick={() => {
+                  mutateSketchbookFavorite.mutate(data?.data?.id);
+                }}
+              >
+                <FilledStar width={30} height={30} />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  mutateSketchbookFavorite.mutate(data?.data?.id);
+                }}
+              >
+                <Star width={30} height={30} />
+              </button>
+            ))}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
@@ -202,18 +229,26 @@ function SketchbookPage() {
                     }
                   />
                   <div className={styles.letterButtons}>
-                    <DefaultButton
-                      onClick={() => letterButton(-1)}
-                      custom={true}
-                    >
-                      {"<"}
-                    </DefaultButton>
-                    <DefaultButton
-                      onClick={() => letterButton(1)}
-                      custom={true}
-                    >
-                      {">"}
-                    </DefaultButton>
+                    {letter > 0 ? (
+                      <DefaultButton
+                        onClick={() => letterButton(-1)}
+                        custom={true}
+                      >
+                        <Prev width={20} height={20} />
+                      </DefaultButton>
+                    ) : (
+                      <div />
+                    )}
+                    {letter < max ? (
+                      <DefaultButton
+                        onClick={() => letterButton(1)}
+                        custom={true}
+                      >
+                        <Next width={20} height={20} />
+                      </DefaultButton>
+                    ) : (
+                      <div />
+                    )}
                   </div>
                   <img
                     src={
@@ -273,25 +308,6 @@ function SketchbookPage() {
                   : `${t("sketchbook.changePublic")}`}
               </DefaultButton>
               <div className={styles.linkBox}>
-                {Favorite?.data ? (
-                  <button
-                    onClick={() => {
-                      mutateSketchbookFavorite.mutate(data?.data?.id);
-                    }}
-                  >
-                    <FilledStar width={30} height={30} />
-                  </button>
-                ) : (
-                  checkToken(localStorage.getItem("accessToken")) && (
-                    <button
-                      onClick={() => {
-                        mutateSketchbookFavorite.mutate(data?.data?.id);
-                      }}
-                    >
-                      <Star width={30} height={30} />
-                    </button>
-                  )
-                )}
                 <CommonShareIcon link={data?.data?.shareLink} />
                 <KakaoShareIcon
                   link={data?.data?.shareLink}
