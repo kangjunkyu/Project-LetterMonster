@@ -157,6 +157,24 @@ function SketchbookPage() {
                 : `${t("sketchbook.private")}`
             } `}</h1>
           )}
+          {checkToken(localStorage.getItem("accessToken")) &&
+            (Favorite?.data ? (
+              <button
+                onClick={() => {
+                  mutateSketchbookFavorite.mutate(data?.data?.id);
+                }}
+              >
+                <FilledStar width={30} height={30} />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  mutateSketchbookFavorite.mutate(data?.data?.id);
+                }}
+              >
+                <Star width={30} height={30} />
+              </button>
+            ))}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
@@ -273,25 +291,6 @@ function SketchbookPage() {
                   : `${t("sketchbook.changePublic")}`}
               </DefaultButton>
               <div className={styles.linkBox}>
-                {Favorite?.data ? (
-                  <button
-                    onClick={() => {
-                      mutateSketchbookFavorite.mutate(data?.data?.id);
-                    }}
-                  >
-                    <FilledStar width={30} height={30} />
-                  </button>
-                ) : (
-                  checkToken(localStorage.getItem("accessToken")) && (
-                    <button
-                      onClick={() => {
-                        mutateSketchbookFavorite.mutate(data?.data?.id);
-                      }}
-                    >
-                      <Star width={30} height={30} />
-                    </button>
-                  )
-                )}
                 <CommonShareIcon link={data?.data?.shareLink} />
                 <KakaoShareIcon
                   link={data?.data?.shareLink}
