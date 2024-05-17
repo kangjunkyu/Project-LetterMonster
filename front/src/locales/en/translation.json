@@ -7,6 +7,33 @@
     "back": "Go Back",
     "goToMain": "Go To Main"
   },
+  "date": {
+    "minute": " minutes ago",
+    "hour": " hours ago",
+    "day": " days ago",
+    "year": " - ",
+    "month": " - ",
+    "days": ""
+  },
+  "notification": {
+    "nameblank": "The first character cannot be a space",
+    "name10": "The sketchbook name must be 10 characters or less",
+    "noregist": "Guests cannot view letters",
+    "copy": "Copy completed",
+    "retry": "Please try again",
+    "letterSuccess": "The letter has been sent!",
+    "letterFail": "Failed to send the letter",
+    "selectCharacter": "Please select a character",
+    "motionLoading": "The character is practicing the movements",
+    "noContent": "Please check the content to be sent",
+    "where": "Please check the sketchbook to be sent",
+    "selectMotion": "Please select a character motion",
+    "error": "An unknown error has occurred",
+    "deleteFriend": "Friend has been deleted!",
+    "weareFriend": "Friend has been added!",
+    "nicknameChange": "Nickname change was successful",
+    "nicknameTwo": "The nickname must be at least two characters long"
+  },
   "nav": {
     "sketchbook": "Sketchbook",
     "logout": "Sign Out",
@@ -31,7 +58,7 @@
     "send": "Send"
   },
   "sketchbookList": {
-    "title": "My Sketchbook List",
+    "title": "Sketchbook List",
     "generate": "Create",
     "generateModal": "Create My Sketchbook",
     "name": "Sketchbook Name",
@@ -42,13 +69,18 @@
     "favoriteList": "Favorite Sketchbook List",
     "searchResult": "Search Results",
     "Explore": "Explore Sketchbooks",
-    "My": "My Sketchbook"
+    "My": "My Sketchbook",
+    "recommend": "Recommended Sketchbook"
   },
   "sketchbook": {
     "letter": "Leaving a letter",
     "rename": "Rename Sketchbook",
     "delete": "Delete Sketchbook",
     "cancel": "Cancel",
+    "changePrivate": "Shareable via link only",
+    "changePublic": "Public to everyone",
+    "public": "Public",
+    "private": "Private",
     "check": "Are you sure you want to delete the sketchbook?"
   },
   "paint": {
@@ -76,7 +108,23 @@
     "practice": "The character is still practicing the motion"
   },
   "mypage": {
-    "sketchbookList": "Sketchbook List"
+    "sketchbookList": "Sketchbook List",
+    "friendList": "My Friend List",
+    "characterList": "My Character List",
+    "characterDelete": "Delete",
+    "characterRep": "Representative",
+    "characterSetRep": "Set as Representative",
+    "nickname": "Nickname",
+    "nicknameTag": "Tag",
+    "insertNickname": "Enter a new nickname",
+    "nicknameChange": "Change Nickname",
+    "nicknameChangeSuccess": "Nickname has been changed",
+    "nicknameNobadwords": "Profanity is not allowed in the nickname",
+    "withdrawal": "Withdraw Membership",
+    "nofriend": "No friends registered",
+    "findfriend": "Find Friend",
+    "friendSearch": "Enter nickname",
+    "wearefriend": "Add"
   },
   "main": {
     "title": "Letter Monster",
@@ -87,5 +135,24 @@
     "friends": "My Friends List",
     "developer": "Visit the Developer's Sketchbook",
     "suggestion": "Suggestions and Bug Reporting"
+  },
+  "myUserInfo": {
+    "leaveButton": "Leave Service",
+    "leaveService": "Leave",
+    "leaveCheck": "Are you sure you want to leave?",
+    "changeNickname": "Change Nickname",
+    "inputNickname": "Enter a new nickname",
+    "nickname": "Nickname",
+    "nicknameTag": "Nickname Tag"
+  },
+  "friendList": {
+    "check": "Are you sure you want to delete?",
+    "deleteFriend": "Delete Friend",
+    "noFriend": "No friends are currently registered.",
+    "delete": "Delete",
+    "findFriend": "Find Friend",
+    "myFriendList": "My Friend List",
+    "completeDeleteFriend": "Friend has been deleted!",
+    "reDelete": "Please try deleting again."
   }
 }

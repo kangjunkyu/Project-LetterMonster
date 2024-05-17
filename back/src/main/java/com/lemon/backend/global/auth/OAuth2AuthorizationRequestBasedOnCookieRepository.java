@@ -53,8 +53,8 @@ public class OAuth2AuthorizationRequestBasedOnCookieRepository implements Author
         CookieUtil.addCookie(response, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME, CookieUtil.serialize(authorizationRequest), cookieExpireSeconds);
         String redirectUriAfterLogin = request.getParameter(REDIRECT_URI_PARAM_COOKIE_NAME);
         String firebaseToken = request.getParameter(FIREBASE_TOKEN_COOKIE_NAME);
+
         if (firebaseToken != null && !firebaseToken.equals("null") && !firebaseToken.isEmpty()) {
-            System.out.println(firebaseToken + " 들어갈 파이어베이스 토큰");
             CookieUtil.addCookie(response, FIREBASE_TOKEN_COOKIE_NAME, firebaseToken, cookieExpireSeconds);
             log.info("파이어베이스 토큰 진짜 있음");
         } else {

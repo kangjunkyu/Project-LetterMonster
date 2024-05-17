@@ -147,6 +147,13 @@ public class SketchbookServiceImpl implements SketchbookService {
         if (!sketchbook.getUsers().getId().equals(userId)) {
             new CustomException(ErrorCode.INVALID_ACCESS);
         } else {
+            // 해당 사용자의 스케치북 수를 확인
+            long sketchbookCount = sketchbookRepository.countByUsersId(userId);
+
+            // 스케치북이 하나 남았을 경우 삭제를 금지
+            if (sketchbookCount <= 1) {
+                throw new CustomException(ErrorCode.CANNOT_DELETE_LAST_SKETCHBOOK);
+            }
             sketchbookRepository.delete(sketchbook);
         }
     }

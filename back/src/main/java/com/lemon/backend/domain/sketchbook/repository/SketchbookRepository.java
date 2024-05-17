@@ -5,4 +5,5 @@ import com.lemon.backend.domain.sketchbook.repository.custom.SketchbookRepositor
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SketchbookRepository extends JpaRepository<Sketchbook, Long>, SketchbookRepositoryCustom {
+    long countByUsersId(Integer userId);
 }

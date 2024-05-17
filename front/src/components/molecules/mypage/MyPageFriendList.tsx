@@ -9,6 +9,8 @@ import MyPageFindFriend from "./MyPageFindFriend";
 import Modal from "../../atoms/modal/Modal";
 import useFriendSketchbookList from "../../../hooks/sketchbook/useFriendSketchbookList";
 import MyPageFriendSketchbook from "./MyPageFriendSketchbook";
+import DefaultButton from "../../atoms/button/DefaultButton";
+import { useTranslation } from "react-i18next";
 
 interface MyFriendProps {
   id: number;
@@ -17,34 +19,43 @@ interface MyFriendProps {
   isFriend: boolean;
 }
 
-type ModalName = "findFriend" | "sketchbookList";
+type ModalName = "findFriend" | "sketchbookList" | "deleteAlert";
 
 function MyPageFriendList() {
+  const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState({
     findFriend: false,
     sketchbookList: false,
+    deleteAlert: false,
   });
   const [userId, setUserId] = useState(-1);
   const [userName, setUserName] = useState("");
+  const [friendToDelete, setFriendToDelete] = useState<MyFriendProps | null>(
+    null
+  );
   const { data: friendSketchbookList, isLoading } =
     useFriendSketchbookList(userId);
   const { showAlert } = useAlert();
   const deleteFriend = useDeleteFriend();
   const { data: myFriend } = useGetFriendGroupList();
 
-  const handleToggleModal = (modalName: ModalName) =>
+  const handleToggleModal = (modalName: ModalName, friend?: MyFriendProps) => {
     setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
+    if (modalName === "deleteAlert" && friend) {
+      setFriendToDelete(friend);
+    }
+  };
 
   const deleteFriendMutation = (friendId: number) => {
     deleteFriend.mutate(friendId, {
       onSuccess: () => {
-        showAlert("친구를 삭제했어요!");
+        showAlert(t("notification.deleteFriend"));
       },
       onError: (err: any) => {
         if (err.response.data.status == 400) {
-          showAlert("다시 삭제해주세요.");
+          showAlert(t("notification.retry"));
         } else {
-          showAlert("다시 삭제해주세요.");
+          showAlert(t("notification.retry"));
         }
       },
     });
@@ -54,9 +65,12 @@ function MyPageFriendList() {
     <>
       <div className={styles.friendListContainer}>
         <div className={styles.friendListUpper}>
-          <div>내 친구 목록</div>
-          <button onClick={() => handleToggleModal("findFriend")}>
-            친구 찾기
+          <div>{t("mypage.friendList")}</div>
+          <button
+            className={styles.friendFindButton}
+            onClick={() => handleToggleModal("findFriend")}
+          >
+            {t("mypage.findfriend")}
           </button>
           {isModalOpen.findFriend && (
             <Modal
@@ -96,21 +110,44 @@ function MyPageFriendList() {
                 <div>{friend.nicknameTag}</div>
                 <button
                   className={styles.deleteFriendButton}
-                  onClick={() => {
-                    deleteFriendMutation(friend.id);
-                  }}
+                  // onClick={() => {
+                  //   deleteFriendMutation(friend.id);
+                  // }}
+                  onClick={() => handleToggleModal("deleteAlert", friend)}
                 >
-                  삭제
+                  {t("mypage.characterDelete")}
                 </button>
               </div>
             ))
           ) : (
             <div className={styles.myFriendListNull}>
-              현재 등록된 친구가 없습니다.
+              {t("mypage.nofriend")}
             </div>
           )}
         </div>
       </div>
+      {isModalOpen.deleteAlert && friendToDelete && (
+        <Modal
+          isOpen={isModalOpen.deleteAlert}
+          onClose={() => handleToggleModal("deleteAlert")}
+        >
+          <div className={styles.buttonBox}>
+            {t("friendList.check")}
+            <DefaultButton
+              onClick={() => deleteFriendMutation(friendToDelete.id)}
+            >
+              {t("friendList.deleteFriend")}
+            </DefaultButton>
+            <DefaultButton
+              onClick={() => {
+                handleToggleModal("deleteAlert");
+              }}
+            >
+              {t("sketchbook.cancel")}
+            </DefaultButton>
+          </div>
+        </Modal>
+      )}
     </>
   );
 }

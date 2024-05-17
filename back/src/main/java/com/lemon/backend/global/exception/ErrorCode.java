@@ -15,6 +15,7 @@ public enum ErrorCode {
 
     //스케치북
     SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "스케치북 정보를 찾을 수 없습니다."),
+    CANNOT_DELETE_LAST_SKETCHBOOK(HttpStatus.BAD_REQUEST, "스케치북은 최소 1개를 남겨야 합니다."),
     
     //즐겨찾기
     FAVORITE_SKETCHBOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "즐겨찾기 내 스케치북 정보를 찾을 수 없습니다."),
