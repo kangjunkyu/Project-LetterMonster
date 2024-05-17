@@ -16,7 +16,7 @@ interface Props {
       nickname: string;
       nicknameTag: number;
     };
-    userNickName: string;
+    userNickName?: string;
     uuid: string;
     tag: number;
     isWritePossible: boolean;
