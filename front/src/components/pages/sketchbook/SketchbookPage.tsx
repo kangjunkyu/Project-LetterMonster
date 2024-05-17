@@ -153,6 +153,12 @@ function SketchbookPage() {
           </DefaultButton>
         </LNB>
         <WriteButton id="writeButton" onClick={() => writeLetter()} />
+        {isModalOpen?.letter && (
+          <div
+            className={styles.back}
+            onClick={() => handleToggleModal("letter", now)}
+          />
+        )}
         {data && (
           <figure className={styles.sketchbook}>
             {isModalOpen?.letter &&
@@ -179,10 +185,6 @@ function SketchbookPage() {
                           ?.letterList?.[letter]?.id
                       )
                     }
-                    character={
-                      data?.data?.sketchbookCharacterMotionList[now]
-                        ?.characterMotion?.imageUrl
-                    }
                   />
                   <div className={styles.letterButtons}>
                     <DefaultButton
@@ -198,6 +200,14 @@ function SketchbookPage() {
                       {">"}
                     </DefaultButton>
                   </div>
+                  <img
+                    src={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.characterMotion?.imageUrl
+                    }
+                    alt="character"
+                    onClick={() => handleToggleModal("letter", now)}
+                  />
                 </div>
               )}
 

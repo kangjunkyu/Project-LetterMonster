@@ -8,7 +8,6 @@ interface Props {
   onClick?: () => void;
   onDelete: () => void;
   item: any;
-  character: string;
   isWritePossible: boolean;
 }
 
@@ -18,7 +17,6 @@ function Letter({
   item,
   onClick,
   onDelete,
-  character,
   isWritePossible,
 }: Props) {
   const { t } = useTranslation();
@@ -34,8 +32,6 @@ function Letter({
           {t("mypage.characterDelete")}
         </button>
       )}
-      <div className={styles.background} />
-      <img className={styles.character} src={character} alt="character" />
     </article>
   );
 }
