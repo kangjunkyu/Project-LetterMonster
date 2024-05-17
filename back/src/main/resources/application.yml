@@ -50,3 +50,14 @@ FAST_API:
 
 base:
   url: ${SHARE_URL}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health, info, prometheus"
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
