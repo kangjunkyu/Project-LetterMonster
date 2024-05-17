@@ -165,27 +165,23 @@ function LetterWritePage() {
             </>
           )}
           {!localStorage.getItem("accessToken") && (
-            <div className={styles.characterList}>
-              <button
-                onClick={() => navigate(Page_Url.Sketch)}
-                className={styles.buttonItem}
-              >
-                {t("writeletter.characterDrawing")}
-              </button>
-            </div>
-          )}
-          {replyId && <div className={styles.replyBox}>To.{replyNickname}</div>}
-          {chId && !localStorage.getItem("accessToken") && (
             <>
-              <div className={styles.imgbox}>
-                <img
-                  className={styles.img}
-                  src={staticCharacter?.data?.imageUrl}
-                  alt=""
-                />
-                <h5 className={styles.imgNickname}>
-                  {staticCharacter?.data?.nickname}
-                </h5>
+              <CharacterList
+                characterList={
+                  chId
+                    ? [
+                        {
+                          nickname: staticCharacter?.data?.nickname,
+                          imageUrl: staticCharacter?.data?.imageUrl,
+                          characterId: chId,
+                        },
+                      ]
+                    : null
+                }
+                characterId={characterId}
+                setId={setCharacterId}
+              ></CharacterList>
+              {chId ? (
                 <DefaultButton
                   onClick={() => {
                     cancelCharacter(chId);
@@ -194,7 +190,16 @@ function LetterWritePage() {
                 >
                   {t("paint.repaint")}
                 </DefaultButton>
-              </div>
+              ) : (
+                <div className={styles.characterList}>
+                  <button
+                    onClick={() => navigate(Page_Url.Sketch)}
+                    className={styles.buttonItem}
+                  >
+                    {t("writeletter.characterDrawing")}
+                  </button>
+                </div>
+              )}
               {characterId != 0 && (
                 <figure>
                   <p>{t("writeletter.motionSelect")}</p>
@@ -207,6 +212,7 @@ function LetterWritePage() {
               )}
             </>
           )}
+          {replyId && <div className={styles.replyBox}>To.{replyNickname}</div>}
           {!replyId && (
             <figure>
               <span>{t("writeletter.sketchbookSelect")}</span>
