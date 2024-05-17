@@ -10,16 +10,17 @@ import com.lemon.backend.domain.users.user.entity.QUsers;
 import com.lemon.backend.global.exception.CustomException;
 import com.lemon.backend.global.exception.ErrorCode;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.lemon.backend.domain.characters.entity.QCharacterMotion.characterMotion;
 import static com.lemon.backend.domain.characters.entity.QCharacters.characters;
@@ -134,45 +135,54 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                 .fetchOne();
 
         if (sketchDto != null) {
-            // SketchbookCharacterMotion과 관련된 데이터를 조인하여 한 번에 가져오기
-            List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotionGetListDtos = query
+            // SketchbookCharacterMotion 데이터 조회
+            List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotions = query
                     .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
                             sketchbookCharacterMotion.id,
                             Projections.constructor(CharacterMotionToSketchbookDto.class,
                                     characterMotion.id,
                                     characterMotion.motion.id,
                                     characterMotion.url,
-                                    characters.nickname),
-                            Projections.list(
-                                    Projections.constructor(LetterToSketchbookDto.class,
-                                            letter.id,
-                                            Projections.fields(UserGetDto.class,
-                                                    letter.sender.id,
-                                                    letter.sender.isLanguage,
-                                                    letter.sender.nickname,
-                                                    letter.sender.nicknameTag),
-                                            Projections.fields(UserGetDto.class,
-                                                    letter.receiver.nickname,
-                                                    letter.receiver.nicknameTag),
-                                            letter.content,
-                                            letter.isPublic,
-                                            letter.createdAt)
-                            )
-                    ))
+                                    characters.nickname)))
                     .from(sketchbookCharacterMotion)
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
-                    .leftJoin(letter).on(letter.sketchbookCharacterMotion.id.eq(sketchbookCharacterMotion.id))
-                    .leftJoin(letter.sender) // 별칭을 명확하게 지정
-                    .leftJoin(letter.receiver) // 별칭을 명확하게 지정
                     .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
 
-            sketchDto.setSketchbookCharacterMotionList(sketchbookCharacterMotionGetListDtos);
+            // SketchbookCharacterMotion과 관련된 Letter 데이터 조회 및 매핑
+            sketchbookCharacterMotions.forEach(motion -> {
+                List<LetterToSketchbookDto> letters = query
+                        .select(Projections.constructor(LetterToSketchbookDto.class,
+                                letter.id,
+                                Projections.fields(UserGetDto.class,
+                                        letter.sender.id,
+                                        letter.sender.isLanguage,
+                                        letter.sender.nickname,
+                                        letter.sender.nicknameTag),
+                                Projections.fields(UserGetDto.class,
+                                        letter.receiver.nickname,
+                                        letter.receiver.nicknameTag),
+                                letter.content,
+                                letter.isPublic,
+                                letter.createdAt))
+                        .from(letter)
+                        .leftJoin(letter.sender)
+                        .leftJoin(letter.receiver)
+                        .where(letter.sketchbookCharacterMotion.id.eq(motion.getId()))
+                        .fetch();
+
+                motion.setLetterList(letters);
+            });
+
+            sketchDto.setSketchbookCharacterMotionList(sketchbookCharacterMotions);
         }
 
         return Optional.ofNullable(sketchDto);
     }
+
+
+
 
 
 
@@ -221,29 +231,28 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
             // SketchbookCharacterMotion과 관련된 Letter를 조인하여 한 번에 가져오기
             List<SketchbookCharacterMotionGetListDto> sketchbookCharacterMotions = query
                     .select(Projections.constructor(SketchbookCharacterMotionGetListDto.class,
-                                    sketchbookCharacterMotion.id,
-                                    Projections.constructor(CharacterMotionToSketchbookDto.class,
-                                            characterMotion.id,
-                                            characterMotion.motion.id,
-                                            characterMotion.url,
-                                            characters.nickname),
-                                    Projections.list(
-                                            Projections.constructor(LetterToSketchbookDto.class,
-                                                    letter.id,
-                                                    Projections.fields(UserGetDto.class,
-                                                            letter.sender.id,
-                                                            letter.sender.isLanguage,
-                                                            letter.sender.nickname,
-                                                            letter.sender.nicknameTag),
-                                                    Projections.fields(UserGetDto.class,
-                                                            letter.receiver.nickname,
-                                                            letter.receiver.nicknameTag),
-                                                    letter.content,
-                                                    letter.isPublic,
-                                                    letter.createdAt)
-                                    )
+                            sketchbookCharacterMotion.id,
+                            Projections.constructor(CharacterMotionToSketchbookDto.class,
+                                    characterMotion.id,
+                                    characterMotion.motion.id,
+                                    characterMotion.url,
+                                    characters.nickname),
+                            Projections.list(
+                                    Projections.constructor(LetterToSketchbookDto.class,
+                                            letter.id,
+                                            Projections.fields(UserGetDto.class,
+                                                    letter.sender.id,
+                                                    letter.sender.isLanguage,
+                                                    letter.sender.nickname,
+                                                    letter.sender.nicknameTag),
+                                            Projections.fields(UserGetDto.class,
+                                                    letter.receiver.nickname,
+                                                    letter.receiver.nicknameTag),
+                                            letter.content,
+                                            letter.isPublic,
+                                            letter.createdAt)
                             )
-                    )
+                    ))
                     .from(sketchbookCharacterMotion)
                     .leftJoin(sketchbookCharacterMotion.characterMotion, characterMotion)
                     .leftJoin(characterMotion.characters, characters)
@@ -253,11 +262,25 @@ public class SketchbookRepositoryImpl implements SketchbookRepositoryCustom {
                     .where(sketchbookCharacterMotion.sketchbook.sketchbookUuid.eq(sketchId))
                     .fetch();
 
-            sketchDto.setSketchbookCharacterMotionList(sketchbookCharacterMotions);
+            // SketchbookCharacterMotion에 편지 리스트를 매핑
+            Map<Long, SketchbookCharacterMotionGetListDto> motionMap = new HashMap<>();
+            sketchbookCharacterMotions.forEach(motion -> {
+                SketchbookCharacterMotionGetListDto existingMotion = motionMap.get(motion.getId());
+                if (existingMotion == null) {
+                    existingMotion = new SketchbookCharacterMotionGetListDto(motion.getId(), motion.getCharacterMotion(), new ArrayList<>());
+                    motionMap.put(motion.getId(), existingMotion);
+                }
+                existingMotion.getLetterList().addAll(motion.getLetterList());
+            });
+
+            List<SketchbookCharacterMotionGetListDto> finalMotions = new ArrayList<>(motionMap.values());
+            sketchDto.setSketchbookCharacterMotionList(finalMotions);
         }
 
         return Optional.ofNullable(sketchDto);
     }
+
+
 
 
     @Override
