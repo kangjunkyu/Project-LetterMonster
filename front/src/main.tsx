@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import Router from "./router/Router";
 import "./locales/i18n";
 import { AlertProvider } from "./hooks/notice/useAlert";
-import GetToken from "./util/fcm/messaging_get_token";
+// import GetToken from "./util/fcm/messaging_get_token";
 
 declare global {
   interface Window {
@@ -69,7 +69,7 @@ const App = () => {
     console.log("이 환경은 Service Worker 또는 푸시 알림을 지원하지 않습니다.");
   }
 
-  GetToken();
+  // GetToken();
 
   return (
     <QueryClientProvider client={queryClient}>
