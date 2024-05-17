@@ -8,6 +8,7 @@ import "./locales/i18n";
 import { AlertProvider } from "./hooks/notice/useAlert";
 import { GetTokenIOS } from "./util/fcm/messaging_get_token";
 import { App as CapacitorApp } from "@capacitor/app";
+import { Browser as CapacitorBrowser } from "@capacitor/browser";
 import styles from "./main.module.scss";
 
 declare global {
@@ -36,7 +37,7 @@ const App = () => {
       }
     };
 
-    const handleAppUrlOpen = (data: any) => {
+    const handleAppUrlOpen = async (data: any) => {
       const url = new URL(data.url);
       const accessToken = url.searchParams.get("accessToken");
       const refreshToken = url.searchParams.get("refreshToken");
@@ -45,6 +46,7 @@ const App = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         window.location.reload();
+        await CapacitorBrowser.close(); // 내부 브라우저를 닫음
       }
     };
 

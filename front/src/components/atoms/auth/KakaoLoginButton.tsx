@@ -1,3 +1,4 @@
+import { Browser } from "@capacitor/browser";
 import Kakao from "../../../assets/login/kakaoLogin.png";
 import styles from "./AuthButton.module.scss";
 
@@ -8,8 +9,8 @@ function KakaoLogin() {
     "fcm_token"
   )}`;
 
-  const Login = () => {
-    window.location.href = KAKAO_AUTH_URL;
+  const Login = async () => {
+    await Browser.open({ url: KAKAO_AUTH_URL });
   };
 
   return (
