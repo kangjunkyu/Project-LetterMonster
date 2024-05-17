@@ -81,10 +81,12 @@
     "changePublic": "Public to everyone",
     "public": "Public",
     "private": "Private",
+    "reply": "Reply",
     "check": "Are you sure you want to delete the sketchbook?"
   },
   "paint": {
     "title": "Painting",
+    "repaint": "Repaint",
     "create": "Create",
     "upload": "Select from Album",
     "nickname": "Please enter a nickname for the character",
