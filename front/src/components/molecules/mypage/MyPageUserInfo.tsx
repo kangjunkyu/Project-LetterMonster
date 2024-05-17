@@ -4,8 +4,12 @@ import styles from "./MyPageMolecules.module.scss";
 import { useGetUserNickname } from "../../../hooks/user/useGetUserNickName";
 import { useDeleteUser } from "../../../hooks/user/useDeleteUser";
 import { useAlert } from "../../../hooks/notice/useAlert";
+import DefaultButton from "../../atoms/button/DefaultButton";
+import Modal from "../../atoms/modal/Modal";
+import { useTranslation } from "react-i18next";
 
 function MyPageUserInfo() {
+  const { t } = useTranslation();
   const deleteUser = useDeleteUser();
   const { showAlert } = useAlert();
   const changeNickname = usePostNickname();
@@ -16,14 +20,14 @@ function MyPageUserInfo() {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newNickname = event.target.value;
       if (newNickname.startsWith(" ")) {
-        showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
+        showAlert(t("notification.nameblank"));
       } else if (
         // /[^a-zA-Z0-9ㄱ-힣ㆍᆞᆢ\s]/.test(newNickname) ||
         newNickname.includes("　")
       ) {
-        showAlert("닉네임에 띄어쓰기는 불가능합니다.");
+        showAlert(t("notification.nameblank"));
       } else if (newNickname.length > 10) {
-        showAlert("닉네임은 10글자 이하만 가능합니다.");
+        showAlert(t("notification.name10"));
       } else {
         setNickname(newNickname);
       }
@@ -32,18 +36,42 @@ function MyPageUserInfo() {
   );
 
   const postNicknameMutation = () => {
-    changeNickname.mutate(nickname, {
-      onSuccess: () => {
-        showAlert("닉네임 변경에 성공했어요!");
-      },
-      onError: (err: any) => {
-        if (err.response.data.status == 400) {
-          showAlert("욕설이 포함된 닉네임은 사용할 수 없어요.");
-        } else {
-          showAlert("다시 시도해주세요.");
-        }
-      },
-    });
+    if (nickname.length < 2) {
+      showAlert(t("mypage.nicknameTwo"));
+    } else {
+      changeNickname.mutate(nickname, {
+        onSuccess: () => {
+          showAlert(t("mypage.nicknameChangeSuccess"));
+        },
+        onError: (err: any) => {
+          if (err.response.data.status == 400) {
+            showAlert(t("mypage.nicknameNobadwords"));
+          } else {
+            showAlert(t("notification.retry"));
+          }
+        },
+      });
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      postNicknameMutation();
+    }
+  };
+
+  type ModalName = "leaveServiceAlert" | "deleteAlert";
+
+  const [isModalOpen, setModalOpen] = useState({
+    leaveServiceAlert: false,
+    deleteAlert: false,
+  });
+
+  const handleToggleModal = (modalName: ModalName) => {
+    setModalOpen((prevState) => ({
+      ...prevState,
+      [modalName]: !prevState[modalName],
+    }));
   };
 
   return (
@@ -51,8 +79,8 @@ function MyPageUserInfo() {
       <div className={styles.userInfoContainer}>
         <div className={styles.userInfoDetail}>
           <div>
-            <div>닉네임</div>
-            <div>닉네임 태그</div>
+            <div>{t("mypage.nickname")}</div>
+            <div>{t("mypage.nicknameTag")}</div>
           </div>
           <div className={styles.userInfoReal}>
             {userInfo && <div>{userInfo?.nickname}</div>}
@@ -64,11 +92,42 @@ function MyPageUserInfo() {
           className={styles.userNicknameInput}
           type="text"
           onChange={handleUserNicknameChange}
-          placeholder="새로운 닉네임을 입력하세요"
+          onKeyDown={handleKeyDown}
+          placeholder={`${t("mypage.nickname")}`}
         />
-        <button onClick={() => postNicknameMutation()}>닉네임변경</button>
-        <button onClick={() => deleteUser()}>회원탈퇴</button>
+        <button
+          className={styles.userNicknameChangeCheck}
+          onClick={() => postNicknameMutation()}
+        >
+          {t("mypage.nicknameChange")}
+        </button>
+        <button
+          className={styles.userLeaveCheck}
+          onClick={() => handleToggleModal("deleteAlert")}
+        >
+          {t("myUserInfo.leaveButton")}
+        </button>
       </div>
+      {isModalOpen.deleteAlert && (
+        <Modal
+          isOpen={isModalOpen.deleteAlert}
+          onClose={() => handleToggleModal("deleteAlert")}
+        >
+          <div className={styles.buttonBox}>
+            {t("myUserInfo.leaveCheck")}
+            <DefaultButton onClick={() => deleteUser()}>
+              {t("myUserInfo.leaveService")}
+            </DefaultButton>
+            <DefaultButton
+              onClick={() => {
+                handleToggleModal("deleteAlert");
+              }}
+            >
+              {t("sketchbook.cancel")}
+            </DefaultButton>
+          </div>
+        </Modal>
+      )}
     </>
   );
 }

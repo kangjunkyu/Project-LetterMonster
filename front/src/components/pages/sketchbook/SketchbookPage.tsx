@@ -24,6 +24,7 @@ import FilledStar from "../../../assets/commonIcon/filledStar.svg?react";
 import useCheckTokenExpiration from "../../../hooks/auth/useCheckTokenExpiration";
 import KakaoShareIcon from "../../atoms/share/kakaoShareIcon";
 import CommonShareIcon from "../../atoms/share/commonShareIcon";
+import { useDeleteLetter } from "../../../hooks/letter/useWriteLetter";
 
 function SketchbookPage() {
   const { t } = useTranslation();
@@ -62,7 +63,7 @@ function SketchbookPage() {
 
   const handleToggleModal = (modalName: ModalName, index: number) => {
     if (data?.data?.sketchbookCharacterMotionList[now]?.letterList === null) {
-      return showAlert("비회원은 편지를 못봐요");
+      return showAlert(`${t("notification.noregist")}`);
     }
     if (now === -1 || index === now) {
       setModalOpen((prev) => ({ ...prev, [modalName]: !prev[modalName] }));
@@ -85,13 +86,13 @@ function SketchbookPage() {
     }
   };
 
+  const deleteButton = useDeleteLetter();
+
   const handleUserNicknameChange = (nickname: string) => {
-    if (nickname.startsWith(" ")) {
-      showAlert("첫 글자로 띄어쓰기를 사용할 수 없습니다.");
-    } else if (nickname.includes("　")) {
-      showAlert("스케치북 이름은 영문, 숫자, 한글만 가능합니다.");
+    if (nickname.startsWith(" ") || nickname.includes("　")) {
+      showAlert(`${t("paint.pleaseDont")}`);
     } else if (nickname.length > 10) {
-      showAlert("스케치북 이름은 10글자 이하만 가능합니다.");
+      showAlert(`${t("paint.pleaseTen")}`);
     } else {
       mutateSketchbookName.mutate({ sketchbookId: data?.data?.id, name: name });
       handleToggleModal("sketchbookInfo", 0);
@@ -104,6 +105,7 @@ function SketchbookPage() {
       ? navigate(`${Page_Url.WriteLetterToSketchbook}${data?.data?.id}`, {
           state: {
             sketchbookName: data?.data?.name,
+            fromUuid: data?.data?.uuid,
           },
         })
       : navigate(Page_Url.Sketch, {
@@ -141,31 +143,14 @@ function SketchbookPage() {
                   handleToggleModal("sketchbookInfo", 0);
               }}
             >{`${data?.data?.name} ▼ ${
-              data?.data?.isPublic ? "공개중" : "비공개중"
+              data?.data?.isPublic
+                ? `${t("sketchbook.public")}`
+                : `${t("sketchbook.private")}`
             } `}</h1>
           )}
           <DefaultButton onClick={() => writeLetter()} custom={true}>
             {t("sketchbook.letter")}
           </DefaultButton>
-          {Favorite?.data ? (
-            <button
-              onClick={() => {
-                mutateSketchbookFavorite.mutate(data?.data?.id);
-              }}
-            >
-              <FilledStar width={30} height={30} />
-            </button>
-          ) : (
-            checkToken(localStorage.getItem("accessToken")) && (
-              <button
-                onClick={() => {
-                  mutateSketchbookFavorite.mutate(data?.data?.id);
-                }}
-              >
-                <Star width={30} height={30} />
-              </button>
-            )
-          )}
         </LNB>
         <WriteButton id="writeButton" onClick={() => writeLetter()} />
         {data && (
@@ -182,7 +167,23 @@ function SketchbookPage() {
                       data?.data?.sketchbookCharacterMotionList[now]
                         ?.letterList?.[letter]?.content
                     }
-                  ></Letter>
+                    item={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.letterList?.[letter]
+                    }
+                    onClick={() => handleToggleModal("letter", now)}
+                    isWritePossible={data?.data?.isWritePossible}
+                    onDelete={() =>
+                      deleteButton.mutate(
+                        data?.data?.sketchbookCharacterMotionList[now]
+                          ?.letterList?.[letter]?.id
+                      )
+                    }
+                    character={
+                      data?.data?.sketchbookCharacterMotionList[now]
+                        ?.characterMotion?.imageUrl
+                    }
+                  />
                   <div className={styles.letterButtons}>
                     <DefaultButton
                       onClick={() => letterButton(-1)}
@@ -242,9 +243,30 @@ function SketchbookPage() {
                   handleToggleModal("sketchbookInfo", 0);
                 }}
               >
-                {data?.data?.isPublic ? "링크로만 공개" : "모두에게 공개"}
+                {data?.data?.isPublic
+                  ? `${t("sketchbook.changePrivate")}`
+                  : `${t("sketchbook.changePublic")}`}
               </DefaultButton>
               <div className={styles.linkBox}>
+                {Favorite?.data ? (
+                  <button
+                    onClick={() => {
+                      mutateSketchbookFavorite.mutate(data?.data?.id);
+                    }}
+                  >
+                    <FilledStar width={30} height={30} />
+                  </button>
+                ) : (
+                  checkToken(localStorage.getItem("accessToken")) && (
+                    <button
+                      onClick={() => {
+                        mutateSketchbookFavorite.mutate(data?.data?.id);
+                      }}
+                    >
+                      <Star width={30} height={30} />
+                    </button>
+                  )
+                )}
                 <CommonShareIcon link={data?.data?.shareLink} />
                 <KakaoShareIcon
                   link={data?.data?.shareLink}

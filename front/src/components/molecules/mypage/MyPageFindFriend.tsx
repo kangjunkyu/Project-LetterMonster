@@ -6,6 +6,7 @@ import {
   usePostFriend,
 } from "../../../hooks/friendGroup/useFriend";
 import { useAlert } from "../../../hooks/notice/useAlert";
+import { useTranslation } from "react-i18next";
 
 interface FriendProps {
   userId: number;
@@ -15,6 +16,7 @@ interface FriendProps {
 }
 
 function MyPageFindFriend() {
+  const { t } = useTranslation();
   const [nickname, setNickname] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const { showAlert } = useAlert();
@@ -24,13 +26,13 @@ function MyPageFindFriend() {
   const deleteFriendMutation = (friendId: number) => {
     deleteFriend.mutate(friendId, {
       onSuccess: () => {
-        showAlert("친구를 삭제했어요!");
+        showAlert(t("notification.deleteFriend"));
       },
       onError: (err: any) => {
         if (err.response.data.status == 400) {
-          showAlert("다시 삭제해주세요.");
+          showAlert(t("notification.retry"));
         } else {
-          showAlert("다시 삭제해주세요.");
+          showAlert(t("notification.retry"));
         }
       },
     });
@@ -39,13 +41,13 @@ function MyPageFindFriend() {
   const addFriendMutation = (friendId: number) => {
     addFriend.mutate(friendId, {
       onSuccess: () => {
-        showAlert("친구를 추가했어요!");
+        showAlert(t("notification.weareFriend"));
       },
       onError: (err: any) => {
         if (err.response.data.status == 400) {
-          showAlert("다시 추가해주세요.");
+          showAlert(t("notification.retry"));
         } else {
-          showAlert("다시 추가해주세요.");
+          showAlert(t("notification.retry"));
         }
       },
     });
@@ -72,20 +74,20 @@ function MyPageFindFriend() {
   return (
     <>
       <div className={styles.findFriendContainer}>
-        <div>친구 찾기</div>
+        <div>{t("mypage.findfriend")}</div>
         <div className={styles.findFriendInput}>
           <input
             type="text"
-            placeholder="닉네임을 입력해주세요."
+            placeholder={t("mypage.friendSearch")}
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
-          <button onClick={() => useSearchUserNickname}>검색</button>
+          <button className={styles.searchUserButton} onClick={() => useSearchUserNickname}>검색</button>
         </div>
         <div className={styles.findFriendDivider}></div>
         <div className={styles.findFriendColumn}>
-          <p>닉네임</p>
-          <p>태그</p>
+          <p>{t("mypage.nickname")}</p>
+          <p>{t("mypage.nicknameTag")}</p>
         </div>
         <div className={styles.findFriendResult}>
           {isLoading ? (
@@ -108,7 +110,7 @@ function MyPageFindFriend() {
                       deleteFriendMutation(friend.userId);
                     }}
                   >
-                    삭제
+                    {t("mypage.characterDelete")}
                   </button>
                 ) : (
                   <button
@@ -117,7 +119,7 @@ function MyPageFindFriend() {
                       addFriendMutation(friend.userId);
                     }}
                   >
-                    추가
+                    {t("mypage.wearefriend")}
                   </button>
                 )}
               </div>

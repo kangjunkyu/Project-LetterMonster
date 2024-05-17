@@ -22,6 +22,8 @@ import { useTranslation } from "react-i18next";
 import { Page_Url } from "../../../router/Page_Url";
 import useImportImageSelect from "../../../hooks/sketch/useImportImageSelect";
 
+import GuidePage from "./SketchGuidePage";
+
 interface PaintProps {}
 
 export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
@@ -41,6 +43,7 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   // const [image, setImage] = useState<HTMLImageElement | undefined>();
   const { image, setImage, onImportImageSelect } = useImportImageSelect(size);
   const [strokeWidth, setStrokeWidth] = useState(15); //펜굵기
+  const [showGuide, setShowGuide] = useState(true);
 
   const { sketchbookId, sketchbookName, fromUuid } = location.state || {};
 
@@ -311,178 +314,181 @@ export const Paint: React.FC<PaintProps> = React.memo(function Paint({}) {
   }, [redoHistory]);
 
   return (
-    <div className={styles.paintContainer}>
-      {windowWidth <= 480 && (
-        <LNB>
-          <h1>{t("paint.title")}</h1>
-          <DefaultButton onClick={() => onExportClick()} custom={true}>
-            {t("paint.create")}
-          </DefaultButton>
-        </LNB>
-      )}
-      <div className={styles.characterNicknameContainer}>
-        <div>
-          <input
-            type="text"
-            value={characterNickname}
-            onChange={handleCharacterNicknameChange}
-            placeholder={t("paint.nickname")}
-            className={styles.inputCharacterNickname}
-          />
+    <>
+      {showGuide && <GuidePage onClose={() => setShowGuide(false)} />}
+      <div className={styles.paintContainer}>
+        {windowWidth <= 480 && (
+          <LNB>
+            <h1>{t("paint.title")}</h1>
+            <DefaultButton onClick={() => onExportClick()} custom={true}>
+              {t("paint.create")}
+            </DefaultButton>
+          </LNB>
+        )}
+        <div className={styles.characterNicknameContainer}>
           <div>
-            {nicknameError && (
-              <div className={styles.nicknameError} style={{ color: "red" }}>
-                {nicknameError}
-              </div>
-            )}
-          </div>
-        </div>
-        <input
-          type="file"
-          ref={fileRef}
-          onChange={
-            onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
-          }
-          style={{ display: "none" }}
-          accept="image/*"
-        />
-        <button className={styles.etcButton} onClick={onImportImageClick}>
-          {t("paint.upload")}
-        </button>
-        <button className={styles.etcButton} onClick={onExportClick}>
-          {t("paint.create")}
-        </button>
-      </div>
-
-      <div className={styles.paintCanvas}>
-        <Stage
-          height={500}
-          width={size}
-          ref={stageRef}
-          onMouseUp={onStageMouseUp}
-          onMouseDown={onStageMouseDown}
-          onMouseMove={onStageMouseMove}
-          onTouchStart={onStageMouseDown}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          style={{ border: "3px solid black" }}
-        >
-          <Layer>
-            <Rect width={size} height={500} fill="white" />
-            {image && (
-              <KonvaImage
-                image={image}
-                x={0}
-                y={0}
-                height={size / 2}
-                width={size / 2}
-                draggable={isDraggable}
-              />
-            )}
-            {scribbles.map((scribble) => (
-              <KonvaLine
-                key={scribble.id}
-                id={scribble.id}
-                lineCap="round"
-                lineJoin="round"
-                stroke={scribble?.color}
-                strokeWidth={scribble.strokeWidth}
-                points={scribble.points}
-                onClick={onShapeClick}
-                draggable={isDraggable}
-              />
-            ))}
-            <Transformer ref={transformerRef} />
-          </Layer>
-        </Stage>
-      </div>
-
-      {/* <div className={`${styles.paintBottom}`}> */}
-      <div className={styles.paintTool}>
-        <div className={styles.paintButtonUpper}>
-          <div id={styles.markerContainer}>
             <input
-              id={styles.marker}
-              type="range"
-              onChange={handleStrokeWidthChange}
-              value={strokeWidth}
-              max="30"
-              min="5"
+              type="text"
+              value={characterNickname}
+              onChange={handleCharacterNicknameChange}
+              placeholder={t("paint.nickname")}
+              className={styles.inputCharacterNickname}
             />
-            <div id={styles.shape}></div>
-          </div>
-          {PAINT_OPTIONS.map(({ id, label, icon }) => (
-            <div
-              key={id}
-              aria-label={label}
-              onClick={() => setDrawAction(id)}
-              className={`${styles.paintEachTool} ${
-                id === drawAction ? styles.toolSelected : ""
-              }`}
-            >
-              {icon}
-            </div>
-          ))}
-
-          <div className={styles.colorButton}>
-            {showPopover && (
-              <div ref={popoverRef} className={styles.popoverContent}>
-                <div className={styles.popoverHeader}>
-                  <button
-                    className={styles.popoverClose}
-                    onClick={() => setShowPopover(false)}
-                  >
-                    <span className="material-icons">clear</span>
-                    <span>{t("close")}</span>
-                  </button>
-                  <SketchPicker
-                    color={color}
-                    onChangeComplete={(selectedColor) =>
-                      setColor(selectedColor.hex)
-                    }
-                  />
+            <div>
+              {nicknameError && (
+                <div className={styles.nicknameError} style={{ color: "red" }}>
+                  {nicknameError}
                 </div>
-              </div>
-            )}
-            <div
-              onClick={() => setShowPopover(true)}
-              style={{
-                backgroundColor: color,
-                height: "32px",
-                width: "32px",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            ></div>
+              )}
+            </div>
           </div>
+          <input
+            type="file"
+            ref={fileRef}
+            onChange={
+              onImportImageSelect as React.ChangeEventHandler<HTMLInputElement>
+            }
+            style={{ display: "none" }}
+            accept="image/*"
+          />
+          <button className={styles.etcButton} onClick={onImportImageClick}>
+            {t("paint.upload")}
+          </button>
+          <button className={styles.etcButton} onClick={onExportClick}>
+            {t("paint.create")}
+          </button>
         </div>
 
-        <div className={styles.paintButtonUnder}>
-          <button
-            className={styles.etcButton}
-            aria-label={"Clear"}
-            onClick={onClear}
+        <div className={styles.paintCanvas}>
+          <Stage
+            height={500}
+            width={size}
+            ref={stageRef}
+            onMouseUp={onStageMouseUp}
+            onMouseDown={onStageMouseDown}
+            onMouseMove={onStageMouseMove}
+            onTouchStart={onStageMouseDown}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            style={{ border: "3px solid black" }}
           >
-            <span className="material-icons">delete_forever</span>
-          </button>
-          <button
-            className={styles.etcButton}
-            aria-label={"Undo"}
-            onClick={undo}
-            disabled={history.length <= 1}
-          >
-            <span className="material-icons">undo</span>
-          </button>
-          <button
-            className={styles.etcButton}
-            aria-label={"Redo"}
-            onClick={redo}
-            disabled={redoHistory.length === 0}
-          >
-            <span className="material-icons">redo</span>
-          </button>
+            <Layer>
+              <Rect width={size} height={500} fill="white" />
+              {image && (
+                <KonvaImage
+                  image={image}
+                  x={0}
+                  y={0}
+                  height={size / 2}
+                  width={size / 2}
+                  draggable={isDraggable}
+                />
+              )}
+              {scribbles.map((scribble) => (
+                <KonvaLine
+                  key={scribble.id}
+                  id={scribble.id}
+                  lineCap="round"
+                  lineJoin="round"
+                  stroke={scribble?.color}
+                  strokeWidth={scribble.strokeWidth}
+                  points={scribble.points}
+                  onClick={onShapeClick}
+                  draggable={isDraggable}
+                />
+              ))}
+              <Transformer ref={transformerRef} />
+            </Layer>
+          </Stage>
+        </div>
+
+        {/* <div className={`${styles.paintBottom}`}> */}
+        <div className={styles.paintTool}>
+          <div className={styles.paintButtonUpper}>
+            <div id={styles.markerContainer}>
+              <input
+                id={styles.marker}
+                type="range"
+                onChange={handleStrokeWidthChange}
+                value={strokeWidth}
+                max="30"
+                min="5"
+              />
+              <div id={styles.shape}></div>
+            </div>
+            {PAINT_OPTIONS.map(({ id, label, icon }) => (
+              <div
+                key={id}
+                aria-label={label}
+                onClick={() => setDrawAction(id)}
+                className={`${styles.paintEachTool} ${
+                  id === drawAction ? styles.toolSelected : ""
+                }`}
+              >
+                {icon}
+              </div>
+            ))}
+
+            <div className={styles.colorButton}>
+              {showPopover && (
+                <div ref={popoverRef} className={styles.popoverContent}>
+                  <div className={styles.popoverHeader}>
+                    <button
+                      className={styles.popoverClose}
+                      onClick={() => setShowPopover(false)}
+                    >
+                      <span className="material-icons">clear</span>
+                      <span>{t("close")}</span>
+                    </button>
+                    <SketchPicker
+                      color={color}
+                      onChangeComplete={(selectedColor) =>
+                        setColor(selectedColor.hex)
+                      }
+                    />
+                  </div>
+                </div>
+              )}
+              <div
+                onClick={() => setShowPopover(true)}
+                style={{
+                  backgroundColor: color,
+                  height: "32px",
+                  width: "32px",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                }}
+              ></div>
+            </div>
+          </div>
+
+          <div className={styles.paintButtonUnder}>
+            <button
+              className={styles.etcButton}
+              aria-label={"Clear"}
+              onClick={onClear}
+            >
+              <span className="material-icons">delete_forever</span>
+            </button>
+            <button
+              className={styles.etcButton}
+              aria-label={"Undo"}
+              onClick={undo}
+              disabled={history.length <= 1}
+            >
+              <span className="material-icons">undo</span>
+            </button>
+            <button
+              className={styles.etcButton}
+              aria-label={"Redo"}
+              onClick={redo}
+              disabled={redoHistory.length === 0}
+            >
+              <span className="material-icons">redo</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 });
