@@ -43,6 +43,11 @@
 &nbsp;
 
 
+
+## 📈 ERD
+![ERD](/uploads/ec0320e2f34d55fd3972f60f7d34439e/ERD.png){: width="70%" height="70%"}
+&nbsp;
+
 ## **🧾 기능 소개**
 ### 카카오, 라인 로그인
 <p align="center">
