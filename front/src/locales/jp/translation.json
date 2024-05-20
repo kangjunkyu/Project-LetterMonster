@@ -1,0 +1,180 @@
+{
+  "header": {
+    "language": "言語設定",
+    "help": "ヘルプ"
+  },
+  "button": {
+    "back": "戻る",
+    "goToMain": "最初に戻る",
+    "open": "開く",
+    "close": "閉じる"
+  },
+  "guide": {
+    "1": "スケッチパッドの使い方ガイド",
+    "2": "キャラクターのニックネーム",
+    "3": "上の入力ボックスにあなたのキャラクターの名前を必ず入力してください！",
+    "4": "アルバムから選択",
+    "5": "背景のない人物やキャラクターの写真をアップロードできます！",
+    "6": "描画ツール",
+    "7": "線の太さ、ペン、消しゴムを選択できます。",
+    "8": "線や絵を動かしたり、色を選択することもできます！",
+    "9": "ニックネームを付けてキャラクターを描いたら、",
+    "10": "上の",
+    "11": "完成",
+    "12": "ボタンを押してください！",
+    "13": "キャラクターの",
+    "14": "腕や脚をはっきりと",
+    "15": "描くと、",
+    "16": "もっと綺麗に見えます！！"
+  },
+  "date": {
+    "minute": "分前",
+    "hour": "時間前",
+    "day": "日前",
+    "year": "年",
+    "month": "月",
+    "days": "日"
+  },
+  "notification": {
+    "nameblank": "最初の文字としてスペースを使用することはできません",
+    "name10": "スケッチブックの名前は10文字以下にしてください",
+    "noregist": "ゲストは手紙を見ることができません",
+    "copy": "コピー完了",
+    "retry": "もう一度お試しください",
+    "letterSuccess": "手紙を送りました！",
+    "letterFail": "手紙の送信に失敗しました",
+    "selectCharacter": "キャラクターを選んでください",
+    "motionLoading": "キャラクターが動作を練習中です",
+    "noContent": "送信する内容を確認してください",
+    "where": "送信するスケッチブックを確認してください",
+    "selectMotion": "キャラクターの動作を選んでください",
+    "error": "不明なエラーが発生しました",
+    "deleteFriend": "友達を削除しました！",
+    "weareFriend": "友達を追加しました！",
+    "nicknameChange": "ニックネームの変更に成功しました",
+    "nicknameTwo": "ニックネームは2文字以上でなければなりません"
+  },
+  "nav": {
+    "sketchbook": "スケッチブック",
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "register": "ユーザー登録",
+    "drawing": "描く",
+    "letter": "手紙",
+    "more": "以外",
+    "home": "ホーム"
+  },
+  "error": "あいにくそんなページはありません。(`°̥̥̥̥̥̥̥̥ω°̥̥̥̥̥̥̥̥｀)",
+  "close": "閉じる",
+  "writeletter": {
+    "title": "手紙書き",
+    "characterSelect": "キャラクター選び",
+    "characterDrawing": "キャラクター描き",
+    "motionSelect": "動作の選び",
+    "sketchbookSelect": "手紙を送るスケッチブック",
+    "sketchbookSearch": "名前で検索",
+    "sketchbookSelectSentence": "手紙を送るスケッチブックを選んでください",
+    "letterContent": "手紙の内容",
+    "send": "送る"
+  },
+  "sketchbookList": {
+    "title": "スケッチブックリスト",
+    "generate": "作成する",
+    "generateModal": "私のスケッチブックを作成する",
+    "name": "スケッチブックの名前",
+    "create": "スケッチブックが作成されました",
+    "namePlease": "スケッチブックの名前を決めてください",
+    "copy": "コピー完了",
+    "empty": "何もない",
+    "favoriteList": "お気に入りのスケッチブックリスト",
+    "searchResult": "検索結果",
+    "Explore": "スケッチブックを探索",
+    "My": "私のスケッチブック",
+    "recommend": "おすすめのスケッチブック"
+  },
+  "sketchbook": {
+    "letter": "手紙を残す",
+    "rename": "スケッチブックの名前を変更",
+    "delete": "スケッチブックを削除",
+    "cancel": "キャンセル",
+    "changePrivate": "リンクでのみ公開",
+    "changePublic": "全員に公開",
+    "public": "公開",
+    "private": "非公開",
+    "reply": "返事",
+    "check": "本当にスケッチブックを削除しますか？"
+  },
+  "paint": {
+    "title": "絵を描く",
+    "repaint": "新しく描く",
+    "create": "完成",
+    "upload": "絵をアップロードする",
+    "nickname": "ニックネームを入力してください",
+    "pleaseRename": "ニックネームは英数字と韓国語の文字のみ使用可能です。",
+    "pleaseDont": "最初の文字にスペースを使用することはできません。",
+    "pleaseTen": "ニックネームは10文字以下である必要があります。",
+    "pleaseDraw": "キャラクターを描いてください"
+  },
+  "paintResult": {
+    "title": "図完成",
+    "birth": "誕生",
+    "move": "移動に行く",
+    "letter": "手紙を書く"
+  },
+  "motion": {
+    "title": "モーション選択",
+    "create": "決定",
+    "repaint": "再描画",
+    "motions": "キャラクターモーションの種類",
+    "warn": "キャラクターモーションを選択してください！",
+    "practice": "キャラクターはまだ動作を練習中です。"
+  },
+  "mypage": {
+    "sketchbookList": "スケッチブックリスト",
+    "friendList": "私の友達リスト",
+    "characterList": "私のキャラクターリスト",
+    "characterDelete": "削除",
+    "characterRep": "代表",
+    "characterSetRep": "代表に設定",
+    "nickname": "ニックネーム",
+    "nicknameTag": "タグ",
+    "insertNickname": "新しいニックネームを入力してください",
+    "nicknameChange": "ニックネームを変更",
+    "nicknameChangeSuccess": "ニックネームが変更されました",
+    "nicknameNobadwords": "ニックネームに不適切な言葉は使えません",
+    "withdrawal": "会員退会",
+    "nofriend": "登録された友達がいません",
+    "findfriend": "友達を探す",
+    "friendSearch": "ニックネームを入力してください",
+    "wearefriend": "追加"
+  },
+  "main": {
+    "title": "レターモンスター",
+    "introduce": "私のキャラクターで手紙を送る！",
+    "proposal": ", こんにちは！",
+    "userInfo": "情報管理",
+    "characterList": "私のキャラクターリスト",
+    "friends": "私の友達リスト",
+    "developer": "開発者のスケッチブックを訪れる",
+    "suggestion": "提案およびバグ報告"
+  },
+  "myUserInfo": {
+    "leaveButton": "退会",
+    "leaveService": "退会する",
+    "leaveCheck": "本当に退会しますか？",
+    "changeNickname": "ニックネーム変更",
+    "inputNickname": "新しいニックネームを入力してください",
+    "nickname": "ニックネーム",
+    "nicknameTag": "ニックネームタグ"
+  },
+  "friendList": {
+    "check": "本当に削除しますか？",
+    "deleteFriend": "友達を削除",
+    "noFriend": "現在登録されている友達がいません。",
+    "delete": "削除",
+    "findFriend": "友達を探す",
+    "myFriendList": "友達リスト",
+    "completeDeleteFriend": "友達が削除されました！",
+    "reDelete": "もう一度削除してください。"
+  }
+}

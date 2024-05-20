@@ -1,0 +1,238 @@
+@import "../../../styles/mixins/_defalut.scss";
+
+$widthValue: 90%;
+$maxWidthValue: 1024px;
+
+.writeContainer {
+  @media screen and (min-width: 767px) {
+    /* 데스크탑 */
+  }
+  @media screen and (min-width: 479px) {
+    /* 타블렛 */
+    @include flexCenterColumn();
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    nav {
+      button {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.replyBox {
+  @include box;
+  text-align: center;
+}
+
+.imgbox {
+  @include flexCenterColumn;
+  @include setFontSize;
+  gap: 1rem;
+}
+
+.img {
+  max-width: 100px;
+}
+
+.writeBox {
+  /* 데스크탑 */
+  @include body;
+  & button {
+    width: 100%;
+    background-color: $primary;
+  }
+
+  & textarea {
+    @include body;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    & button {
+      display: none;
+    }
+  }
+}
+
+.letterBox {
+  width: $widthValue;
+  max-width: $maxWidthValue;
+  display: flex;
+  margin: 0 auto;
+  gap: 1em;
+
+  align-items: center;
+
+  & article {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  @media screen and (min-width: 768px) {
+    /* 데스크탑 */
+    flex-direction: row;
+    & > * {
+      max-width: 50%;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 479px) {
+    @include wrapBox();
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    flex-direction: column;
+  }
+}
+
+.localMenu {
+  width: $widthValue;
+  max-width: $maxWidthValue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    display: none;
+  }
+}
+
+.letterSize {
+  width: 600px;
+  height: 300px;
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    margin: 0 auto;
+    width: 100%;
+    height: 300px;
+  }
+}
+
+.characterList {
+  /* 데스크탑 */
+  @include wrapBox();
+  list-style: none;
+  display: flex;
+  gap: 0.5em;
+  overflow-y: hidden;
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.motionList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  list-style: none;
+}
+
+.characterListItem {
+  /* 데스크탑 */
+  list-style: none;
+  width: 100px;
+  border-radius: 5px;
+  background-color: $gc900;
+  width: 100%;
+
+  &:hover {
+    border: 1.5px solid blue;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.characterImg {
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.boxComponent {
+  @include box();
+}
+
+.letterContent {
+  @include box();
+  background-color: inherit;
+  width: 100%;
+}
+
+.cursor {
+  cursor: pointer;
+  background-color: $gc900;
+}
+
+.sendList {
+  width: 100%;
+  font-size: 16px;
+}
+
+.selected {
+  background-color: red;
+}
+
+.buttonItem {
+  /* 데스크탑 */
+  list-style: none;
+  width: 100px;
+  border-radius: 5px;
+  background-color: $gc900;
+  width: 100%;
+  padding: 1em;
+  &:hover {
+    border: 1.5px solid blue;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}

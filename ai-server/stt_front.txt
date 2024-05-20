@@ -1,0 +1,95 @@
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import {
+  ReactMediaRecorder,
+  ReactMediaRecorderRenderProps,
+} from "react-media-recorder";
+
+const STT: React.FC = () => {
+  const [text, setText] = useState<string>("");
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [timer]);
+
+  // 녹음 시작
+  const handleStartRecording = (
+    startRecording: () => void,
+    stopRecording: () => void
+  ) => {
+    startRecording();
+    const newTimer = setTimeout(() => {
+      stopRecording();
+    }, 60000);
+    setTimer(newTimer);
+  };
+
+  // 녹음 중지
+  const handleStopRecording = (stopRecording: () => void) => {
+    if (timer) clearTimeout(timer);
+    stopRecording();
+  };
+
+  // stt 요청
+  const speechToText = async (audioUrl: string) => {
+    try {
+      // audio 파일
+      const fetchData = await fetch(audioUrl);
+      const blobData = await fetchData.blob();
+      const formData = new FormData();
+      formData.append("audio", blobData, "audio.wav");
+
+      // 언어 선택
+      formData.append("lang", "Kor"); // Kor, Jpn, Eng, Chn
+
+      const result = await axios.post(
+        "http://localhost:8000/ai/letter/stt",
+        formData
+      );
+      console.log(result);
+      setText(result.data.text);
+    } catch (err) {
+      console.error("sppechToText 에러 : ", err);
+    }
+  };
+
+  return (
+    <div>
+      <ReactMediaRecorder
+        audio
+        render={({
+          status,
+          startRecording,
+          stopRecording,
+          mediaBlobUrl,
+        }: ReactMediaRecorderRenderProps) => (
+          <div>
+            <div>상태: {status}</div>
+            <button
+              onClick={() =>
+                handleStartRecording(startRecording, stopRecording)
+              }
+            >
+              녹음 시작
+            </button>
+            <button onClick={() => handleStopRecording(stopRecording)}>
+              녹음 중지
+            </button>
+            {mediaBlobUrl && (
+              <audio src={mediaBlobUrl} controls autoPlay loop />
+            )}
+            <button onClick={() => mediaBlobUrl && speechToText(mediaBlobUrl)}>
+              STT test
+            </button>
+          </div>
+        )}
+      />
+      {text}
+    </div>
+  );
+};
+
+export default STT;

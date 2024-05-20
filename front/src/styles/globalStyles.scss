@@ -1,0 +1,87 @@
+@import "./fonts";
+@import "./colors";
+html {
+  /* 데스크탑 */
+
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+body {
+  overflow-x: hidden;
+  background-color: $gc900;
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+/* 폰트 초기화 */
+body,
+input,
+textarea,
+select,
+button,
+table {
+  font-family: "KyoboHand";
+  line-height: 1.1;
+}
+
+input {
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    font-size: 16px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+/* 여백 초기화 */
+body,
+div,
+ul,
+li,
+dl,
+dd,
+dt,
+ol,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+fieldset,
+legend,
+p,
+select,
+table,
+th,
+td,
+tr,
+textarea,
+button,
+form,
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+}

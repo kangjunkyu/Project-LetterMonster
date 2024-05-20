@@ -1,0 +1,37 @@
+@import "../variables.scss";
+
+main {
+  position: relative;
+  min-width: 100vw;
+
+  @media screen AND (min-width: 480px) {
+    min-height: 100vh;
+  }
+
+  & .layoutSection {
+    /* 데스크탑 */
+    @media screen AND (min-width: 768px) {
+      min-height: 100vh;
+      & > * {
+        min-height: 100vh;
+        padding-left: $GNBWidth;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      /* 타블렛 */
+      & > * {
+        min-height: calc(100vh - $GNBHeight);
+        margin-bottom: $GNBHeight;
+      }
+    }
+
+    @media screen and (max-width: 479px) {
+      /* 모바일 */
+      & > * {
+        min-height: calc(100vh - $LNBHeight - $GNBHeight);
+        margin-top: $LNBHeight;
+      }
+    }
+  }
+}

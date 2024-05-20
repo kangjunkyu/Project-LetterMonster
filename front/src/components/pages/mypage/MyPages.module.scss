@@ -1,0 +1,38 @@
+@import "../../../styles/mixins/_defalut.scss";
+
+$widthValue: 90%;
+$maxWidthValue: 1024px;
+
+
+.myPageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: $maxWidthValue;
+  margin: 0 auto;
+
+  @media screen and (min-width: 767px) {
+    /* 데스크탑 */
+    height: 100vh;  // 전체 화면 높이
+  }
+  @media screen and (min-width: 479px) {
+    /* 타블렛 */
+    height: 100vh;  // 전체 화면 높이
+    @include flexCenterColumn();
+  }
+  
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+    height: 80vh;  // 전체 화면 높이
+    @include flexCenterColumn();
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}

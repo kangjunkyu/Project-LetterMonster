@@ -1,0 +1,29 @@
+FROM python:3.9
+
+# 라이브러리 설치
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libosmesa6 \
+    libosmesa6-dev \
+    freeglut3-dev \
+    libglfw3-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workdir
+
+# requirements.txt를 먼저 복사하고 설치하여, 다른 코드 변경 시 재설치 방지
+# COPY requirements.txt ./
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# 나머지 파일 복사
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV PYOPENGL_PLATFORM=osmesa
+ENV ENV=dev
+
+CMD ["python", "main.py"]
+# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

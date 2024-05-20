@@ -1,0 +1,76 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/defalut";
+
+.motionListContainer {
+  width: 100%;
+  max-width: 400px;
+  padding: 1em 0;
+  background-color: white;
+  border-radius: 15px;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  transition: 0.3s all;
+  @media screen and (max-width: 767px) {
+    width: 90%;
+  }
+}
+
+.motionSampleImage {
+  width: 100px;
+  height: 100px;
+  transition: 0.3s all;
+}
+
+.motionSampleEach,
+.motionSampleEachHorizontal {
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+  align-items: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  transition: 0.3s all;
+  &:hover {
+    border: 1.5px solid green;
+    border-radius: 15px;
+  }
+  &.selected {
+    border: 1px solid black;
+  }
+}
+
+.motionSampleList {
+  font-size: 14px;
+  display: none;
+  transition: 0.3s all;
+  @media screen and (min-width: 767px) {
+    display: flex;
+    width: 350px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 1em;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.motionSampleListHorizontal {
+  font-size: 14px;
+  display: flex;
+  padding: 1em;
+  width: 100%;
+  gap: 0.5em;
+  overflow-x: auto;
+  text-align: center;
+  transition: 0.3s all;
+  @media screen and (min-width: 767px) {
+    display: none;
+  }
+}

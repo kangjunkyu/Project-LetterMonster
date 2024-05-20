@@ -1,0 +1,95 @@
+@import "../../../styles/mixins/defalut";
+@import "../../../styles/colors";
+
+.mainContainer {
+  @include flexCenter();
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 100px;
+  padding: 1rem;
+  & section {
+    @include body2();
+    padding: 10px;
+  }
+
+  @include setFontSize;
+}
+
+.character {
+  width: 100px;
+  height: 100px;
+}
+
+.characterDiv {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.startButton {
+  padding: 1em;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid $gc600;
+}
+
+.mainLoginButton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mainMenuContainer {
+  gap: 1rem;
+  width: 100%;
+  @include flexCenter;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  & > button {
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50%;
+    position: relative;
+    @include box;
+    @include hoverItem;
+    & > p {
+      @include body;
+    }
+    @media screen and (min-width: 768px) {
+      /* 데스크탑 */
+      flex-direction: column;
+    }
+    & > svg {
+      position: absolute;
+      left: 1rem;
+      @media screen and (min-width: 768px) {
+        /* 데스크탑 */
+        position: relative;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    /* 타블렛 */
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 479px) {
+    /* 모바일 */
+  }
+}
+
+.socialMediaLinks {
+  gap: 1rem;
+  @include flexCenter;
+  margin: 0.5rem 0;
+  a {
+    @include flexCenter;
+  }
+}

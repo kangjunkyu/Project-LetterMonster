@@ -1,0 +1,54 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/mixins/defalut";
+
+.motionImage {
+  width: 100%;
+  max-width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    max-width: 300px;
+  }
+}
+
+.motionPreviewContainer {
+  gap: 8px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  padding: 1em;
+  background-color: white;
+  border-radius: 15px;
+  border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    width: 90%;
+  }
+}
+
+
+.motionPreviewButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  
+  @media screen and (max-width: 479px) {
+    button:nth-child(1){
+       display: none;
+    }
+  }
+}
+
+.motionCharacterNickname{
+  text-align: center;
+  align-items: center;
+}
