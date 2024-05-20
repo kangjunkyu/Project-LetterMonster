@@ -128,583 +128,586 @@
   <summary>
   Back-End
   </summary>
+
     📦src
- ┣ 📂main
- ┃ ┣ 📂generated
- ┃ ┃ ┗ 📂com
- ┃ ┃ ┃ ┗ 📂lemon
- ┃ ┃ ┃ ┃ ┗ 📂backend
- ┃ ┃ ┃ ┃ ┃ ┗ 📂domain
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂base
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QBaseEntity.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂characters
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜QCharacterMotion.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜QCharacters.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QMotion.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂FavoriteSketchbook
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂friend
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂letter
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QLetter.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂notification
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂sketchbook
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QSketchbook.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂users
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂user
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QUsers.java
- ┃ ┣ 📂java
- ┃ ┃ ┗ 📂com
- ┃ ┃ ┃ ┗ 📂lemon
- ┃ ┃ ┃ ┃ ┗ 📂backend
- ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂base
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜BaseEntity.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂characters
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterInfoDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionProjection.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionSketchbookProjection.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharactersGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharactersIdDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ImageUrlDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RepresentMotionDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SelectCharacterMotionDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionToSketchbookDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterToSketchbookDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotion.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Characters.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Motion.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜MotionRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜MotionService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂FavoriteSketchbook
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteRequestDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteSketchbookCreateDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteSketchbookGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookGetOneDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbook.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteSketchbookRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂friend
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupRequestDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂response
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendResponseDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupResponseDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Friends.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsInfo.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜GroupsRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂letter
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterPublicController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂requestDto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterCreateDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterGetListDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterGetRecentListDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterToSketchbookDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂responseDto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterCreateResponse.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterReplyResponse.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Letter.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂notification
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜NotificationGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationSendDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Notification.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜NotificationRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂sketchbook
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂requestDto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCharacterMotionUpdateDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCreateDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookUpdateDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂responseDto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCharacterMotionGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCharacterMotionGetListDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookDetailPageDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetAllDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetDetailDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetFromFavoriteDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetRandomDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetSimpleDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookSearchGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Sketchbook.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookCharacterMotion.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchCharacterMotionRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂users
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂user
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ChangeNicknameRequest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂response
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChangeNicknameResponse.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginResponse.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserSearchAndFriendResponse.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSearchGetDto.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Adjective.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Noun.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Social.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Users.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserRepositoryCustom.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepositoryImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserServiceImpl.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserService.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📂global
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂userinfo
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜KakaoOAuth2UserInfo.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LineOAuth2UserInfo.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2UserInfo.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜OAuth2UserInfoFactory.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2UserService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOidcUserService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2AuthorizationRequestBasedOnCookieRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2LoginFailureHandler.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2LoginSuccessHandler.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserPrincipal.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂badWord
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BadWordFilterUtil.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜BadWords.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂config
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FCMConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜QueryDslConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RedisConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜S3Config.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SwaggerConfig.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂cookie
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CookieUtil.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂exception
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomException.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ErrorCode.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ErrorResponseEntity.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂filter
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜JwtAuthenticationFilter.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂handler
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ExceptionController.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂jwt
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtTokenProvider.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenResponse.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂redis
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RefreshToken.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenBlacklist.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RefreshTokenRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenBlacklistRepository.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenBlacklistService.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂response
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommonResponseEntity.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SuccessCode.java
- ┃ ┃ ┃ ┃ ┃ ┗ 📜Main.java
- ┃ ┗ 📂resources
- ┃ ┃ ┣ 📂firebase
- ┃ ┃ ┃ ┗ 📜lemon-8e34d-firebase-adminsdk-vjl60-ea10a56333.json
- ┃ ┃ ┣ 📂img
- ┃ ┃ ┃ ┗ 📜notification_logo.png
- ┃ ┃ ┣ 📜application-dev.yml
- ┃ ┃ ┣ 📜application-local.yml
- ┃ ┃ ┣ 📜application-prod.yml
- ┃ ┃ ┣ 📜application-secret.yml
- ┃ ┃ ┗ 📜application.yml
- ┗ 📂test
- ┃ ┗ 📂java
- ┃ ┃ ┗ 📂com
- ┃ ┃ ┃ ┗ 📂lemon
- ┃ ┃ ┃ ┃ ┗ 📂backend
- ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂characters
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂friend
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂letter
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂notification
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂sketchbook
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂users
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserServiceTest.java
- ┃ ┃ ┃ ┃ ┃ ┣ 📜HttpClientTest.java
- ┃ ┃ ┃ ┃ ┃ ┗ 📜MainApplicationTests.java
+      ┣ 📂main
+      ┃ ┣ 📂generated
+      ┃ ┃ ┗ 📂com
+      ┃ ┃ ┃ ┗ 📂lemon
+      ┃ ┃ ┃ ┃ ┗ 📂backend
+      ┃ ┃ ┃ ┃ ┃ ┗ 📂domain
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂base
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QBaseEntity.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂characters
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜QCharacterMotion.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜QCharacters.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QMotion.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂FavoriteSketchbook
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂friend
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂letter
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QLetter.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂notification
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂sketchbook
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QSketchbook.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂users
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂user
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜QUsers.java
+      ┃ ┣ 📂java
+      ┃ ┃ ┗ 📂com
+      ┃ ┃ ┃ ┗ 📂lemon
+      ┃ ┃ ┃ ┃ ┗ 📂backend
+      ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂base
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜BaseEntity.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂characters
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂response
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterInfoDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionProjection.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionSketchbookProjection.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharactersGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharactersIdDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ImageUrlDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RepresentMotionDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SelectCharacterMotionDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionToSketchbookDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterToSketchbookDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotion.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Characters.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Motion.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜MotionRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterMotionService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CharacterService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜MotionService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂FavoriteSketchbook
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteRequestDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteSketchbookCreateDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteSketchbookGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookGetOneDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbook.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FavoriteSketchbookRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜FavoriteSketchbookService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂friend
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupRequestDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂response
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendResponseDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupResponseDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Friends.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsInfo.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜GroupsRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendsService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupsService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂letter
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterPublicController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂requestDto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterCreateDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterGetListDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterGetRecentListDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterToSketchbookDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂responseDto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterCreateResponse.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterReplyResponse.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Letter.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LetterRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂notification
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜NotificationGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationSendDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Notification.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜NotificationRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂sketchbook
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂requestDto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCharacterMotionUpdateDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCreateDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookUpdateDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂responseDto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCharacterMotionGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookCharacterMotionGetListDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookDetailPageDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetAllDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetDetailDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetFromFavoriteDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetRandomDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookGetSimpleDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookSearchGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Sketchbook.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookCharacterMotion.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SketchbookRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchCharacterMotionRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂users
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂user
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂request
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ChangeNicknameRequest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂response
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ChangeNicknameResponse.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LoginResponse.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserSearchAndFriendResponse.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserSearchGetDto.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Adjective.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Noun.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Role.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜Social.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜Users.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂custom
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜UserRepositoryCustom.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepositoryImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂impl
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserServiceImpl.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserService.java
+      ┃ ┃ ┃ ┃ ┃ ┣ 📂global
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂auth
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂userinfo
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜KakaoOAuth2UserInfo.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜LineOAuth2UserInfo.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2UserInfo.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜OAuth2UserInfoFactory.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOAuth2UserService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomOidcUserService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2AuthorizationRequestBasedOnCookieRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2LoginFailureHandler.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜OAuth2LoginSuccessHandler.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserPrincipal.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂badWord
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜BadWordFilterUtil.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜BadWords.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂config
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FCMConfig.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜QueryDslConfig.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RedisConfig.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜S3Config.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜SecurityConfig.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SwaggerConfig.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂cookie
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CookieUtil.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂exception
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CustomException.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜ErrorCode.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ErrorResponseEntity.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂filter
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜JwtAuthenticationFilter.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂handler
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜ExceptionController.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂jwt
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜JwtTokenProvider.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenResponse.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂redis
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RefreshToken.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenBlacklist.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜RefreshTokenRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenBlacklistRepository.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜TokenBlacklistService.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂response
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜CommonResponseEntity.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SuccessCode.java
+      ┃ ┃ ┃ ┃ ┃ ┗ 📜Main.java
+      ┃ ┗ 📂resources
+      ┃ ┃ ┣ 📂firebase
+      ┃ ┃ ┃ ┗ 📜lemon-8e34d-firebase-adminsdk-vjl60-ea10a56333.json
+      ┃ ┃ ┣ 📂img
+      ┃ ┃ ┃ ┗ 📜notification_logo.png
+      ┃ ┃ ┣ 📜application-dev.yml
+      ┃ ┃ ┣ 📜application-local.yml
+      ┃ ┃ ┣ 📜application-prod.yml
+      ┃ ┃ ┣ 📜application-secret.yml
+      ┃ ┃ ┗ 📜application.yml
+      ┗ 📂test
+      ┃ ┗ 📂java
+      ┃ ┃ ┗ 📂com
+      ┃ ┃ ┃ ┗ 📂lemon
+      ┃ ┃ ┃ ┃ ┗ 📂backend
+      ┃ ┃ ┃ ┃ ┃ ┣ 📂domain
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂characters
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜CharacterServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂friend
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📜FriendServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜GroupServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂letter
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜LetterServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂notification
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜NotificationServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂sketchbook
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜SketchbookServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂users
+      ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜UserServiceTest.java
+      ┃ ┃ ┃ ┃ ┃ ┣ 📜HttpClientTest.java
+      ┃ ┃ ┃ ┃ ┃ ┗ 📜MainApplicationTests.java
 </details>
+
 <details>
   <summary>
   Front-End
   </summary>
-  📦src
- ┣ 📂api
- ┃ ┣ 📜Api.tsx
- ┃ ┗ 📜Config.ts
- ┣ 📂assets
- ┃ ┣ 📂boxborder
- ┃ ┃ ┣ 📜linebox202.png
- ┃ ┃ ┣ 📜linebox203.png
- ┃ ┃ ┣ 📜linebox204.png
- ┃ ┃ ┗ 📜linebox20gray.png
- ┃ ┣ 📂characterSample
- ┃ ┃ ┣ 📜attamoma.gif
- ┃ ┃ ┣ 📜egypt.gif
- ┃ ┃ ┣ 📜gom.gif
- ┃ ┃ ┣ 📜hojin_character.gif
- ┃ ┃ ┣ 📜juhyeon.gif
- ┃ ┃ ┣ 📜rabbit.gif
- ┃ ┃ ┣ 📜shinzzang.gif
- ┃ ┃ ┣ 📜television.gif
- ┃ ┃ ┗ 📜test_dab.gif
- ┃ ┣ 📂commonIcon
- ┃ ┃ ┣ 📜addCircle.svg
- ┃ ┃ ┣ 📜back.svg
- ┃ ┃ ┣ 📜character.svg
- ┃ ┃ ┣ 📜developer.svg
- ┃ ┃ ┣ 📜expandLess.svg
- ┃ ┃ ┣ 📜expandMore.svg
- ┃ ┃ ┣ 📜filledStar.svg
- ┃ ┃ ┣ 📜friends.svg
- ┃ ┃ ┣ 📜lock.svg
- ┃ ┃ ┣ 📜lockOpen.svg
- ┃ ┃ ┣ 📜logout.svg
- ┃ ┃ ┣ 📜next.svg
- ┃ ┃ ┣ 📜person.svg
- ┃ ┃ ┣ 📜report.svg
- ┃ ┃ ┣ 📜shareLink.svg
- ┃ ┃ ┣ 📜star.svg
- ┃ ┃ ┗ 📜thumb.svg
- ┃ ┣ 📂errorPage
- ┃ ┃ ┗ 📜lemonZombie.gif
- ┃ ┣ 📂GNBIcon
- ┃ ┃ ┣ 📜blue.png
- ┃ ┃ ┣ 📜draw.svg
- ┃ ┃ ┣ 📜green.png
- ┃ ┃ ┣ 📜home.svg
- ┃ ┃ ┣ 📜letter.svg
- ┃ ┃ ┣ 📜more.svg
- ┃ ┃ ┣ 📜red.png
- ┃ ┃ ┣ 📜sketchbook.svg
- ┃ ┃ ┗ 📜yellow.png
- ┃ ┣ 📂lemon
- ┃ ┃ ┗ 📜lemon.png
- ┃ ┣ 📂loadingspinner
- ┃ ┃ ┣ 📜gom.png
- ┃ ┃ ┣ 📜gom2.png
- ┃ ┃ ┗ 📜gom3.png
- ┃ ┣ 📂login
- ┃ ┃ ┣ 📜kakaoLogin.png
- ┃ ┃ ┗ 📜lineLogin.png
- ┃ ┣ 📂motion
- ┃ ┃ ┣ 📜0_dab.gif
- ┃ ┃ ┣ 📜1_jesse_dance.gif
- ┃ ┃ ┣ 📜2_jumping.gif
- ┃ ┃ ┣ 📜3_jumping_jacks.gif
- ┃ ┃ ┣ 📜4_jump.gif
- ┃ ┃ ┣ 📜5_zombie.gif
- ┃ ┃ ┣ 📜6_wave_hello.gif
- ┃ ┃ ┣ 📜7_hello.gif
- ┃ ┃ ┗ 📜8_wow.gif
- ┃ ┣ 📂sketchbook
- ┃ ┃ ┣ 📜letterImg.png
- ┃ ┃ ┣ 📜sDesktop.png
- ┃ ┃ ┗ 📜sMobile.png
- ┃ ┗ 📂snslogo
- ┃ ┃ ┣ 📜instagramLogo.svg
- ┃ ┃ ┣ 📜tiktokLogo.svg
- ┃ ┃ ┗ 📜xLogo.svg
- ┣ 📂components
- ┃ ┣ 📂atoms
- ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┣ 📜AuthButton.module.scss
- ┃ ┃ ┃ ┣ 📜KakaoLoginButton.tsx
- ┃ ┃ ┃ ┗ 📜LineLoginButton.tsx
- ┃ ┃ ┣ 📂button
- ┃ ┃ ┃ ┣ 📜AddButton.module.scss
- ┃ ┃ ┃ ┣ 📜AddButton.tsx
- ┃ ┃ ┃ ┣ 📜DefaultButton.module.scss
- ┃ ┃ ┃ ┣ 📜DefaultButton.tsx
- ┃ ┃ ┃ ┣ 📜LNBButton.module.scss
- ┃ ┃ ┃ ┣ 📜LNBButton.tsx
- ┃ ┃ ┃ ┗ 📜WriteLetterButton.tsx
- ┃ ┃ ┣ 📂character
- ┃ ┃ ┃ ┣ 📜CharacterListItem.module.scss
- ┃ ┃ ┃ ┗ 📜CharacterListItem.tsx
- ┃ ┃ ┣ 📂crayonBox
- ┃ ┃ ┃ ┣ 📜CrayonBox20.scss
- ┃ ┃ ┃ ┣ 📜CrayonBox20.tsx
- ┃ ┃ ┃ ┗ 📜CrayonBox20Static.tsx
- ┃ ┃ ┣ 📂letter
- ┃ ┃ ┃ ┣ 📜Letter.module.scss
- ┃ ┃ ┃ ┗ 📜Letter.tsx
- ┃ ┃ ┣ 📂loadingSpinner
- ┃ ┃ ┃ ┣ 📜LoadingSpinner.module.scss
- ┃ ┃ ┃ ┗ 📜LoadingSpinner.tsx
- ┃ ┃ ┣ 📂modal
- ┃ ┃ ┃ ┣ 📜Modal.module.scss
- ┃ ┃ ┃ ┗ 📜Modal.tsx
- ┃ ┃ ┣ 📂notice
- ┃ ┃ ┃ ┣ 📜AlertNotice.module.scss
- ┃ ┃ ┃ ┗ 📜AlertNotice.tsx
- ┃ ┃ ┣ 📂notification
- ┃ ┃ ┃ ┣ 📜NotificationListItem.module.scss
- ┃ ┃ ┃ ┗ 📜NotificationListItem.tsx
- ┃ ┃ ┣ 📂share
- ┃ ┃ ┃ ┣ 📜commonShareIcon.tsx
- ┃ ┃ ┃ ┣ 📜kakaoShareIcon.tsx
- ┃ ┃ ┃ ┣ 📜shareIcon.module.scss
- ┃ ┃ ┃ ┗ 📜xShareIcon.tsx
- ┃ ┃ ┗ 📂sketchbook
- ┃ ┃ ┃ ┣ 📜SketchbookListItem.module.scss
- ┃ ┃ ┃ ┗ 📜SketchbookListItem.tsx
- ┃ ┣ 📂molecules
- ┃ ┃ ┣ 📂character
- ┃ ┃ ┃ ┣ 📜CharacterList.module.scss
- ┃ ┃ ┃ ┗ 📜CharacterList.tsx
- ┃ ┃ ┣ 📂common
- ┃ ┃ ┃ ┣ 📜GNB.module.scss
- ┃ ┃ ┃ ┣ 📜GNB.tsx
- ┃ ┃ ┃ ┣ 📜GNBLink.tsx
- ┃ ┃ ┃ ┣ 📜LNB.module.scss
- ┃ ┃ ┃ ┣ 📜LNB.tsx
- ┃ ┃ ┃ ┣ 📜SNB.module.scss
- ┃ ┃ ┃ ┗ 📜SNB.tsx
- ┃ ┃ ┣ 📂language
- ┃ ┃ ┃ ┣ 📜LanguageSwitcher.module.scss
- ┃ ┃ ┃ ┗ 📜LanguageSwitcher.tsx
- ┃ ┃ ┣ 📂motion
- ┃ ┃ ┃ ┣ 📜MotionExample.module.scss
- ┃ ┃ ┃ ┣ 📜MotionExample.tsx
- ┃ ┃ ┃ ┣ 📜MotionList.module.scss
- ┃ ┃ ┃ ┣ 📜MotionList.tsx
- ┃ ┃ ┃ ┣ 📜MotionPreview.module.scss
- ┃ ┃ ┃ ┗ 📜MotionPreview.tsx
- ┃ ┃ ┣ 📂mypage
- ┃ ┃ ┃ ┣ 📜MyPageCharacter.tsx
- ┃ ┃ ┃ ┣ 📜MyPageFindFriend.tsx
- ┃ ┃ ┃ ┣ 📜MyPageFriendList.tsx
- ┃ ┃ ┃ ┣ 📜MyPageFriendSketchbook.tsx
- ┃ ┃ ┃ ┣ 📜MyPageLangSelect.tsx
- ┃ ┃ ┃ ┣ 📜MyPageMolecules.module.scss
- ┃ ┃ ┃ ┗ 📜MyPageUserInfo.tsx
- ┃ ┃ ┣ 📂notification
- ┃ ┃ ┃ ┣ 📜NotificationList.module.scss
- ┃ ┃ ┃ ┗ 📜NotificationList.tsx
- ┃ ┃ ┣ 📂search
- ┃ ┃ ┃ ┣ 📜SearchList.module.scss
- ┃ ┃ ┃ ┗ 📜SearchList.tsx
- ┃ ┃ ┗ 📂sketchbook
- ┃ ┃ ┃ ┣ 📜SketchbookList.module.scss
- ┃ ┃ ┃ ┗ 📜SketchbookList.tsx
- ┃ ┗ 📂pages
- ┃ ┃ ┣ 📂error
- ┃ ┃ ┃ ┣ 📜ErrorPage.module.scss
- ┃ ┃ ┃ ┗ 📜ErrorPage.tsx
- ┃ ┃ ┣ 📂letter
- ┃ ┃ ┃ ┣ 📜WriteLetterPage.module.scss
- ┃ ┃ ┃ ┗ 📜WriteLetterPage.tsx
- ┃ ┃ ┣ 📂login
- ┃ ┃ ┃ ┣ 📜KakaoCallback.tsx
- ┃ ┃ ┃ ┣ 📜LineCallback.tsx
- ┃ ┃ ┃ ┣ 📜LoginPage.module.scss
- ┃ ┃ ┃ ┗ 📜LoginPage.tsx
- ┃ ┃ ┣ 📂main
- ┃ ┃ ┃ ┣ 📜MainPage copy.tsx
- ┃ ┃ ┃ ┣ 📜MainPage.module.scss
- ┃ ┃ ┃ ┗ 📜MainPage.tsx
- ┃ ┃ ┣ 📂motion
- ┃ ┃ ┃ ┣ 📜MotionPage.module.scss
- ┃ ┃ ┃ ┣ 📜MotionPage.tsx
- ┃ ┃ ┃ ┗ 📜MotionResultPage.tsx
- ┃ ┃ ┣ 📂mypage
- ┃ ┃ ┃ ┣ 📜MyPages.module.scss
- ┃ ┃ ┃ ┗ 📜MyPages.tsx
- ┃ ┃ ┣ 📂notification
- ┃ ┃ ┃ ┣ 📜NotificationPage.module.scss
- ┃ ┃ ┃ ┗ 📜NotificationPage.tsx
- ┃ ┃ ┣ 📂sketch
- ┃ ┃ ┃ ┣ 📜Paint.module.scss
- ┃ ┃ ┃ ┣ 📜Paint.tsx
- ┃ ┃ ┃ ┣ 📜PaintConstants.tsx
- ┃ ┃ ┃ ┣ 📜PaintTypes.ts
- ┃ ┃ ┃ ┣ 📜SketchGuidePage.module.scss
- ┃ ┃ ┃ ┣ 📜SketchGuidePage.tsx
- ┃ ┃ ┃ ┣ 📜SketchPage.module.scss
- ┃ ┃ ┃ ┣ 📜SketchPage.tsx
- ┃ ┃ ┃ ┗ 📜SketchResultPage.tsx
- ┃ ┃ ┣ 📂sketchbook
- ┃ ┃ ┃ ┣ 📜SketchbookListPage.module.scss
- ┃ ┃ ┃ ┣ 📜SketchbookListPage.tsx
- ┃ ┃ ┃ ┣ 📜SketchbookPage.module.scss
- ┃ ┃ ┃ ┗ 📜SketchbookPage.tsx
- ┃ ┃ ┗ 📂welcome
- ┃ ┃ ┃ ┣ 📜WelcomePage.module.scss
- ┃ ┃ ┃ ┗ 📜WelcomePage.tsx
- ┣ 📂hooks
- ┃ ┣ 📂auth
- ┃ ┃ ┣ 📜useCheckTokenExpiration.tsx
- ┃ ┃ ┣ 📜useKakaoCallback.tsx
- ┃ ┃ ┣ 📜useLineCallback.tsx
- ┃ ┃ ┗ 📜useLogout.tsx
- ┃ ┣ 📂character
- ┃ ┃ ┣ 📜useCharacter.tsx
- ┃ ┃ ┗ 📜useCharacterList.tsx
- ┃ ┣ 📂common
- ┃ ┃ ┣ 📜useCopyClipboard.tsx
- ┃ ┃ ┗ 📜useSuggestion.tsx
- ┃ ┣ 📂friendGroup
- ┃ ┃ ┣ 📜useFriend.tsx
- ┃ ┃ ┗ 📜useSearchUserNickname.tsx
- ┃ ┣ 📂letter
- ┃ ┃ ┗ 📜useWriteLetter.tsx
- ┃ ┣ 📂motion
- ┃ ┃ ┣ 📜useFormatMotionName.tsx
- ┃ ┃ ┣ 📜useGetMotionList.tsx
- ┃ ┃ ┣ 📜useGetMotionSelect.tsx
- ┃ ┃ ┗ 📜useGetSelectedMotion.tsx
- ┃ ┣ 📂notice
- ┃ ┃ ┣ 📜useAlert.tsx
- ┃ ┃ ┗ 📜useTrigger.tsx
- ┃ ┣ 📂notification
- ┃ ┃ ┗ 📜useNotification.tsx
- ┃ ┣ 📂sketch
- ┃ ┃ ┣ 📜useImportImageSelect.tsx
- ┃ ┃ ┗ 📜usePostSketchCharacter.tsx
- ┃ ┣ 📂sketchbook
- ┃ ┃ ┣ 📜useFavorite.tsx
- ┃ ┃ ┣ 📜useFriendSketchbookList.tsx
- ┃ ┃ ┣ 📜useSearchSketchbook.tsx
- ┃ ┃ ┣ 📜useSketchbook.tsx
- ┃ ┃ ┗ 📜useSketchbookList.tsx
- ┃ ┗ 📂user
- ┃ ┃ ┣ 📜useDeleteUser.tsx
- ┃ ┃ ┣ 📜useGetUserNickName.tsx
- ┃ ┃ ┗ 📜usePostNickname.tsx
- ┣ 📂locales
- ┃ ┣ 📂en
- ┃ ┃ ┗ 📜translation.json
- ┃ ┣ 📂jp
- ┃ ┃ ┗ 📜translation.json
- ┃ ┣ 📂ko
- ┃ ┃ ┗ 📜translation.json
- ┃ ┗ 📜i18n.ts
- ┣ 📂router
- ┃ ┣ 📜Page_Url.tsx
- ┃ ┗ 📜Router.tsx
- ┣ 📂styles
- ┃ ┣ 📂layouts
- ┃ ┃ ┣ 📜DefaultLayouts.module.scss
- ┃ ┃ ┣ 📜DefaultLayouts.tsx
- ┃ ┃ ┣ 📜NoGNBLayout.module.scss
- ┃ ┃ ┣ 📜NoGNBLayout.tsx
- ┃ ┃ ┣ 📜NoLNBLayout.module.scss
- ┃ ┃ ┗ 📜NoLNBLayout.tsx
- ┃ ┣ 📂mixins
- ┃ ┃ ┗ 📜_defalut.scss
- ┃ ┣ 📜globalStyles.scss
- ┃ ┣ 📜_colors.scss
- ┃ ┣ 📜_fonts.scss
- ┃ ┗ 📜_variables.scss
- ┣ 📂util
- ┃ ┣ 📂date
- ┃ ┃ ┗ 📜convertDateString.ts
- ┃ ┣ 📂fcm
- ┃ ┃ ┣ 📜firebase.ts
- ┃ ┃ ┗ 📜messaging_get_token.ts
- ┃ ┣ 📂ga
- ┃ ┃ ┗ 📜RouterChangeTracker.ts
- ┃ ┗ 📜Alert.tsx
- ┣ 📜main.tsx
- ┗ 📜vite-env.d.ts
+
+    📦src   
+      ┣ 📂api
+      ┃ ┣ 📜Api.tsx
+      ┃ ┗ 📜Config.ts
+      ┣ 📂assets
+      ┃ ┣ 📂boxborder
+      ┃ ┃ ┣ 📜linebox202.png
+      ┃ ┃ ┣ 📜linebox203.png
+      ┃ ┃ ┣ 📜linebox204.png
+      ┃ ┃ ┗ 📜linebox20gray.png
+      ┃ ┣ 📂characterSample
+      ┃ ┃ ┣ 📜attamoma.gif
+      ┃ ┃ ┣ 📜egypt.gif
+      ┃ ┃ ┣ 📜gom.gif
+      ┃ ┃ ┣ 📜hojin_character.gif
+      ┃ ┃ ┣ 📜juhyeon.gif
+      ┃ ┃ ┣ 📜rabbit.gif
+      ┃ ┃ ┣ 📜shinzzang.gif
+      ┃ ┃ ┣ 📜television.gif
+      ┃ ┃ ┗ 📜test_dab.gif
+      ┃ ┣ 📂commonIcon
+      ┃ ┃ ┣ 📜addCircle.svg
+      ┃ ┃ ┣ 📜back.svg
+      ┃ ┃ ┣ 📜character.svg
+      ┃ ┃ ┣ 📜developer.svg
+      ┃ ┃ ┣ 📜expandLess.svg
+      ┃ ┃ ┣ 📜expandMore.svg
+      ┃ ┃ ┣ 📜filledStar.svg
+      ┃ ┃ ┣ 📜friends.svg
+      ┃ ┃ ┣ 📜lock.svg
+      ┃ ┃ ┣ 📜lockOpen.svg
+      ┃ ┃ ┣ 📜logout.svg
+      ┃ ┃ ┣ 📜next.svg
+      ┃ ┃ ┣ 📜person.svg
+      ┃ ┃ ┣ 📜report.svg
+      ┃ ┃ ┣ 📜shareLink.svg
+      ┃ ┃ ┣ 📜star.svg
+      ┃ ┃ ┗ 📜thumb.svg
+      ┃ ┣ 📂errorPage
+      ┃ ┃ ┗ 📜lemonZombie.gif
+      ┃ ┣ 📂GNBIcon
+      ┃ ┃ ┣ 📜blue.png
+      ┃ ┃ ┣ 📜draw.svg
+      ┃ ┃ ┣ 📜green.png
+      ┃ ┃ ┣ 📜home.svg
+      ┃ ┃ ┣ 📜letter.svg
+      ┃ ┃ ┣ 📜more.svg
+      ┃ ┃ ┣ 📜red.png
+      ┃ ┃ ┣ 📜sketchbook.svg
+      ┃ ┃ ┗ 📜yellow.png
+      ┃ ┣ 📂lemon
+      ┃ ┃ ┗ 📜lemon.png
+      ┃ ┣ 📂loadingspinner
+      ┃ ┃ ┣ 📜gom.png
+      ┃ ┃ ┣ 📜gom2.png
+      ┃ ┃ ┗ 📜gom3.png
+      ┃ ┣ 📂login
+      ┃ ┃ ┣ 📜kakaoLogin.png
+      ┃ ┃ ┗ 📜lineLogin.png
+      ┃ ┣ 📂motion
+      ┃ ┃ ┣ 📜0_dab.gif
+      ┃ ┃ ┣ 📜1_jesse_dance.gif
+      ┃ ┃ ┣ 📜2_jumping.gif
+      ┃ ┃ ┣ 📜3_jumping_jacks.gif
+      ┃ ┃ ┣ 📜4_jump.gif
+      ┃ ┃ ┣ 📜5_zombie.gif
+      ┃ ┃ ┣ 📜6_wave_hello.gif
+      ┃ ┃ ┣ 📜7_hello.gif
+      ┃ ┃ ┗ 📜8_wow.gif
+      ┃ ┣ 📂sketchbook
+      ┃ ┃ ┣ 📜letterImg.png
+      ┃ ┃ ┣ 📜sDesktop.png
+      ┃ ┃ ┗ 📜sMobile.png
+      ┃ ┗ 📂snslogo
+      ┃ ┃ ┣ 📜instagramLogo.svg
+      ┃ ┃ ┣ 📜tiktokLogo.svg
+      ┃ ┃ ┗ 📜xLogo.svg
+      ┣ 📂components
+      ┃ ┣ 📂atoms
+      ┃ ┃ ┣ 📂auth
+      ┃ ┃ ┃ ┣ 📜AuthButton.module.scss
+      ┃ ┃ ┃ ┣ 📜KakaoLoginButton.tsx
+      ┃ ┃ ┃ ┗ 📜LineLoginButton.tsx
+      ┃ ┃ ┣ 📂button
+      ┃ ┃ ┃ ┣ 📜AddButton.module.scss
+      ┃ ┃ ┃ ┣ 📜AddButton.tsx
+      ┃ ┃ ┃ ┣ 📜DefaultButton.module.scss
+      ┃ ┃ ┃ ┣ 📜DefaultButton.tsx
+      ┃ ┃ ┃ ┣ 📜LNBButton.module.scss
+      ┃ ┃ ┃ ┣ 📜LNBButton.tsx
+      ┃ ┃ ┃ ┗ 📜WriteLetterButton.tsx
+      ┃ ┃ ┣ 📂character
+      ┃ ┃ ┃ ┣ 📜CharacterListItem.module.scss
+      ┃ ┃ ┃ ┗ 📜CharacterListItem.tsx
+      ┃ ┃ ┣ 📂crayonBox
+      ┃ ┃ ┃ ┣ 📜CrayonBox20.scss
+      ┃ ┃ ┃ ┣ 📜CrayonBox20.tsx
+      ┃ ┃ ┃ ┗ 📜CrayonBox20Static.tsx
+      ┃ ┃ ┣ 📂letter
+      ┃ ┃ ┃ ┣ 📜Letter.module.scss
+      ┃ ┃ ┃ ┗ 📜Letter.tsx
+      ┃ ┃ ┣ 📂loadingSpinner
+      ┃ ┃ ┃ ┣ 📜LoadingSpinner.module.scss
+      ┃ ┃ ┃ ┗ 📜LoadingSpinner.tsx
+      ┃ ┃ ┣ 📂modal
+      ┃ ┃ ┃ ┣ 📜Modal.module.scss
+      ┃ ┃ ┃ ┗ 📜Modal.tsx
+      ┃ ┃ ┣ 📂notice
+      ┃ ┃ ┃ ┣ 📜AlertNotice.module.scss
+      ┃ ┃ ┃ ┗ 📜AlertNotice.tsx
+      ┃ ┃ ┣ 📂notification
+      ┃ ┃ ┃ ┣ 📜NotificationListItem.module.scss
+      ┃ ┃ ┃ ┗ 📜NotificationListItem.tsx
+      ┃ ┃ ┣ 📂share
+      ┃ ┃ ┃ ┣ 📜commonShareIcon.tsx
+      ┃ ┃ ┃ ┣ 📜kakaoShareIcon.tsx
+      ┃ ┃ ┃ ┣ 📜shareIcon.module.scss
+      ┃ ┃ ┃ ┗ 📜xShareIcon.tsx
+      ┃ ┃ ┗ 📂sketchbook
+      ┃ ┃ ┃ ┣ 📜SketchbookListItem.module.scss
+      ┃ ┃ ┃ ┗ 📜SketchbookListItem.tsx
+      ┃ ┣ 📂molecules
+      ┃ ┃ ┣ 📂character
+      ┃ ┃ ┃ ┣ 📜CharacterList.module.scss
+      ┃ ┃ ┃ ┗ 📜CharacterList.tsx
+      ┃ ┃ ┣ 📂common
+      ┃ ┃ ┃ ┣ 📜GNB.module.scss
+      ┃ ┃ ┃ ┣ 📜GNB.tsx
+      ┃ ┃ ┃ ┣ 📜GNBLink.tsx
+      ┃ ┃ ┃ ┣ 📜LNB.module.scss
+      ┃ ┃ ┃ ┣ 📜LNB.tsx
+      ┃ ┃ ┃ ┣ 📜SNB.module.scss
+      ┃ ┃ ┃ ┗ 📜SNB.tsx
+      ┃ ┃ ┣ 📂language
+      ┃ ┃ ┃ ┣ 📜LanguageSwitcher.module.scss
+      ┃ ┃ ┃ ┗ 📜LanguageSwitcher.tsx
+      ┃ ┃ ┣ 📂motion
+      ┃ ┃ ┃ ┣ 📜MotionExample.module.scss
+      ┃ ┃ ┃ ┣ 📜MotionExample.tsx
+      ┃ ┃ ┃ ┣ 📜MotionList.module.scss
+      ┃ ┃ ┃ ┣ 📜MotionList.tsx
+      ┃ ┃ ┃ ┣ 📜MotionPreview.module.scss
+      ┃ ┃ ┃ ┗ 📜MotionPreview.tsx
+      ┃ ┃ ┣ 📂mypage
+      ┃ ┃ ┃ ┣ 📜MyPageCharacter.tsx
+      ┃ ┃ ┃ ┣ 📜MyPageFindFriend.tsx
+      ┃ ┃ ┃ ┣ 📜MyPageFriendList.tsx
+      ┃ ┃ ┃ ┣ 📜MyPageFriendSketchbook.tsx
+      ┃ ┃ ┃ ┣ 📜MyPageLangSelect.tsx
+      ┃ ┃ ┃ ┣ 📜MyPageMolecules.module.scss
+      ┃ ┃ ┃ ┗ 📜MyPageUserInfo.tsx
+      ┃ ┃ ┣ 📂notification
+      ┃ ┃ ┃ ┣ 📜NotificationList.module.scss
+      ┃ ┃ ┃ ┗ 📜NotificationList.tsx
+      ┃ ┃ ┣ 📂search
+      ┃ ┃ ┃ ┣ 📜SearchList.module.scss
+      ┃ ┃ ┃ ┗ 📜SearchList.tsx
+      ┃ ┃ ┗ 📂sketchbook
+      ┃ ┃ ┃ ┣ 📜SketchbookList.module.scss
+      ┃ ┃ ┃ ┗ 📜SketchbookList.tsx
+      ┃ ┗ 📂pages
+      ┃ ┃ ┣ 📂error
+      ┃ ┃ ┃ ┣ 📜ErrorPage.module.scss
+      ┃ ┃ ┃ ┗ 📜ErrorPage.tsx
+      ┃ ┃ ┣ 📂letter
+      ┃ ┃ ┃ ┣ 📜WriteLetterPage.module.scss
+      ┃ ┃ ┃ ┗ 📜WriteLetterPage.tsx
+      ┃ ┃ ┣ 📂login
+      ┃ ┃ ┃ ┣ 📜KakaoCallback.tsx
+      ┃ ┃ ┃ ┣ 📜LineCallback.tsx
+      ┃ ┃ ┃ ┣ 📜LoginPage.module.scss
+      ┃ ┃ ┃ ┗ 📜LoginPage.tsx
+      ┃ ┃ ┣ 📂main
+      ┃ ┃ ┃ ┣ 📜MainPage copy.tsx
+      ┃ ┃ ┃ ┣ 📜MainPage.module.scss
+      ┃ ┃ ┃ ┗ 📜MainPage.tsx
+      ┃ ┃ ┣ 📂motion
+      ┃ ┃ ┃ ┣ 📜MotionPage.module.scss
+      ┃ ┃ ┃ ┣ 📜MotionPage.tsx
+      ┃ ┃ ┃ ┗ 📜MotionResultPage.tsx
+      ┃ ┃ ┣ 📂mypage
+      ┃ ┃ ┃ ┣ 📜MyPages.module.scss
+      ┃ ┃ ┃ ┗ 📜MyPages.tsx
+      ┃ ┃ ┣ 📂notification
+      ┃ ┃ ┃ ┣ 📜NotificationPage.module.scss
+      ┃ ┃ ┃ ┗ 📜NotificationPage.tsx
+      ┃ ┃ ┣ 📂sketch
+      ┃ ┃ ┃ ┣ 📜Paint.module.scss
+      ┃ ┃ ┃ ┣ 📜Paint.tsx
+      ┃ ┃ ┃ ┣ 📜PaintConstants.tsx
+      ┃ ┃ ┃ ┣ 📜PaintTypes.ts
+      ┃ ┃ ┃ ┣ 📜SketchGuidePage.module.scss
+      ┃ ┃ ┃ ┣ 📜SketchGuidePage.tsx
+      ┃ ┃ ┃ ┣ 📜SketchPage.module.scss
+      ┃ ┃ ┃ ┣ 📜SketchPage.tsx
+      ┃ ┃ ┃ ┗ 📜SketchResultPage.tsx
+      ┃ ┃ ┣ 📂sketchbook
+      ┃ ┃ ┃ ┣ 📜SketchbookListPage.module.scss
+      ┃ ┃ ┃ ┣ 📜SketchbookListPage.tsx
+      ┃ ┃ ┃ ┣ 📜SketchbookPage.module.scss
+      ┃ ┃ ┃ ┗ 📜SketchbookPage.tsx
+      ┃ ┃ ┗ 📂welcome
+      ┃ ┃ ┃ ┣ 📜WelcomePage.module.scss
+      ┃ ┃ ┃ ┗ 📜WelcomePage.tsx
+      ┣ 📂hooks
+      ┃ ┣ 📂auth
+      ┃ ┃ ┣ 📜useCheckTokenExpiration.tsx
+      ┃ ┃ ┣ 📜useKakaoCallback.tsx
+      ┃ ┃ ┣ 📜useLineCallback.tsx
+      ┃ ┃ ┗ 📜useLogout.tsx
+      ┃ ┣ 📂character
+      ┃ ┃ ┣ 📜useCharacter.tsx
+      ┃ ┃ ┗ 📜useCharacterList.tsx
+      ┃ ┣ 📂common
+      ┃ ┃ ┣ 📜useCopyClipboard.tsx
+      ┃ ┃ ┗ 📜useSuggestion.tsx
+      ┃ ┣ 📂friendGroup
+      ┃ ┃ ┣ 📜useFriend.tsx
+      ┃ ┃ ┗ 📜useSearchUserNickname.tsx
+      ┃ ┣ 📂letter
+      ┃ ┃ ┗ 📜useWriteLetter.tsx
+      ┃ ┣ 📂motion
+      ┃ ┃ ┣ 📜useFormatMotionName.tsx
+      ┃ ┃ ┣ 📜useGetMotionList.tsx
+      ┃ ┃ ┣ 📜useGetMotionSelect.tsx
+      ┃ ┃ ┗ 📜useGetSelectedMotion.tsx
+      ┃ ┣ 📂notice
+      ┃ ┃ ┣ 📜useAlert.tsx
+      ┃ ┃ ┗ 📜useTrigger.tsx
+      ┃ ┣ 📂notification
+      ┃ ┃ ┗ 📜useNotification.tsx
+      ┃ ┣ 📂sketch
+      ┃ ┃ ┣ 📜useImportImageSelect.tsx
+      ┃ ┃ ┗ 📜usePostSketchCharacter.tsx
+      ┃ ┣ 📂sketchbook
+      ┃ ┃ ┣ 📜useFavorite.tsx
+      ┃ ┃ ┣ 📜useFriendSketchbookList.tsx
+      ┃ ┃ ┣ 📜useSearchSketchbook.tsx
+      ┃ ┃ ┣ 📜useSketchbook.tsx
+      ┃ ┃ ┗ 📜useSketchbookList.tsx
+      ┃ ┗ 📂user
+      ┃ ┃ ┣ 📜useDeleteUser.tsx
+      ┃ ┃ ┣ 📜useGetUserNickName.tsx
+      ┃ ┃ ┗ 📜usePostNickname.tsx
+      ┣ 📂locales
+      ┃ ┣ 📂en
+      ┃ ┃ ┗ 📜translation.json
+      ┃ ┣ 📂jp
+      ┃ ┃ ┗ 📜translation.json
+      ┃ ┣ 📂ko
+      ┃ ┃ ┗ 📜translation.json
+      ┃ ┗ 📜i18n.ts
+      ┣ 📂router
+      ┃ ┣ 📜Page_Url.tsx
+      ┃ ┗ 📜Router.tsx
+      ┣ 📂styles
+      ┃ ┣ 📂layouts
+      ┃ ┃ ┣ 📜DefaultLayouts.module.scss
+      ┃ ┃ ┣ 📜DefaultLayouts.tsx
+      ┃ ┃ ┣ 📜NoGNBLayout.module.scss
+      ┃ ┃ ┣ 📜NoGNBLayout.tsx
+      ┃ ┃ ┣ 📜NoLNBLayout.module.scss
+      ┃ ┃ ┗ 📜NoLNBLayout.tsx
+      ┃ ┣ 📂mixins
+      ┃ ┃ ┗ 📜_defalut.scss
+      ┃ ┣ 📜globalStyles.scss
+      ┃ ┣ 📜_colors.scss
+      ┃ ┣ 📜_fonts.scss
+      ┃ ┗ 📜_variables.scss
+      ┣ 📂util
+      ┃ ┣ 📂date
+      ┃ ┃ ┗ 📜convertDateString.ts
+      ┃ ┣ 📂fcm
+      ┃ ┃ ┣ 📜firebase.ts
+      ┃ ┃ ┗ 📜messaging_get_token.ts
+      ┃ ┣ 📂ga
+      ┃ ┃ ┗ 📜RouterChangeTracker.ts
+      ┃ ┗ 📜Alert.tsx
+      ┣ 📜main.tsx
+      ┗ 📜vite-env.d.ts
 </details>
