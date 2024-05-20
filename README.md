@@ -38,4 +38,33 @@
 &nbsp;
 
 ## 🛠️ 시스템 아키텍처
-![lettermonster_시스템_아키텍처](/uploads/9964fd929bc36e84f529b16c690024da/lettermonster_시스템_아키텍처.png)
+![Lemon_시스템아키텍처](/uploads/a64d338e6a39c4bab82c95fcd30e27c8/Lemon_시스템아키텍처.png)
+
+&nbsp;
+
+
+## **🧾 기능 소개**
+### 카카오, 라인 로그인
+<p align="center">
+<img src="/uploads/79f73f6eebddf14fe3066b8a9fbe54bd/카카오로그인.gif" width="30%" height="30%"/>
+<img src="/uploads/0898a791903f41df14cc4bf8cee1acab/라인로그인.gif" width="30%" height="30%"/>
+</p>
+&nbsp;
+
+### 캐릭터 그리기
+<p align="center">
+<img src="/uploads/f2c91491460eda8f994451f787344149/캐릭터_그리기.gif" width="30%" height="30%"/>
+</p>
+&nbsp;
+
+### 편지 작성
+<p align="center">
+<img src="/uploads/ca586adc4a37b955385c3c18ce93d238/편지쓰기.gif" width="30%" height="30%"/>
+</p>
+&nbsp;
+
+### 편지 확인
+<p align="center">
+<img src="/uploads/79283761dde13592c5c4848d8356f67d/보낸_편지_확인.gif" width="30%" height="30%"/>
+</p>
+&nbsp;
