@@ -45,7 +45,7 @@
 
 
 ## 📈 ERD
-![ERD](image/ERD.png){: width="70%" height="70%"}
+![ERD](image/ERD.png)
 &nbsp;
 
 ## **🧾 기능 소개**
