@@ -21,7 +21,7 @@
 &nbsp;
 
 ## **💑 멤버 소개**
-![멤버소개](/uploads/630734f8c3cf6b29d55afba698137156/멤버소개.jpg)
+![멤버소개](image/멤버소개.jpg)
 
 &nbsp;
 
@@ -38,88 +38,88 @@
 &nbsp;
 
 ## 🛠️ 시스템 아키텍처
-![Lemon_시스템아키텍처](/uploads/a64d338e6a39c4bab82c95fcd30e27c8/Lemon_시스템아키텍처.png)
+![Lemon_시스템아키텍처](image/Lemon_시스템아키텍처.png)
 
 &nbsp;
 
 
 
 ## 📈 ERD
-![ERD](/uploads/ec0320e2f34d55fd3972f60f7d34439e/ERD.png){: width="70%" height="70%"}
+![ERD](image/ERD.png){: width="70%" height="70%"}
 &nbsp;
 
 ## **🧾 기능 소개**
 ### 카카오, 라인 로그인
 <p align="center">
-<img src="/uploads/79f73f6eebddf14fe3066b8a9fbe54bd/카카오로그인.gif" width="30%" height="30%"/>
-<img src="/uploads/0898a791903f41df14cc4bf8cee1acab/라인로그인.gif" width="30%" height="30%"/>
+<img src="image/카카오로그인.gif" width="30%" height="30%"/>
+<img src="image/라인로그인.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 캐릭터 그리기
 <p align="center">
-<img src="/uploads/f2c91491460eda8f994451f787344149/캐릭터_그리기.gif" width="30%" height="30%"/>
+<img src="image/캐릭터_그리기.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 편지 작성
 <p align="center">
-<img src="/uploads/ca586adc4a37b955385c3c18ce93d238/편지쓰기.gif" width="30%" height="30%"/>
+<img src="image/편지쓰기.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 편지 확인
 <p align="center">
-<img src="/uploads/79283761dde13592c5c4848d8356f67d/보낸_편지_확인.gif" width="30%" height="30%"/>
+<img src="image/보낸_편지_확인.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 비회원 편지 작성
 <p align="center">
-<img src="/uploads/c07bae67525e1684ac32ddca9d582d3e/비회원이_편지_남기기.gif" width="30%" height="30%"/>
+<img src="image/비회원이_편지_남기기.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 답장하기
 <p align="center">
-<img src="/uploads/0d150ba32b3ee975ba6a5844aa3a5df3/답장하기.gif" width="30%" height="30%"/>
+<img src="image/답장하기.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 
 ### 스케치북 삭제
 <p align="center">
-<img src="/uploads/543b0ae149242c10ae79132d7b648b43/스케치북_삭제.gif" width="30%" height="30%"/>
+<img src="image/스케치북_삭제.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 스케치북 이름 수정
 <p align="center">
-<img src="/uploads/4d3deddaeda4e5176ff095611108c641/스케치북_이름_변경.gif" width="30%" height="30%"/>
+<img src="image/스케치북_이름_변경.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 스케치북 검색
 <p align="center">
-<img src="/uploads/2762210328f480ad265960c99abaf12f/스케치북_검색.gif" width="30%" height="30%"/>
+<img src="image/스케치북_검색.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 스케치북 공개 여부 설정
 <p align="center">
-<img src="/uploads/ab593056e3fbfe1c7260a5ec0cff38e4/스케치북_공겨_여부_설정.gif" width="30%" height="30%"/>
+<img src="image/스케치북_공겨_여부_설정.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 친구 추가
 <p align="center">
-<img src="/uploads/e66d4cab910ccc3ded5ab746c6e7142e/친구추가.gif" width="30%" height="30%"/>
+<img src="image/친구추가.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
 ### 즐겨찾기 등록
 <p align="center">
-<img src="/uploads/9f44596f4d4f190e7ecd64449d241909/즐겨찾기_등록_및_삭제.gif" width="30%" height="30%"/>
+<img src="image/즐겨찾기_등록_및_삭제.gif" width="30%" height="30%"/>
 </p>
 &nbsp;
 
